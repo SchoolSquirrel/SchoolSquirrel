@@ -9,6 +9,9 @@
 ## Frontend
 * Shared [Angular](https://angular.io/) app with [NativeScript](https://www.nativescript.org/) and [Electron](https://www.electronjs.org/).
 * Push messages using [FCM](https://firebase.google.com/docs/cloud-messaging) and a [custom relay server](https://github.com/SchoolSquirrel/SquirrelFcmRelay).
+* [NG Bootstrap](https://ng-bootstrap.github.io/#/home)
+* [Perfect Scrollbar](https://github.com/mdbootstrap/perfect-scrollbar)
+
 
 # Video Conferencing
 Not sure yet ;-) see comparison below
