@@ -11,6 +11,7 @@
 * Push messages using [FCM](https://firebase.google.com/docs/cloud-messaging) and a [custom relay server](https://github.com/SchoolSquirrel/SquirrelFcmRelay).
 * [NG Bootstrap](https://ng-bootstrap.github.io/#/home)
 * [Perfect Scrollbar](https://github.com/mdbootstrap/perfect-scrollbar)
+* [Syncfusion Angular Scheduler](https://www.syncfusion.com/angular-ui-components/angular-scheduler)
 
 
 # Video Conferencing
