@@ -10,6 +10,14 @@
 * Shared [Angular](https://angular.io/) app with [NativeScript](https://www.nativescript.org/) and [Electron](https://www.electronjs.org/).
 * Push messages using [FCM](https://firebase.google.com/docs/cloud-messaging) and a [custom relay server](https://github.com/SchoolSquirrel/SquirrelFcmRelay).
 
+# Video Conferencing
+Not sure yet ;-) see comparison below
+| Library                                                   | Pros                                                              | Cons                                 |
+|-----------------------------------------------------------|-------------------------------------------------------------------|--------------------------------------|
+| [OpenVidu](https://openvidu.io)                           | <ul><li>Easy api</li> <li>great UI samples</li></ul>              | <ul><li>TURN Server needed</li></ul> |
+| [Jitsi](https://jitsi.org)                                | <ul><li>?</li></ul>                                               | <ul><li>?</li></ul>                  |
+| [RtcMulticonnection](https://www.rtcmulticonnection.org/) | <ul><li>Peer2Peer</li> <li>No server ressources needed</li></ul>  |  <ul><li>Reliability (?)</li></ul>   |
+| Pure WebRTC                                               | <ul><li>Peer2Peer</li> <li>Customizability</li></ul>              | <ul><li>Work</li></ul>               |
 
 ## Miscellaneous
 
