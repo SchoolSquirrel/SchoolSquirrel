@@ -10,7 +10,7 @@
 * Shared [Angular](https://angular.io/) app with [NativeScript](https://www.nativescript.org/) and [Electron](https://www.electronjs.org/).
 * Push messages using [FCM](https://firebase.google.com/docs/cloud-messaging) and a [custom relay server](https://github.com/SchoolSquirrel/SquirrelFcmRelay).
 * [NG Bootstrap](https://ng-bootstrap.github.io/#/home)
-* [Perfect Scrollbar](https://github.com/mdbootstrap/perfect-scrollbar)
+* ~~[Perfect Scrollbar](https://github.com/mdbootstrap/perfect-scrollbar)~~ CSS Styled scrollbars https://css-tricks.com/custom-scrollbars-in-webkit/
 * [Syncfusion Angular Scheduler](https://www.syncfusion.com/angular-ui-components/angular-scheduler)
 
 
