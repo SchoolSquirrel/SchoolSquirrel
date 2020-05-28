@@ -21,7 +21,7 @@ Not sure yet ;-) see comparison below
 | [OpenVidu](https://openvidu.io)                           | <ul><li>Easy api</li> <li>great UI samples</li></ul>              | <ul><li>TURN Server needed</li></ul>                 |
 | [Jitsi](https://jitsi.org)                                | <ul><li>Wide adoption</li></ul>                                   | <ul><li>Implementation may be complicated</li></ul>  |
 | [RtcMulticonnection](https://www.rtcmulticonnection.org/) | <ul><li>Peer2Peer</li> <li>No server ressources needed</li></ul>  | <ul><li>Reliability (?)</li></ul>                    |
-| Pure WebRTC                                               | <ul><li>Peer2Peer</li> <li>Customizability</li></ul>              | <ul><li>Work</li></ul>                               |
+| Pure WebRTC                                               | <ul><li>Peer2Peer</li> <li>Customizability</li></ul>              | <ul><li>Work</li><li>Many edge cases</li></ul>       |
 
 # Online Office
 | Software       | Pros                                                                                           | Cons                                                 |
