@@ -16,18 +16,18 @@
 
 # Video Conferencing
 Not sure yet ;-) see comparison below
-| Library                                                   | Pros                                                              | Cons                                 |
-|-----------------------------------------------------------|-------------------------------------------------------------------|--------------------------------------|
-| [OpenVidu](https://openvidu.io)                           | <ul><li>Easy api</li> <li>great UI samples</li></ul>              | <ul><li>TURN Server needed</li></ul> |
-| [Jitsi](https://jitsi.org)                                | <ul><li>Wide adoption</li></ul>                                               | <ul><li>Implementation may be complicated</li></ul>                  |
-| [RtcMulticonnection](https://www.rtcmulticonnection.org/) | <ul><li>Peer2Peer</li> <li>No server ressources needed</li></ul>  |  <ul><li>Reliability (?)</li></ul>   |
-| Pure WebRTC                                               | <ul><li>Peer2Peer</li> <li>Customizability</li></ul>              | <ul><li>Work</li></ul>               |
+| Library                                                   | Pros                                                              | Cons                                                 |
+|-----------------------------------------------------------|-------------------------------------------------------------------|------------------------------------------------------|
+| [OpenVidu](https://openvidu.io)                           | <ul><li>Easy api</li> <li>great UI samples</li></ul>              | <ul><li>TURN Server needed</li></ul>                 |
+| [Jitsi](https://jitsi.org)                                | <ul><li>Wide adoption</li></ul>                                   | <ul><li>Implementation may be complicated</li></ul>  |
+| [RtcMulticonnection](https://www.rtcmulticonnection.org/) | <ul><li>Peer2Peer</li> <li>No server ressources needed</li></ul>  | <ul><li>Reliability (?)</li></ul>                    |
+| Pure WebRTC                                               | <ul><li>Peer2Peer</li> <li>Customizability</li></ul>              | <ul><li>Work</li></ul>                               |
 
 # Online Office
-| Software       | Pros                                                                     | Cons                                 |
-|----------------|--------------------------------------------------------------------------|--------------------------------------|
+| Software       | Pros                                                                                           | Cons                                                 |
+|----------------|------------------------------------------------------------------------------------------------|------------------------------------------------------|
 | Onlyoffice     | <ul><li>many Features</li><li>good MS Compatibility</li><li>fairly easy to implement</li></ul> | <ul><li>from questionable Company</li></ul>          |
-| Collabora CODE | <ul><li>good enough Features</li><li>Open Source Spirit :)</li></ul>                        | <ul><li>not as many Features as Onlyoffice</li></ul> |
+| Collabora CODE | <ul><li>good enough Features</li><li>Open Source Spirit :)</li></ul>                           | <ul><li>not as many Features as Onlyoffice</li></ul> |
 
 ## Miscellaneous
 
