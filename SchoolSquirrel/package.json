@@ -3,7 +3,10 @@
     "nativescript": {
         "id": "org.nativescript.SchoolSquirrel",
         "tns-android": {
-            "version": "6.0.2"
+            "version": "6.5.1"
+        },
+        "tns-ios": {
+            "version": "6.5.1"
         }
     },
     "version": "0.0.0",
