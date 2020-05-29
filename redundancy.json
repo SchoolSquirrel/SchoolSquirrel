@@ -1,0 +1,10 @@
+{
+    "version": 1,
+    "files": [{
+        "src": "api/src/entity/*.ts",
+        "dest": "SchoolSquirrel/src/app/_models/",
+        "removeDecorators": true,
+        "removeMethods": ["hashPassword", "checkIfUnencryptedPasswordIsValid"],
+        "removeImports": ["bcryptjs", "typeorm"]
+    }]
+}
