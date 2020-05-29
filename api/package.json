@@ -1,0 +1,55 @@
+{
+    "name": "schoolsquirrel-api",
+    "version": "0.0.0",
+    "description": "The api for SchoolSquirrel",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/SchoolSquirrel/SchoolSquirrel.git"
+    },
+    "keywords": [
+        "api",
+        "SchoolSquirrel"
+    ],
+    "author": "SchoolSquirrel Team",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/SchoolSquirrel/SchoolSquirrel/issues"
+    },
+    "homepage": "https://github.com/SchoolSquirrel/SchoolSquirrel#readme",
+    "devDependencies": {
+        "@types/i18n": "^0.8.6",
+        "@types/node": "^13.9.3",
+        "@types/request": "^2.48.4",
+        "npx": "^10.2.2",
+        "ts-node": "8.8.1",
+        "tslint": "^6.1.0",
+        "typescript": "3.8.3"
+    },
+    "dependencies": {
+        "@types/bcryptjs": "^2.4.2",
+        "@types/body-parser": "^1.19.0",
+        "@types/cors": "^2.8.6",
+        "@types/helmet": "0.0.45",
+        "@types/jsonwebtoken": "^8.3.8",
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.19.0",
+        "class-validator": "^0.11.1",
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "helmet": "^3.22.0",
+        "i18n": "^0.8.6",
+        "jsonwebtoken": "^8.5.1",
+        "mysql": "^2.18.1",
+        "reflect-metadata": "^0.1.13",
+        "ts-node-dev": "^1.0.0-pre.44",
+        "typeorm": "0.2.24"
+    },
+    "scripts": {
+        "tsc": "tsc",
+        "start": "set debug=* && ts-node-dev --respawn --transpileOnly ./src/index.ts",
+        "prod": "tsc && node ./build/index.js",
+        "build": "tsc",
+        "lint": "npx tslint --project .",
+        "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run"
+    }
+}

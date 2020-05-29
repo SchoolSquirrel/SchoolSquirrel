@@ -1,0 +1,24 @@
+{
+    "errors": {
+        "emailNotFound": "Email not found!",
+        "error": "Error!",
+        "errorWhileAddingUser": "Error while adding user!",
+        "errorWhileDeleting": "Error while deleting!",
+        "errorWhileDeletingUser": "Error while deleting user!",
+        "eventNotFound": "Event not found!",
+        "existingUsername": "Username already exists!",
+        "notAllFieldsProvided": "Not all data provided!",
+        "notAllowed": "This action is not allowed!",
+        "oldPasswordWrong": "Old password is not correct!",
+        "passwordsDontMatch": "Passwords do not match!",
+        "sessionExpired": "Session expired. Please login again!",
+        "unauthorized": "Unauthorized!",
+        "unknown": "Unknown error!",
+        "userNotFound": "User not found!",
+        "userNotFoundWrongLink": "User not found, wrong link!",
+        "usergroupDoesNotExist": "The usergroup doesn't exist!",
+        "usernameOrPasswordEmpty": "Username oder password empty!",
+        "wrongPassword": "Wrong password!",
+        "wrongUsername": "Wrong username!"
+    }
+}
