@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { User } from '../_models/User';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 import { map } from "rxjs/operators";
+import { User } from "../_models/User";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: "root",
 })
 export class AuthenticationService {
   public currentUser: User;
