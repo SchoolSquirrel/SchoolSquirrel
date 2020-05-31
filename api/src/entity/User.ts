@@ -38,6 +38,8 @@ export class User {
     this.password = bcrypt.hashSync(this.password, 8);
   }
 
+  public jwtToken?: string;
+
   public checkIfUnencryptedPasswordIsValid(unencryptedPassword: string) {
       if (unencryptedPassword) {
           return bcrypt.compareSync(unencryptedPassword, this.password);

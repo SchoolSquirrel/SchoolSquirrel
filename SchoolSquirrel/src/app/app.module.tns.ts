@@ -6,11 +6,13 @@ import { AppComponent } from '@src/app/app.component';
 import { HomeComponent } from '@src/app/_pages/home/home.component';
 import { NativeScriptFormsModule } from 'nativescript-angular/forms';
 import { NativeScriptHttpClientModule } from 'nativescript-angular/http-client';
+import { LoginComponent } from '@src/app/_pages/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    LoginComponent,
   ],
   imports: [
     NativeScriptModule,

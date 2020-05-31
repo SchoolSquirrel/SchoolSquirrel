@@ -37,5 +37,7 @@
 /* do not edit */
 /* do not edit */   
 /* do not edit */
+/* do not edit */   public jwtToken?: string;
+/* do not edit */
 /* do not edit */   
 /* do not edit */ }
