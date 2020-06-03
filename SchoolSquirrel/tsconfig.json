@@ -29,8 +29,5 @@
               "src/*.ts"
           ]
       }
-   },
-    "angularCompilerOptions": {
-        "enableIvy": false
-    }
+   }
 }
