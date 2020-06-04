@@ -1,11 +1,11 @@
 import { Component } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { HttpClient } from "@angular/common/http";
-import { ToastService } from "../../_services/toast.service";
-import { RemoteService } from "../../_services/remote.service";
-import { NoErrorToastHttpParams } from "@src/app/_helpers/noErrorToastHttpParams";
-import { AuthenticationService } from "@src/app/_services/authentication.service";
 import { Router } from "@angular/router";
+import { RemoteService } from "../../_services/remote.service";
+import { NoErrorToastHttpParams } from "../../_helpers/noErrorToastHttpParams";
+import { AuthenticationService } from "../../_services/authentication.service";
+import { ToastService } from "../../_services/toast.service";
 
 @Component({
     selector: "app-login",

@@ -19,6 +19,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             .pipe(
                 retry(1),
                 catchError((error: HttpErrorResponse) => {
+                    // eslint-disable-next-line no-console
                     console.log(error);
                     const errorMessage = error.error?.message || error.message || "unknown error!";
                     // when using { params: new NoErrorToastHttpParams(true) }, don't show toast
