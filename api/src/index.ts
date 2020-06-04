@@ -90,6 +90,7 @@ createConnection({
         app.use("/api", routes);
         // Set route for config.json
         app.use("/config.json", ConfigController.config);
+        app.use("/", express.static("/app/dist/frontend"));
 
         // That starts the server on the given port
         app.listen(3000, () => {
