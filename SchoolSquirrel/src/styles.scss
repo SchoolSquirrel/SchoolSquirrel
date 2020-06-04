@@ -1,1 +1,15 @@
 @import "~bootstrap/scss/bootstrap.scss";
+.toast {
+    min-width: 20rem;
+    .toast-header {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        color: #fff !important;
+        .close {
+            color: #fff;
+            opacity: .7;
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+}
