@@ -1,4 +1,11 @@
 # SchoolSquirrel
+[![Available on Docker Hub](https://img.shields.io/badge/available_on-Docker_Hub-blue?logo=docker)](https://hub.docker.com/repository/docker/schoolsquirrel/schoolsquirrel)
+[![Production build](https://github.com/SchoolSquirrel/SchoolSquirrel/workflows/Build/badge.svg)](https://github.com/SchoolSquirrel/SchoolSquirrel/actions)
+[![Lint](https://github.com/SchoolSquirrel/SchoolSquirrel/workflows/Lint/badge.svg)](https://github.com/SchoolSquirrel/SchoolSquirrel/actions)
+[![License](https://img.shields.io/badge/License-MIT-blue)](./LICENSE.md)
+[![GitHub last commit](https://img.shields.io/github/last-commit/SchoolSquirrel/SchoolSquirrel?color=brightgreen)](https://github.com/SchoolSquirrel/SchoolSquirrel/commits)
+[![Maintenance](https://img.shields.io/maintenance/yes/2020)](https://github.com/SchoolSquirrel/SchoolSquirrel/commits)
+
 The main repo for SchoolSquirrel
 
 ## Development
