@@ -19,14 +19,8 @@ export class ErrorInterceptor implements HttpInterceptor {
             .pipe(
                 retry(1),
                 catchError((error: HttpErrorResponse) => {
-                    let errorMessage = "";
-                    if (error.error instanceof ErrorEvent) {
-                        // client-side error
-                        errorMessage = error.error.message;
-                    } else {
-                        // server-side error
-                        errorMessage = error.message;
-                    }
+                    console.log(error);
+                    const errorMessage = error.error?.message || error.message || "unknown error!";
                     // when using { params: new NoErrorToastHttpParams(true) }, don't show toast
                     if (!(request.params instanceof NoErrorToastHttpParams
                         && request.params.dontShowToast)) {
