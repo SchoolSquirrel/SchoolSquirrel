@@ -1,2 +1,19 @@
 <app-toasts></app-toasts>
-<router-outlet></router-outlet>
+<!--<app-sidebar *ngIf="!isFullScreenPage"></app-sidebar>-->
+
+
+<!--
+<main >
+    <router-outlet></router-outlet>
+</main>-->
+
+<app-navbar *ngIf="!isFullScreenPage"></app-navbar>
+<div class="container-fluid">
+    <div class="row">
+        <app-sidebar *ngIf="!isFullScreenPage"></app-sidebar>
+
+        <main role="main" class="col" [class.col-12]="isFullScreenPage" [class.offset-1]="!isFullScreenPage">
+            <router-outlet></router-outlet>
+        </main>
+    </div>
+</div>

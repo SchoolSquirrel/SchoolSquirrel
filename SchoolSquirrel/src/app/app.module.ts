@@ -11,6 +11,8 @@ import { HomeComponent } from "./_pages/home/home.component";
 import { LoginComponent } from "./_pages/login/login.component";
 import { ErrorInterceptor } from "./_interceptors/error.interceptor";
 import { ToastComponent } from "./_components/toast/toast.component";
+import { SidebarComponent } from "./_components/sidebar/sidebar.component";
+import { NavbarComponent } from "./_components/navbar/navbar.component";
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     return new TranslateHttpLoader(http);
@@ -22,6 +24,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         HomeComponent,
         LoginComponent,
         ToastComponent,
+        SidebarComponent,
+        NavbarComponent,
     ],
     imports: [
         BrowserModule,
