@@ -3,6 +3,12 @@ The main repo for SchoolSquirrel
 
 ## Development
 
+### Prerequisites
+- [Node.js](https://nodejs.org/en/)
+- [Angular CLI](https://cli.angular.io/)
+For the mobile app:
+- [NativeScript](https://docs.nativescript.org/angular/start/quick-setup#step-1-install-nodejs-and-nativescript-cli)
+
 ### API
 1. Create a MySQL Database
 2. `npm i` and then `npm start` in `api` folder
