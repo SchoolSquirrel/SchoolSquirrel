@@ -6,6 +6,7 @@ The main repo for SchoolSquirrel
 ### Prerequisites
 - [Node.js](https://nodejs.org/en/)
 - [Angular CLI](https://cli.angular.io/)
+
 For the mobile app:
 - [NativeScript](https://docs.nativescript.org/angular/start/quick-setup#step-1-install-nodejs-and-nativescript-cli)
 
