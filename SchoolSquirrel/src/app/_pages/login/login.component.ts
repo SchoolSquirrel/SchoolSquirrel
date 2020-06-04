@@ -15,6 +15,7 @@ import { ToastService } from "../../_services/toast.service";
 export class LoginComponent {
     public loginForm: FormGroup;
     public submitted = false;
+    public loading = false;
 
     constructor(
         private httpClient: HttpClient,
@@ -36,7 +37,9 @@ export class LoginComponent {
         if (this.loginForm.invalid) {
             return;
         }
+        this.loading = true;
         this.httpClient.get(`${this.loginForm.controls.domain.value}/config.json`, { params: new NoErrorToastHttpParams(true) }).subscribe((data: any) => {
+            this.loading = false;
             if (data && data.apiUrl) {
                 const apiUrl = new URL(data.apiUrl, this.loginForm.controls.domain.value)
                     .toString();
@@ -46,12 +49,15 @@ export class LoginComponent {
                     this.loginForm.controls.name.value,
                     this.loginForm.controls.password.value,
                 ).subscribe(() => {
+                    this.loading = false;
                     this.router.navigate(["home"]);
                 });
             } else {
+                this.loading = false;
                 this.toastService.error("Fehlerhafte config!");
             }
         }, () => {
+            this.loading = false;
             this.toastService.error("Falsche Domain!");
         });
     }

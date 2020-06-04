@@ -23,5 +23,5 @@
         <input type="checkbox" class="custom-control-input" id="stayLoggedIn">
         <label class="custom-control-label" for="stayLoggedIn">Eingeloggt bleiben</label>
     </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="loading">Login <span *ngIf="loading" class="spinner-border spinner-border-sm mb-1"></span></button>
 </form>
