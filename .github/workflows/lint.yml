@@ -1,0 +1,35 @@
+name: Lint
+
+on: [push]
+
+jobs:
+  lint_api:
+    name: Lint API
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12
+    - name: Install dependencies
+      working-directory: api
+      run: npm i
+    - name: Lint
+      working-directory: api
+      run: npm run lint
+  line_frontend:
+    name: Lint Frontend
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12
+    - name: Install dependencies
+      working-directory: SchoolSquirrel
+      run: npm i
+    - name: Lint
+      working-directory: SchoolSquirrel
+      run: npm run lint
