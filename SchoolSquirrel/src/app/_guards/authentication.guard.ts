@@ -13,7 +13,7 @@ export class AuthenticationGuard implements CanActivate {
         private authenticationService: AuthenticationService,
     ) { }
 
-    public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         if (this.authenticationService.currentUser) {
             // authorised so return true
             return true;
