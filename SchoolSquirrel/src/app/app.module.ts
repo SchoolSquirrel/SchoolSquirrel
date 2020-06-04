@@ -4,11 +4,13 @@ import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from "@angular/common
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./_pages/home/home.component";
 import { LoginComponent } from "./_pages/login/login.component";
 import { ErrorInterceptor } from "./_interceptors/error.interceptor";
+import { ToastComponent } from "./_components/toast/toast.component";
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     return new TranslateHttpLoader(http);
@@ -19,12 +21,14 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         AppComponent,
         HomeComponent,
         LoginComponent,
+        ToastComponent,
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
         FormsModule,
+        NgbModule,
         ReactiveFormsModule,
         TranslateModule.forRoot({
             loader: {

@@ -18,6 +18,10 @@ export class ToastService {
         this.toasts = this.toasts.filter((t) => t !== toast);
     }
 
+    public removeAll(): void {
+        this.toasts = [];
+    }
+
     public success(msg: string) : void{
         this.custom(msg, { classname: "bg-success text-white", headerText: "Erfolg!" });
     }
