@@ -13,6 +13,7 @@ import { toInt } from "./utils/utils";
 import { envOptions, globals } from "./globals";
 import * as fs from "fs";
 import { getConfig, setConfig } from "./utils/config";
+import ConfigController from "./controllers/ConfigController";
 
 // write env to config file
 if (!fs.existsSync(globals.configPath)) {
@@ -87,6 +88,8 @@ createConnection({
 
         // Set all routes from routes folder
         app.use("/api", routes);
+        // Set route for config.json
+        app.use("/config.json", ConfigController.config);
 
         // That starts the server on the given port
         app.listen(3000, () => {
