@@ -19,20 +19,22 @@ export class AuthenticationService {
         private router: Router,
     ) { }
 
-    public login(username: string, password: string): Observable<User> {
+    public login(username: string, password: string, rememberMe: boolean): Observable<User> {
         return this.remoteService.post("auth/login", { password, username }).pipe(
             map((user: User) => {
                 // login successful if there's a jwt token in the response
-                this.loggedIn(user);
+                this.loggedIn(user, rememberMe);
                 return user;
             }),
         );
     }
 
-    private loggedIn(user: User) {
+    private loggedIn(user: User, rememberMe: boolean) {
         if (user) {
             this.currentUser = user;
-            this.storageService.set("jwtToken", user.jwtToken);
+            if (rememberMe) {
+                this.storageService.set("jwtToken", user.jwtToken);
+            }
         }
     }
 
@@ -40,7 +42,7 @@ export class AuthenticationService {
         const o = new Subject();
         this.remoteService.post("auth/renewToken", { jwtToken }, { params: new NoErrorToastHttpParams(true) }).subscribe((data) => {
             if (data && data.user) {
-                this.loggedIn(data.user);
+                this.loggedIn(data.user, true);
                 o.next(true);
             } else {
                 o.next(false);

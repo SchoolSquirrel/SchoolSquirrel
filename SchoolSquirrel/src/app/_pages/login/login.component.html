@@ -20,8 +20,8 @@
     </div>
 
     <div class="custom-control custom-checkbox mb-4">
-        <input type="checkbox" class="custom-control-input" id="stayLoggedIn">
-        <label class="custom-control-label" for="stayLoggedIn">Eingeloggt bleiben</label>
+        <input type="checkbox" class="custom-control-input" id="rememberMe" formControlName="rememberMe">
+        <label class="custom-control-label" for="rememberMe">Eingeloggt bleiben</label>
     </div>
     <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="loading">Login <span *ngIf="loading"
             class="spinner-border spinner-border-sm mb-1"></span></button>

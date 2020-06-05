@@ -32,6 +32,7 @@ export class LoginComponent {
             domain: new FormControl("", [Validators.required, Validators.pattern(/((http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*))|http(s)?:\/\/localhost/)]),
             name: new FormControl("", [Validators.required]),
             password: new FormControl("", [Validators.required]),
+            rememberMe: new FormControl(true),
         });
         if (this.autoDetectDomain) {
             const url = window.location.toString();
@@ -73,6 +74,7 @@ export class LoginComponent {
                 this.authenticationService.login(
                     this.loginForm.controls.name.value,
                     this.loginForm.controls.password.value,
+                    this.loginForm.controls.rememberMe.value,
                 ).subscribe(() => {
                     this.loading = false;
                     this.router.navigate(["home"]);
