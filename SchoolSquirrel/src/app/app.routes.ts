@@ -4,6 +4,7 @@ import { HomeComponent } from "./_pages/home/home.component";
 import { LoginComponent } from "./_pages/login/login.component";
 import { AuthenticationGuard } from "./_guards/authentication.guard";
 import { AssignmentsComponent } from "./_pages/assignments/assignments.component";
+import { CalendarComponent } from "./_pages/calendar/calendar.component";
 
 export const routes: Routes = [
     {
@@ -14,6 +15,11 @@ export const routes: Routes = [
     {
         path: "assignments",
         component: AssignmentsComponent,
+        canActivate: [AuthenticationGuard],
+    },
+    {
+        path: "calendar",
+        component: CalendarComponent,
         canActivate: [AuthenticationGuard],
     },
     {
