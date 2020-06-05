@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { debounceTime, map } from "rxjs/operators";
 import { Observable } from "rxjs";
-import { AuthenticationService } from "@src/app/_services/authentication.service";
+import { AuthenticationService } from "../../_services/authentication.service";
 
 const actions: {
     name: string;
