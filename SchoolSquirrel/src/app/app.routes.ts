@@ -15,8 +15,7 @@ export const routes: Routes = [
         component: LoginComponent,
     },
     {
-        path: "",
+        path: "**",
         redirectTo: "/home",
-        pathMatch: "full",
     },
 ];
