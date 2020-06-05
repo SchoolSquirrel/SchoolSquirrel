@@ -12,6 +12,14 @@
     - Typeaheadbox as wide as input field
 - Sidebar
   - List classes (`hrueger`)
+- Calendar
+  - Show Syncfusion's scheduler
+  - Show events from api
+- Assignments
+  - Teachers: create
+  - Students: see, upload files
+  - Directory structure?
+
 
 ## API
 - User Roles
@@ -22,3 +30,5 @@
 - User Settings
   - Avatar
   - Status
+- Events for Calendar (meetings, due dates of assignments)
+- Assignments
