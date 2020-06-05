@@ -1,4 +1,4 @@
-<form class="form-signin col-12 col-sm-8 col-md-6 col-lg-4 col-xl-3 mx-auto mt-5" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+<form class="form-signin col-12 col-sm-8 col-md-6 col-lg-4 col-xl-3 mx-auto mt-5" [formGroup]="loginForm" (ngSubmit)="onSubmit()" *ngIf="!tryingToAutoLogin">
 
     <h3 class="text-center mb-5">SchoolSquirrel</h3>
     <div class="form-label-group" [class.d-none]="autoDetectDomain">
@@ -23,5 +23,10 @@
         <input type="checkbox" class="custom-control-input" id="stayLoggedIn">
         <label class="custom-control-label" for="stayLoggedIn">Eingeloggt bleiben</label>
     </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="loading">Login <span *ngIf="loading" class="spinner-border spinner-border-sm mb-1"></span></button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="loading">Login <span *ngIf="loading"
+            class="spinner-border spinner-border-sm mb-1"></span></button>
 </form>
+
+<div class="d-flex justify-content-center autoLoginSpinner" *ngIf="tryingToAutoLogin">
+    <div class="spinner-border text-primary"></div>
+</div>

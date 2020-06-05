@@ -1,7 +1,6 @@
 # Frontend
 ## Web
 - Login
-  - Stay logged in (`hrueger`)
   - Renew JWT token automatically
 - General
   - Theming (Logo colors?)
