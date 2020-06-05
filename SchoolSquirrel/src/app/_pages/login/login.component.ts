@@ -16,6 +16,7 @@ export class LoginComponent {
     public loginForm: FormGroup;
     public submitted = false;
     public loading = false;
+    public readonly autoDetectDomain = true; // toDo: for Electron this needs to be false
 
     constructor(
         private httpClient: HttpClient,
@@ -29,6 +30,14 @@ export class LoginComponent {
             name: new FormControl("", [Validators.required]),
             password: new FormControl("", [Validators.required]),
         });
+        if (this.autoDetectDomain) {
+            const url = window.location.toString();
+            if (url.indexOf("localhost:4200") !== -1) { // is dev
+                this.loginForm.controls.domain.setValue("http://localhost:3000");
+            } else {
+                this.loginForm.controls.domain.setValue(url.substring(0, url.indexOf("/login")));
+            }
+        }
     }
 
     public onSubmit(): void {

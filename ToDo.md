@@ -3,7 +3,6 @@
 - Login
   - Stay logged in (`hrueger`)
   - Renew JWT token automatically
-  - Detect api automatically when using browser client  (`hrueger`)
 - General
   - Theming (Logo colors?)
 - Navbar
