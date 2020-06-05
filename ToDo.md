@@ -10,13 +10,15 @@
   - Command / Search feature
     - Service / API for Users
     - Typeaheadbox as wide as input field
+- Sidebar
+  - List classes (`hrueger`)
 
 ## API
 - User Roles
-- Courses / Classes
+- Courses / Classes (`hrueger`)
 - Messages (private and group)
-- User grades
-- Admin can create users and grades
+- User grades (`hrueger`)
+- Admin can create users and grades (`hrueger`)
 - User Settings
   - Avatar
   - Status
