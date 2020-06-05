@@ -12,9 +12,9 @@ export class AuthenticationService {
 
   constructor(private remoteService: RemoteService) {}
 
-  public login(username: string, password: string): Observable<any> {
+  public login(username: string, password: string): Observable<User> {
       return this.remoteService.post("auth/login", { password, username }).pipe(
-          map((user) => {
+          map((user: User) => {
               // login successful if there's a jwt token in the response
               if (user) {
                   this.currentUser = user;
