@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { map } from "rxjs/operators";
 import { Observable, Subject } from "rxjs";
+import { Router } from "@angular/router";
 import { User } from "../_models/User";
 import { RemoteService } from "./remote.service";
 import { StorageService } from "./storage.service";
@@ -12,7 +13,11 @@ import { NoErrorToastHttpParams } from "../_helpers/noErrorToastHttpParams";
 export class AuthenticationService {
     public currentUser: User;
 
-    constructor(private remoteService: RemoteService, private storageService: StorageService) { }
+    constructor(
+        private remoteService: RemoteService,
+        private storageService: StorageService,
+        private router: Router,
+    ) { }
 
     public login(username: string, password: string): Observable<User> {
         return this.remoteService.post("auth/login", { password, username }).pipe(
@@ -47,6 +52,7 @@ export class AuthenticationService {
     }
 
     public logout(): void {
-        // ToDo
+        this.storageService.remove("jwtToken");
+        window.location.reload();
     }
 }

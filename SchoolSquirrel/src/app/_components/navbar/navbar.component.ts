@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { debounceTime, map } from "rxjs/operators";
 import { Observable } from "rxjs";
+import { AuthenticationService } from "@src/app/_services/authentication.service";
 
 const actions: {
     name: string;
@@ -28,6 +29,8 @@ const actions: {
 export class NavbarComponent {
     public actionValue = "";
     public inputFocused = false;
+
+    constructor(public authenticationService: AuthenticationService) {}
 
     public openTypeahead(element: HTMLInputElement): void {
         element.value = "";
