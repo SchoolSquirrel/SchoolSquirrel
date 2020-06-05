@@ -1,9 +1,9 @@
 # Frontend
 ## Web
 - Login
-  - Stay logged in
+  - Stay logged in (`hrueger`)
   - Renew JWT token automatically
-  - Detect api automatically when using browser client
+  - Detect api automatically when using browser client  (`hrueger`)
 - General
   - Theming (Logo colors?)
 - Navbar
