@@ -1,4 +1,16 @@
-<h1>Users - Admin</h1>
-<div class="alert alert-info">
-    ToDo
-</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Role</th>
+            <th>Name</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of users">
+            <td>{{user.role}}</td>
+            <td>{{user.username}}</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
