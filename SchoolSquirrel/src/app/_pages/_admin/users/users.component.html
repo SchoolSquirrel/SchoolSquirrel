@@ -10,6 +10,10 @@
                     <option value="teacher">Lehrer</option>
                     <option value="admin">Admin</option>
                 </select>
+                <select class="form-control inline-edit d-inline mb-2 mr-2" [(ngModel)]="newUserGradeId" name="grade">
+                    <option selected="true" disabled="disabled" value="">-- Bitte wählen --</option>
+                    <option *ngFor="let grade of grades" [value]="grade.id">{{grade.name}}</option>
+                </select>
 
                 <button type="submit" class="btn btn-primary mb-2" (click)="createUser()">Erstellen</button>
             </form>

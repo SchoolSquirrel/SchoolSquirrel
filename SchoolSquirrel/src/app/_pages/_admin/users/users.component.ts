@@ -15,6 +15,7 @@ export class UsersComponent {
     public newUserRole = "student";
     public newUserName: string;
     public newGradeName: string;
+    public newUserGradeId = "";
 
     constructor(private remoteService: RemoteService, private toastService: ToastService) { }
 
@@ -28,8 +29,8 @@ export class UsersComponent {
     }
 
     public createUser(): void {
-        if (this.newUserName && this.newUserRole) {
-            this.remoteService.post("admin/users", { name: this.newUserName, role: this.newUserRole }).subscribe((data) => {
+        if (this.newUserName && this.newUserRole && this.newUserGradeId) {
+            this.remoteService.post("admin/users", { name: this.newUserName, role: this.newUserRole, grade: this.newUserGradeId }).subscribe((data) => {
                 if (data && data.success) {
                     this.ngOnInit();
                     this.toastService.success("Benutzer erstellt");
