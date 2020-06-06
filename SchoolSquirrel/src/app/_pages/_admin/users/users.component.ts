@@ -10,6 +10,7 @@ import { Grade } from "../../../_models/Grade";
     styleUrls: ["./users.component.scss"],
 })
 export class UsersComponent {
+    title = 'Users'; // needed for AoT since you're binding to it in {N} view
     public users: User[] = [];
     public grades: Grade[] = [];
     public newUserRole = "student";

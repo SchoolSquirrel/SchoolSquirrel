@@ -7,5 +7,7 @@ import { AuthenticationService } from "../../_services/authentication.service";
     styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent {
+    title = 'Home'; // needed for AoT since you're binding to it in {N} view
+
     constructor(public authenticationService: AuthenticationService) {}
 }

@@ -6,4 +6,5 @@ import { Component } from "@angular/core";
     styleUrls: ["./calendar.component.scss"],
 })
 export class CalendarComponent {
+    title = 'Calendar'; // needed for AoT since you're binding to it in {N} view
 }

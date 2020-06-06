@@ -6,4 +6,5 @@ import { Component } from "@angular/core";
     styleUrls: ["./settings.component.scss"],
 })
 export class SettingsComponent {
+    title = 'Settings'; // needed for AoT since you're binding to it in {N} view
 }

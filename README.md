@@ -29,7 +29,7 @@ For the mobile app:
 3. The domain for the login is `http://localhost:3000`
 
 ### Frontend Mobile
-1. `npm i` and `tns run android` in `SchoolSquirrel` folder
+1. `npm i` and `tns run android --env.aot` in `SchoolSquirrel` folder
 
 ### Frontend Desktop
 ToDo

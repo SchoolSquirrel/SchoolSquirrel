@@ -4,6 +4,9 @@
         "id": "com.schoolsquirrel.SchoolSquirrel",
         "tns-android": {
             "version": "6.5.1"
+        },
+        "tns-ios": {
+            "version": "6.5.1"
         }
     },
     "version": "0.0.0",
@@ -20,7 +23,9 @@
         "mobile": "tns run",
         "preview": "tns preview",
         "desktop": "wait-on http-get://localhost:4200/ && npm run electron:tsc && electron ./ --serve",
-        "electron:tsc": "tsc main.ts"
+        "electron:tsc": "tsc main.ts",
+        "ngcc": "ngcc --properties es2015 module main --first-only",
+        "postinstall": "npm run ngcc"
     },
     "main": "main.js",
     "private": true,
