@@ -8,7 +8,7 @@ export class createAdminUser1574018391679 implements MigrationInterface {
         const user = new User();
         user.username = "admin";
         user.password = "admin";
-        user.isAdmin = true;
+        user.role = "admin";
         user.hashPassword();
         const userRepository = getRepository(User);
         await userRepository.save(user);

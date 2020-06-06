@@ -2,78 +2,65 @@ import { Request, Response } from "express";
 import * as i18n from "i18n";
 import { getRepository } from "typeorm";
 import { User } from "../entity/User";
+import { Grade } from "../entity/Grade";
 class UserController {
     public static listAll = async (req: Request, res: Response) => {
         const userRepository = getRepository(User);
-        const users = await userRepository.find();
+        const users = await userRepository.find({relations: ["grade"]});
         res.send(users);
     }
 
     public static newUser = async (req: Request, res: Response) => {
-        const { username, pw, pw2, isAdmin } = req.body;
-        if (!(username && pw && pw2)) {
+        const { name, role, grade } = req.body;
+        if (!(name && ["student", "teacher", "admin"].includes(role) && grade)) {
             res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });
-            return;
-        }
-        if (pw != pw2) {
-            res.status(400).send({ message: i18n.__("errors.passwordsDontMatch") });
             return;
         }
 
         const user = new User();
-        user.username = username;
-        user.password = pw;
-        user.isAdmin = isAdmin ? true : false;
+        user.username = name;
+        user.password = req.app.locals.config.DEFAULT_PASSWORD;
+        user.role = role;
+
+        const userRepository = getRepository(User);
+        const gradeRepository = getRepository(Grade);
+        user.grade = await gradeRepository.findOne(grade);
 
         user.hashPassword();
 
-        const userRepository = getRepository(User);
         try {
             await userRepository.save(user);
         } catch (e) {
             res.status(409).send({ message: i18n.__("errors.existingUsername") });
             return;
         }
-        res.status(200).send({ status: true });
+        res.status(200).send({ success: true });
     }
 
-    public static editCurrent = async (req: Request, res: Response) => {
-        const id = res.locals.jwtPayload.userId;
+    public static editUser = async (req: Request, res: Response) => {
+        const id = req.params.id;
 
-        const { username, email, pwNew, pwNew2, pwOld } = req.body;
+        const { name, role, grade } = req.body;
 
         const userRepository = getRepository(User);
+        const gradeRepository = getRepository(Grade);
         let user;
         try {
-            user = await userRepository.createQueryBuilder("user")
-                .addSelect("user.password")
-                .where("user.id = :id", { id })
-                .getOne();
+            user = await userRepository.findOne(id);
         } catch (error) {
             res.status(404).send({ message: i18n.__("errors.userNotFound") });
             return;
+            return;
         }
 
-        if (!(username && email && pwOld)) {
+        if (!(name && role && grade)) {
             res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });
-        }
-
-        if (pwNew != pwNew2) {
-            res.status(400).send({ message: i18n.__("errors.passwordsDontMatch") });
             return;
         }
 
-        if (!user.checkIfUnencryptedPasswordIsValid(pwOld)) {
-            res.status(401).send({ message: i18n.__("errors.oldPasswordWrong") });
-            return;
-        }
-
-        user.username = username;
-        user.email = email;
-        if (pwNew && pwNew2) {
-            user.password = pwNew;
-            user.hashPassword();
-        }
+        user.username = name;
+        user.role = role;
+        user.grade = await gradeRepository.findOne(grade);
 
         try {
             await userRepository.save(user);
@@ -82,7 +69,7 @@ class UserController {
             return;
         }
 
-        res.status(200).send({ status: true });
+        res.status(200).send({ success: true });
     }
 
     public static deleteUser = async (req: Request, res: Response) => {
@@ -97,7 +84,7 @@ class UserController {
             return;
         }
 
-        res.status(200).send({ status: true });
+        res.status(200).send({ success: true });
     }
 }
 

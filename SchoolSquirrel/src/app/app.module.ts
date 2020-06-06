@@ -13,6 +13,11 @@ import { ErrorInterceptor } from "./_interceptors/error.interceptor";
 import { ToastComponent } from "./_components/toast/toast.component";
 import { SidebarComponent } from "./_components/sidebar/sidebar.component";
 import { NavbarComponent } from "./_components/navbar/navbar.component";
+import { AssignmentsComponent } from "./_pages/assignments/assignments.component";
+import { CalendarComponent } from "./_pages/calendar/calendar.component";
+import { UsersComponent } from "./_pages/_admin/users/users.component";
+import { SettingsComponent } from "./_pages/_admin/settings/settings.component";
+import { JwtInterceptor } from "./_interceptors/jwt.interceptor";
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     return new TranslateHttpLoader(http);
@@ -26,6 +31,10 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         ToastComponent,
         SidebarComponent,
         NavbarComponent,
+        AssignmentsComponent,
+        CalendarComponent,
+        UsersComponent,
+        SettingsComponent,
     ],
     imports: [
         BrowserModule,
@@ -47,6 +56,11 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         {
             provide: HTTP_INTERCEPTORS,
             useClass: ErrorInterceptor,
+            multi: true,
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: JwtInterceptor,
             multi: true,
         },
     ],

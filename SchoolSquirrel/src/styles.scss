@@ -1,4 +1,5 @@
 @import "~bootstrap/scss/bootstrap.scss";
+@import "~@fortawesome/fontawesome-free/css/all.css";
 .toast {
     min-width: 20rem;
     .toast-header {
@@ -17,4 +18,21 @@
 html {
     height: 100vh;
     overflow: hidden;
+}
+
+.form-control-dark::placeholder {
+    color: rgb(196, 196, 196);
+}
+
+ngb-typeahead-window {
+    width: 50vw;
+    .dropdown-item.active {
+        background-color: rgb(224, 224, 224);
+        color: #000;
+    }
+}
+
+input.inline-edit,
+select.inline-edit {
+    width: unset;
 }

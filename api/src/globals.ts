@@ -8,6 +8,7 @@ export const envOptions = {
     DB_PORT: 3306,
     JWT_SECRET: "ioauwielywiupe9",
     DEFAULT_LANGUAGE: "de",
+    DEFAULT_PASSWORD: "SchoolSquirrel"
 };
 
 

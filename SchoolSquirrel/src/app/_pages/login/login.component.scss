@@ -1,3 +1,11 @@
+.autoLoginSpinner {
+    margin-top: calc(50vh - 5rem);
+    div {
+        width: 5rem;
+        height: 5rem;
+    }
+}
+
 .form-label-group {
     position: relative;
     margin-bottom: 1rem;

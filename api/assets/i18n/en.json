@@ -14,6 +14,7 @@
         "sessionExpired": "Session expired. Please login again!",
         "unauthorized": "Unauthorized!",
         "unknown": "Unknown error!",
+        "unknownError": "Unknown error!",
         "userNotFound": "User not found!",
         "userNotFoundWrongLink": "User not found, wrong link!",
         "usergroupDoesNotExist": "The usergroup doesn't exist!",

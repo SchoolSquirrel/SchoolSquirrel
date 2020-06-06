@@ -14,6 +14,8 @@ import { envOptions, globals } from "./globals";
 import * as fs from "fs";
 import { getConfig, setConfig } from "./utils/config";
 import ConfigController from "./controllers/ConfigController";
+import { Grade } from "./entity/Grade";
+import { Course } from "./entity/Course";
 
 // write env to config file
 if (!fs.existsSync(globals.configPath)) {
@@ -51,6 +53,8 @@ createConnection({
     // List all entities here
     entities: [
         User,
+        Grade,
+        Course,
     ],
     host: config.DB_HOST,
     logging: false,
@@ -92,10 +96,14 @@ createConnection({
         app.use("/config.json", ConfigController.config);
         app.use("/", express.static("/app/dist/frontend"));
 
+        let port = 80;
+        if (process.env.NODE_ENV == "development") {
+            port = 3000;
+        }
         // That starts the server on the given port
-        app.listen(3000, () => {
+        app.listen(port, () => {
             // tslint:disable-next-line: no-console
-            console.log("Server started on port 3000!");
+            console.log(`Server started on port ${port}!`);
         });
     })
     // If an error happens, print it on the console

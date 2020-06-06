@@ -1,5 +1,34 @@
 {
     "errors": {
-        "required": "Dieses Feld muss ausgefüllt werden!"
+        "required": "Dieses Feld muss ausgefüllt werden!",
+        "error": "Fehler"
+    },
+    "general": {
+        "logout": "Abmelden",
+        "dashboard": "Dashboard",
+        "assignments": "Aufgaben",
+        "calendar": "Kalender",
+        "classes": "Fächer",
+        "name": "Name",
+        "password": "Passwort",
+        "success": "Erfolg",
+        "administration": "Administration",
+        "users": "Benutzer",
+        "settings": "Einstellungen"
+    },
+    "components": {
+        "navbar": {
+            "actions": {
+                "info": "/ oder @ eingeben, um eine Liste der Befehle anzuzeigen",
+                "placeholder": "Suchen oder Befehl eingeben"
+            }
+        }
+    },
+    "pages": {
+        "login": {
+            "domain": "Domain",
+            "rememberMe": "Eingeloggt bleiben",
+            "login": "Login"
+        }
     }
 }
