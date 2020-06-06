@@ -50,7 +50,6 @@ export class UsersComponent {
     }
 
     public saveUser(user: User): void {
-        console.log(user);
         this.remoteService.post(`admin/users/${user.id}`, { name: user.username, role: user.role, grade: user.grade.id }).subscribe((data) => {
             if (data && data.success) {
                 this.toastService.success("Benutzer geändert");
