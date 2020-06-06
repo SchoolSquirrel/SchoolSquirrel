@@ -5,7 +5,7 @@ import { Grade } from "../entity/Grade";
 class GradeController {
     public static listAll = async (req: Request, res: Response) => {
         const gradeRepository = getRepository(Grade);
-        const grades = await gradeRepository.find();
+        const grades = await gradeRepository.find({ relations: ["users"]});
         res.send(grades);
     }
 

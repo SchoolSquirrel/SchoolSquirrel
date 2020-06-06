@@ -25,6 +25,10 @@ export class UsersComponent {
         });
         this.remoteService.get("admin/grades").subscribe((data: Grade[]) => {
             this.grades = data;
+            this.grades = this.grades.map((g: any) => {
+                g.usersFormatted = g.users.map((u) => u.username).join(", ");
+                return g;
+            });
         });
     }
 
