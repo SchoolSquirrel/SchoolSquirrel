@@ -15,7 +15,6 @@ import { SidebarComponent } from "./_components/sidebar/sidebar.component";
 import { NavbarComponent } from "./_components/navbar/navbar.component";
 import { AssignmentsComponent } from "./_pages/assignments/assignments.component";
 import { CalendarComponent } from "./_pages/calendar/calendar.component";
-import { FastTranslateService } from "./_services/fast-translate.service";
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     return new TranslateHttpLoader(http);

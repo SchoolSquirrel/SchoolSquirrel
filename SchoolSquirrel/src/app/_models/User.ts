@@ -19,7 +19,7 @@
 /* do not edit */   public username: string;
 /* do not edit */
 /* do not edit */   
-/* do not edit */   public isAdmin: boolean;
+/* do not edit */   public role: "student" | "teacher" | "admin";
 /* do not edit */
 /* do not edit */   
 /* do not edit */   public password: string;

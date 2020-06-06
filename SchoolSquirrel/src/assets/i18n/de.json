@@ -11,7 +11,10 @@
         "classes": "Fächer",
         "name": "Name",
         "password": "Passwort",
-        "success": "Erfolg"
+        "success": "Erfolg",
+        "administration": "Administration",
+        "users": "Benutzer",
+        "settings": "Einstellungen"
     },
     "components": {
         "navbar": {

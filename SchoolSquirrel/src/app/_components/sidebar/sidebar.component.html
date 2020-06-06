@@ -17,7 +17,26 @@
                 </a>
             </li>
         </ul>
-
+        <ng-container *ngIf="authenticationService.currentUser?.role=='admin'">
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                <span>{{"general.admin" | translate}}</span>
+                <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+                    <span data-feather="plus-circle"></span>
+                </a>
+            </h6>
+            <ul class="nav flex-column" routerLinkActive="active">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/admin/users" routerLinkActive="active">
+                        <i class="fa fa-users"> </i> {{"general.users" | translate}}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/admin/settings" routerLinkActive="active">
+                        <i class="fa fa-cogs"> </i> {{"general.settings" | translate}}
+                    </a>
+                </li>
+            </ul>
+        </ng-container>
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
             <span>{{"general.classes" | translate}}</span>
             <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
