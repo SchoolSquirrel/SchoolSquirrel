@@ -16,6 +16,7 @@ import { NavbarComponent } from "./_components/navbar/navbar.component";
 import { AssignmentsComponent } from "./_pages/assignments/assignments.component";
 import { CalendarComponent } from "./_pages/calendar/calendar.component";
 import { UsersComponent } from "./_pages/_admin/users/users.component";
+import { SettingsComponent } from "./_pages/_admin/settings/settings.component";
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     return new TranslateHttpLoader(http);
@@ -32,6 +33,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         AssignmentsComponent,
         CalendarComponent,
         UsersComponent,
+        SettingsComponent,
     ],
     imports: [
         BrowserModule,
