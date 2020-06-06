@@ -7,12 +7,12 @@ import { AuthenticationService } from "../_services/authentication.service";
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-    constructor(private authenticatioNService: AuthenticationService) { }
+    constructor(private authenticationService: AuthenticationService) { }
     public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (this.authenticatioNService.currentUser) {
+        if (this.authenticationService.currentUser) {
             const authReq = req.clone({
                 headers: new HttpHeaders({
-                    authorization: this.authenticatioNService.currentUser?.jwtToken,
+                    authorization: this.authenticationService.currentUser?.jwtToken,
                 }),
             });
             return next.handle(authReq);
