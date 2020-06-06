@@ -21,12 +21,15 @@
 - Bulk import users from CSV / XLSX
 - Increment classes by 1 (new schoolyear)
 - Fix teachers must not have a grade
+- Add login background / illustration
 
 ## Mobile
 - Add NativeScript config (`hrueger`)
 
 ## Electron
-- Add Electron config (`hrueger`)
+- Add window action icons (minimize, maximize and close) to login page
+- Add window action icons to navbar
+- Add tray icon
 
 ## API
 - User Roles
