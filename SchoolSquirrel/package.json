@@ -18,8 +18,11 @@
         "android": "tns run android",
         "ios": "tns run ios",
         "mobile": "tns run",
-        "preview": "tns preview"
+        "preview": "tns preview",
+        "desktop": "wait-on http-get://localhost:4200/ && npm run electron:tsc && electron ./ --serve",
+        "electron:tsc": "tsc main.ts"
     },
+    "main": "main.js",
     "private": true,
     "dependencies": {
         "@angular/animations": "^9.1.9",
@@ -40,6 +43,9 @@
         "@ngx-translate/http-loader": "^4.0.0",
         "bootstrap": "^4.5.0",
         "core-js": "^3.6.5",
+        "electron": "^9.0.2",
+        "electron-reload": "^1.5.0",
+        "electron-splashscreen": "^1.0.0",
         "reflect-metadata": "~0.1.13",
         "rxjs": "~6.5.5",
         "tslib": "2.0.0",
@@ -52,7 +58,7 @@
         "@nativescript/schematics": "^1.0.0",
         "@types/jasmine": "~3.5.10",
         "@types/jasminewd2": "~2.0.8",
-        "@types/node": "~14.0.9",
+        "@types/node": "^12.12.44",
         "@typescript-eslint/eslint-plugin": "^3.1.0",
         "@typescript-eslint/parser": "^3.1.0",
         "codelyzer": "^5.2.2",
@@ -78,6 +84,7 @@
         "protractor": "~7.0.0",
         "ts-node": "~8.10.2",
         "tslint": "~6.1.2",
-        "typescript": "~3.8.3"
+        "typescript": "~3.8.3",
+        "wait-on": "^5.0.0"
     }
 }

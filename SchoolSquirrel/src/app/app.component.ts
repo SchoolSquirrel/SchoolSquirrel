@@ -18,5 +18,9 @@ export class AppComponent {
                 }
             }
         });
+        if (window && window.process && window.process.type) { // isElectron
+            // eslint-disable-next-line
+            window.require("electron").ipcRenderer.send("ready");
+        }
     }
 }
