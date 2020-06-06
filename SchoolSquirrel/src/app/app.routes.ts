@@ -30,10 +30,12 @@ export const routes: Routes = [
     {
         path: "admin/users",
         component: UsersComponent,
+        canActivate: [AuthenticationGuard],
     },
     {
         path: "admin/settings",
         component: SettingsComponent,
+        canActivate: [AuthenticationGuard],
     },
 
     /* *** Authentication routes *** */
