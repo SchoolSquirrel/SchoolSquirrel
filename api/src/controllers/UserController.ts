@@ -10,19 +10,15 @@ class UserController {
     }
 
     public static newUser = async (req: Request, res: Response) => {
-        const { username, pw, pw2, role } = req.body;
-        if (!(username && pw && pw2 && ["student", "teacher", "admin"].includes(role))) {
+        const { name, role } = req.body;
+        if (!(name && ["student", "teacher", "admin"].includes(role))) {
             res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });
-            return;
-        }
-        if (pw != pw2) {
-            res.status(400).send({ message: i18n.__("errors.passwordsDontMatch") });
             return;
         }
 
         const user = new User();
-        user.username = username;
-        user.password = pw;
+        user.username = name;
+        user.password = req.app.locals.config.DEFAULT_PASSWORD;
         user.role = role;
 
         user.hashPassword();
@@ -34,7 +30,7 @@ class UserController {
             res.status(409).send({ message: i18n.__("errors.existingUsername") });
             return;
         }
-        res.status(200).send({ status: true });
+        res.status(200).send({ success: true });
     }
 
     public static editCurrent = async (req: Request, res: Response) => {

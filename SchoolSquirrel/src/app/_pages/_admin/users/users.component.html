@@ -1,3 +1,15 @@
+<form class="form-inline my-5">
+    Neuer Benutzer:
+    <input type="text" class="form-control mb-2 mr-sm-2" name="name" placeholder="Vorname Nachname" [(ngModel)]="newUserName">
+    <select class="form-control" [(ngModel)]="newUserRole" name="role">
+        <option value="student">Schüler</option>
+        <option value="teacher">Lehrer</option>
+        <option value="admin">Admin</option>
+    </select>
+
+    <button type="submit" class="btn btn-primary mb-2" (click)="createUser()">Erstellen</button>
+</form>
+
 <table class="table table-striped">
     <thead>
         <tr>
