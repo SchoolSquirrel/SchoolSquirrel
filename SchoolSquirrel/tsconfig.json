@@ -16,8 +16,7 @@
       "lib": [
           "es2017",
           "dom",
-          "es6",
-          "es2015.iterable"
+          "es6"
       ],
       "baseUrl": ".",
       "paths": {
@@ -29,5 +28,8 @@
               "src/*.ts"
           ]
       }
-   }
+   },
+   "files": [
+    "./src/main.ts"
+  ]
 }
