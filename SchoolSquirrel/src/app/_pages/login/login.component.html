@@ -2,28 +2,28 @@
 
     <h3 class="text-center mb-5">SchoolSquirrel</h3>
     <div class="form-label-group" [class.d-none]="autoDetectDomain">
-        <input type="url" id="inputDomain" class="form-control" placeholder="Domain" formControlName="domain" required autofocus [class.is-invalid]="submitted && loginForm.controls.domain.invalid" [class.is-valid]="loginForm.controls.domain.valid">
-        <label for="inputDomain">Domain</label>
+        <input type="url" id="inputDomain" class="form-control" [placeholder]="'pages.login.domain' | translate" formControlName="domain" required autofocus [class.is-invalid]="submitted && loginForm.controls.domain.invalid" [class.is-valid]="loginForm.controls.domain.valid">
+        <label for="inputDomain">{{"pages.login.domain" | translate}}</label>
         <div class="invalid-feedback">{{"errors.required" | translate}}</div>
     </div>
 
     <div class="form-label-group">
-        <input type="text" id="inputName" class="form-control" placeholder="Name" formControlName="name" required [class.is-invalid]="submitted && loginForm.controls.name.invalid" [class.is-valid]="loginForm.controls.name.valid">
-        <label for="inputName">Name</label>
+        <input type="text" id="inputName" class="form-control" [placeholder]="'general.name' | translate" formControlName="name" required [class.is-invalid]="submitted && loginForm.controls.name.invalid" [class.is-valid]="loginForm.controls.name.valid">
+        <label for="inputName">{{"general.name" | translate}}</label>
         <div class="invalid-feedback">{{"errors.required" | translate}}</div>
     </div>
 
     <div class="form-label-group">
-        <input type="password" id="inputPassword" class="form-control" formControlName="password" placeholder="Passwort" required [class.is-invalid]="submitted && loginForm.controls.password.invalid" [class.is-valid]="loginForm.controls.password.valid">
-        <label for="inputPassword">Passwort</label>
+        <input type="password" id="inputPassword" class="form-control" formControlName="password" [placeholder]="'general.password' | translate" required [class.is-invalid]="submitted && loginForm.controls.password.invalid" [class.is-valid]="loginForm.controls.password.valid">
+        <label for="inputPassword">{{"general.password" | translate}}</label>
         <div class="invalid-feedback">{{"errors.required" | translate}}</div>
     </div>
 
     <div class="custom-control custom-checkbox mb-4">
         <input type="checkbox" class="custom-control-input" id="rememberMe" formControlName="rememberMe">
-        <label class="custom-control-label" for="rememberMe">Eingeloggt bleiben</label>
+        <label class="custom-control-label" for="rememberMe">{{"pages.login.rememberMe" | translate}}</label>
     </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="loading">Login <span *ngIf="loading"
+    <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="loading">{{"pages.login.login" | translate}} <span *ngIf="loading"
             class="spinner-border spinner-border-sm mb-1"></span></button>
 </form>
 

@@ -1,9 +1,9 @@
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
     <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">SchoolSquirrel</a>
-    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <input type="text" #actionInput (focus)="inputFocused = true; openTypeahead(actionInput)" (blur)="inputFocused = false" [placeholder]="inputFocused ? '/ oder @ eingeben, um eine Liste der Befehle anzuzeigen' : 'Suchen oder Befehl eingeben'" class="form-control form-control-dark w-100"
+    <input type="text" #actionInput (focus)="inputFocused = true; openTypeahead(actionInput)" (blur)="inputFocused = false" [placeholder]="(inputFocused ? 'components.navbar.actions.info' : 'components.navbar.actions.placeholder') | translate" class="form-control form-control-dark w-100"
         [(ngModel)]="actionValue" [ngbTypeahead]="action" [resultTemplate]="rt" />
 
     <ng-template #rt let-r="result" let-t="term">
@@ -17,7 +17,7 @@
 
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-            <a class="nav-link" routerLink="" (click)="authenticationService.logout()">Sign out</a>
+            <a class="nav-link" routerLink="" (click)="authenticationService.logout()">{{"general.logout" | translate}}</a>
         </li>
     </ul>
 </nav>
