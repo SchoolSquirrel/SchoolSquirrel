@@ -31,3 +31,8 @@ ngb-typeahead-window {
         color: #000;
     }
 }
+
+input.inline-edit,
+select.inline-edit {
+    width: unset;
+}

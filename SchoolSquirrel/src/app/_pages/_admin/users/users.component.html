@@ -1,28 +1,99 @@
-<form class="form-inline my-5">
-    Neuer Benutzer:
-    <input type="text" class="form-control mb-2 mr-sm-2" name="name" placeholder="Vorname Nachname" [(ngModel)]="newUserName">
-    <select class="form-control" [(ngModel)]="newUserRole" name="role">
-        <option value="student">Schüler</option>
-        <option value="teacher">Lehrer</option>
-        <option value="admin">Admin</option>
-    </select>
+<nav ngbNav #nav="ngbNav" class="nav-tabs mt-3">
+    <ng-container ngbNavItem>
+        <a ngbNavLink>Personen</a>
+        <ng-template ngbNavContent>
+            <form class="form-inline my-3">
+                Neuer Benutzer:
+                <input type="text" class="form-control mb-2 mx-2" name="name" placeholder="Vorname Nachname" [(ngModel)]="newUserName">
+                <select class="form-control mb-2 mr-2" [(ngModel)]="newUserRole" name="role">
+                    <option value="student">Schüler</option>
+                    <option value="teacher">Lehrer</option>
+                    <option value="admin">Admin</option>
+                </select>
 
-    <button type="submit" class="btn btn-primary mb-2" (click)="createUser()">Erstellen</button>
-</form>
+                <button type="submit" class="btn btn-primary mb-2" (click)="createUser()">Erstellen</button>
+            </form>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Role</th>
-            <th>Name</th>
-            <th>Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let user of users">
-            <td>{{user.role}}</td>
-            <td>{{user.username}}</td>
-            <td></td>
-        </tr>
-    </tbody>
-</table>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Role</th>
+                        <th>Name</th>
+                        <th>Grade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users">
+                        <td>
+                            <div *ngIf="user.edit!='role'">
+                                <button class="btn text-secondary" (click)="user.edit = 'role'"><i class="fas fa-pen"></i></button> {{user.role}}
+                            </div>
+                            <div *ngIf="user.edit=='role'">
+                                <select class="form-control inline-edit d-inline" [(ngModel)]="user.role" name="role">
+                                    <option value="student">Schüler</option>
+                                    <option value="teacher">Lehrer</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                                <button class="btn text-success" (click)="user.edit = undefined; saveUser(user)"><i class="fas fa-check"></i></button>
+                            </div>
+                        </td>
+                        <td>
+                            <div *ngIf="user.edit!='username'">
+                                <button class="btn text-secondary" (click)="user.edit = 'username'"><i class="fas fa-pen"></i></button> {{user.username}}
+                            </div>
+                            <div *ngIf="user.edit=='username'">
+                                <input [(ngModel)]="user.username" class="form-control inline-edit d-inline">
+                                <button class="btn text-success" (click)="user.edit = undefined; saveUser(user)"><i class="fas fa-check"></i></button>
+                            </div>
+                        </td>
+                        <td>
+                            <div *ngIf="user.edit!='grade'">
+                                <button class="btn text-secondary" (click)="user.edit = 'grade'"><i class="fas fa-pen"></i></button> {{user.grade?.name}}
+                            </div>
+                            <div *ngIf="user.edit=='grade'">
+                                <select class="form-control inline-edit d-inline" [(ngModel)]="user.grade" name="grade">
+                                    <option *ngFor="let grade of grades" [ngValue]="grade" [selected]="grade.id == user.grade?.id">{{grade.name}}</option>
+                                </select>
+                                <button class="btn text-success" (click)="user.edit = undefined; saveUser(user)"><i class="fas fa-check"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-template>
+    </ng-container>
+    <ng-container ngbNavItem>
+        <a ngbNavLink>Klassen</a>
+        <ng-template ngbNavContent>
+            <form class="form-inline my-3">
+                Neue Klasse:
+                <input type="text" class="form-control mb-2 mx-2" name="grade" placeholder="Name (5a, 6b, 7c, ...)" [(ngModel)]="newGradeName">
+                <button type="submit" class="btn btn-primary mb-2" (click)="createGrade()">Erstellen</button>
+            </form>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Schüler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let grade of grades">
+                        <td>{{grade.name}}</td>
+                        <td>{{grade.usersFormatted}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-template>
+    </ng-container>
+    <ng-container ngbNavItem>
+        <a ngbNavLink>Fächer / Kurse</a>
+        <ng-template ngbNavContent>
+
+
+        </ng-template>
+    </ng-container>
+</nav>
+
+<div [ngbNavOutlet]="nav" class="mt-2"></div>
