@@ -7,8 +7,10 @@ import {
     Unique,
     UpdateDateColumn,
     ManyToOne,
+    ManyToMany,
 } from "typeorm";
 import { Grade } from "./Grade";
+import { Course } from "./Course";
 
 @Entity()
 @Unique(["username"])
@@ -39,11 +41,14 @@ export class User {
     @ManyToOne(() => Grade, (grade) => grade.users)
     public grade: Grade;
 
+    @ManyToMany(() => Course, (course) => course.users)
+    public courses: Course[];
+
+    public jwtToken?: string;
+
     public hashPassword() {
         this.password = bcrypt.hashSync(this.password, 8);
     }
-
-    public jwtToken?: string;
 
     public checkIfUnencryptedPasswordIsValid(unencryptedPassword: string) {
         if (unencryptedPassword) {
