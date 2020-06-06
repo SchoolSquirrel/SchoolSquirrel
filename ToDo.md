@@ -22,6 +22,12 @@
 - Increment classes by 1 (new schoolyear)
 - Fix teachers must not have a grade
 
+## Mobile
+- Add NativeScript config (`hrueger`)
+
+## Electron
+- Add Electron config (`hrueger`)
+
 ## API
 - User Roles
 - Courses (`hrueger`)
