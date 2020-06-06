@@ -18,7 +18,7 @@ export class User {
   public username: string;
 
   @Column()
-  public isAdmin: boolean;
+  public role: "student" | "teacher" | "admin";
 
   @Column({select: false})
   public password: string;

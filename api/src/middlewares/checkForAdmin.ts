@@ -16,7 +16,7 @@ export const checkForAdmin = () => {
       res.status(401).send({message: i18n.__("errors.userNotFound"), logout: true});
     }
 
-    if (user && user.isAdmin) {
+    if (user && user.role == "admin") {
       next();
     } else {
       res.status(401).send({message: i18n.__("errors.notAllowed")});

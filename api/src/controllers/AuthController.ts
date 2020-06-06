@@ -33,7 +33,7 @@ class AuthController {
             return;
         }
         const token = jwt.sign(
-            { userId: user.id, username: user.username },
+            { userId: user.id, username: user.username, role: user.role },
             req.app.locals.config.JWT_SECRET,
             { expiresIn: "1h" },
         );
@@ -63,8 +63,8 @@ class AuthController {
             res.status(401).send({ message: i18n.__("errors.unknownError") });
             return;
         }
-        const { userId, username } = jwtPayload;
-        const newToken = jwt.sign({ userId, username }, req.app.locals.config.JWT_SECRET, {
+        const { userId, username, role } = jwtPayload;
+        const newToken = jwt.sign({ userId, username, role }, req.app.locals.config.JWT_SECRET, {
             expiresIn: "1h",
         });
 
@@ -73,6 +73,7 @@ class AuthController {
             user: {
                 id: userId,
                 username,
+                role,
                 jwtToken: newToken,
         } });
     }

@@ -10,8 +10,8 @@ class UserController {
     }
 
     public static newUser = async (req: Request, res: Response) => {
-        const { username, pw, pw2, isAdmin } = req.body;
-        if (!(username && pw && pw2)) {
+        const { username, pw, pw2, role } = req.body;
+        if (!(username && pw && pw2 && ["student", "teacher", "admin"].includes(role))) {
             res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });
             return;
         }
@@ -23,7 +23,7 @@ class UserController {
         const user = new User();
         user.username = username;
         user.password = pw;
-        user.isAdmin = isAdmin ? true : false;
+        user.role = role;
 
         user.hashPassword();
 
