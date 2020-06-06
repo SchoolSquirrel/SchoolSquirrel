@@ -17,16 +17,20 @@
   - Teachers: create
   - Students: see, upload files
   - Directory structure?
-
+- Fix edit user grade no value preselected
+- Bulk import users from CSV / XLSX
+- Increment classes by 1 (new schoolyear)
+- Fix teachers must not have a grade
 
 ## API
 - User Roles
-- Courses / Classes (`hrueger`)
+- Courses (`hrueger`)
 - Messages (private and group)
-- User grades (`hrueger`)
-- Admin can create users and grades (`hrueger`)
 - User Settings
   - Avatar
   - Status
 - Events for Calendar (meetings, due dates of assignments)
 - Assignments
+- Bulk import users from CSV / XLSX
+- Increment classes by 1 (new schoolyear)
+- Fix teachers must not have a grade
