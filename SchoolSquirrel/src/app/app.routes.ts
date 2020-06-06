@@ -5,8 +5,10 @@ import { LoginComponent } from "./_pages/login/login.component";
 import { AuthenticationGuard } from "./_guards/authentication.guard";
 import { AssignmentsComponent } from "./_pages/assignments/assignments.component";
 import { CalendarComponent } from "./_pages/calendar/calendar.component";
+import { UsersComponent } from "./_pages/_admin/users/users.component";
 
 export const routes: Routes = [
+    /* *** Main routes *** */
     {
         path: "home",
         component: HomeComponent,
@@ -22,10 +24,20 @@ export const routes: Routes = [
         component: CalendarComponent,
         canActivate: [AuthenticationGuard],
     },
+
+    /* *** Admin routes *** */
+    {
+        path: "admin/users",
+        component: UsersComponent,
+    },
+
+    /* *** Authentication routes *** */
     {
         path: "login",
         component: LoginComponent,
     },
+
+    /* *** Default routes *** */
     {
         path: "**",
         redirectTo: "/home",
