@@ -7,6 +7,7 @@ import { AssignmentsComponent } from "./_pages/assignments/assignments.component
 import { CalendarComponent } from "./_pages/calendar/calendar.component";
 import { UsersComponent } from "./_pages/_admin/users/users.component";
 import { SettingsComponent } from "./_pages/_admin/settings/settings.component";
+import { AdminGuard } from "./_guards/admin.guard";
 
 export const routes: Routes = [
     /* *** Main routes *** */
@@ -30,12 +31,12 @@ export const routes: Routes = [
     {
         path: "admin/users",
         component: UsersComponent,
-        canActivate: [AuthenticationGuard],
+        canActivate: [AuthenticationGuard, AdminGuard],
     },
     {
         path: "admin/settings",
         component: SettingsComponent,
-        canActivate: [AuthenticationGuard],
+        canActivate: [AuthenticationGuard, AdminGuard],
     },
 
     /* *** Authentication routes *** */
