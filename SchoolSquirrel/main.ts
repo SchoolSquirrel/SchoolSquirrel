@@ -8,6 +8,7 @@ import {
 import { initSplashScreen, OfficeTemplate } from "electron-splashscreen";
 import * as path from "path";
 import * as url from "url";
+import { setup as setupPushReceiver } from "electron-push-receiver";
 
 let win: BrowserWindow;
 const args = process.argv.slice(1);
@@ -25,6 +26,7 @@ function createWindow() {
         minHeight: 500,
         minWidth: 1000,
     });
+    setupPushReceiver(win.webContents);
     if (serve) {
         // eslint-disable-next-line
         require("electron-reload")(__dirname, {
