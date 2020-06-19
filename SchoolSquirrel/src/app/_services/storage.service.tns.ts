@@ -11,7 +11,15 @@ export class StorageService {
     }
 
     public get(key: string): any {
-        return JSON.parse(applicationSettings.getString(key));
+        const data = applicationSettings.getString(key);
+        if (data) {
+            try {
+                return JSON.parse(data);
+            } catch {
+                //
+            }
+        }
+        return undefined;
     }
 
     public remove(key: string): void {

@@ -35,7 +35,7 @@ export class LoginComponent {
             rememberMe: new FormControl(true),
         });
         if (this.autoDetectDomain) {
-            const url = window.location.toString();
+            const url = typeof window !== "undefined" ? window.location.toString() : "";
             if (url.indexOf("localhost:4200") !== -1) { // is dev
                 this.loginForm.controls.domain.setValue("http://localhost:3000");
             } else {
