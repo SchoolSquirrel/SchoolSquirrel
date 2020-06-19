@@ -16,6 +16,7 @@ import { getConfig, setConfig } from "./utils/config";
 import ConfigController from "./controllers/ConfigController";
 import { Grade } from "./entity/Grade";
 import { Course } from "./entity/Course";
+import { Assignment } from "./entity/Assignment";
 
 // write env to config file
 if (!fs.existsSync(globals.configPath)) {
@@ -55,6 +56,7 @@ createConnection({
         User,
         Grade,
         Course,
+        Assignment,
     ],
     host: config.DB_HOST,
     logging: false,
