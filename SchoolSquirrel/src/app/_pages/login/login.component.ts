@@ -55,6 +55,7 @@ export class LoginComponent {
                 this.tryingToAutoLogin = false;
             });
         }
+        this.loginForm.controls.domain.setValue("http://192.168.178:3000");
     }
 
     public onSubmit(): void {

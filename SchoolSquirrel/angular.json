@@ -33,7 +33,11 @@
                         "styles": [
                             "src/styles.scss"
                         ],
-                        "scripts": []
+                        "scripts": [
+                            "./node_modules/jquery/dist/jquery.min.js",
+                            "./src/app/_libs/strophe.min.js",
+                            "./src/app/_libs/strophe.disco.min.js"
+                        ]
                     },
                     "configurations": {
                         "production": {
