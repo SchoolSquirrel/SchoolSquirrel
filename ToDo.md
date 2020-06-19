@@ -22,6 +22,7 @@
 - Increment classes by 1 (new schoolyear)
 - Fix teachers must not have a grade
 - Add login background / illustration
+- Date localization (i18n)
 
 ## Mobile
 - Add NativeScript config (`hrueger`)
