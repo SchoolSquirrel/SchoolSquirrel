@@ -81,3 +81,4 @@ import "@angular/localize/init";
 /** ************************************************************************************************
  * APPLICATION IMPORTS
  */
+import "core-js/es/reflect";

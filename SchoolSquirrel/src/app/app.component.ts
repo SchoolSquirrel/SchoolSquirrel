@@ -10,7 +10,10 @@ import { PushService } from "./_services/push.service";
 })
 export class AppComponent {
     isFullScreenPage: boolean;
-    constructor(private router: Router, private pushService: PushService) {
+    constructor(
+        private router: Router,
+        private pushService: PushService,
+    ) {
         this.router.events.subscribe((r) => {
             if (r instanceof NavigationEnd) {
                 if (r.url.indexOf("login") == -1) {

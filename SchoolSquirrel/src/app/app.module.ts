@@ -1,4 +1,6 @@
-import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
+import {
+    NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA,
+} from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
@@ -22,6 +24,7 @@ import { CalendarComponent } from "./_pages/calendar/calendar.component";
 import { UsersComponent } from "./_pages/_admin/users/users.component";
 import { SettingsComponent } from "./_pages/_admin/settings/settings.component";
 import { JwtInterceptor } from "./_interceptors/jwt.interceptor";
+import { NavbarActionsService } from "./_services/navbar-actions.service";
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     return new TranslateHttpLoader(http);
@@ -74,8 +77,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         EditService,
         ToolbarService,
         ForeignKeyService,
+        { provide: "navbarActionsService", useExisting: NavbarActionsService },
     ],
     bootstrap: [AppComponent],
     schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AppModule { }
+export class AppModule {}

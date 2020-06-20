@@ -1,7 +1,20 @@
 import { Component } from "@angular/core";
 import { RemoteService } from "../../_services/remote.service";
 import { Assignment } from "../../_models/Assignment";
+import { NavbarActions } from "../../_decorators/navbar-actions.decorator";
 
+@NavbarActions([
+    {
+        name: "Assignments",
+        description: "View all your assignments",
+        navigate: true,
+    },
+    {
+        name: "New assignment",
+        description: "Create a new assignment",
+        navigate: true,
+    },
+], "assignments")
 @Component({
     selector: "app-assignments",
     templateUrl: "./assignments.component.html",

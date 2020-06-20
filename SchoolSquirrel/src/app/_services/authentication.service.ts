@@ -6,7 +6,15 @@ import { User } from "../_models/User";
 import { RemoteService } from "./remote.service";
 import { StorageService } from "./storage.service";
 import { NoErrorToastHttpParams } from "../_helpers/noErrorToastHttpParams";
+import { NavbarActions } from "../_decorators/navbar-actions.decorator";
 
+@NavbarActions([
+    {
+        name: "Logout",
+        description: "Logout of SchoolSquirrel",
+        onClick: "logout",
+    },
+])
 @Injectable({
     providedIn: "root",
 })
