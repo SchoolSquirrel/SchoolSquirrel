@@ -5,6 +5,10 @@ import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import {
+    GridModule, PageService, SortService,
+    FilterService, EditService, ToolbarService, ForeignKeyService,
+} from "@syncfusion/ej2-angular-grids";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./_pages/home/home.component";
@@ -51,6 +55,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
             },
             defaultLanguage: "de",
         }),
+        GridModule,
     ],
     providers: [
         {
@@ -63,6 +68,12 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
             useClass: JwtInterceptor,
             multi: true,
         },
+        PageService,
+        SortService,
+        FilterService,
+        EditService,
+        ToolbarService,
+        ForeignKeyService,
     ],
     bootstrap: [AppComponent],
     schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
