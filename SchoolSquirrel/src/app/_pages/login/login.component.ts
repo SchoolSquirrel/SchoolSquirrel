@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { HttpClient } from "@angular/common/http";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { RemoteService } from "../../_services/remote.service";
 import { NoErrorToastHttpParams } from "../../_helpers/noErrorToastHttpParams";
 import { AuthenticationService } from "../../_services/authentication.service";
@@ -27,6 +27,7 @@ export class LoginComponent {
         private authenticationService: AuthenticationService,
         private router: Router,
         private storageService: StorageService,
+        private route: ActivatedRoute,
     ) {
         this.loginForm = new FormGroup({
             domain: new FormControl("", [Validators.required, Validators.pattern(/((http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*))|http(s)?:\/\/localhost/)]),
@@ -50,7 +51,11 @@ export class LoginComponent {
             this.remoteService.setApiUrl(apiUrl);
             this.authenticationService.autoLogin(jwtToken).subscribe((success) => {
                 if (success) {
-                    this.router.navigate(["home"]);
+                    if (this.route.snapshot.queryParams.returnUrl) {
+                        this.router.navigate([this.route.snapshot.queryParams.returnUrl]);
+                    } else {
+                        this.router.navigate(["home"]);
+                    }
                 }
                 this.tryingToAutoLogin = false;
             });
@@ -77,7 +82,11 @@ export class LoginComponent {
                     this.loginForm.controls.rememberMe.value,
                 ).subscribe(() => {
                     this.loading = false;
-                    this.router.navigate(["home"]);
+                    if (this.route.snapshot.queryParams.returnUrl) {
+                        this.router.navigate([this.route.snapshot.queryParams.returnUrl]);
+                    } else {
+                        this.router.navigate(["home"]);
+                    }
                 });
             } else {
                 this.loading = false;
