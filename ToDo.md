@@ -6,8 +6,8 @@
   - Theming (Logo colors?)
 - Navbar
   - Command / Search feature
-    - Service / API for Users
-    - Typeaheadbox as wide as input field
+    - Split commands and other stuff
+    - Do something on click
 - Sidebar
   - List classes (`hrueger`)
 - Calendar

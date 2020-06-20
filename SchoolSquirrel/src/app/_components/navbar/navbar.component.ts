@@ -12,6 +12,7 @@ import { AuthenticationService } from "../../_services/authentication.service";
 export class NavbarComponent {
     public actionValue = "";
     public inputFocused = false;
+    public typeaheadWidth: number;
 
     constructor(
         public authenticationService: AuthenticationService,
@@ -21,6 +22,7 @@ export class NavbarComponent {
     }
 
     public openTypeahead(element: HTMLInputElement): void {
+        this.typeaheadWidth = element.getBoundingClientRect().width - 18;
         element.value = "";
         element.dispatchEvent(new Event("input"));
         element.focus();

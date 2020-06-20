@@ -56,3 +56,7 @@ select.inline-edit {
         height: 100%;
     }
 }
+
+ngb-typeahead-window.dropdown-menu.show {
+    width: min-content;
+}
