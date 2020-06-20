@@ -30,7 +30,8 @@
                     <tr *ngFor="let user of users">
                         <td>
                             <div *ngIf="user.edit!='role'">
-                                <button class="btn text-secondary" (click)="user.edit = 'role'"><i class="fas fa-pen"></i></button> {{user.role}}
+                                <button class="btn text-secondary" (click)="user.edit = 'role'"><i class="fas fa-pen"></i></button>
+                                <i [class]="'fas fa-' + (user.role == 'student' ? 'user-graduate' : user.role == 'teacher' ? 'chalkboard-teacher' : 'user-shield')"></i> {{user.role == "student" ? "Schüler" : user.role == "teacher" ? "Lehrer" : "Admin"}}
                             </div>
                             <div *ngIf="user.edit=='role'">
                                 <select class="form-control inline-edit d-inline" [(ngModel)]="user.role" name="role">
