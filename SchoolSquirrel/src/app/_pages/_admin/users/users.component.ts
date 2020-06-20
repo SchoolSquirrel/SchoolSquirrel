@@ -12,6 +12,7 @@ import { getDropdownFilterParams, getDropdownEditParams } from "../../../_helper
     selector: "app-users",
     templateUrl: "./users.component.html",
     styleUrls: ["./users.component.scss"],
+    host: { style: "height: 100%; display: block" },
 })
 export class UsersComponent {
     public users: User[] = [];

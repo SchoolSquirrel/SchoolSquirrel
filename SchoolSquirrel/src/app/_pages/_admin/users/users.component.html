@@ -1,8 +1,8 @@
-<nav ngbNav #nav="ngbNav" class="nav-tabs mt-3">
+<nav ngbNav #nav="ngbNav" class="nav-tabs pt-3">
     <ng-container ngbNavItem>
         <a ngbNavLink>Personen</a>
-        <ng-template ngbNavContent>
-            <ejs-grid *ngIf="allDataLoaded" [filterOptions]="filterOptions" #usersGrid [dataSource]="users" [allowPaging]="true" [allowSorting]="true" [allowFiltering]="true" [toolbar]="toolbar" [editSettings]="editSettings" (actionComplete)="actionComplete($event)">
+        <ng-template ngbNavContent class="">
+            <ejs-grid height='100%' *ngIf="allDataLoaded" class="h-100" [filterOptions]="filterOptions" #usersGrid [dataSource]="users" [allowPaging]="true" [allowSorting]="true" [allowFiltering]="true" [toolbar]="toolbar" [editSettings]="editSettings" (actionComplete)="actionComplete($event)">
                 <e-columns>
                     <e-column field="role" headerText="Typ" editType="dropdownedit" [filterBarTemplate]='roleFilter' [edit]="roleParams">
                         <ng-template #template let-data>
@@ -50,4 +50,4 @@
     </ng-container>
 </nav>
 
-<div [ngbNavOutlet]="nav" class="mt-2"></div>
+<div [ngbNavOutlet]="nav" class="mt-2 full-height-tab-content"></div>
