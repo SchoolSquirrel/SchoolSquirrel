@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
+import { L10n, setCulture } from "@syncfusion/ej2-base";
 import { NavbarActions } from "../../_decorators/navbar-actions.decorator";
+import { FastTranslateService } from "../../_services/fast-translate.service";
 
 @NavbarActions([
     {
@@ -20,4 +22,12 @@ import { NavbarActions } from "../../_decorators/navbar-actions.decorator";
 })
 export class CalendarComponent {
     public weekFirstDay = 1;
+    constructor(private fts: FastTranslateService) {
+        setCulture("de");
+        (async () => {
+            L10n.load({
+                de: await this.fts.t("libraries"),
+            });
+        })();
+    }
 }
