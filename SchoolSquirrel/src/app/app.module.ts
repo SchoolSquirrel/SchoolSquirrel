@@ -19,6 +19,7 @@ import {
     ScheduleModule, DayService, WeekService, WorkWeekService, MonthService,
     AgendaService, MonthAgendaService, TimelineViewsService, TimelineMonthService,
 } from "@syncfusion/ej2-angular-schedule";
+import { loadCldr } from "@syncfusion/ej2-base";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./_pages/home/home.component";
@@ -35,6 +36,17 @@ import { JwtInterceptor } from "./_interceptors/jwt.interceptor";
 import { NavbarActionsService } from "./_services/navbar-actions.service";
 
 registerLocaleData(localeDe, localeDeExtra);
+declare const require: any;
+loadCldr(
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    require("cldr-data/supplemental/numberingSystems.json"),
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    require("cldr-data/main/de/ca-gregorian.json"),
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    require("cldr-data/main/de/numbers.json"),
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    require("cldr-data/main/de/timeZoneNames.json"),
+);
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     return new TranslateHttpLoader(http);

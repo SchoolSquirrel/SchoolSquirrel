@@ -19,4 +19,5 @@ import { NavbarActions } from "../../_decorators/navbar-actions.decorator";
     styleUrls: ["./calendar.component.scss"],
 })
 export class CalendarComponent {
+    public weekFirstDay = 1;
 }
