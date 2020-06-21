@@ -1,8 +1,8 @@
 <nav ngbNav #nav="ngbNav" class="nav-tabs pt-3">
     <ng-container ngbNavItem>
         <a ngbNavLink>Personen</a>
-        <ng-template ngbNavContent class="">
-            <ejs-grid height='100%' *ngIf="allDataLoaded" class="h-100" [filterOptions]="filterOptions" #usersGrid [dataSource]="users" [allowPaging]="true" [allowSorting]="true" [allowFiltering]="true" [toolbar]="toolbar" [editSettings]="editSettings" (actionComplete)="actionComplete($event)">
+        <ng-template ngbNavContent>
+            <ejs-grid height="100%" *ngIf="allDataLoaded" class="h-100" [filterOptions]="filterOptions" #usersGrid [dataSource]="users" [allowPaging]="true" [allowSorting]="true" [allowFiltering]="true" [toolbar]="toolbar" [editSettings]="editSettings" (actionComplete)="usersActionComplete($event)">
                 <e-columns>
                     <e-column field="role" headerText="Typ" editType="dropdownedit" [filterBarTemplate]='roleFilter' [edit]="roleParams">
                         <ng-template #template let-data>
@@ -19,26 +19,12 @@
     <ng-container ngbNavItem>
         <a ngbNavLink>Klassen</a>
         <ng-template ngbNavContent>
-            <form class="form-inline my-3">
-                Neue Klasse:
-                <input type="text" class="form-control mb-2 mx-2" name="grade" placeholder="Name (5a, 6b, 7c, ...)" [(ngModel)]="newGradeName">
-                <button type="submit" class="btn btn-primary mb-2" (click)="createGrade()">Erstellen</button>
-            </form>
-
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Schüler</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let grade of grades">
-                        <td>{{grade.name}}</td>
-                        <td>{{grade.usersFormatted}}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <ejs-grid height="100%" *ngIf="allDataLoaded" class="h-100" #gradesGrid [dataSource]="grades" [allowPaging]="true" [allowSorting]="true" [allowFiltering]="true" [toolbar]="toolbar" [editSettings]="editSettings" (actionComplete)="gradesActionComplete($event)">
+                <e-columns>
+                    <e-column field="name" headerText="Name"></e-column>
+                    <e-column field="usersFormatted" headerText="Schüler" [allowEditing]="false"></e-column>
+                </e-columns>
+            </ejs-grid>
         </ng-template>
     </ng-container>
     <ng-container ngbNavItem>

@@ -70,7 +70,7 @@ export class UsersComponent {
         }
     } */
 
-    public actionComplete(args: {
+    public usersActionComplete(args: {
         requestType: string; data: { id: any; username: any; role: any; grade: { name: any; }; };
     }): void {
         if (args.requestType === "save") {
@@ -91,7 +91,7 @@ export class UsersComponent {
                     grade: this.getGradeIdFromName(args.data.grade.name),
                 }).subscribe((data) => {
                     if (data && data.success) {
-                        this.toastService.success("Benutzer geändert");
+                        this.toastService.success("Benutzer gespeichert");
                     }
                 });
             }
@@ -99,6 +99,36 @@ export class UsersComponent {
             this.remoteService.delete(`admin/users/${args.data[0].id}`).subscribe((data) => {
                 if (data && data.success) {
                     this.toastService.success("Benutzer gelöscht");
+                }
+            });
+        }
+    }
+
+    public gradesActionComplete(args: {
+        requestType: string; data: { id: any; name: string; };
+    }): void {
+        if (args.requestType === "save") {
+            if (args.data.id) {
+                this.remoteService.post(`admin/grades/${args.data.id}`, {
+                    name: args.data.name,
+                }).subscribe((data) => {
+                    if (data && data.success) {
+                        this.toastService.success("Klasse geändert");
+                    }
+                });
+            } else {
+                this.remoteService.post("admin/grades", {
+                    name: args.data.name,
+                }).subscribe((data) => {
+                    if (data && data.success) {
+                        this.toastService.success("Klasse gespeichert");
+                    }
+                });
+            }
+        } else if (args.requestType == "delete") {
+            this.remoteService.delete(`admin/grades/${args.data[0].id}`).subscribe((data) => {
+                if (data && data.success) {
+                    this.toastService.success("Klasse gelöscht");
                 }
             });
         }
