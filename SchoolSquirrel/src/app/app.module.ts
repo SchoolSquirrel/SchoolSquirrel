@@ -15,6 +15,10 @@ import {
 import localeDe from "@angular/common/locales/de";
 import localeDeExtra from "@angular/common/locales/extra/de";
 import { registerLocaleData } from "@angular/common";
+import {
+    ScheduleModule, DayService, WeekService, WorkWeekService, MonthService,
+    AgendaService, MonthAgendaService, TimelineViewsService, TimelineMonthService,
+} from "@syncfusion/ej2-angular-schedule";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./_pages/home/home.component";
@@ -65,6 +69,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
             defaultLanguage: "de",
         }),
         GridModule,
+        ScheduleModule,
     ],
     providers: [
         {
@@ -84,6 +89,14 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         EditService,
         ToolbarService,
         ForeignKeyService,
+        DayService,
+        WeekService,
+        WorkWeekService,
+        MonthService,
+        AgendaService,
+        MonthAgendaService,
+        TimelineViewsService,
+        TimelineMonthService,
         { provide: "navbarActionsService", useExisting: NavbarActionsService },
     ],
     bootstrap: [AppComponent],

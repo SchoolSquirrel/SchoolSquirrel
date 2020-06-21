@@ -48,6 +48,7 @@
         "@ngx-translate/http-loader": "^5.0.0",
         "@syncfusion/ej2-angular-dropdowns": "^18.1.57",
         "@syncfusion/ej2-angular-grids": "^18.1.57",
+        "@syncfusion/ej2-angular-schedule": "^18.1.56",
         "bootstrap": "^4.5.0",
         "core-js": "^3.6.5",
         "electron": "^9.0.4",
