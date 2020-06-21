@@ -1,5 +1,6 @@
 import {
     NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA,
+    LOCALE_ID,
 } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from "@angular/common/http";
@@ -11,6 +12,9 @@ import {
     GridModule, PageService, SortService,
     FilterService, EditService, ToolbarService, ForeignKeyService,
 } from "@syncfusion/ej2-angular-grids";
+import localeDe from "@angular/common/locales/de";
+import localeDeExtra from "@angular/common/locales/extra/de";
+import { registerLocaleData } from "@angular/common";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./_pages/home/home.component";
@@ -25,6 +29,8 @@ import { UsersComponent } from "./_pages/_admin/users/users.component";
 import { SettingsComponent } from "./_pages/_admin/settings/settings.component";
 import { JwtInterceptor } from "./_interceptors/jwt.interceptor";
 import { NavbarActionsService } from "./_services/navbar-actions.service";
+
+registerLocaleData(localeDe, localeDeExtra);
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     return new TranslateHttpLoader(http);
@@ -71,6 +77,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
             useClass: JwtInterceptor,
             multi: true,
         },
+        { provide: LOCALE_ID, useValue: "de-DE" },
         PageService,
         SortService,
         FilterService,
