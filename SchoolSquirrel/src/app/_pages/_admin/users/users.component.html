@@ -2,7 +2,7 @@
     <ng-container ngbNavItem>
         <a ngbNavLink>Personen</a>
         <ng-template ngbNavContent>
-            <ejs-grid height="100%" *ngIf="allDataLoaded" class="h-100" [filterOptions]="filterOptions" #usersGrid [dataSource]="users" [allowSorting]="true" [allowFiltering]="true" [toolbar]="toolbar" [editSettings]="editSettings" (actionComplete)="usersActionComplete($event)">
+            <ejs-grid height="100%" *ngIf="allDataLoaded" class="h-100" locale="de-DE" [filterOptions]="filterOptions" #usersGrid [dataSource]="users" [allowSorting]="true" [allowFiltering]="true" [toolbar]="toolbar" [editSettings]="editSettings" (actionComplete)="usersActionComplete($event)">
                 <e-columns>
                     <e-column field="role" headerText="Typ" editType="dropdownedit" [filterBarTemplate]='roleFilter' [edit]="roleParams">
                         <ng-template #template let-data>
@@ -11,7 +11,7 @@
                     </e-column>
                     <e-column field="username" headerText="Name"></e-column>
                     <e-column field="grade.name" headerText="Klasse" editType="dropdownedit" [filterBarTemplate]='gradeFilter' [edit]="gradeParams"></e-column>
-                    <e-column field="createdAt" headerText="Hinzugefügt am" type="date" editType="datepickeredit" [allowEditing]="false" [format]="{ type: 'dateTime', format: 'dd.MM.yyyy hh:mm' }"></e-column>
+                    <e-column field="createdAt" headerText="Hinzugefügt am" type="date" [allowEditing]="false" [format]="{ type: 'dateTime', format: 'dd.MM.yyyy hh:mm' }"></e-column>
                 </e-columns>
             </ejs-grid>
         </ng-template>
@@ -19,7 +19,7 @@
     <ng-container ngbNavItem>
         <a ngbNavLink>Klassen</a>
         <ng-template ngbNavContent>
-            <ejs-grid height="100%" *ngIf="allDataLoaded" class="h-100" #gradesGrid [dataSource]="grades" [allowSorting]="true" [allowFiltering]="true" [toolbar]="toolbar" [editSettings]="editSettings" (actionComplete)="gradesActionComplete($event)">
+            <ejs-grid height="100%" *ngIf="allDataLoaded" class="h-100" locale="de-DE" #gradesGrid [dataSource]="grades" [allowSorting]="true" [allowFiltering]="true" [toolbar]="toolbar" [editSettings]="editSettings" (actionComplete)="gradesActionComplete($event)">
                 <e-columns>
                     <e-column field="name" headerText="Name"></e-column>
                     <e-column field="usersFormatted" headerText="Schüler" [allowEditing]="false"></e-column>

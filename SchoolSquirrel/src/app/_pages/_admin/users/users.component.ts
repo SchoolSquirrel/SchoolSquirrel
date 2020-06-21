@@ -2,9 +2,11 @@ import { Component, ViewChild } from "@angular/core";
 import {
     EditSettingsModel, IEditCell, IFilterUI, GridComponent,
 } from "@syncfusion/ej2-angular-grids";
+import { L10n, setCulture } from "@syncfusion/ej2-base";
 import { User } from "../../../_models/User";
 import { RemoteService } from "../../../_services/remote.service";
 import { ToastService } from "../../../_services/toast.service";
+import { FastTranslateService } from "../../../_services/fast-translate.service";
 import { Grade } from "../../../_models/Grade";
 import { getDropdownFilterParams, getDropdownEditParams } from "../../../_helpers/gridFilterUI";
 
@@ -37,7 +39,18 @@ export class UsersComponent {
     public filterOptions: { columns: [{ field: "username", matchCase: true, operator: "contains" }] };
     public allDataLoaded = false;
 
-    constructor(private remoteService: RemoteService, private toastService: ToastService) { }
+    constructor(
+        private remoteService: RemoteService,
+        private toastService: ToastService,
+        private fts: FastTranslateService,
+    ) {
+        setCulture("de-DE");
+        (async () => {
+            L10n.load({
+                "de-DE": await this.fts.t("libraries"),
+            });
+        })();
+    }
 
     public ngOnInit(): void {
         this.remoteService.get("admin/users").subscribe((data: User[]) => {
