@@ -20,9 +20,6 @@
         <ng-container *ngIf="authenticationService.currentUser?.role=='admin'">
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                 <span>{{"general.admin" | translate}}</span>
-                <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-                    <span data-feather="plus-circle"></span>
-                </a>
             </h6>
             <ul class="nav flex-column" routerLinkActive="active">
                 <li class="nav-item">
@@ -38,9 +35,9 @@
             </ul>
         </ng-container>
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-            <span>{{"general.classes" | translate}}</span>
-            <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-                <span data-feather="plus-circle"></span>
+            <span>{{"general.courses" | translate}} </span>
+            <a class="btn d-flex align-items-center text-muted" routerLink="/courses/new">
+                <i class="fas fa-plus-circle"></i>
             </a>
         </h6>
         <ul class="nav flex-column mb-2">
