@@ -21,7 +21,7 @@ import {
 } from "@syncfusion/ej2-angular-schedule";
 import { loadCldr } from "@syncfusion/ej2-base";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
-import { MatFormField } from "@angular/material/form-field";
+import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatChipsModule } from "@angular/material/chips";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { AppComponent } from "./app.component";
@@ -91,7 +91,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         GridModule,
         ScheduleModule,
         NoopAnimationsModule,
-        MatFormField,
+        MatFormFieldModule,
         MatChipsModule,
         MatAutocompleteModule,
     ],
