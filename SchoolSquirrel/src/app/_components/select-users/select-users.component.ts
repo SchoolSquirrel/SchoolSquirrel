@@ -1,5 +1,5 @@
 import {
-    Component, OnInit, ViewChild, ElementRef,
+    Component, ViewChild, ElementRef,
 } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { Observable } from "rxjs";
