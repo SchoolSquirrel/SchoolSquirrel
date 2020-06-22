@@ -5,7 +5,7 @@ import { Injectable } from "@angular/core";
 export class FastTranslateService {
     constructor(private translateService: TranslateService) { }
 
-    public async t(key: string): Promise<string> {
+    public async t(key: string): Promise<string | {[key: string]: string}> {
         return this.translateService.get(key).toPromise();
     }
 }

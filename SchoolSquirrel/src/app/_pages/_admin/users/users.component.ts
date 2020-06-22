@@ -1,23 +1,56 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
+import {
+    EditSettingsModel, IEditCell, IFilterUI, GridComponent,
+} from "@syncfusion/ej2-angular-grids";
+import { L10n, setCulture } from "@syncfusion/ej2-base";
 import { User } from "../../../_models/User";
 import { RemoteService } from "../../../_services/remote.service";
 import { ToastService } from "../../../_services/toast.service";
+import { FastTranslateService } from "../../../_services/fast-translate.service";
 import { Grade } from "../../../_models/Grade";
+import { getDropdownFilterParams, getDropdownEditParams } from "../../../_helpers/gridFilterUI";
 
 @Component({
     selector: "app-users",
     templateUrl: "./users.component.html",
     styleUrls: ["./users.component.scss"],
+    host: { style: "height: 100%; display: block" },
 })
 export class UsersComponent {
     public users: User[] = [];
     public grades: Grade[] = [];
-    public newUserRole = "student";
-    public newUserName: string;
-    public newGradeName: string;
-    public newUserGradeId = "";
+    public editSettings: EditSettingsModel = {
+        allowEditing: true,
+        allowAdding: true,
+        allowDeleting: true,
+        showDeleteConfirmDialog: true,
+    };
+    @ViewChild("usersGrid") public usersGrid: GridComponent;
+    public toolbar = ["Add", "Edit", "Delete", "Update", "Cancel"];
+    public roles = [
+        { name: "Schüler", value: "student" },
+        { name: "Lehrer", value: "teacher" },
+        { name: "Admin", value: "admin" },
+    ];
+    public roleParams: IEditCell = getDropdownEditParams(this.roles);
+    public roleFilter: IFilterUI = getDropdownFilterParams(this.roles, "role", () => this.usersGrid);
+    public gradeParams: IEditCell;
+    public gradeFilter: IFilterUI;
+    public filterOptions: { columns: [{ field: "username", matchCase: true, operator: "contains" }] };
+    public allDataLoaded = false;
 
-    constructor(private remoteService: RemoteService, private toastService: ToastService) { }
+    constructor(
+        private remoteService: RemoteService,
+        private toastService: ToastService,
+        private fts: FastTranslateService,
+    ) {
+        setCulture("de-DE");
+        (async () => {
+            L10n.load({
+                "de-DE": await this.fts.t("libraries"),
+            });
+        })();
+    }
 
     public ngOnInit(): void {
         this.remoteService.get("admin/users").subscribe((data: User[]) => {
@@ -29,36 +62,92 @@ export class UsersComponent {
                 g.usersFormatted = g.users.map((u) => u.username).join(", ");
                 return g;
             });
+
+            this.gradeParams = getDropdownEditParams(
+                this.grades.map((g) => ({ name: g.name, value: g.name })),
+            );
+            this.gradeFilter = getDropdownFilterParams(this.grades.map((g) => ({ name: g.name, value: g.name })), "grade.name", () => this.usersGrid);
+            this.allDataLoaded = true;
         });
     }
 
-    public createUser(): void {
-        if (this.newUserName && this.newUserRole && this.newUserGradeId) {
-            this.remoteService.post("admin/users", { name: this.newUserName, role: this.newUserRole, grade: this.newUserGradeId }).subscribe((data) => {
-                if (data && data.success) {
-                    this.ngOnInit();
-                    this.toastService.success("Benutzer erstellt");
-                }
-            });
-        }
-    }
-
-    public createGrade(): void {
+    /* public createGrade(): void {
         if (this.newGradeName) {
-            this.remoteService.post("admin/grades", { name: this.newGradeName }).subscribe((data) => {
+            this.remoteService.post("admin/grades",
+            { name: this.newGradeName }).subscribe((data) => {
                 if (data && data.success) {
                     this.ngOnInit();
                     this.toastService.success("Klasse erstellt");
                 }
             });
         }
+    } */
+
+    public usersActionComplete(args: {
+        requestType: string; data: { id: any; username: any; role: any; grade: { name: any; }; };
+    }): void {
+        if (args.requestType === "save") {
+            if (args.data.id) {
+                this.remoteService.post(`admin/users/${args.data.id}`, {
+                    name: args.data.username,
+                    role: args.data.role,
+                    grade: this.getGradeIdFromName(args.data.grade.name),
+                }).subscribe((data) => {
+                    if (data && data.success) {
+                        this.toastService.success("Benutzer geändert");
+                    }
+                });
+            } else {
+                this.remoteService.post("admin/users", {
+                    name: args.data.username,
+                    role: args.data.role,
+                    grade: this.getGradeIdFromName(args.data.grade.name),
+                }).subscribe((data) => {
+                    if (data && data.success) {
+                        this.toastService.success("Benutzer gespeichert");
+                    }
+                });
+            }
+        } else if (args.requestType == "delete") {
+            this.remoteService.delete(`admin/users/${args.data[0].id}`).subscribe((data) => {
+                if (data && data.success) {
+                    this.toastService.success("Benutzer gelöscht");
+                }
+            });
+        }
     }
 
-    public saveUser(user: User): void {
-        this.remoteService.post(`admin/users/${user.id}`, { name: user.username, role: user.role, grade: user.grade.id }).subscribe((data) => {
-            if (data && data.success) {
-                this.toastService.success("Benutzer geändert");
+    public gradesActionComplete(args: {
+        requestType: string; data: { id: any; name: string; };
+    }): void {
+        if (args.requestType === "save") {
+            if (args.data.id) {
+                this.remoteService.post(`admin/grades/${args.data.id}`, {
+                    name: args.data.name,
+                }).subscribe((data) => {
+                    if (data && data.success) {
+                        this.toastService.success("Klasse geändert");
+                    }
+                });
+            } else {
+                this.remoteService.post("admin/grades", {
+                    name: args.data.name,
+                }).subscribe((data) => {
+                    if (data && data.success) {
+                        this.toastService.success("Klasse gespeichert");
+                    }
+                });
             }
-        });
+        } else if (args.requestType == "delete") {
+            this.remoteService.delete(`admin/grades/${args.data[0].id}`).subscribe((data) => {
+                if (data && data.success) {
+                    this.toastService.success("Klasse gelöscht");
+                }
+            });
+        }
+    }
+
+    private getGradeIdFromName(name: any): any {
+        return this.grades.filter((g) => g.name == name)[0].id;
     }
 }

@@ -7,7 +7,7 @@
         [(ngModel)]="actionValue" [ngbTypeahead]="action" [resultTemplate]="rt" />
 
     <ng-template #rt let-r="result" let-t="term">
-        <div class="row">
+        <div class="row" [style.width]="typeaheadWidth + 'px'">
             <div class="col">
                 <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
             </div>

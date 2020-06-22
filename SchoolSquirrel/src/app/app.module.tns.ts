@@ -13,6 +13,8 @@ import { SettingsComponent } from "./_pages/_admin/settings/settings.component";
 import { NavbarComponent } from "./_components/navbar/navbar.component";
 import { SidebarComponent } from "./_components/sidebar/sidebar.component";
 import { ToastComponent } from "./_components/toast/toast.component";
+import { CoursesComponent } from "./_pages/courses/courses.component";
+import { SelectUsersComponent } from "./_components/select-users/select-users.component";
 
 @NgModule({
     declarations: [
@@ -26,6 +28,8 @@ import { ToastComponent } from "./_components/toast/toast.component";
         CalendarComponent,
         UsersComponent,
         SettingsComponent,
+        CoursesComponent,
+        SelectUsersComponent,
     ],
     imports: [
         ReactiveFormsModule,

@@ -6,10 +6,10 @@
   - Theming (Logo colors?)
 - Navbar
   - Command / Search feature
-    - Service / API for Users
-    - Typeaheadbox as wide as input field
+    - Split commands and other stuff
+    - Do something on click
 - Sidebar
-  - List classes (`hrueger`)
+  - List courses (`hrueger`)
 - Calendar
   - Show Syncfusion's scheduler
   - Show events from api
@@ -19,9 +19,10 @@
   - Directory structure?
 - Fix edit user grade no value preselected
 - Bulk import users from CSV / XLSX
-- Increment classes by 1 (new schoolyear)
+- Increment grades by 1 (new schoolyear)
 - Fix teachers must not have a grade
 - Add login background / illustration
+- Date localization (i18n)
 
 ## Mobile
 - Add NativeScript config (`hrueger`)
@@ -41,5 +42,5 @@
 - Events for Calendar (meetings, due dates of assignments)
 - Assignments
 - Bulk import users from CSV / XLSX
-- Increment classes by 1 (new schoolyear)
+- Increment grades by 1 (new schoolyear)
 - Fix teachers must not have a grade

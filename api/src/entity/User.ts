@@ -41,8 +41,11 @@ export class User {
     @ManyToOne(() => Grade, (grade) => grade.users)
     public grade: Grade;
 
-    @ManyToMany(() => Course, (course) => course.users)
+    @ManyToMany(() => Course, (course) => course.students)
     public courses: Course[];
+
+    @ManyToMany(() => Course, (course) => course.teachers)
+    public coursesTeaching: Course[];
 
     public jwtToken?: string;
 

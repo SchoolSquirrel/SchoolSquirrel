@@ -16,6 +16,8 @@ import { getConfig, setConfig } from "./utils/config";
 import ConfigController from "./controllers/ConfigController";
 import { Grade } from "./entity/Grade";
 import { Course } from "./entity/Course";
+import { Assignment } from "./entity/Assignment";
+import { createGrades4684684684651 } from "./migration/4684684684651-createGrades";
 
 // write env to config file
 if (!fs.existsSync(globals.configPath)) {
@@ -55,11 +57,12 @@ createConnection({
         User,
         Grade,
         Course,
+        Assignment,
     ],
     host: config.DB_HOST,
     logging: false,
     // List all migrations here
-    migrations: [createAdminUser1574018391679],
+    migrations: [createAdminUser1574018391679, createGrades4684684684651],
     migrationsRun: true,
     password: config.DB_PASSWORD,
     port: toInt(config.DB_PORT),

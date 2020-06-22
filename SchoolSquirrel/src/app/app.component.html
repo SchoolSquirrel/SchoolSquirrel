@@ -5,7 +5,7 @@
         <app-sidebar *ngIf="!isFullScreenPage"></app-sidebar>
 
         <main role="main" class="col" [class.col-12]="isFullScreenPage" [class.offset-lg-2]="!isFullScreenPage" [class.offset-md-3]="!isFullScreenPage">
-            <router-outlet></router-outlet>
+            <router-outlet class="h-100"></router-outlet>
         </main>
     </div>
 </div>

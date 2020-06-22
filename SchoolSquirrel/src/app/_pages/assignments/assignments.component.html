@@ -1,4 +1,21 @@
 <h1>Assignments</h1>
-<div class="alert alert-info">
-    ToDo
+<div>
+    <input class="form-control" [(ngModel)]="newTitle" placeholder="Title">
+    <input class="form-control" [(ngModel)]="newContent" placeholder="Content">
+    <button class="btn btn-outline-primary" (click)="newAssignment()">Create</button>
 </div>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Content</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let assignment of assignments" class="cursor-pointer" (click)="viewAssignment(assignment)">
+            <td>{{assignment.title}}</td>
+            <td>{{assignment.content}}</td>
+        </tr>
+    </tbody>
+</table>

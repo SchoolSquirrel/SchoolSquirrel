@@ -1,25 +1,8 @@
 import { Component } from "@angular/core";
 import { debounceTime, map } from "rxjs/operators";
 import { Observable } from "rxjs";
+import { NavbarActionsService } from "../../_services/navbar-actions.service";
 import { AuthenticationService } from "../../_services/authentication.service";
-
-const actions: {
-    name: string;
-    description: string;
-}[] = [
-    {
-        name: "Call...",
-        description: "Call a user",
-    },
-    {
-        name: "Offline",
-        description: "Set your status to offline",
-    },
-    {
-        name: "Online",
-        description: "Set your status to online",
-    },
-];
 
 @Component({
     selector: "app-navbar",
@@ -29,23 +12,34 @@ const actions: {
 export class NavbarComponent {
     public actionValue = "";
     public inputFocused = false;
+    public typeaheadWidth: number;
 
-    constructor(public authenticationService: AuthenticationService) {}
+    constructor(
+        public authenticationService: AuthenticationService,
+        private navbarActionsService: NavbarActionsService,
+    ) {
+        this.action = this.action.bind(this);
+    }
 
     public openTypeahead(element: HTMLInputElement): void {
+        this.typeaheadWidth = element.getBoundingClientRect().width - 18;
         element.value = "";
         element.dispatchEvent(new Event("input"));
         element.focus();
     }
 
-    public action(text$: Observable<string>): Observable<any[]> {
-        return text$.pipe(
+    public action(inputText: Observable<string>): any {
+        return inputText.pipe(
             debounceTime(200),
-            map((term) => (term === ""
-                ? actions
-                : actions.filter(
-                    (v) => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1,
-                ).slice(0, 10))),
+            map((term) => this.search(term).slice(0, 10)),
         );
+    }
+
+    public search(term: string): any[] {
+        return (term === ""
+            ? this.navbarActionsService.getNavbarActions()
+            : this.navbarActionsService.getNavbarActions().filter(
+                (v) => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1,
+            ));
     }
 }
