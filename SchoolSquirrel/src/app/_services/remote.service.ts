@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { StorageService } from "./storage.service";
 
 @Injectable({
@@ -17,11 +17,14 @@ export class RemoteService {
     }
 
     public get(url: string): Observable<any> {
+        if (!this.apiUrl) {
+            return new Subject();
+        }
         return this.httpClient.get(`${this.apiUrl}/${url}`);
     }
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    public post(url: string, data: {[key: string]: any}, options?: any): Observable<any> {
+    public post(url: string, data: { [key: string]: any }, options?: any): Observable<any> {
         return this.httpClient.post(`${this.apiUrl}/${url}`, data, options);
     }
 
