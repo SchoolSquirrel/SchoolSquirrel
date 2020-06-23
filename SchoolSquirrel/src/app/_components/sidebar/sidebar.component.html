@@ -35,7 +35,7 @@
             </ul>
         </ng-container>
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-            <span>{{"general.courses" | translate}} </span>
+            <a routerLink="/courses" class="text-decoration-none text-secondary">{{"general.courses" | translate}}</a>
             <a class="btn d-flex align-items-center text-muted" routerLink="/courses/new" *ngIf="authenticationService.isTeacher()">
                 <i class="fas fa-plus-circle"></i>
             </a>
