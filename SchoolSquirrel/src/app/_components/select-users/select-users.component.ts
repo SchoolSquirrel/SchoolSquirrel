@@ -1,12 +1,12 @@
 import {
-    Component, ViewChild, ElementRef,
+    Component, ViewChild, ElementRef, Input, Output, EventEmitter,
 } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { Observable } from "rxjs";
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 import { startWith, map } from "rxjs/operators";
-import { MatChipInputEvent } from "@angular/material/chips";
-import { COMMA, ENTER } from "@angular/cdk/keycodes";
+import { User } from "../../_models/User";
+import { RemoteService } from "../../_services/remote.service";
 
 @Component({
     selector: "app-select-users",
@@ -14,59 +14,54 @@ import { COMMA, ENTER } from "@angular/cdk/keycodes";
     styleUrls: ["./select-users.component.css"],
 })
 export class SelectUsersComponent {
-    visible = true;
-    selectable = true;
-    removable = true;
-    separatorKeysCodes: number[] = [ENTER, COMMA];
-    fruitCtrl = new FormControl();
-    filteredFruits: Observable<string[]>;
-    fruits: string[] = ["Lemon"];
-    allFruits: string[] = ["Apple", "Lemon", "Lime", "Orange", "Strawberry"];
+    public separatorKeysCodes: number[] = [];
+    public userCtrl = new FormControl();
+    public filteredUsers: Observable<User[]>;
+    @Input() public placeholder = "";
+    @Input() public users: User[] = [];
+    @Output() public usersChange = new EventEmitter<User[]>();
+    public allUsers: User[] = [];
 
-    @ViewChild("fruitInput") fruitInput: ElementRef<HTMLInputElement>;
+    @ViewChild("userInput") userInput: ElementRef<HTMLInputElement>;
     @ViewChild("auto") matAutocomplete: MatAutocomplete;
 
-    constructor() {
-        this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
+    constructor(private remoteService: RemoteService) {
+        this.filteredUsers = this.userCtrl.valueChanges.pipe(
             startWith(null),
-            map((fruit: string | null) => (fruit ? this._filter(fruit) : this.allFruits.slice())),
+            map((searchTerm: string | null) => (
+                searchTerm ? this._filter(searchTerm) : this.allUsers.slice())),
         );
     }
 
-    add(event: MatChipInputEvent): void {
-        const { input } = event;
-        const { value } = event;
-
-        // Add our fruit
-        if ((value || "").trim()) {
-            this.fruits.push(value.trim());
-        }
-
-        // Reset the input value
-        if (input) {
-            input.value = "";
-        }
-
-        this.fruitCtrl.setValue(null);
+    public ngOnInit(): void {
+        this.remoteService.get("users").subscribe((data) => {
+            if (data) {
+                this.allUsers = data;
+            }
+        });
     }
 
-    remove(fruit: string): void {
-        const index = this.fruits.indexOf(fruit);
+    public remove(user: User): void {
+        const index = this.users.indexOf(user);
 
         if (index >= 0) {
-            this.fruits.splice(index, 1);
+            this.users.splice(index, 1);
         }
+        this.emitNewUsers();
     }
 
-    selected(event: MatAutocompleteSelectedEvent): void {
-        this.fruits.push(event.option.viewValue);
-        this.fruitInput.nativeElement.value = "";
-        this.fruitCtrl.setValue(null);
+    public selected(event: MatAutocompleteSelectedEvent): void {
+        this.users.push(this.allUsers.filter((u) => u.username == event.option.viewValue)[0]);
+        this.userInput.nativeElement.value = "";
+        this.userCtrl.setValue(null);
+        this.emitNewUsers();
     }
 
-    private _filter(value: string): string[] {
-        const filterValue = value.toLowerCase();
+    private _filter(searchTerm: string): User[] {
+        return this.allUsers.filter((u) => u.username.toLowerCase().indexOf(searchTerm) === 0);
+    }
 
-        return this.allFruits.filter((fruit) => fruit.toLowerCase().indexOf(filterValue) === 0);
+    private emitNewUsers() {
+        this.usersChange.emit(this.users);
     }
 }
