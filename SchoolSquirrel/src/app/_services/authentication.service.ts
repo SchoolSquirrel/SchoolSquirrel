@@ -41,7 +41,7 @@ export class AuthenticationService {
         return this.currentUser?.role == "admin";
     }
     public isTeacher(): boolean {
-        return this.currentUser?.role == "teacher";
+        return this.isAdmin() || this.currentUser?.role == "teacher";
     }
     public isStudent(): boolean {
         return this.currentUser?.role == "student";
