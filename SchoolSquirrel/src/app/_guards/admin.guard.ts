@@ -12,11 +12,9 @@ export class AdminGuard implements CanActivate {
     ) { }
 
     public canActivate(): boolean {
-        if (this.authenticationService.currentUser?.role == "admin") {
-            // authorised so return true
+        if (this.authenticationService.isAdmin()) {
             return true;
         }
-
         // user is no admin so redirect to home page
         this.router.navigate(["/home"]);
         return false;

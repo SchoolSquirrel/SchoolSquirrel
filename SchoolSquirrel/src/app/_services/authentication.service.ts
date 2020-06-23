@@ -37,6 +37,16 @@ export class AuthenticationService {
         );
     }
 
+    public isAdmin(): boolean {
+        return this.currentUser?.role == "admin";
+    }
+    public isTeacher(): boolean {
+        return this.currentUser?.role == "teacher";
+    }
+    public isStudent(): boolean {
+        return this.currentUser?.role == "student";
+    }
+
     private loggedIn(user: User, rememberMe: boolean) {
         if (user) {
             this.currentUser = user;
