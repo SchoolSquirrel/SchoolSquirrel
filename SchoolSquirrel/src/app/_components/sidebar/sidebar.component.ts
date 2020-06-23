@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
 import { AuthenticationService } from "../../_services/authentication.service";
+import { RemoteService } from "../../_services/remote.service";
+import { Course } from "../../_models/Course";
 
 @Component({
     selector: "app-sidebar",
@@ -7,5 +9,15 @@ import { AuthenticationService } from "../../_services/authentication.service";
     styleUrls: ["./sidebar.component.scss"],
 })
 export class SidebarComponent {
-    constructor(public authenticationService: AuthenticationService) {}
+    public courses: Course[] = [];
+    constructor(
+        public authenticationService: AuthenticationService,
+        private remoteService: RemoteService,
+    ) { }
+
+    public ngOnInit(): void {
+        this.remoteService.get("courses").subscribe((data) => {
+            this.courses = data;
+        });
+    }
 }
