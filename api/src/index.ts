@@ -18,6 +18,7 @@ import { Grade } from "./entity/Grade";
 import { Course } from "./entity/Course";
 import { Assignment } from "./entity/Assignment";
 import { createGrades4684684684651 } from "./migration/4684684684651-createGrades";
+import { Chat } from "./entity/Chat";
 
 // write env to config file
 if (!fs.existsSync(globals.configPath)) {
@@ -58,6 +59,7 @@ createConnection({
         Grade,
         Course,
         Assignment,
+        Chat,
     ],
     host: config.DB_HOST,
     logging: false,

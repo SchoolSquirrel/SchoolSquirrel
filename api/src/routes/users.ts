@@ -6,6 +6,7 @@ import { checkJwt } from "../middlewares/checkJwt";
 const router = Router();
 
 router.get("/", [checkJwt], UserController.listAll);
+router.get("/:id", [checkJwt], UserController.avatar);
 // router.post("/", [checkJwt, checkForAdmin()], UserController.newUser);
 // router.post("/editCurrent", [checkJwt], UserController.editCurrent);
 // router.delete("/:id([0-9]+)", [checkJwt, checkForAdmin()], UserController.deleteUser);

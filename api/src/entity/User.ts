@@ -11,6 +11,7 @@ import {
 } from "typeorm";
 import { Grade } from "./Grade";
 import { Course } from "./Course";
+import { Chat } from "./Chat";
 
 @Entity()
 @Unique(["username"])
@@ -46,6 +47,9 @@ export class User {
 
     @ManyToMany(() => Course, (course) => course.teachers)
     public coursesTeaching: Course[];
+
+    @ManyToMany(() => Chat, (chat) => chat.users)
+    public chats: Chat[];
 
     public jwtToken?: string;
 
