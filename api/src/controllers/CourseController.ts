@@ -10,6 +10,12 @@ class CourseController {
         res.send(courses);
     }
 
+    public static getCourse = async (req: Request, res: Response) => {
+        const courseRepository = getRepository(Course);
+        const course = await courseRepository.findOne(req.params.id, { relations: ["students", "teachers"]});
+        res.send(course);
+    }
+
     public static newCourse = async (req: Request, res: Response) => {
         const { name, users }: {name: string, users: number[]} = req.body;
         if (!(name && users && users.length)) {
