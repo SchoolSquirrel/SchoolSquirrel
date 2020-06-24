@@ -1,1 +1,13 @@
-<p>chat works!</p>
+<div class="row h-100">
+    <div class="col-3 h-100 overflow-auto border-right border-secondary">
+        <div *ngFor="let chat of chats">
+            {{chat.name}}
+        </div>
+        <div *ngIf="!chats || chats.length == 0">
+            No chats...
+        </div>
+    </div>
+    <div class="col-9">
+        Main
+    </div>
+</div>

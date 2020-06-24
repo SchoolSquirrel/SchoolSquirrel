@@ -10,19 +10,15 @@
 /* do not edit */ import { User } from "./User";
 /* do not edit */ 
 /* do not edit */ 
-/* do not edit */ export class Course {
-/* do not edit */     
-/* do not edit */     public id: number;
+/* do not edit */ export class Chat {
+/* do not edit */   
+/* do not edit */   public id: number;
 /* do not edit */ 
-/* do not edit */     
-/* do not edit */     public name: string;
+/* do not edit */   
+/* do not edit */   public name: string;
 /* do not edit */ 
-/* do not edit */     
-/* do not edit */     
-/* do not edit */     public students: User[];
-/* do not edit */ 
-/* do not edit */     
-/* do not edit */     
-/* do not edit */     public teachers: User[];
+/* do not edit */   
+/* do not edit */   
+/* do not edit */   public users: User[];
 /* do not edit */ }
 /* do not edit */

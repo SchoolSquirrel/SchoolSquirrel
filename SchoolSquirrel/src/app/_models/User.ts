@@ -10,42 +10,50 @@
 /* do not edit */ 
 /* do not edit */ import { Grade } from "./Grade";
 /* do not edit */ import { Course } from "./Course";
-/* do not edit */
+/* do not edit */ import { Chat } from "./Chat";
+/* do not edit */ 
 /* do not edit */ 
 /* do not edit */ 
 /* do not edit */ export class User {
 /* do not edit */     
 /* do not edit */     public id: number;
-/* do not edit */
+/* do not edit */ 
 /* do not edit */     
 /* do not edit */     public username: string;
-/* do not edit */
+/* do not edit */ 
 /* do not edit */     
 /* do not edit */     public role: "student" | "teacher" | "admin";
-/* do not edit */
+/* do not edit */ 
 /* do not edit */     
 /* do not edit */     public password: string;
-/* do not edit */
+/* do not edit */ 
 /* do not edit */     
 /* do not edit */     public passwordResetToken: string;
-/* do not edit */
+/* do not edit */ 
 /* do not edit */     
 /* do not edit */     
 /* do not edit */     public createdAt: Date;
-/* do not edit */
+/* do not edit */ 
 /* do not edit */     
 /* do not edit */     
 /* do not edit */     public updatedAt: Date;
-/* do not edit */
+/* do not edit */ 
 /* do not edit */     
 /* do not edit */     public grade: Grade;
-/* do not edit */
+/* do not edit */ 
 /* do not edit */     
 /* do not edit */     public courses: Course[];
-/* do not edit */
-/* do not edit */     public jwtToken?: string;
-/* do not edit */
+/* do not edit */ 
 /* do not edit */     
-/* do not edit */
+/* do not edit */     public coursesTeaching: Course[];
+/* do not edit */ 
+/* do not edit */     
+/* do not edit */     public chats: Chat[];
+/* do not edit */ 
+/* do not edit */     public jwtToken?: string;
+/* do not edit */ 
+/* do not edit */     
+/* do not edit */ 
 /* do not edit */     
 /* do not edit */ }
+/* do not edit */
