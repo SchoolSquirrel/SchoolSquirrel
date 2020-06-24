@@ -3,11 +3,22 @@ import * as i18n from "i18n";
 import { getRepository } from "typeorm";
 import { User } from "../entity/User";
 import { Grade } from "../entity/Grade";
+import Avatars from "@dicebear/avatars";
+import initialsSprites from "@dicebear/avatars-initials-sprites";
+
+const avatars = new Avatars(initialsSprites, {});
+
 class UserController {
     public static listAll = async (req: Request, res: Response) => {
         const userRepository = getRepository(User);
         const users = await userRepository.find({relations: ["grade"]});
         res.send(users);
+    }
+
+    public static avatar = async (req: Request, res: Response) => {
+        const userRepository = getRepository(User);
+        const user = await userRepository.findOne(req.params.id);
+        res.send(avatars.create(user.username));
     }
 
     public static newUser = async (req: Request, res: Response) => {
