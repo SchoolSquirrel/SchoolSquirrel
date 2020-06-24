@@ -10,6 +10,7 @@ import { SettingsComponent } from "./_pages/_admin/settings/settings.component";
 import { AdminGuard } from "./_guards/admin.guard";
 import { TeacherGuard } from "./_guards/teacher.guard";
 import { CoursesComponent } from "./_pages/courses/courses.component";
+import { CourseComponent } from "./_pages/course/course.component";
 
 export const routes: Routes = [
     /* *** Main routes *** */
@@ -37,6 +38,11 @@ export const routes: Routes = [
         path: "courses/new",
         component: CoursesComponent,
         canActivate: [AuthenticationGuard, TeacherGuard],
+    },
+    {
+        path: "courses/:id",
+        component: CourseComponent,
+        canActivate: [AuthenticationGuard],
     },
 
     /* *** Admin routes *** */

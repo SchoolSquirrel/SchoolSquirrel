@@ -1,0 +1,6 @@
+<div *ngIf="course">
+    <h1>{{course.name}}</h1>
+    <pre>{{course | json}}</pre>
+</div>
+
+<app-full-page-loading *ngIf="!course"></app-full-page-loading>

@@ -15,6 +15,7 @@ import { SidebarComponent } from "./_components/sidebar/sidebar.component";
 import { ToastComponent } from "./_components/toast/toast.component";
 import { CoursesComponent } from "./_pages/courses/courses.component";
 import { SelectUsersComponent } from "./_components/select-users/select-users.component";
+import { CourseComponent } from "./_pages/course/course.component";
 import { FullPageLoadingComponent } from "./_components/full-page-loading/full-page-loading.component";
 
 @NgModule({
@@ -31,6 +32,7 @@ import { FullPageLoadingComponent } from "./_components/full-page-loading/full-p
         SettingsComponent,
         CoursesComponent,
         SelectUsersComponent,
+        CourseComponent,
         FullPageLoadingComponent,
     ],
     imports: [
