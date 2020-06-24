@@ -41,6 +41,7 @@ import { NavbarActionsService } from "./_services/navbar-actions.service";
 import { CoursesComponent } from "./_pages/courses/courses.component";
 import { SelectUsersComponent } from "./_components/select-users/select-users.component";
 import { AppRoutingModule } from "./app-routing.module";
+import { FullPageLoadingComponent } from "./_components/full-page-loading/full-page-loading.component";
 
 registerLocaleData(localeDe, localeDeExtra);
 declare const require: any;
@@ -73,6 +74,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         SettingsComponent,
         CoursesComponent,
         SelectUsersComponent,
+        FullPageLoadingComponent,
     ],
     imports: [
         BrowserModule,
