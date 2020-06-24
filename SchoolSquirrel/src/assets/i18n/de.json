@@ -14,7 +14,8 @@
         "success": "Erfolg",
         "administration": "Administration",
         "users": "Benutzer",
-        "settings": "Einstellungen"
+        "settings": "Einstellungen",
+        "chat": "Chat"
     },
     "components": {
         "navbar": {

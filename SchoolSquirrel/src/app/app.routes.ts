@@ -11,6 +11,7 @@ import { AdminGuard } from "./_guards/admin.guard";
 import { TeacherGuard } from "./_guards/teacher.guard";
 import { CoursesComponent } from "./_pages/courses/courses.component";
 import { CourseComponent } from "./_pages/course/course.component";
+import { ChatComponent } from "./_pages/chat/chat.component";
 
 export const routes: Routes = [
     /* *** Main routes *** */
@@ -42,6 +43,16 @@ export const routes: Routes = [
     {
         path: "courses/:id",
         component: CourseComponent,
+        canActivate: [AuthenticationGuard],
+    },
+    {
+        path: "chat",
+        component: ChatComponent,
+        canActivate: [AuthenticationGuard],
+    },
+    {
+        path: "chat/:id",
+        component: ChatComponent,
         canActivate: [AuthenticationGuard],
     },
 

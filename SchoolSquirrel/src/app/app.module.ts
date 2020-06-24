@@ -43,6 +43,7 @@ import { SelectUsersComponent } from "./_components/select-users/select-users.co
 import { AppRoutingModule } from "./app-routing.module";
 import { CourseComponent } from "./_pages/course/course.component";
 import { FullPageLoadingComponent } from "./_components/full-page-loading/full-page-loading.component";
+import { ChatComponent } from "./_pages/chat/chat.component";
 
 registerLocaleData(localeDe, localeDeExtra);
 declare const require: any;
@@ -77,6 +78,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         SelectUsersComponent,
         CourseComponent,
         FullPageLoadingComponent,
+        ChatComponent,
     ],
     imports: [
         BrowserModule,

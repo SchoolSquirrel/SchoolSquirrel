@@ -17,6 +17,7 @@ import { CoursesComponent } from "./_pages/courses/courses.component";
 import { SelectUsersComponent } from "./_components/select-users/select-users.component";
 import { CourseComponent } from "./_pages/course/course.component";
 import { FullPageLoadingComponent } from "./_components/full-page-loading/full-page-loading.component";
+import { ChatComponent } from "./_pages/chat/chat.component";
 
 @NgModule({
     declarations: [
@@ -34,6 +35,7 @@ import { FullPageLoadingComponent } from "./_components/full-page-loading/full-p
         SelectUsersComponent,
         CourseComponent,
         FullPageLoadingComponent,
+        ChatComponent,
     ],
     imports: [
         ReactiveFormsModule,
