@@ -42,6 +42,7 @@
         "@angular/platform-browser": "^9.1.11",
         "@angular/platform-browser-dynamic": "^9.1.11",
         "@angular/router": "^9.1.11",
+        "@danvick/ngx-translate-nativescript-loader": "^2.0.0",
         "@fortawesome/fontawesome-free": "^5.13.1",
         "@nativescript/angular": "^9.0.0",
         "@nativescript/core": "^6.5.7",

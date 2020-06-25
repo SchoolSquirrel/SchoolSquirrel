@@ -1,7 +1,8 @@
 import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { NativeScriptModule, NativeScriptFormsModule, NativeScriptHttpClientModule } from "@nativescript/angular";
 import { ReactiveFormsModule } from "@angular/forms";
-import { TranslateModule } from "@ngx-translate/core";
+import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
+import { NativeScriptLoader } from "@danvick/ngx-translate-nativescript-loader";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./_pages/home/home.component";
@@ -18,6 +19,10 @@ import { SelectUsersComponent } from "./_components/select-users/select-users.co
 import { CourseComponent } from "./_pages/course/course.component";
 import { FullPageLoadingComponent } from "./_components/full-page-loading/full-page-loading.component";
 import { ChatComponent } from "./_pages/chat/chat.component";
+
+export function nativescriptTranslateLoaderFactory(): NativeScriptLoader {
+    return new NativeScriptLoader("./assets/i18n/", ".json");
+}
 
 @NgModule({
     declarations: [
@@ -43,7 +48,13 @@ import { ChatComponent } from "./_pages/chat/chat.component";
         AppRoutingModule,
         NativeScriptFormsModule,
         NativeScriptHttpClientModule,
-        TranslateModule.forRoot(),
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: nativescriptTranslateLoaderFactory,
+            },
+            defaultLanguage: "de",
+        }),
     ],
     providers: [],
     bootstrap: [AppComponent],
