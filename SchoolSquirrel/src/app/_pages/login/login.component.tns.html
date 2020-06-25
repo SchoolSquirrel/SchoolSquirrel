@@ -1,30 +1,27 @@
-<StackLayout>
-    <ActivityIndicator [busy]="true" *ngIf="tryingToAutoLogin"></ActivityIndicator>
-    <Label text="cool"></Label>
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" *ngIf="!tryingToAutoLogin">
+<StackLayout class="fix-statusbar-margin">
+    <ActivityIndicator [busy]="true" *ngIf="tryingToAutoLogin || loading"></ActivityIndicator>
+    <StackLayout [formGroup]="loginForm" class="login-form" *ngIf="!tryingToAutoLogin" [visibility]="loading ? 'collapse' : 'visible'">
+        <Image class="top-img" src="~/assets/logo.png"></Image>
         <Label text="SchoolSquirrel"></Label>
         <StackLayout class="form-label-group" [class.d-none]="autoDetectDomain">
-            <TextField type="url" id="inputDomain" class="form-control" [placeholder]="'pages.login.domain'" formControlName="domain" required autofocus [class.is-invalid]="submitted && loginForm.controls.domain.invalid" [class.is-valid]="loginForm.controls.domain.valid"></TextField>
-            <Label for="inputDomain">{{"pages.login.domain"}}</Label>
-            <Label class="invalid-feedback" [text]="'errors.required'"></Label>
+            <TextField type="url" id="inputDomain" class="form-control" [hint]="'pages.login.domain' | translate" formControlName="domain" required autofocus [class.is-invalid]="submitted && loginForm.controls.domain.invalid" [class.is-valid]="loginForm.controls.domain.valid"></TextField>
+            <Label class="invalid-feedback" *ngIf="submitted && loginForm.controls.domain.invalid" [text]="'errors.required' | translate"></Label>
         </StackLayout>
 
         <StackLayout class="form-label-group">
-            <TextField type="text" id="inputName" class="form-control" [placeholder]="'general.name'" formControlName="name" required [class.is-invalid]="submitted && loginForm.controls.name.invalid" [class.is-valid]="loginForm.controls.name.valid"></TextField>
-            <Label for="inputName">{{"general.name"}}</Label>
-            <Label class="invalid-feedback" [text]="'errors.required'"></Label>
+            <TextField type="text" id="inputName" class="form-control" [hint]="'general.name' | translate" formControlName="name" required [class.is-invalid]="submitted && loginForm.controls.name.invalid" [class.is-valid]="loginForm.controls.name.valid"></TextField>
+            <Label class="invalid-feedback" *ngIf="submitted && loginForm.controls.name.invalid" [text]="'errors.required' | translate"></Label>
         </StackLayout>
 
         <StackLayout class="form-label-group">
-            <TextField type="password" id="inputPassword" class="form-control" formControlName="password" [placeholder]="'general.password'" required [class.is-invalid]="submitted && loginForm.controls.password.invalid" [class.is-valid]="loginForm.controls.password.valid"></TextField>
-            <Label for="inputPassword">{{"general.password"}}</Label>
-            <Label class="invalid-feedback" [text]="'errors.required'"></Label>
+            <TextField type="password" id="inputPassword" class="form-control" formControlName="password" [hint]="'general.password' | translate" required [class.is-invalid]="submitted && loginForm.controls.password.invalid" [class.is-valid]="loginForm.controls.password.valid"></TextField>
+            <Label class="invalid-feedback" *ngIf="submitted && loginForm.controls.password.invalid" [text]="'errors.required' | translate"></Label>
         </StackLayout>
 
         <StackLayout class="custom-control custom-checkbox mb-4">
-            <TextField type="checkbox" class="custom-control-input" id="rememberMe" formControlName="rememberMe"></TextField>
-            <Label class="custom-control-label" for="rememberMe">{{"pages.login.rememberMe"}}</Label>
+            <Switch formControlName="rememberMe"></Switch>
+            <Label class="custom-control-label" [text]="'pages.login.rememberMe' | translate"></Label>
         </StackLayout>
-        <Button class="btn btn-lg btn-primary btn-block" [disabled]="loading" text="'pages.login.login'"></Button>
-    </form>
+        <Button class="btn btn-lg btn-primary btn-block" [disabled]="loading" (tap)="onSubmit()" [text]="'pages.login.login' | translate"></Button>
+    </StackLayout>
 </StackLayout>

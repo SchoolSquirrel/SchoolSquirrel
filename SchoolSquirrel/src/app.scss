@@ -1,3 +1,20 @@
 ActionBar {
     margin-top: 30;
 }
+
+.fix-statusbar-margin {
+    margin-top: 33;
+}
+
+.form-control {
+    &.is-valid {
+        color: rgb(41, 180, 41);
+    }
+    &.is-invalid {
+        color: rgb(231, 57, 34);
+    }
+}
+
+.invalid-feedback {
+    color: rgb(231, 57, 34);
+}
