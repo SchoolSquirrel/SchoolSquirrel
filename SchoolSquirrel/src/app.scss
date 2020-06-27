@@ -1,21 +1,9 @@
-@import "../node_modules/@nativescript/theme/css/sky.css";
+@import "~@nativescript/theme/core";
+@import "~@nativescript/theme/default";
 ActionBar {
     margin-top: 31.5;
 }
 
 .fix-statusbar-margin {
     margin-top: 31.5;
-}
-
-.form-control {
-    &.is-valid {
-        color: rgb(41, 180, 41);
-    }
-    &.is-invalid {
-        color: rgb(231, 57, 34);
-    }
-}
-
-.invalid-feedback {
-    color: rgb(231, 57, 34);
 }
