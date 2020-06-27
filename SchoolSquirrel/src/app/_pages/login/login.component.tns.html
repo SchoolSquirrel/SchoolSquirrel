@@ -14,7 +14,7 @@
         </StackLayout>
 
         <StackLayout class="form-label-group">
-            <TextField type="password" id="inputPassword" class="form-control" formControlName="password" [hint]="'general.password' | translate" required [class.is-invalid]="submitted && loginForm.controls.password.invalid" [class.is-valid]="loginForm.controls.password.valid"></TextField>
+            <TextField type="password" secure="true" id="inputPassword" class="form-control" formControlName="password" [hint]="'general.password' | translate" required [class.is-invalid]="submitted && loginForm.controls.password.invalid" [class.is-valid]="loginForm.controls.password.valid"></TextField>
             <Label class="invalid-feedback" *ngIf="submitted && loginForm.controls.password.invalid" [text]="'errors.required' | translate"></Label>
         </StackLayout>
 
