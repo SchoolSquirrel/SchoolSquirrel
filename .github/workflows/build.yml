@@ -39,3 +39,24 @@ jobs:
     - name: Build
       working-directory: SchoolSquirrel
       run: npm run build
+  build_docker:
+    name: Docker Build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12
+    - name: Install frontend dependencies
+      working-directory: SchoolSquirrel
+      run: npm i
+    - name: Install backend dependencies
+      working-directory: api
+      run: npm i
+    - name: Build
+      working-directory: docker
+      run: sudo bash ./build.sh
+    - name: Deploy to Docker Hub
+      working-directory: docker
+      run: sudo bash ./deploy.sh ${{ secrets.DOCKER_HUB_USERNAME }} ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
