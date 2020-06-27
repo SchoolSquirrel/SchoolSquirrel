@@ -66,8 +66,7 @@ export class LoginComponentCommon {
         this.httpClient.get(`${this.loginForm.controls.domain.value}/config.json`, { params: new NoErrorToastHttpParams(true) }).subscribe((data: any) => {
             this.loading = false;
             if (data && data.apiUrl) {
-                const apiUrl = new URL(data.apiUrl, this.loginForm.controls.domain.value)
-                    .toString();
+                const apiUrl = `${this.loginForm.controls.domain.value}/${data.apiUrl}`;
                 this.storageService.set("apiUrl", apiUrl);
                 this.remoteService.setApiUrl(apiUrl);
                 this.authenticationService.login(
