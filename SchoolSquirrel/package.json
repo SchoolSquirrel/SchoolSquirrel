@@ -1,5 +1,6 @@
 {
     "name": "SchoolSquirrel",
+    "version": "0.0.1",
     "nativescript": {
         "id": "com.schoolsquirrel.SchoolSquirrel",
         "tns-android": {
@@ -9,7 +10,6 @@
             "version": "6.5.1"
         }
     },
-    "version": "0.0.0",
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
