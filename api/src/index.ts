@@ -100,6 +100,7 @@ createConnection({
         // Set route for config.json
         app.use("/config.json", ConfigController.config);
         app.use("/", express.static("/app/dist/frontend"));
+        app.use("*", express.static("/app/dist/frontend/index.html"));
 
         let port = 80;
         if (process.env.NODE_ENV == "development") {
