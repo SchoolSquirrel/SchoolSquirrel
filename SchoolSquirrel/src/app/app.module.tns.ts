@@ -7,6 +7,7 @@ import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { NativeScriptLoader } from "@danvick/ngx-translate-nativescript-loader";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angular";
+import { NativeScriptUICalendarModule } from "nativescript-ui-calendar/angular";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./_pages/home/home.component";
@@ -55,6 +56,7 @@ export function nativescriptTranslateLoaderFactory(): NativeScriptLoader {
         NativeScriptFormsModule,
         NativeScriptHttpClientModule,
         NativeScriptUISideDrawerModule,
+        NativeScriptUICalendarModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
