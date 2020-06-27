@@ -1,1 +1,7 @@
-  <page-router-outlet></page-router-outlet>
+<RadSideDrawer>
+    <GridLayout tkDrawerContent rows="auto, *" class="sidedrawer sidedrawer-left">
+        <app-sidebar></app-sidebar>
+    </GridLayout>
+
+    <page-router-outlet tkMainContent></page-router-outlet>
+</RadSideDrawer>

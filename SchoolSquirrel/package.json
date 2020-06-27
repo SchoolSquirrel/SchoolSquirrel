@@ -61,6 +61,7 @@
         "electron-reload": "^1.5.0",
         "electron-splashscreen": "^1.0.0",
         "nativescript-feedback": "^1.4.0",
+        "nativescript-ui-sidedrawer": "^8.0.1",
         "reflect-metadata": "~0.1.13",
         "rxjs": "~6.5.5",
         "tslib": "2.0.0",

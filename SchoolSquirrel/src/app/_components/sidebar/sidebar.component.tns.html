@@ -1,0 +1,68 @@
+<StackLayout row="0" class="sidedrawer-header fix-statusbar-margin">
+    <Label class="sidedrawer-header-image fas" text="&#xf2bd;"></Label>
+    <Label class="sidedrawer-header-brand" text="User Name"></Label>
+    <Label class="footnote" text="username@mail.com"></Label>
+</StackLayout>
+
+<ScrollView row="1">
+    <StackLayout class="sidedrawer-content">
+        <GridLayout columns="auto, *" class="sidedrawer-list-item" [nsRouterLinkActive]="['active']" [nsRouterLink]="['/home']" (tap)="hideDrawer()">
+            <Label col="0" text="&#xf015;" class="fas icon"></Label>
+            <Label col="1" [text]="'general.dashboard' | translate" class="p-r-10"></Label>
+        </GridLayout>
+
+        <GridLayout columns="auto, *" class="sidedrawer-list-item" [nsRouterLinkActive]="['active']" nsRouterLink="chat" (tap)="hideDrawer()">
+            <Label col="0" text="&#xf086;" class="far icon"></Label>
+            <Label col="1" [text]="'general.chat' | translate" class="p-r-10"></Label>
+        </GridLayout>
+
+        <GridLayout columns="auto, *" class="sidedrawer-list-item" [nsRouterLinkActive]="['active']" nsRouterLink="assignments" (tap)="hideDrawer()">
+            <Label col="0" text="&#xf0ae;" class="fas icon"></Label>
+            <Label col="1" [text]="'general.assignments' | translate" class="p-r-10"></Label>
+        </GridLayout>
+
+        <GridLayout columns="auto, *" class="sidedrawer-list-item" [nsRouterLinkActive]="['active']" nsRouterLink="calendar" (tap)="hideDrawer()">
+            <Label col="0" text="&#xf073;" class="far icon"></Label>
+            <Label col="1" [text]="'general.calendar' | translate" class="p-r-10"></Label>
+        </GridLayout>
+
+        <StackLayout class="hr"></StackLayout>
+
+        <GridLayout columns="auto, *" class="sidedrawer-list-item" [nsRouterLinkActive]="['active']" nsRouterLink="calendar" (tap)="hideDrawer()">
+            <Label col="0" text="&#xf013;" class="fas icon"></Label>
+            <Label col="1" text="Settings" class="p-r-10"></Label>
+        </GridLayout>
+    </StackLayout>
+</ScrollView>
+<!--
+
+
+<ng-container *ngIf="authenticationService.isAdmin()">
+    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+        <span>{{"general.admin" | translate}}</span>
+    </h6>
+
+    <a class="nav-link" routerLink="/admin/users" routerLinkActive="active">
+        <i class="fa fa-users"> </i> {{"general.users" | translate}}
+    </a>
+
+    <a class="nav-link" routerLink="/admin/settings" routerLinkActive="active">
+        <i class="fa fa-cogs"> </i> {{"general.settings" | translate}}
+    </a>
+
+</ng-container>
+
+<a routerLink="/courses" class="text-decoration-none text-secondary">{{"general.courses" | translate}}</a>
+<a class="invisible-btn d-flex align-items-center text-muted" routerLink="/courses/new" *ngIf="authenticationService.isTeacher()">
+    <i class="fas fa-plus-circle"></i>
+</a>
+<ul class="nav flex-column mb-2">
+    <li class="nav-item" *ngFor="let course of courses">
+        <a class="nav-link" [routerLink]="'/courses/' + course.id" routerLinkActive="active">
+                    {{course.name}}
+                </a>
+    </li>
+</ul>
+</div>
+</nav>
+-->
