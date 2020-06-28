@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable, Subject } from "rxjs";
 import { StorageService } from "./storage.service";
+import { AuthenticationService } from "./authentication.service";
 
 @Injectable({
     providedIn: "root",
@@ -14,6 +15,10 @@ export class RemoteService {
 
     public setApiUrl(url: string): void {
         this.apiUrl = url;
+    }
+
+    public getImageUrl(url: string, authService: AuthenticationService): string {
+        return `${this.apiUrl}/${url}?authorization=${authService.currentUser?.jwtToken}`;
     }
 
     public get(url: string): Observable<any> {
