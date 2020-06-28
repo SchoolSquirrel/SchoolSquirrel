@@ -26,6 +26,5 @@ export class LoginComponent extends LoginComponentCommon {
     ) {
         super(httpClient, toastService, remoteService,
             authenticationService, router, storageService, route);
-        this.page.actionBarHidden = true;
     }
 }
