@@ -30,4 +30,8 @@ export class CalendarComponent {
             });
         })();
     }
+
+    public newEvent(): void {
+        //
+    }
 }

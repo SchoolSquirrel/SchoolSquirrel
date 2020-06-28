@@ -1,6 +1,5 @@
-<StackLayout class="fix-statusbar-margin" hideActionBar>
-    <app-navbar [title]="'general.calendar' | translate"></app-navbar>
-    <StackLayout class="">
-        <RadCalendar></RadCalendar>
-    </StackLayout>
-</StackLayout>
+<GridLayout rows="auto, *, auto" columns="*" class="fix-statusbar-margin" hideActionBar>
+    <app-navbar row="0" col="0" [title]="'general.calendar' | translate"></app-navbar>
+    <RadCalendar rowspan="2" row="1" col="0"></RadCalendar>
+    <FAB row="2" col="0" (tap)="newEvent()" text="&#xf067;" class="fab-button fas"></FAB>
+</GridLayout>
