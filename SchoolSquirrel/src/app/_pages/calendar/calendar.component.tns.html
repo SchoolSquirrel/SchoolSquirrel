@@ -1,4 +1,6 @@
-<ActionBar title="Calendar"></ActionBar>
-<StackLayout class="p-20">
-    <RadCalendar></RadCalendar>
+<StackLayout class="fix-statusbar-margin" hideActionBar>
+    <app-navbar [title]="'general.calendar' | translate"></app-navbar>
+    <StackLayout class="">
+        <RadCalendar></RadCalendar>
+    </StackLayout>
 </StackLayout>
