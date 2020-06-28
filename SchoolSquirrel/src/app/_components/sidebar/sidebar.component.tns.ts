@@ -19,8 +19,10 @@ export class SidebarComponent {
     ) { }
 
     public ngOnInit(): void {
-        this.remoteService.get("courses").subscribe((data) => {
-            this.courses = data;
+        this.authenticationService.onLogin.subscribe(() => {
+            this.remoteService.get("courses").subscribe((data) => {
+                this.courses = data;
+            });
         });
     }
 

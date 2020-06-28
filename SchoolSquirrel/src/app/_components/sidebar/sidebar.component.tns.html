@@ -28,11 +28,13 @@
             <Label col="1" [text]="'general.calendar' | translate" class="p-r-10"></Label>
         </GridLayout>
 
-        <StackLayout class="hr"></StackLayout>
+        <StackLayout class="hr">
+            <Label text="Courses"></Label>
+        </StackLayout>
 
-        <GridLayout columns="auto, *" class="sidedrawer-list-item" [nsRouterLinkActive]="['selected']" nsRouterLink="calendar" (tap)="hideDrawer()">
-            <Label col="0" text="&#xf013;" class="fas icon"></Label>
-            <Label col="1" text="Settings" class="p-r-10"></Label>
+        <GridLayout columns="auto, *" *ngFor="let course of courses" class="sidedrawer-list-item" [nsRouterLinkActive]="['selected']" [nsRouterLink]="['courses', course.id]" (tap)="hideDrawer()">
+            <Label col="0" text="&#xf02d;" class="fas icon"></Label>
+            <Label col="1" [text]="course.name" class="p-r-10"></Label>
         </GridLayout>
     </StackLayout>
 </ScrollView>
