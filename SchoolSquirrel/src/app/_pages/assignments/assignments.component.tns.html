@@ -1,6 +1,13 @@
 <StackLayout class="fix-statusbar-margin" hideActionBar>
     <app-navbar [title]="'general.assignments' | translate"></app-navbar>
     <StackLayout class="">
-        <Label text="Assignments"></Label>
+        <ListView [items]="assignments" class="list-group">
+            <ng-template let-item="item">
+                <GridLayout columns="*" rows="auto, auto">
+                    <Label col="0" row="0" [text]="item.title" class="list-group-item h2"></Label>
+                    <Label col="0" row="1" [text]="item.content" class="list-group-item"></Label>
+                </GridLayout>
+            </ng-template>
+        </ListView>
     </StackLayout>
 </StackLayout>
