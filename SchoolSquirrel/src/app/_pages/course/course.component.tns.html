@@ -1,1 +1,7 @@
-<Button text="course works!" class="btn btn-primary"></Button>
+<StackLayout class="fix-statusbar-margin" hideActionBar>
+    <app-navbar [title]="course ? course.name : 'Loading'"></app-navbar>
+    <StackLayout class="" *ngIf="course">
+        <WebView [src]="'<pre>' + (course | json)+ '</pre>'"></WebView>
+    </StackLayout>
+    <app-full-page-loading *ngIf="!course"></app-full-page-loading>
+</StackLayout>
