@@ -5,7 +5,6 @@ import { User } from "../entity/User";
 import { Grade } from "../entity/Grade";
 import Avatars from "@dicebear/avatars";
 import initialsSprites from "@dicebear/avatars-initials-sprites";
-import { svg2png } from "svg-png-converter";
 
 const avatars = new Avatars(initialsSprites, {});
 
@@ -22,12 +21,8 @@ class UserController {
         if (req.params.ext == "svg") {
             res.send(avatars.create(user.username));
         } else {
-            res.contentType("png")
-            res.send(await svg2png({
-                input: avatars.create(user.username, {height: 100, width: 100}),
-                encoding: "buffer",
-                format: "png",
-            }));
+            const parts = user.username.split(" ");
+            res.redirect(`https://eu.ui-avatars.com/api/?name=${parts[0][0]}+${parts[parts.length - 1][0]}`)
         }
     }
 
