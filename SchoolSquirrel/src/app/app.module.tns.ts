@@ -1,7 +1,9 @@
 import {
     NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID,
 } from "@angular/core";
-import { NativeScriptModule, NativeScriptFormsModule, NativeScriptHttpClientModule } from "@nativescript/angular";
+import {
+    NativeScriptModule, NativeScriptFormsModule, NativeScriptHttpClientModule, registerElement,
+} from "@nativescript/angular";
 import { ReactiveFormsModule } from "@angular/forms";
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { NativeScriptLoader } from "@danvick/ngx-translate-nativescript-loader";
@@ -27,6 +29,12 @@ import { ChatComponent } from "./_pages/chat/chat.component";
 import { JwtInterceptor } from "./_interceptors/jwt.interceptor";
 import { ErrorInterceptor } from "./_interceptors/error.interceptor";
 import { HideActionBarDirective } from "./_directives/hideActionBar.directive";
+
+registerElement(
+    "Fab",
+    // eslint-disable-next-line
+    () => require("@nstudio/nativescript-floatingactionbutton").Fab,
+);
 
 export function nativescriptTranslateLoaderFactory(): NativeScriptLoader {
     return new NativeScriptLoader("./assets/i18n/", ".json");
