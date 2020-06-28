@@ -1,5 +1,6 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<ActionBar title="Assignments"></ActionBar>
-<StackLayout class="p-20">
-    <Label text="You're now logged in!" class="h1 text-center" textWrap="true"></Label>
+<StackLayout class="fix-statusbar-margin" hideActionBar>
+    <app-navbar [title]="'general.assignments' | translate"></app-navbar>
+    <StackLayout class="">
+        <Label text="Assignments"></Label>
+    </StackLayout>
 </StackLayout>
