@@ -1,1 +1,5 @@
-/* Add mobile styles for the component here.  */
+.spinner {
+    width: 50;
+    height: 50;
+    margin-top: calc(50% - 50);
+}
