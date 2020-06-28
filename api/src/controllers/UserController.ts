@@ -22,7 +22,7 @@ class UserController {
             res.send(avatars.create(user.username));
         } else {
             const parts = user.username.split(" ");
-            res.redirect(`https://eu.ui-avatars.com/api/?name=${parts[0][0]}+${parts[parts.length - 1][0]}`)
+            res.redirect(`https://eu.ui-avatars.com/api/?name=${parts[0][0]}+${parts[parts.length - 1][0]}&size=512`)
         }
     }
 
