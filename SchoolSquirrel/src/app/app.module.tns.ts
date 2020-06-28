@@ -26,6 +26,7 @@ import { FullPageLoadingComponent } from "./_components/full-page-loading/full-p
 import { ChatComponent } from "./_pages/chat/chat.component";
 import { JwtInterceptor } from "./_interceptors/jwt.interceptor";
 import { ErrorInterceptor } from "./_interceptors/error.interceptor";
+import { HideActionBarDirective } from "./_directives/hideActionBar.directive";
 
 export function nativescriptTranslateLoaderFactory(): NativeScriptLoader {
     return new NativeScriptLoader("./assets/i18n/", ".json");
@@ -48,6 +49,7 @@ export function nativescriptTranslateLoaderFactory(): NativeScriptLoader {
         CourseComponent,
         FullPageLoadingComponent,
         ChatComponent,
+        HideActionBarDirective,
     ],
     imports: [
         ReactiveFormsModule,
