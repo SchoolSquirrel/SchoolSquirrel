@@ -1,5 +1,5 @@
 <StackLayout class="fix-statusbar-margin" hideActionBar>
-    <ActivityIndicator [busy]="true" *ngIf="tryingToAutoLogin || loading"></ActivityIndicator>
+    <app-full-page-loading *ngIf="tryingToAutoLogin || loading"></app-full-page-loading>
     <StackLayout [formGroup]="loginForm" class="nt-form login-form" *ngIf="!tryingToAutoLogin" [visibility]="loading ? 'collapse' : 'visible'">
         <Label class="h1 text-center" text="SchoolSquirrel"></Label>
         <Image class="top-img" src="~/assets/logo.png"></Image>
