@@ -14,4 +14,8 @@ export class NavbarComponent {
     public openSideDrawer(): void {
         (Application.getRootView() as any as RadSideDrawer).showDrawer();
     }
+
+    public back(): void {
+        //
+    }
 }
