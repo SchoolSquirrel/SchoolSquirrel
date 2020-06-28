@@ -20,6 +20,7 @@
         "e2e": "ng e2e",
         "clean": "npx rimraf hooks node_modules platforms package-lock.json && npm i",
         "android": "tns debug android --env.aot --no-hmr",
+        "android:prod": "tns build android --env.aot",
         "ios": "tns debug ios --env.aot --no-hmr",
         "mobile": "tns run --env.aot --no-hmr",
         "preview": "tns preview --env.aot --no-hmr",

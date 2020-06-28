@@ -60,3 +60,27 @@ jobs:
     - name: Deploy to Docker Hub
       working-directory: docker
       run: sudo bash ./deploy.sh ${{ secrets.DOCKER_HUB_USERNAME }} ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+  build_android:
+    name: Android Build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12
+    - name: Setup Nativescript
+      uses: hrueger/setup-nativescript@v1.0.0
+    - name: Install frontend dependencies
+      working-directory: SchoolSquirrel
+      run: npm i
+    - name: Build
+      working-directory: SchoolSquirrel
+      run: npm run android:prod
+    - name: Upload APK
+      uses: actions/upload-artifact@v2
+      working-directory: SchoolSquirrel
+      with:
+        name: schoolsquirrel-android
+        path: platforms/android/app/build/outputs/apk/debug/app-debug.apk
+    
