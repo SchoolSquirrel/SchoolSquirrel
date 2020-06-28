@@ -5,6 +5,7 @@ import { User } from "../entity/User";
 import { Grade } from "../entity/Grade";
 import Avatars from "@dicebear/avatars";
 import initialsSprites from "@dicebear/avatars-initials-sprites";
+import { svg2png } from "svg-png-converter";
 
 const avatars = new Avatars(initialsSprites, {});
 
@@ -18,7 +19,16 @@ class UserController {
     public static avatar = async (req: Request, res: Response) => {
         const userRepository = getRepository(User);
         const user = await userRepository.findOne(req.params.id);
-        res.send(avatars.create(user.username));
+        if (req.params.ext == "svg") {
+            res.send(avatars.create(user.username));
+        } else {
+            res.contentType("png")
+            res.send(await svg2png({
+                input: avatars.create(user.username, {height: 100, width: 100}),
+                encoding: "buffer",
+                format: "png",
+            }));
+        }
     }
 
     public static newUser = async (req: Request, res: Response) => {
