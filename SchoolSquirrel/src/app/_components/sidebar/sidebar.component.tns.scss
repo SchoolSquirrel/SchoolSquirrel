@@ -1,58 +1,37 @@
-.sidedrawer-list-item-icon,
-.sidedrawer-list-item {
-    color: #022734;
-}
-
-.sidedrawer.sidedrawer-left {
-    background-color: #3A53FF;
-}
-
-.sidedrawer-header-image {
-    color: #F8F8F8;
-    height: 60;
-    width: 60;
-    font-size: 60;
-    padding: 0;
-    margin-bottom: 5;
-    margin-top: 20;
-}
-
-.footnote {
-    color: rgba(255, 255, 255, 0.5);
-}
-
 .sidedrawer-header {
-    background-color: #3A53FF;
-}
-
-.sidedrawer-header .sidedrawer-header-brand {
-    color: #fff;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    .sidedrawer-header-infos {
+        margin-top: 100;
+        background-color: rgba(255, 255, 255, 0.5);
+        color: #000;
+        font-size: 15;
+        .sidedrawer-header-username {
+            font-weight: 500;
+        }
+    }
 }
 
 .sidedrawer-content {
     background-color: #fff;
-}
-
-.sidedrawer-content .sidedrawer-list-item {
-    padding: 15;
-}
-
-.sidedrawer-content .sidedrawer-list-item Label {
-    vertical-align: center;
-    color: #022734;
-}
-
-.sidedrawer-content .sidedrawer-list-item .icon {
-    width: 20;
-    margin-right: 10;
-}
-
-.sidedrawer-content .sidedrawer-list-item.selected {
-    background-color: #F8F8F8;
-}
-
-.sidedrawer-content .sidedrawer-list-item.selected Label {
-    color: #3A53FF;
+    .sidedrawer-list-item {
+        padding: 15;
+        Label {
+            vertical-align: center;
+            color: #022734;
+        }
+        .icon {
+            width: 20;
+            margin-right: 10;
+        }
+        &.selected {
+            background-color: #F8F8F8;
+            Label {
+                color: #3A53FF;
+            }
+        }
+    }
 }
 
 .active {

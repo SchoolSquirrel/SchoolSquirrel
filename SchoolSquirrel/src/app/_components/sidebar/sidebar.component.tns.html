@@ -1,34 +1,36 @@
-<StackLayout row="0" class="sidedrawer-header fix-statusbar-margin">
-    <Label class="sidedrawer-header-image fas" text="&#xf2bd;"></Label>
-    <Label class="sidedrawer-header-brand" text="User Name"></Label>
-    <Label class="footnote" text="username@mail.com"></Label>
+<StackLayout row="0" class="sidedrawer-header fix-statusbar-margin" [backgroundImage]="remoteService.getImageUrl('users/' + (authenticationService.currentUser ? authenticationService.currentUser.id : '') + '.png', authenticationService)">
+    <StackLayout class="sidedrawer-header-infos p-10">
+        <Label class="sidedrawer-header-username" [text]="authenticationService.currentUser ? authenticationService.currentUser.username : ''"></Label>
+        <Label class="" [text]="authenticationService.currentUser && authenticationService.currentUser.grade ?authenticationService.currentUser.grade.name : ''"></Label>
+    </StackLayout>
+
 </StackLayout>
 
 <ScrollView row="1">
     <StackLayout class="sidedrawer-content">
-        <GridLayout columns="auto, *" class="sidedrawer-list-item" [nsRouterLinkActive]="['active']" [nsRouterLink]="['/home']" (tap)="hideDrawer()">
+        <GridLayout columns="auto, *" class="sidedrawer-list-item" [nsRouterLinkActive]="['selected']" [nsRouterLink]="['/home']" (tap)="hideDrawer()">
             <Label col="0" text="&#xf015;" class="fas icon"></Label>
             <Label col="1" [text]="'general.dashboard' | translate" class="p-r-10"></Label>
         </GridLayout>
 
-        <GridLayout columns="auto, *" class="sidedrawer-list-item" [nsRouterLinkActive]="['active']" nsRouterLink="chat" (tap)="hideDrawer()">
+        <GridLayout columns="auto, *" class="sidedrawer-list-item" [nsRouterLinkActive]="['selected']" nsRouterLink="chat" (tap)="hideDrawer()">
             <Label col="0" text="&#xf086;" class="far icon"></Label>
             <Label col="1" [text]="'general.chat' | translate" class="p-r-10"></Label>
         </GridLayout>
 
-        <GridLayout columns="auto, *" class="sidedrawer-list-item" [nsRouterLinkActive]="['active']" nsRouterLink="assignments" (tap)="hideDrawer()">
+        <GridLayout columns="auto, *" class="sidedrawer-list-item" [nsRouterLinkActive]="['selected']" nsRouterLink="assignments" (tap)="hideDrawer()">
             <Label col="0" text="&#xf0ae;" class="fas icon"></Label>
             <Label col="1" [text]="'general.assignments' | translate" class="p-r-10"></Label>
         </GridLayout>
 
-        <GridLayout columns="auto, *" class="sidedrawer-list-item" [nsRouterLinkActive]="['active']" nsRouterLink="calendar" (tap)="hideDrawer()">
+        <GridLayout columns="auto, *" class="sidedrawer-list-item" [nsRouterLinkActive]="['selected']" nsRouterLink="calendar" (tap)="hideDrawer()">
             <Label col="0" text="&#xf073;" class="far icon"></Label>
             <Label col="1" [text]="'general.calendar' | translate" class="p-r-10"></Label>
         </GridLayout>
 
         <StackLayout class="hr"></StackLayout>
 
-        <GridLayout columns="auto, *" class="sidedrawer-list-item" [nsRouterLinkActive]="['active']" nsRouterLink="calendar" (tap)="hideDrawer()">
+        <GridLayout columns="auto, *" class="sidedrawer-list-item" [nsRouterLinkActive]="['selected']" nsRouterLink="calendar" (tap)="hideDrawer()">
             <Label col="0" text="&#xf013;" class="fas icon"></Label>
             <Label col="1" text="Settings" class="p-r-10"></Label>
         </GridLayout>
@@ -42,11 +44,11 @@
         <span>{{"general.admin" | translate}}</span>
     </h6>
 
-    <a class="nav-link" routerLink="/admin/users" routerLinkActive="active">
+    <a class="nav-link" routerLink="/admin/users" routerLinkActive="selected">
         <i class="fa fa-users"> </i> {{"general.users" | translate}}
     </a>
 
-    <a class="nav-link" routerLink="/admin/settings" routerLinkActive="active">
+    <a class="nav-link" routerLink="/admin/settings" routerLinkActive="selected">
         <i class="fa fa-cogs"> </i> {{"general.settings" | translate}}
     </a>
 
@@ -58,7 +60,7 @@
 </a>
 <ul class="nav flex-column mb-2">
     <li class="nav-item" *ngFor="let course of courses">
-        <a class="nav-link" [routerLink]="'/courses/' + course.id" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="'/courses/' + course.id" routerLinkActive="selected">
                     {{course.name}}
                 </a>
     </li>

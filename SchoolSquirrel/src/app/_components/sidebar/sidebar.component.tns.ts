@@ -14,7 +14,7 @@ export class SidebarComponent {
     public courses: Course[] = [];
     constructor(
         public authenticationService: AuthenticationService,
-        private remoteService: RemoteService,
+        public remoteService: RemoteService,
         private cdr: ChangeDetectorRef,
     ) { }
 
