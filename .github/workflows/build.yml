@@ -79,8 +79,7 @@ jobs:
       run: npm run android:prod
     - name: Upload APK
       uses: actions/upload-artifact@v2
-      working-directory: SchoolSquirrel
       with:
         name: schoolsquirrel-android
-        path: platforms/android/app/build/outputs/apk/debug/app-debug.apk
+        path: SchoolSquirrel/platforms/android/app/build/outputs/apk/debug/app-debug.apk
     
