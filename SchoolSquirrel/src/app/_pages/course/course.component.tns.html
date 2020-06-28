@@ -1,7 +1,43 @@
 <StackLayout class="fix-statusbar-margin" hideActionBar>
     <app-navbar [title]="course ? course.name : 'Loading'"></app-navbar>
-    <StackLayout class="" *ngIf="course">
-        <WebView [src]="'<pre>' + (course | json)+ '</pre>'"></WebView>
-    </StackLayout>
-    <app-full-page-loading *ngIf="!course"></app-full-page-loading>
+
+    <Tabs selectedIndex="1" *ngIf="course">
+        <TabStrip>
+            <TabStripItem>
+                <Label text="&#xf015;" class="fas"></Label>
+            </TabStripItem>
+            <TabStripItem>
+                <Label text="&#xf075;" class="far"></Label>
+            </TabStripItem>
+            <TabStripItem>
+                <Label text="&#xf15c;" class="far"></Label>
+            </TabStripItem>
+            <TabStripItem>
+                <Label text="&#xf0ae;" class="fas"></Label>
+            </TabStripItem>
+        </TabStrip>
+        <TabContentItem>
+            <GridLayout>
+                <Label text="Overview" class="h2 text-center"></Label>
+                <WebView [src]="'<pre>' + (course | json)+ '</pre>'"></WebView>
+            </GridLayout>
+        </TabContentItem>
+        <TabContentItem>
+            <GridLayout>
+                <Label text="Chat" class="h2 text-center"></Label>
+            </GridLayout>
+        </TabContentItem>
+        <TabContentItem>
+            <GridLayout>
+                <Label text="Files" class="h2 text-center"></Label>
+            </GridLayout>
+        </TabContentItem>
+        <TabContentItem>
+            <GridLayout>
+                <Label text="Assignments" class="h2 text-center"></Label>
+            </GridLayout>
+        </TabContentItem>
+    </Tabs>
+
 </StackLayout>
+<app-full-page-loading *ngIf="!course"></app-full-page-loading>
