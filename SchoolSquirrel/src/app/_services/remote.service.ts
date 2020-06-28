@@ -10,7 +10,7 @@ import { AuthenticationService } from "./authentication.service";
 export class RemoteService {
     private apiUrl = "";
     constructor(private httpClient: HttpClient, private storageService: StorageService) {
-        this.storageService.get("apiUrl");
+        this.apiUrl = this.storageService.get("apiUrl");
     }
 
     public setApiUrl(url: string): void {
