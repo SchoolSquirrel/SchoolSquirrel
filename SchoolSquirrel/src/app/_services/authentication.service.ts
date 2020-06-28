@@ -20,6 +20,7 @@ import { NavbarActions } from "../_decorators/navbar-actions.decorator";
 })
 export class AuthenticationService {
     public currentUser: User;
+    public onLogin = new Subject<boolean>();
 
     constructor(
         private remoteService: RemoteService,
@@ -53,6 +54,7 @@ export class AuthenticationService {
             if (rememberMe) {
                 this.storageService.set("jwtToken", user.jwtToken);
             }
+            this.onLogin.next(true);
         }
     }
 
