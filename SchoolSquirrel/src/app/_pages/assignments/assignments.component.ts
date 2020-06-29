@@ -7,12 +7,11 @@ import { NavbarActions } from "../../_decorators/navbar-actions.decorator";
     {
         name: "Assignments",
         description: "View all your assignments",
-        navigate: true,
     },
     {
         name: "New assignment",
         description: "Create a new assignment",
-        navigate: true,
+        navigateTo: "new",
     },
 ], "assignments")
 @Component({

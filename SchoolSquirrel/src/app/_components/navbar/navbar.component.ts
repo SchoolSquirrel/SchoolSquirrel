@@ -1,6 +1,9 @@
 import { Component } from "@angular/core";
 import { debounceTime, map } from "rxjs/operators";
 import { Observable } from "rxjs";
+import { NgbTypeaheadSelectItemEvent } from "@ng-bootstrap/ng-bootstrap";
+import { Router } from "@angular/router";
+import { NavbarAction } from "../../_services/NavbarAction";
 import { NavbarActionsService } from "../../_services/navbar-actions.service";
 import { AuthenticationService } from "../../_services/authentication.service";
 
@@ -17,6 +20,7 @@ export class NavbarComponent {
     constructor(
         public authenticationService: AuthenticationService,
         private navbarActionsService: NavbarActionsService,
+        private router: Router,
     ) {
         this.action = this.action.bind(this);
     }
@@ -33,6 +37,24 @@ export class NavbarComponent {
             debounceTime(200),
             map((term) => this.search(term).slice(0, 10)),
         );
+    }
+
+    public itemSelected(event: NgbTypeaheadSelectItemEvent): void {
+        const action: NavbarAction = event.item;
+        if (action.navigateTo) {
+            this.router.navigate(["/", action._baseRoute, action.navigateTo]);
+        }
+        if (action.onClick) {
+            action._component[action.onClick]();
+        }
+        if (!action.onClick && !action.navigateTo) {
+            this.router.navigate(["/", action._baseRoute]);
+        }
+        event.preventDefault();
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        document.activeElement.blur();
+        this.actionValue = "";
     }
 
     public search(term: string): any[] {

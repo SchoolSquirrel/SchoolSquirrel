@@ -3,8 +3,8 @@
     <button class="navbar-toggler position-absolute d-md-none collapsed" type="button">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <input type="text" #actionInput (focus)="inputFocused = true; openTypeahead(actionInput)" (blur)="inputFocused = false" [placeholder]="(inputFocused ? 'components.navbar.actions.info' : 'components.navbar.actions.placeholder') | translate" class="form-control form-control-dark w-100"
-        [(ngModel)]="actionValue" [ngbTypeahead]="action" [resultTemplate]="rt" />
+    <input type="text" #actionInput (selectItem)="itemSelected($event)" (focus)="inputFocused = true; openTypeahead(actionInput)" (blur)="inputFocused = false" [placeholder]="(inputFocused ? 'components.navbar.actions.info' : 'components.navbar.actions.placeholder') | translate"
+        class="form-control form-control-dark w-100" [(ngModel)]="actionValue" [ngbTypeahead]="action" [resultTemplate]="rt" />
 
     <ng-template #rt let-r="result" let-t="term">
         <div class="row" [style.width]="typeaheadWidth + 'px'">

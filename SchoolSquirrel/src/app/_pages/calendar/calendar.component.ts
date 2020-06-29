@@ -7,12 +7,11 @@ import { FastTranslateService } from "../../_services/fast-translate.service";
     {
         name: "Calendar",
         description: "Open the calendar",
-        navigate: true,
     },
     {
         name: "New event",
         description: "Create a new event",
-        navigate: true,
+        navigateTo: "new",
     },
 ], "calendar")
 @Component({

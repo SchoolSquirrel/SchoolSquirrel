@@ -5,8 +5,8 @@ import { NavbarAction } from "./NavbarAction";
     providedIn: "root",
 })
 export class NavbarActionsService {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public static addActions(route: string, ...actions: NavbarAction[]): void {
+    // eslint-disable-next-line
+    public static addActions(component: any, route: string, ...actions: NavbarAction[]): void {
         //
     }
 
