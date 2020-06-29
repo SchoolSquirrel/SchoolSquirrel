@@ -19,6 +19,7 @@ class UserController {
         const userRepository = getRepository(User);
         const user = await userRepository.findOne(req.params.id);
         if (req.params.ext == "svg") {
+            res.contentType("svg");
             res.send(avatars.create(user.username));
         } else {
             const parts = user.username.split(" ");
