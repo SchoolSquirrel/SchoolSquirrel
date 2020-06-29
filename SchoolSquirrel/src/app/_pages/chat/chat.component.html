@@ -1,13 +1,26 @@
-<div class="row h-100">
-    <div class="col-3 h-100 overflow-auto border-right border-secondary">
-        <div *ngFor="let chat of chats">
-            {{chat.name}}
-        </div>
-        <div *ngIf="!chats || chats.length == 0">
-            No chats...
+<div class="row h-100" *ngIf="chats.length > 0 && !loading">
+    <div class="col-3 p-0 h-100 overflow-auto border-right border-secondary">
+        <div class="list-group list-group-flush">
+            <a [routerLink]="['/', 'chat', chat.id]" class="list-group-item list-group-item-action d-flex" *ngFor="let chat of chats">
+                <img class="avatar pull-left" [src]="getChatImageUrl(chat)">
+                <div>
+                    <div class="flex-grow-1 d-flex justify-content-between">
+                        <h5 class="mb-1">{{getChatName(chat)}}</h5>
+                        <small>timestamp</small>
+                    </div>
+                    <small>Last message</small>
+                </div>
+            </a>
         </div>
     </div>
     <div class="col-9">
-        Main
+        <pre>
+            {{currentChat | json}}
+        </pre>
+        <squirrel-chat-ui></squirrel-chat-ui>
     </div>
 </div>
+<div *ngIf="chats.length == 0 && !loading" class="h-100 d-flex justify-content-center flex-column">
+    <p class="text-center">{{'pages.chat.noChats' | translate}}</p>
+</div>
+<app-full-page-loading *ngIf="loading"></app-full-page-loading>
