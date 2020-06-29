@@ -58,10 +58,36 @@ export class NavbarComponent {
     }
 
     public search(term: string): any[] {
-        return (term === ""
-            ? this.navbarActionsService.getNavbarActions()
-            : this.navbarActionsService.getNavbarActions().filter(
-                (v) => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1,
-            ));
+        if (term === "") {
+            return [];
+        }
+        if (term.startsWith("/")) {
+            const actions = this.navbarActionsService.getNavbarActions().filter((a) => !a.isUser);
+            if (term === "/") {
+                return actions;
+            }
+            return actions.filter(
+                (a) => a.name.toLowerCase().indexOf(term.substr(1).toLowerCase()) > -1,
+            );
+        }
+        if (term.startsWith("@")) {
+            const actions = this.navbarActionsService.getNavbarActions().filter((a) => a.isUser);
+            if (term === "@") {
+                return actions;
+            }
+            return actions.filter(
+                (a) => a.name.toLowerCase().indexOf(term.substr(1).toLowerCase()) > -1,
+            );
+        }
+        return this.navbarActionsService.getNavbarActions().filter(
+            (v) => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1,
+        );
+    }
+
+    public removeSpecialChars(t: string): string {
+        if (t.startsWith("/") || t.startsWith("@")) {
+            return t.substr(1);
+        }
+        return t;
     }
 }
