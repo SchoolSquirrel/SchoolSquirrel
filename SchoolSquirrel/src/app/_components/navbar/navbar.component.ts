@@ -42,7 +42,7 @@ export class NavbarComponent {
     public itemSelected(event: NgbTypeaheadSelectItemEvent): void {
         const action: NavbarAction = event.item;
         if (action.navigateTo) {
-            this.router.navigate(["/", action._baseRoute, action.navigateTo]);
+            this.router.navigate(["/", action._baseRoute, ...action.navigateTo.split("/")]);
         }
         if (action.onClick) {
             action._component[action.onClick]();
