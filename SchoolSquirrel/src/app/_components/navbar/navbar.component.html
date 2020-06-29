@@ -7,9 +7,13 @@
         class="form-control form-control-dark w-100" [(ngModel)]="actionValue" [ngbTypeahead]="action" [resultTemplate]="rt" />
 
     <ng-template #rt let-r="result" let-t="term">
-        <div class="row" [style.width]="typeaheadWidth + 'px'">
-            <div class="col">
-                <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
+        <div class="row py-1" [style.width]="typeaheadWidth + 'px'">
+            <div *ngIf="r.isUser">
+                <img [src]="r.img" class="avatar" alt="Image">
+            </div>
+            <div class="col" [class.ml-4]="!r.isUser" [class.ml-0]="r.isUser">
+                <ngb-highlight class="d-block" [result]="r.name" [term]="t"></ngb-highlight>
+                <small class="d-block subtitle text-muted">{{r.subtitle}}</small>
             </div>
             <div class="col text-right text-secondary">{{r.description}}</div>
         </div>
