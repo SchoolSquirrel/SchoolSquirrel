@@ -24,6 +24,8 @@ export class HomeComponent {
                     subtitle: user.grade?.name,
                     isUser: true,
                     img: this.remoteService.getImageUrl(`users/${user.id}.svg`, this.authenticationService),
+                    navigateTo: `user/${user.id}`,
+                    _baseRoute: "chat",
                 } as NavbarAction);
             }
         });
