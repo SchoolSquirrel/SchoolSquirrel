@@ -4,9 +4,6 @@
     <Tabs selectedIndex="1" *ngIf="course">
         <TabStrip>
             <TabStripItem>
-                <Label text="&#xf015;" class="fas"></Label>
-            </TabStripItem>
-            <TabStripItem>
                 <Label text="&#xf075;" class="far"></Label>
             </TabStripItem>
             <TabStripItem>
@@ -16,12 +13,6 @@
                 <Label text="&#xf0ae;" class="fas"></Label>
             </TabStripItem>
         </TabStrip>
-        <TabContentItem>
-            <GridLayout>
-                <Label text="Overview" class="h2 text-center"></Label>
-                <WebView [src]="'<pre>' + (course | json)+ '</pre>'"></WebView>
-            </GridLayout>
-        </TabContentItem>
         <TabContentItem>
             <GridLayout>
                 <Label text="Chat" class="h2 text-center"></Label>

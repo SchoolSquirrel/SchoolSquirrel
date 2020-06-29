@@ -1,6 +1,27 @@
-<div *ngIf="course">
-    <h1>{{course.name}}</h1>
-    <pre>{{course | json}}</pre>
+<div *ngIf="course" class="h-100 d-flex flex-column pt-2">
+    <nav ngbNav #nav="ngbNav" class="nav-tabs">
+        <h4 class="pt-2 mr-4">{{course.name}}</h4>
+        <ng-container ngbNavItem>
+            <a ngbNavLink><i class="far fa-comment"></i> {{'general.chat' | translate}}</a>
+            <ng-template ngbNavContent>
+                <squirrel-chat-ui class="h-100"></squirrel-chat-ui>
+            </ng-template>
+        </ng-container>
+        <ng-container ngbNavItem>
+            <a ngbNavLink><i class="far fa-file"></i> {{'general.files' | translate}}</a>
+            <ng-template ngbNavContent>
+                <p>Files</p>
+            </ng-template>
+        </ng-container>
+        <ng-container ngbNavItem>
+            <a ngbNavLink><i class="fas fa-tasks"></i> {{'general.assignments' | translate}}</a>
+            <ng-template ngbNavContent>
+                <p>Assignments</p>
+            </ng-template>
+        </ng-container>
+    </nav>
+
+    <div [ngbNavOutlet]="nav" class="mt-2 flex-grow-1"></div>
 </div>
 
 <app-full-page-loading *ngIf="!course"></app-full-page-loading>

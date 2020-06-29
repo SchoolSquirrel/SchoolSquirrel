@@ -25,6 +25,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatChipsModule } from "@angular/material/chips";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatIconModule } from "@angular/material/icon";
+import { SquirrelChatUiModule } from "@schoolsquirrel/squirrel-chat-ui";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./_pages/home/home.component";
 import { LoginComponent } from "./_pages/login/login.component";
@@ -97,6 +98,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         }),
         GridModule,
         ScheduleModule,
+        SquirrelChatUiModule,
         NoopAnimationsModule,
         MatFormFieldModule,
         MatChipsModule,

@@ -15,7 +15,8 @@
         "administration": "Administration",
         "users": "Benutzer",
         "settings": "Einstellungen",
-        "chat": "Chat"
+        "chat": "Chat",
+        "files": "Dateien"
     },
     "components": {
         "navbar": {
