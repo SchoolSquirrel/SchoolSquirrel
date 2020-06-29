@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import * as i18n from "i18n";
-import { getRepository } from "typeorm";
+import { getRepository, createQueryBuilder } from "typeorm";
 import { Chat } from "../entity/Chat";
 import { User } from "../entity/User";
 class ChatController {
@@ -10,7 +10,33 @@ class ChatController {
         res.send(chats);
     }
 
-    public static newChat = async (req: Request, res: Response) => {
+    public static getChatFromUserId = async (req: Request, res: Response) => {
+        const chatRepository = getRepository(Chat);
+        const userRepository = getRepository(User);
+        let chat = await chatRepository.query(`
+        SELECT chat.* FROM chat
+        WHERE chat.id = (
+            SELECT c0.chatId FROM chat_users_user AS c0
+            JOIN chat_users_user AS c1 ON c1.chatId = c0.chatId
+            WHERE c0.userId = '${req.params.id}' AND c1.userId = '${res.locals.jwtPayload.userId}')`) as Chat; // HAVING COUNT(DISTINCT m3.name) = 2;
+        chat = chat && chat[0] ? chat[0] : undefined;
+        if (!chat) {
+            chat = new Chat();
+            chat.users = [];
+            chat.users.push(await userRepository.findOne(req.params.id));
+            chat.users.push(await userRepository.findOne(res.locals.jwtPayload.userId));
+            chat = await chatRepository.save(chat);
+        }
+        res.send(chat);
+    }
+
+    public static getChat = async (req: Request, res: Response) => {
+        const chatRepository = getRepository(Chat);
+        const chat = await chatRepository.findOne(req.params.id, { relations: ["users"] });
+        res.send(chat);
+    }
+
+    public static newGroupChat = async (req: Request, res: Response) => {
         const { name, user } = req.body;
         if (!(name && user)) {
             res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });
