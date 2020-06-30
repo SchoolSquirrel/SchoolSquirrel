@@ -8,23 +8,34 @@
 
 /* do not edit */ 
 /* do not edit */ import { User } from "./User";
-/* do not edit */ import { Message } from "./Message";
+/* do not edit */ import { MessageStatus } from "./MessageStatus";
+/* do not edit */ import { Chat } from "./Chat";
 /* do not edit */ 
 /* do not edit */ 
-/* do not edit */ export class Chat {
+/* do not edit */ export class Message {
 /* do not edit */   
 /* do not edit */   public id: number;
 /* do not edit */ 
 /* do not edit */   
-/* do not edit */   public name: string;
+/* do not edit */   public text: string;
 /* do not edit */ 
 /* do not edit */   
-/* do not edit */   public messages: Message[];
+/* do not edit */   public sender: User;
 /* do not edit */ 
 /* do not edit */   
-/* do not edit */   
-/* do not edit */   public users: User[];
+/* do not edit */   public edited?: boolean;
 /* do not edit */ 
-/* do not edit */   public info?: string;
+/* do not edit */   
+/* do not edit */   public citation?: number;
+/* do not edit */ 
+/* do not edit */   
+/* do not edit */   public date: Date;
+/* do not edit */ 
+/* do not edit */   
+/* do not edit */   public chat: Chat;
+/* do not edit */ 
+/* do not edit */   public reactions?: Record<string, User[]>;
+/* do not edit */   public fromMe?: boolean;
+/* do not edit */   public status?: MessageStatus;
 /* do not edit */ }
 /* do not edit */

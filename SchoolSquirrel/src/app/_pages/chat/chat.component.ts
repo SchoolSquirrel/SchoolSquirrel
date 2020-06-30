@@ -4,6 +4,8 @@ import { RemoteService } from "../../_services/remote.service";
 import { Chat } from "../../_models/Chat";
 import { AuthenticationService } from "../../_services/authentication.service";
 import { User } from "../../_models/User";
+import { Message } from "../../_models/Message";
+import { MessageStatus } from "../../_models/MessageStatus";
 
 @Component({
     selector: "app-chat",
@@ -15,8 +17,8 @@ export class ChatComponent implements OnInit {
     public currentChat: Chat;
     public loading = true;
     constructor(
+        public authenticationService: AuthenticationService,
         private remoteService: RemoteService,
-        private authenticationService: AuthenticationService,
         private route: ActivatedRoute,
         private router: Router,
     ) {}
@@ -32,6 +34,10 @@ export class ChatComponent implements OnInit {
             if (params.id) {
                 this.remoteService.get(`chats/${params.id}`).subscribe((chat) => {
                     this.currentChat = chat;
+                    for (const message of this.currentChat.messages) {
+                        message.fromMe = message.sender.id
+                            == this.authenticationService.currentUser.id;
+                    }
                 });
             }
         });
@@ -62,5 +68,13 @@ export class ChatComponent implements OnInit {
 
     public getChatImageUrl(chat: Chat): string {
         return this.remoteService.getImageUrl(this.isGroupChat(chat) ? "" : `users/${this.getOtherUserInPrivateChat(chat).id}.svg`, this.authenticationService);
+    }
+
+    public onMessageSent(message: Message): void {
+        this.remoteService.post(`chats/${this.currentChat.id}`, { text: message.text }).subscribe((m: Message) => {
+            Object.assign(this.currentChat.messages[this.currentChat.messages.indexOf(message)], m);
+            this.currentChat.messages[this.currentChat.messages.findIndex((msg) => msg.id == m.id)]
+                .status = MessageStatus.Sent;
+        });
     }
 }

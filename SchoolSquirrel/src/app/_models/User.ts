@@ -11,6 +11,7 @@
 /* do not edit */ import { Grade } from "./Grade";
 /* do not edit */ import { Course } from "./Course";
 /* do not edit */ import { Chat } from "./Chat";
+/* do not edit */ import { Message } from "./Message";
 /* do not edit */ 
 /* do not edit */ 
 /* do not edit */ 
@@ -49,6 +50,10 @@
 /* do not edit */ 
 /* do not edit */     
 /* do not edit */     public chats: Chat[];
+/* do not edit */ 
+/* do not edit */     
+/* do not edit */     public messages: Message[];
+/* do not edit */ 
 /* do not edit */ 
 /* do not edit */     public jwtToken?: string;
 /* do not edit */ 

@@ -85,7 +85,7 @@ export class LoginComponentCommon {
                 this.loading = false;
                 this.toastService.error("Fehlerhafte config!");
             }
-        }, (e) => {
+        }, () => {
             this.loading = false;
             this.toastService.error("Falsche Domain!");
         });
