@@ -1,7 +1,10 @@
-import { Component } from "@angular/core";
+import { Component, ElementRef } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { RemoteService } from "../../_services/remote.service";
 import { Assignment } from "../../_models/Assignment";
 import { NavbarActions } from "../../_decorators/navbar-actions.decorator";
+import { Course } from "../../_models/Course";
 
 @NavbarActions([
     {
@@ -20,20 +23,30 @@ import { NavbarActions } from "../../_decorators/navbar-actions.decorator";
     styleUrls: ["./assignments.component.scss"],
 })
 export class AssignmentsComponent {
-    public newTitle = "";
-    public newContent = "";
-    public assignments: Assignment[] = [];
-    constructor(private remoteService: RemoteService) {}
-    public newAssignment(): void {
-        if (this.newTitle && this.newContent) {
-            this.remoteService.post("assignments", { title: this.newTitle, content: this.newContent }).subscribe((data) => {
-                if (data && data.success) {
-                    this.loadAssignments();
-                }
-            });
-        }
-        this.newTitle = "";
-        this.newContent = "";
+    public courses: Course[] = [];
+    public newAssignmentForm = new FormGroup({
+        title: new FormControl("", [Validators.required]),
+        content: new FormControl("", [Validators.required]),
+        course: new FormControl("", [Validators.required]),
+        date: new FormControl("", [Validators.required]),
+        timeHours: new FormControl("23", [Validators.required, Validators.min(0), Validators.max(23)]),
+        timeMinutes: new FormControl("59", [Validators.required, Validators.min(0), Validators.max(59)]),
+    });
+    constructor(
+        private remoteService: RemoteService,
+        private modalService: NgbModal,
+    ) { }
+
+    public newAssignment(content: ElementRef): void {
+        this.modalService.open(content, { size: "xl" }).result.then((result) => {
+            if (result.newTitle && result.newContent) {
+                this.remoteService.post("assignments", { title: result.newTitle, content: result.newContent }).subscribe((data) => {
+                    if (data && data.success) {
+                        this.loadAssignments();
+                    }
+                });
+            }
+        }, () => undefined);
     }
 
     public ngOnInit(): void {
@@ -48,9 +61,9 @@ export class AssignmentsComponent {
     }
 
     private loadAssignments() {
-        this.remoteService.get("assignments").subscribe((data) => {
+        this.remoteService.get("assignments").subscribe((data: Course[]) => {
             if (data) {
-                this.assignments = data;
+                this.courses = data;
             }
         });
     }

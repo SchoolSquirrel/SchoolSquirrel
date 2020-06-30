@@ -77,6 +77,44 @@ ngb-typeahead-window.dropdown-menu.show {
     border-radius: 50%;
 }
 
+ngb-accordion.tree-view-accordion {
+    >.card {
+        border: none;
+        .card-header {
+            padding: 0;
+            background-color: transparent;
+            border: none;
+            .btn.btn-link {
+                color: #555;
+                font-weight: bold;
+                &:hover,
+                &:focus {
+                    text-decoration: none;
+                }
+                &:before {
+                    font-family: "Font Awesome 5 Free";
+                    content: "\f107";
+                    display: inline-block;
+                    padding-right: 3px;
+                    vertical-align: top;
+                    font-weight: 900;
+                }
+                &.collapsed:before {
+                    content: "\f105";
+                }
+                &:focus {
+                    outline: none;
+                    box-shadow: none;
+                }
+            }
+        }
+        .card-body {
+            padding: 0px;
+            padding-left: 2rem;
+        }
+    }
+}
+
 
 /* Material Icons */
 
