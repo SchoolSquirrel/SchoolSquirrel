@@ -4,8 +4,10 @@ import {
     PrimaryGeneratedColumn,
     ManyToMany,
     JoinTable,
+    OneToMany,
 } from "typeorm";
 import { User } from "./User";
+import { Assignment } from "./Assignment";
 
 @Entity()
 export class Course {
@@ -22,4 +24,7 @@ export class Course {
     @JoinTable()
     @ManyToMany(() => User, (user) => user.coursesTeaching)
     public teachers: User[];
+
+    @OneToMany(() => Assignment, (assignment) => assignment.course)
+    public assignments: Assignment[];
 }

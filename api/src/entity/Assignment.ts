@@ -4,7 +4,7 @@ Entity,
 PrimaryGeneratedColumn,
 ManyToOne,
 } from "typeorm";
-import { Grade } from "./Grade";
+import { Course } from "./Course";
 
 @Entity()
 export class Assignment {
@@ -17,6 +17,6 @@ export class Assignment {
   @Column({length: 10000})
   public content: string;
 
-  @ManyToOne(() => Grade, (grade) => grade.assignments)
-  public grade: Grade;
+  @ManyToOne(() => Course, (course) => course.assignments)
+  public course: Course;
 }
