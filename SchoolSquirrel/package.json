@@ -55,6 +55,7 @@
         "@nstudio/nativescript-floatingactionbutton": "^2.1.0",
         "@schoolsquirrel/squirrel-chat-ui": "^0.0.10",
         "@syncfusion/ej2-angular-dropdowns": "^18.1.57",
+        "@syncfusion/ej2-angular-filemanager": "^18.1.56",
         "@syncfusion/ej2-angular-grids": "^18.1.57",
         "@syncfusion/ej2-angular-schedule": "^18.1.56",
         "bootstrap": "^4.5.0",

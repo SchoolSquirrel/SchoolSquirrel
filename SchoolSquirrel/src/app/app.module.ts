@@ -26,6 +26,7 @@ import { MatChipsModule } from "@angular/material/chips";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatIconModule } from "@angular/material/icon";
 import { SquirrelChatUiModule } from "@schoolsquirrel/squirrel-chat-ui";
+import { FileManagerModule } from "@syncfusion/ej2-angular-filemanager";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./_pages/home/home.component";
 import { LoginComponent } from "./_pages/login/login.component";
@@ -98,6 +99,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         }),
         GridModule,
         ScheduleModule,
+        FileManagerModule,
         SquirrelChatUiModule,
         NoopAnimationsModule,
         MatFormFieldModule,
