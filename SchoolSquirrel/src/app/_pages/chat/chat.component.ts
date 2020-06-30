@@ -18,25 +18,27 @@ export class ChatComponent implements OnInit {
         private authenticationService: AuthenticationService,
         private route: ActivatedRoute,
         private router: Router,
-    ) { }
+    ) {}
 
     public ngOnInit(): void {
-        if (this.route.snapshot.params.id && this.route.snapshot.url.map((u) => u.toString()).includes("user")) {
-            this.remoteService.get(`chats/user/${this.route.snapshot.params.id}`).subscribe((chat) => {
-                this.navigateToChat(chat);
-            });
-            return;
-        }
-        this.remoteService.get("chats").subscribe((data) => {
-            this.chats = data;
-            this.loading = false;
-            if (!this.route.snapshot.params.id) {
+        this.route.params.subscribe((params) => {
+            if (params.id && this.route.snapshot.url.map((u) => u.toString()).includes("user")) {
+                this.remoteService.get(`chats/user/${params.id}`).subscribe((chat) => {
+                    this.navigateToChat(chat);
+                });
+                return;
+            }
+            if (!params.id) {
                 this.navigateToChat(this.chats[0]);
                 return;
             }
-            this.remoteService.get(`chats/${this.route.snapshot.params.id}`).subscribe((chat) => {
+            this.remoteService.get(`chats/${params.id}`).subscribe((chat) => {
                 this.currentChat = chat;
             });
+        });
+        this.remoteService.get("chats").subscribe((data) => {
+            this.chats = data;
+            this.loading = false;
         });
     }
 
