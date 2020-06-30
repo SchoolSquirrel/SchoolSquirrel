@@ -29,9 +29,11 @@ export class ChatComponent implements OnInit {
                 });
                 return;
             }
-            this.remoteService.get(`chats/${params.id}`).subscribe((chat) => {
-                this.currentChat = chat;
-            });
+            if (params.id) {
+                this.remoteService.get(`chats/${params.id}`).subscribe((chat) => {
+                    this.currentChat = chat;
+                });
+            }
         });
         this.remoteService.get("chats").subscribe((data) => {
             this.chats = data;
