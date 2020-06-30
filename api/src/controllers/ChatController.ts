@@ -32,7 +32,7 @@ class ChatController {
     }
 
     public static sendMessage = async (req: Request, res: Response) => {
-        const { text } = req.body;
+        const { text, citation } = req.body;
         if (!text) {
             res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });
             return;
@@ -45,6 +45,7 @@ class ChatController {
         message.chat = await chatRepository.findOne(req.params.id);
         message.sender = await userRepository.findOne(res.locals.jwtPayload.userId);
         message.date = new Date();
+        message.citation = citation;
         message = await messageRepository.save(message);
         res.send(message);
     }
