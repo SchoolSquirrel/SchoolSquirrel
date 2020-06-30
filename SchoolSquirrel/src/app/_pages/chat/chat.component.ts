@@ -29,10 +29,6 @@ export class ChatComponent implements OnInit {
                 });
                 return;
             }
-            if (!params.id) {
-                this.navigateToChat(this.chats[0]);
-                return;
-            }
             this.remoteService.get(`chats/${params.id}`).subscribe((chat) => {
                 this.currentChat = chat;
             });
@@ -40,6 +36,9 @@ export class ChatComponent implements OnInit {
         this.remoteService.get("chats").subscribe((data) => {
             this.chats = data;
             this.loading = false;
+            if (!this.route.snapshot.params.id) {
+                this.navigateToChat(this.chats[0]);
+            }
         });
     }
 
