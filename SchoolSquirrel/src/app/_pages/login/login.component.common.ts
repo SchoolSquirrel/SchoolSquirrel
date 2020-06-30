@@ -66,7 +66,7 @@ export class LoginComponentCommon {
         this.httpClient.get(`${this.loginForm.controls.domain.value}/config.json`, { params: new NoErrorToastHttpParams(true) }).subscribe((data: any) => {
             this.loading = false;
             if (data && data.apiUrl) {
-                const apiUrl = `${this.loginForm.controls.domain.value}/${data.apiUrl}`;
+                const apiUrl = `${this.loginForm.controls.domain.value}${data.apiUrl}`;
                 this.storageService.set("apiUrl", apiUrl);
                 this.remoteService.setApiUrl(apiUrl);
                 this.authenticationService.login(
@@ -86,7 +86,6 @@ export class LoginComponentCommon {
                 this.toastService.error("Fehlerhafte config!");
             }
         }, (e) => {
-            console.log(e);
             this.loading = false;
             this.toastService.error("Falsche Domain!");
         });
