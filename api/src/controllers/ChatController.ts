@@ -44,6 +44,7 @@ class ChatController {
         message.text = text;
         message.chat = await chatRepository.findOne(req.params.id);
         message.sender = await userRepository.findOne(res.locals.jwtPayload.userId);
+        message.date = new Date();
         message = await messageRepository.save(message);
         res.send(message);
     }
