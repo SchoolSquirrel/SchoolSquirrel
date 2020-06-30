@@ -20,6 +20,7 @@
         "usergroupDoesNotExist": "Die Benutzergruppe existiert nicht!",
         "usernameOrPasswordEmpty": "Benutzername oder Passwort leer!",
         "wrongPassword": "Falsches Passwort!",
-        "wrongUsername": "Falscher Benutzername!"
+        "wrongUsername": "Falscher Benutzername!",
+        "chatNotFound": "Der Chat wurde nicht gefunden!"
     }
 }

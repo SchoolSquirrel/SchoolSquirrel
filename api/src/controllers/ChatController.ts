@@ -32,14 +32,18 @@ class ChatController {
 
     public static getChat = async (req: Request, res: Response) => {
         const chatRepository = getRepository(Chat);
-        const chat = await chatRepository.findOne(req.params.id, { relations: ["users"] });
-        if (chat.users.length > 2) {
-            // is a group chat
-            chat.info = chat.users.map((u) => u.username).join(", ");
-        } else {
-            chat.info = `Last seen: ${"unknown"}`;
+        try {
+            const chat = await chatRepository.findOneOrFail(req.params.id, { relations: ["users"] });
+            if (chat.users.length > 2) {
+                // is a group chat
+                chat.info = chat.users.map((u) => u.username).join(", ");
+            } else {
+                chat.info = `Last seen: ${"unknown"}`;
+            }
+            res.send(chat);
+        } catch {
+            res.status(404).send(i18n.__("errors.chatNotFound"));
         }
-        res.send(chat);
     }
 
     public static newGroupChat = async (req: Request, res: Response) => {
