@@ -20,5 +20,7 @@
 /* do not edit */   
 /* do not edit */   
 /* do not edit */   public users: User[];
+/* do not edit */ 
+/* do not edit */   public info?: string;
 /* do not edit */ }
 /* do not edit */

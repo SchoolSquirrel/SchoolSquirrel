@@ -19,4 +19,6 @@ export class Chat {
   @JoinTable()
   @ManyToMany(() => User, (user) => user.chats)
   public users: User[];
+
+  public info?: string;
 }
