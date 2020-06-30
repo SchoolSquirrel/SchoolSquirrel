@@ -2,6 +2,8 @@ import { Component } from "@angular/core";
 import { Router, NavigationEnd } from "@angular/router";
 import { isElectron } from "./_helpers/isElectron";
 import { PushService } from "./_services/push.service";
+import { NavbarUsersService } from "./_services/navbar-users.service";
+import { AuthenticationService } from "./_services/authentication.service";
 
 @Component({
     selector: "app-root",
@@ -13,6 +15,8 @@ export class AppComponent {
     constructor(
         private router: Router,
         private pushService: PushService,
+        private navbarUsersService: NavbarUsersService,
+        private authenticationService: AuthenticationService,
     ) {
         this.router.events.subscribe((r) => {
             if (r instanceof NavigationEnd) {
@@ -22,6 +26,9 @@ export class AppComponent {
                     this.isFullScreenPage = true;
                 }
             }
+        });
+        this.authenticationService.onLogin.subscribe(() => {
+            this.navbarUsersService.init();
         });
         if (isElectron()) {
             // eslint-disable-next-line
