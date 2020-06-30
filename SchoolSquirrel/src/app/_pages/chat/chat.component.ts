@@ -71,7 +71,7 @@ export class ChatComponent implements OnInit {
     }
 
     public onMessageSent(message: Message): void {
-        this.remoteService.post(`chats/${this.currentChat.id}`, { text: message.text }).subscribe((m: Message) => {
+        this.remoteService.post(`chats/${this.currentChat.id}`, { text: message.text, citation: message.citation }).subscribe((m: Message) => {
             Object.assign(this.currentChat.messages[this.currentChat.messages.indexOf(message)], m);
             this.currentChat.messages[this.currentChat.messages.findIndex((msg) => msg.id == m.id)]
                 .status = MessageStatus.Sent;
