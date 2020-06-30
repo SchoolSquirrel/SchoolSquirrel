@@ -3,6 +3,7 @@ import * as i18n from "i18n";
 import { getRepository, createQueryBuilder } from "typeorm";
 import { Chat } from "../entity/Chat";
 import { User } from "../entity/User";
+import { Message } from "../entity/Message";
 class ChatController {
     public static listAll = async (req: Request, res: Response) => {
         const chatRepository = getRepository(Chat);
@@ -30,10 +31,27 @@ class ChatController {
         res.send(chat);
     }
 
+    public static sendMessage = async (req: Request, res: Response) => {
+        const { text } = req.body;
+        if (!text) {
+            res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });
+            return;
+        }
+        const chatRepository = getRepository(Chat);
+        const userRepository = getRepository(User);
+        const messageRepository = getRepository(Message);
+        let message = new Message();
+        message.text = text;
+        message.chat = await chatRepository.findOne(req.params.id);
+        message.sender = await userRepository.findOne(res.locals.jwtPayload.userId);
+        message = await messageRepository.save(message);
+        res.send(message);
+    }
+
     public static getChat = async (req: Request, res: Response) => {
         const chatRepository = getRepository(Chat);
         try {
-            const chat = await chatRepository.findOneOrFail(req.params.id, { relations: ["users"] });
+            const chat = await chatRepository.findOneOrFail(req.params.id, { relations: ["users", "messages", "messages.sender"] });
             if (chat.users.length > 2) {
                 // is a group chat
                 chat.info = chat.users.map((u) => u.username).join(", ");

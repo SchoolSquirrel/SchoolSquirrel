@@ -8,10 +8,12 @@ import {
     UpdateDateColumn,
     ManyToOne,
     ManyToMany,
+    OneToMany,
 } from "typeorm";
 import { Grade } from "./Grade";
 import { Course } from "./Course";
 import { Chat } from "./Chat";
+import { Message } from "./Message";
 
 @Entity()
 @Unique(["username"])
@@ -50,6 +52,10 @@ export class User {
 
     @ManyToMany(() => Chat, (chat) => chat.users)
     public chats: Chat[];
+
+    @OneToMany(() => Message, (message) => message.sender)
+    public messages: Message[];
+
 
     public jwtToken?: string;
 

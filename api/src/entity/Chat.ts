@@ -7,6 +7,7 @@ ManyToMany,
 JoinTable,
 } from "typeorm";
 import { User } from "./User";
+import { Message } from "./Message";
 
 @Entity()
 export class Chat {
@@ -15,6 +16,9 @@ export class Chat {
 
   @Column()
   public name: string;
+
+  @OneToMany(() => Message, (message) => message.chat)
+  public messages: Message[];
 
   @JoinTable()
   @ManyToMany(() => User, (user) => user.chats)
