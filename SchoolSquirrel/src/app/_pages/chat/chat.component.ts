@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { RemoteService } from "../../_services/remote.service";
 import { Chat } from "../../_models/Chat";
 import { AuthenticationService } from "../../_services/authentication.service";
+import { User } from "../../_models/User";
 
 @Component({
     selector: "app-chat",
@@ -50,7 +51,7 @@ export class ChatComponent implements OnInit {
         return chat.name ? chat.name : this.isGroupChat(chat) ? chat.users.map((u) => u.username.split(" ")[0]).join(", ") : this.getOtherUserInPrivateChat(chat).username;
     }
 
-    private getOtherUserInPrivateChat(chat: Chat) {
+    public getOtherUserInPrivateChat(chat: Chat): User {
         return chat.users.filter((u) => u.id != this.authenticationService.currentUser.id)[0];
     }
 

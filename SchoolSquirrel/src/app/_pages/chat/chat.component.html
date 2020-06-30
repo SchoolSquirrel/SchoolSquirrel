@@ -1,9 +1,9 @@
 <div class="row h-100" *ngIf="chats.length > 0 && !loading">
-    <div class="col-3 p-0 h-100 overflow-auto border-right border-secondary">
+    <div class="col-3 p-0 h-100 overflow-auto border-right border-black-50">
         <div class="list-group list-group-flush">
             <a [routerLink]="['/', 'chat', chat.id]" class="list-group-item list-group-item-action d-flex" *ngFor="let chat of chats">
                 <img class="avatar pull-left" [src]="getChatImageUrl(chat)">
-                <div>
+                <div class="w-100">
                     <div class="flex-grow-1 d-flex justify-content-between">
                         <h5 class="mb-1">{{getChatName(chat)}}</h5>
                         <small>timestamp</small>
@@ -13,12 +13,11 @@
             </a>
         </div>
     </div>
-    <div class="col-9">
-        <pre>
-            {{currentChat | json}}
-        </pre>
-        <squirrel-chat-ui></squirrel-chat-ui>
+    <div class="col-9 px-0">
+        <squirrel-chat-ui [subtitle]="currentChat.info" [title]="getOtherUserInPrivateChat(currentChat).username" [profileImageSource]="getChatImageUrl(currentChat)"></squirrel-chat-ui>
     </div>
+    <!-- (attachmentClicked)="onAttachmentClicked($event)" (audioCallClicked)="onAudioCallClicked()" (menuItemClicked)="onMenuItemClicked($event)" (messageEdited)="onMessageEdited($event)" (messageSent)="onMessageSent($event)" (reaction)="onReaction($event)"
+            (videoCallClicked)="onVideoCallClicked()" [attachmentButtons]="attachmentButtons" [emojiMartOptions]="emojiMartOptions" [me]="me" [menuItems]="menuItems" [messages]="messages" -->
 </div>
 <div *ngIf="chats.length == 0 && !loading" class="h-100 d-flex justify-content-center flex-column">
     <p class="text-center">{{'pages.chat.noChats' | translate}}</p>
