@@ -2,6 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Course } from "../../_models/Course";
 import { RemoteService } from "../../_services/remote.service";
+import { AuthenticationService } from "../../_services/authentication.service";
+import { Message } from "../../_models/Message";
+import { MessageStatus } from "../../_models/MessageStatus";
 
 @Component({
     selector: "app-course",
@@ -11,11 +14,27 @@ import { RemoteService } from "../../_services/remote.service";
 export class CourseComponent implements OnInit {
     public course: Course;
 
-    constructor(private remoteService: RemoteService, private route: ActivatedRoute) {}
+    constructor(
+        public authenticationService: AuthenticationService,
+        private remoteService: RemoteService,
+        private route: ActivatedRoute,
+    ) { }
 
     public ngOnInit(): void {
         this.remoteService.get(`courses/${this.route.snapshot.params.id}`).subscribe((data) => {
             this.course = data;
+            for (const message of this.course.messages) {
+                message.fromMe = message.sender.id
+                    == this.authenticationService.currentUser.id;
+            }
+        });
+    }
+
+    public onMessageSent(message: Message): void {
+        this.remoteService.post(`courses/${this.course.id}/chat`, { text: message.text, citation: message.citation }).subscribe((m: Message) => {
+            Object.assign(this.course.messages[this.course.messages.indexOf(message)], m);
+            this.course.messages[this.course.messages.findIndex((msg) => msg.id == m.id)]
+                .status = MessageStatus.Sent;
         });
     }
 }

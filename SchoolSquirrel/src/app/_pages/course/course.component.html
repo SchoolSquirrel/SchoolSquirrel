@@ -4,7 +4,7 @@
         <ng-container ngbNavItem>
             <a ngbNavLink><i class="far fa-comment"></i> {{'general.chat' | translate}}</a>
             <ng-template ngbNavContent>
-                <squirrel-chat-ui hideHeader="true" class="h-100"></squirrel-chat-ui>
+                <squirrel-chat-ui hideHeader="true" [messages]="course.messages" [me]="authenticationService.currentUser" (messageSent)="onMessageSent($event)" class="h-100"></squirrel-chat-ui>
             </ng-template>
         </ng-container>
         <ng-container ngbNavItem>
