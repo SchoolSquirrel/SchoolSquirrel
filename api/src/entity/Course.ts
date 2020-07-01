@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 import { User } from "./User";
 import { Assignment } from "./Assignment";
+import { Message } from "./Message";
 
 @Entity()
 export class Course {
@@ -27,4 +28,7 @@ export class Course {
 
     @OneToMany(() => Assignment, (assignment) => assignment.course)
     public assignments: Assignment[];
+
+    @OneToMany(() => Message, (message) => message.course)
+    public messages: Message[];
 }

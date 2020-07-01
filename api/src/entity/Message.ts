@@ -7,6 +7,7 @@ ManyToOne,
 import { User } from "./User";
 import { MessageStatus } from "./MessageStatus";
 import { Chat } from "./Chat";
+import { Course } from "./Course";
 
 @Entity()
 export class Message {
@@ -30,6 +31,9 @@ export class Message {
 
   @ManyToOne(() => Chat, (chat) => chat.messages)
   public chat: Chat;
+
+  @ManyToOne(() => Course, (course) => course.messages)
+  public course: Course;
 
   public reactions?: Record<string, User[]>;
   public fromMe?: boolean;

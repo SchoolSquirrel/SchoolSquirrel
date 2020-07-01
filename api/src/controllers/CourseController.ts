@@ -3,6 +3,7 @@ import * as i18n from "i18n";
 import { getRepository } from "typeorm";
 import { Course } from "../entity/Course";
 import { User } from "../entity/User";
+import { sendMessage } from "../utils/messages";
 class CourseController {
     public static listAll = async (req: Request, res: Response) => {
         const courseRepository = getRepository(Course);
@@ -12,8 +13,12 @@ class CourseController {
 
     public static getCourse = async (req: Request, res: Response) => {
         const courseRepository = getRepository(Course);
-        const course = await courseRepository.findOne(req.params.id, { relations: ["students", "teachers"]});
+        const course = await courseRepository.findOne(req.params.id, { relations: ["students", "teachers", "messages", "messages.sender"]});
         res.send(course);
+    }
+
+    public static sendMessage = async (req: Request, res: Response) => {
+        sendMessage(req, res, "course");
     }
 
     public static newCourse = async (req: Request, res: Response) => {
