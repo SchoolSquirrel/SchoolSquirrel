@@ -26,40 +26,42 @@
             <div class="form-group row">
                 <label for="title" class="col-sm-2 col-form-label">{{'pages.assignments.title' | translate}}</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="title" formControlName="title" [placeholder]="'pages.assignments.title' | translate">
+                    <input type="text" class="form-control" id="title" formControlName="title" [class.is-invalid]="submitted && newAssignmentForm.controls.title.invalid" [class.is-valid]="newAssignmentForm.controls.title.valid" required [placeholder]="'pages.assignments.title' | translate">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="title" class="col-sm-2 col-form-label">{{'general.course' | translate}}</label>
                 <div class="col-sm-10">
-                    <select class="form-control" formControlName="course">
-                    <option disabled value="" selected>-- {{'general.pleaseSelect' | translate}} --</option>
-                    <option *ngFor="let course of courses" [value]="course.id">{{course.name}}</option>
-                </select>
+                    <select class="form-control" formControlName="course" [class.is-invalid]="submitted && newAssignmentForm.controls.course.invalid" [class.is-valid]="newAssignmentForm.controls.course.valid" required>
+                        <option disabled value="" selected>-- {{'general.pleaseSelect' | translate}} --</option>
+                        <option *ngFor="let course of courses" [value]="course.id">{{course.name}}</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="content" class="col-sm-2 col-form-label">{{'pages.assignments.due' | translate}}</label>
                 <div class="input-group col-sm-5">
-                    <input class="form-control" formControlName="date" placeholder="dd.mm.yyyy" name="d2" ngbDatepicker #d2="ngbDatepicker">
+                    <input class="form-control" formControlName="date" [class.is-invalid]="submitted && newAssignmentForm.controls.date.invalid" [class.is-valid]="newAssignmentForm.controls.date.valid" required placeholder="dd.mm.yyyy" name="d2" ngbDatepicker #d2="ngbDatepicker">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"><i class="fas fa-calendar-alt"></i></button>
                     </div>
                 </div>
                 <div class="col-sm-5">
-                    <input type="number" maxlength="2" inputmode="numeric" min="0" max="23" class="form-control time-input d-inline" placeholder="HH" formControlName="timeHours"> :
-                    <input type="number" maxlength="2" inputmode="numeric" min="0" max="59" class="form-control time-input d-inline" placeholder="MM" formControlName="timeMinutes">
+                    <input type="number" maxlength="2" inputmode="numeric" [class.is-invalid]="submitted && newAssignmentForm.controls.timeHours.invalid" [class.is-valid]="newAssignmentForm.controls.timeHours.valid" required min="0" max="23" class="form-control time-input d-inline"
+                        placeholder="HH" formControlName="timeHours"> :
+                    <input type="number" maxlength="2" inputmode="numeric" [class.is-invalid]="submitted && newAssignmentForm.controls.timeMinutes.invalid" [class.is-valid]="newAssignmentForm.controls.timeMinutes.valid" required min="0" max="59" class="form-control time-input d-inline"
+                        placeholder="MM" formControlName="timeMinutes">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="content" class="col-sm-2 col-form-label">{{'pages.assignments.content' | translate}}</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="content" formControlName="content" [placeholder]="'pages.assignments.content' | translate"></textarea>
+                    <textarea class="form-control" id="content" [class.is-invalid]="submitted && newAssignmentForm.controls.content.invalid" [class.is-valid]="newAssignmentForm.controls.content.valid" required formControlName="content" [placeholder]="'pages.assignments.content' | translate"></textarea>
                 </div>
             </div>
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-success" (click)="modal.close('Save click')">{{'general.create' | translate}}</button>
+        <button type="button" class="btn btn-outline-success" (click)="submitted = true; newAssignmentForm.valid ? modal.close() : undefined">{{'general.create' | translate}}</button>
     </div>
 </ng-template>

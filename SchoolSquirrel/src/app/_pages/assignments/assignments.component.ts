@@ -32,16 +32,30 @@ export class AssignmentsComponent {
         timeHours: new FormControl("23", [Validators.required, Validators.min(0), Validators.max(23)]),
         timeMinutes: new FormControl("59", [Validators.required, Validators.min(0), Validators.max(59)]),
     });
+    public submitted = false;
     constructor(
         private remoteService: RemoteService,
         private modalService: NgbModal,
     ) { }
 
     public newAssignment(content: ElementRef): void {
-        this.modalService.open(content, { size: "xl" }).result.then((result) => {
-            if (result.newTitle && result.newContent) {
-                this.remoteService.post("assignments", { title: result.newTitle, content: result.newContent }).subscribe((data) => {
+        this.modalService.open(content, { size: "xl" }).result.then(() => {
+            if (this.newAssignmentForm.valid) {
+                this.submitted = false;
+                this.remoteService.post("assignments", {
+                    title: this.newAssignmentForm.controls.title.value,
+                    content: this.newAssignmentForm.controls.content.value,
+                    course: this.newAssignmentForm.controls.course.value,
+                    due: new Date(
+                        this.newAssignmentForm.controls.date.value.year,
+                        this.newAssignmentForm.controls.date.value.month,
+                        this.newAssignmentForm.controls.date.value.day,
+                        this.newAssignmentForm.controls.timeHours.value,
+                        this.newAssignmentForm.controls.timeMinutes.value,
+                    ),
+                }).subscribe((data) => {
                     if (data && data.success) {
+                        this.newAssignmentForm.reset();
                         this.loadAssignments();
                     }
                 });

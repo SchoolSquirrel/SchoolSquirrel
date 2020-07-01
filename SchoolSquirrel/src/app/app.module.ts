@@ -7,7 +7,7 @@ import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from "@angular/common
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModule, NgbDateParserFormatter } from "@ng-bootstrap/ng-bootstrap";
 import {
     GridModule, PageService, SortService,
     FilterService, EditService, ToolbarService, ForeignKeyService,
@@ -46,6 +46,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { CourseComponent } from "./_pages/course/course.component";
 import { FullPageLoadingComponent } from "./_components/full-page-loading/full-page-loading.component";
 import { ChatComponent } from "./_pages/chat/chat.component";
+import { NgbDateCustomParserFormatter } from "./_helpers/NgbDateCustomParserFormatter";
 
 registerLocaleData(localeDe, localeDeExtra);
 declare const require: any;
@@ -134,6 +135,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         TimelineViewsService,
         TimelineMonthService,
         { provide: "navbarActionsService", useExisting: NavbarActionsService },
+        { provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter },
     ],
     bootstrap: [AppComponent],
     schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
