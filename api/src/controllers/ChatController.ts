@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import * as i18n from "i18n";
-import { getRepository, createQueryBuilder } from "typeorm";
+import { getRepository } from "typeorm";
 import { Chat } from "../entity/Chat";
 import { User } from "../entity/User";
-import { Message } from "../entity/Message";
+import { sendMessage } from "../utils/messages";
 class ChatController {
     public static listAll = async (req: Request, res: Response) => {
         const chatRepository = getRepository(Chat);
@@ -32,22 +32,7 @@ class ChatController {
     }
 
     public static sendMessage = async (req: Request, res: Response) => {
-        const { text, citation } = req.body;
-        if (!text) {
-            res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });
-            return;
-        }
-        const chatRepository = getRepository(Chat);
-        const userRepository = getRepository(User);
-        const messageRepository = getRepository(Message);
-        let message = new Message();
-        message.text = text;
-        message.chat = await chatRepository.findOne(req.params.id);
-        message.sender = await userRepository.findOne(res.locals.jwtPayload.userId);
-        message.date = new Date();
-        message.citation = citation;
-        message = await messageRepository.save(message);
-        res.send(message);
+        sendMessage(req, res, "chat");
     }
 
     public static getChat = async (req: Request, res: Response) => {
@@ -56,7 +41,7 @@ class ChatController {
             const chat = await chatRepository.findOneOrFail(req.params.id, { relations: ["users", "messages", "messages.sender"] });
             if (chat.users.length > 2) {
                 // is a group chat
-                chat.info = chat.users.map((u) => u.username).join(", ");
+                chat.info = chat.users.map((u) => u.name).join(", ");
             } else {
                 chat.info = `Last seen: ${"unknown"}`;
             }
