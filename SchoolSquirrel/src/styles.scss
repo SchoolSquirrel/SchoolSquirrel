@@ -115,6 +115,18 @@ ngb-accordion.tree-view-accordion {
     }
 }
 
+nav.nav-tabs.nav.modern-tabs {
+    border-bottom: 1px solid lightgrey;
+    .nav-link.nav-item {
+        border: 0;
+        color: #495057;
+        &.active {
+            border-bottom: 3px solid rgb(28, 106, 223);
+            color: rgb(28, 106, 223);
+        }
+    }
+}
+
 
 /* Material Icons */
 
