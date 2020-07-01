@@ -33,6 +33,7 @@ export class AssignmentsComponent {
         timeMinutes: new FormControl("59", [Validators.required, Validators.min(0), Validators.max(59)]),
     });
     public submitted = false;
+    public activeIds: string[] = [];
     constructor(
         private remoteService: RemoteService,
         private modalService: NgbModal,
@@ -78,6 +79,7 @@ export class AssignmentsComponent {
         this.remoteService.get("assignments").subscribe((data: Course[]) => {
             if (data) {
                 this.courses = data;
+                this.activeIds = this.courses.map((c) => (`panel-${c.id}`));
             }
         });
     }

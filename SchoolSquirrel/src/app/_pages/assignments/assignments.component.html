@@ -2,8 +2,8 @@
 
 <button class="btn btn-outline-primary mb-4" (click)="newAssignment(assignmentModal)">{{'pages.assignments.newAssignment' | translate}}</button>
 
-<ngb-accordion #acc="ngbAccordion" class="tree-view-accordion" activeIds="ngb-panel-0">
-    <ngb-panel [title]="course.name" *ngFor="let course of courses">
+<ngb-accordion #acc="ngbAccordion" class="tree-view-accordion" [activeIds]="activeIds">
+    <ngb-panel [title]="course.name" *ngFor="let course of courses" [id]="'panel-' + course.id">
         <ng-template ngbPanelContent>
             <div class="card p-2" *ngFor="let assignment of course.assignments">
                 {{assignment | json}}
