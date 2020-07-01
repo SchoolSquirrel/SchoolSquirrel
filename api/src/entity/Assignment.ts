@@ -17,6 +17,9 @@ export class Assignment {
   @Column({length: 10000})
   public content: string;
 
+  @Column()
+  public due: Date;
+
   @ManyToOne(() => Course, (course) => course.assignments)
   public course: Course;
 }

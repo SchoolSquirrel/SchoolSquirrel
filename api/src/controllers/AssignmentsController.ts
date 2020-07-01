@@ -5,7 +5,7 @@ import { Assignment } from "../entity/Assignment";
 import { Course } from "../entity/Course";
 
 class AssignmentsController {
-    public static listAll = async (req: Request, res: Response) => {
+    public static listCoursesWithAssignments = async (req: Request, res: Response) => {
         const courseRepository = getRepository(Course);
         const assignments = await courseRepository.find({relations: ["assignments"]});
         res.send(assignments);
@@ -18,8 +18,8 @@ class AssignmentsController {
     }
 
     public static newAssignment = async (req: Request, res: Response) => {
-        const { title, content, course } = req.body;
-        if (!(title && content && course)) {
+        const { title, content, course, due } = req.body;
+        if (!(title && content && course && due)) {
             res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });
             return;
         }
@@ -27,6 +27,7 @@ class AssignmentsController {
         const assignment = new Assignment();
         assignment.title = title;
         assignment.content = content;
+        assignment.due = due;
         assignment.course = await getRepository(Course).findOne(course);
 
         const assignmentRepository = getRepository(Assignment);

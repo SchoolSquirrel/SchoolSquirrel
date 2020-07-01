@@ -4,7 +4,7 @@ import AssignmentsController from "../controllers/AssignmentsController";
 
 const router = Router();
 
-router.get("/", [checkJwt], AssignmentsController.listAll);
+router.get("/", [checkJwt], AssignmentsController.listCoursesWithAssignments);
 router.get("/:id", [checkJwt], AssignmentsController.getAssignment);
 router.post("/", [checkJwt], AssignmentsController.newAssignment);
 // router.post("/:id", [checkJwt], AssignmentsController.editAssignment);
