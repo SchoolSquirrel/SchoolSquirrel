@@ -43,7 +43,8 @@
             "noAssignments": "Keine Aufgaben!",
             "title": "Titel",
             "content": "Inhalt",
-            "due": "Abgabe am"
+            "due": "Abgabe am",
+            "view": "Ansehen"
         }
     },
     "libraries": {

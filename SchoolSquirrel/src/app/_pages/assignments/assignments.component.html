@@ -5,8 +5,16 @@
 <ngb-accordion #acc="ngbAccordion" class="tree-view-accordion" [activeIds]="activeIds">
     <ngb-panel [title]="course.name" *ngFor="let course of courses" [id]="'panel-' + course.id">
         <ng-template ngbPanelContent>
-            <div class="card p-2" *ngFor="let assignment of course.assignments">
-                {{assignment | json}}
+            <div class="card p-2 my-1" *ngFor="let assignment of course.assignments">
+                <div class="d-flex justify-content-between">
+                    <h6><b>{{assignment.title}}</b></h6>
+                    <span class="text-muted float-right">{{'pages.assignments.due' | translate}} {{assignment.due | date}}, {{assignment.due | date:'shortTime'}} Uhr</span>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <span class="w-100 text-truncate">{{assignment.content}}</span>
+                    <a [routerLink]="['/assignments', assignment.id]" class="stretched-link ml-5">{{'pages.assignments.view' | translate}}</a>
+                </div>
             </div>
             <span class="text-muted" *ngIf="course.assignments.length == 0">{{'pages.assignments.noAssignments' | translate}}</span>
         </ng-template>
