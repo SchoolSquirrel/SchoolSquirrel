@@ -20,9 +20,9 @@ class UserController {
         const user = await userRepository.findOne(req.params.id);
         if (req.params.ext == "svg") {
             res.contentType("svg");
-            res.send(avatars.create(user.username));
+            res.send(avatars.create(user.name));
         } else {
-            const parts = user.username.split(" ");
+            const parts = user.name.split(" ");
             res.redirect(`https://eu.ui-avatars.com/api/?name=${parts[0][0]}+${parts[parts.length - 1][0]}&size=512`)
         }
     }
@@ -35,7 +35,7 @@ class UserController {
         }
 
         const user = new User();
-        user.username = name;
+        user.name = name;
         user.password = req.app.locals.config.DEFAULT_PASSWORD;
         user.role = role;
 
@@ -75,7 +75,7 @@ class UserController {
             return;
         }
 
-        user.username = name;
+        user.name = name;
         user.role = role;
         user.grade = await gradeRepository.findOne(grade);
 

@@ -10,6 +10,7 @@
 /* do not edit */ import { User } from "./User";
 /* do not edit */ import { MessageStatus } from "./MessageStatus";
 /* do not edit */ import { Chat } from "./Chat";
+/* do not edit */ import { Course } from "./Course";
 /* do not edit */ 
 /* do not edit */ 
 /* do not edit */ export class Message {
@@ -33,6 +34,9 @@
 /* do not edit */ 
 /* do not edit */   
 /* do not edit */   public chat: Chat;
+/* do not edit */ 
+/* do not edit */   
+/* do not edit */   public course: Course;
 /* do not edit */ 
 /* do not edit */   public reactions?: Record<string, User[]>;
 /* do not edit */   public fromMe?: boolean;

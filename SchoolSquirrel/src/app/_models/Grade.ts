@@ -7,9 +7,7 @@
 /*    +-----------------------------------------------------------------------+    */
 
 /* do not edit */ 
-/* do not edit */ 
 /* do not edit */ import { User } from "./User";
-/* do not edit */ import { Assignment } from "./Assignment";
 /* do not edit */ 
 /* do not edit */ 
 /* do not edit */ 
@@ -22,8 +20,5 @@
 /* do not edit */ 
 /* do not edit */   
 /* do not edit */   public users: User[];
-/* do not edit */ 
-/* do not edit */   
-/* do not edit */   public assignments: Assignment[];
 /* do not edit */ }
 /* do not edit */

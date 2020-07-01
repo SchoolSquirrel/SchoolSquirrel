@@ -55,7 +55,7 @@ export class ChatComponent implements OnInit {
     }
 
     public getChatName(chat: Chat): string {
-        return chat.name ? chat.name : this.isGroupChat(chat) ? chat.users.map((u) => u.username.split(" ")[0]).join(", ") : this.getOtherUserInPrivateChat(chat).username;
+        return chat.name ? chat.name : this.isGroupChat(chat) ? chat.users.map((u) => u.name.split(" ")[0]).join(", ") : this.getOtherUserInPrivateChat(chat).name;
     }
 
     public getOtherUserInPrivateChat(chat: Chat): User {

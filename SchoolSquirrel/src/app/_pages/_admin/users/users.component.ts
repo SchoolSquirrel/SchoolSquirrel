@@ -36,7 +36,7 @@ export class UsersComponent {
     public roleFilter: IFilterUI = getDropdownFilterParams(this.roles, "role", () => this.usersGrid);
     public gradeParams: IEditCell;
     public gradeFilter: IFilterUI;
-    public filterOptions: { columns: [{ field: "username", matchCase: true, operator: "contains" }] };
+    public filterOptions: { columns: [{ field: "name", matchCase: true, operator: "contains" }] };
     public allDataLoaded = false;
 
     constructor(
@@ -59,7 +59,7 @@ export class UsersComponent {
         this.remoteService.get("admin/grades").subscribe((data: Grade[]) => {
             this.grades = data;
             this.grades = this.grades.map((g: any) => {
-                g.usersFormatted = g.users.map((u) => u.username).join(", ");
+                g.usersFormatted = g.users.map((u) => u.name).join(", ");
                 return g;
             });
 
@@ -84,12 +84,12 @@ export class UsersComponent {
     } */
 
     public usersActionComplete(args: {
-        requestType: string; data: { id: any; username: any; role: any; grade: { name: any; }; };
+        requestType: string; data: { id: any; name: any; role: any; grade: { name: any; }; };
     }): void {
         if (args.requestType === "save") {
             if (args.data.id) {
                 this.remoteService.post(`admin/users/${args.data.id}`, {
-                    name: args.data.username,
+                    name: args.data.name,
                     role: args.data.role,
                     grade: this.getGradeIdFromName(args.data.grade.name),
                 }).subscribe((data) => {
@@ -99,7 +99,7 @@ export class UsersComponent {
                 });
             } else {
                 this.remoteService.post("admin/users", {
-                    name: args.data.username,
+                    name: args.data.name,
                     role: args.data.role,
                     grade: this.getGradeIdFromName(args.data.grade.name),
                 }).subscribe((data) => {

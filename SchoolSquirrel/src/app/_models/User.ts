@@ -20,7 +20,7 @@
 /* do not edit */     public id: number;
 /* do not edit */ 
 /* do not edit */     
-/* do not edit */     public username: string;
+/* do not edit */     public name: string;
 /* do not edit */ 
 /* do not edit */     
 /* do not edit */     public role: "student" | "teacher" | "admin";

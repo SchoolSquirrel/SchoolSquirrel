@@ -16,13 +16,13 @@ import { Chat } from "./Chat";
 import { Message } from "./Message";
 
 @Entity()
-@Unique(["username"])
+@Unique(["name"])
 export class User {
     @PrimaryGeneratedColumn()
     public id: number;
 
     @Column()
-    public username: string;
+    public name: string;
 
     @Column()
     public role: "student" | "teacher" | "admin";

@@ -17,8 +17,8 @@ export class NavbarUsersService {
         this.remoteService.get("users").subscribe((users: User[]) => {
             for (const user of users) {
                 (window as any).actions.push({
-                    description: `Chat with ${user.username}`,
-                    name: user.username,
+                    description: `Chat with ${user.name}`,
+                    name: user.name,
                     subtitle: user.grade?.name,
                     isUser: true,
                     img: this.remoteService.getImageUrl(`users/${user.id}.svg`, this.authenticationService),

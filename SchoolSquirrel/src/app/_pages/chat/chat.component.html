@@ -14,7 +14,7 @@
         </div>
     </div>
     <div class="col-9 px-0">
-        <squirrel-chat-ui *ngIf="currentChat" [subtitle]="currentChat.info" [messages]="currentChat.messages" [me]="authenticationService.currentUser" [title]="getOtherUserInPrivateChat(currentChat).username" (messageSent)="onMessageSent($event)" [profileImageSource]="getChatImageUrl(currentChat)"></squirrel-chat-ui>
+        <squirrel-chat-ui *ngIf="currentChat" [subtitle]="currentChat.info" [messages]="currentChat.messages" [me]="authenticationService.currentUser" [title]="getOtherUserInPrivateChat(currentChat).name" (messageSent)="onMessageSent($event)" [profileImageSource]="getChatImageUrl(currentChat)"></squirrel-chat-ui>
     </div>
     <!-- (attachmentClicked)="onAttachmentClicked($event)" (audioCallClicked)="onAudioCallClicked()" (menuItemClicked)="onMenuItemClicked($event)" (messageEdited)="onMessageEdited($event)" (messageSent)="onMessageSent($event)" (reaction)="onReaction($event)"
             (videoCallClicked)="onVideoCallClicked()" [attachmentButtons]="attachmentButtons" [emojiMartOptions]="emojiMartOptions" [menuItems]="menuItems" [messages]="messages" -->

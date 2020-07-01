@@ -7,7 +7,7 @@
 /*    +-----------------------------------------------------------------------+    */
 
 /* do not edit */ 
-/* do not edit */ import { Grade } from "./Grade";
+/* do not edit */ import { Course } from "./Course";
 /* do not edit */ 
 /* do not edit */ 
 /* do not edit */ export class Assignment {
@@ -21,6 +21,6 @@
 /* do not edit */   public content: string;
 /* do not edit */ 
 /* do not edit */   
-/* do not edit */   public grade: Grade;
+/* do not edit */   public course: Course;
 /* do not edit */ }
 /* do not edit */

@@ -9,7 +9,7 @@
                             <i [class]="'mr-2 fas fa-' + (data.role == 'student' ? 'user-graduate' : data.role == 'teacher' ? 'chalkboard-teacher' : 'user-shield')"></i> {{data.role == "student" ? "Schüler" : data.role == "teacher" ? "Lehrer" : "Admin"}}
                         </ng-template>
                     </e-column>
-                    <e-column field="username" headerText="Name"></e-column>
+                    <e-column field="name" headerText="Name"></e-column>
                     <e-column field="grade.name" headerText="Klasse" editType="dropdownedit" [filterBarTemplate]='gradeFilter' [edit]="gradeParams"></e-column>
                     <e-column field="createdAt" headerText="Hinzugefügt am" type="date" [allowEditing]="false" [format]="{ type: 'dateTime', format: 'dd.MM.yyyy hh:mm' }"></e-column>
                 </e-columns>

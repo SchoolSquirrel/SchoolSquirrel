@@ -7,8 +7,8 @@ import { User } from "../entity/User";
 class AuthController {
 
     public static login = async (req: Request, res: Response) => {
-        const { username, password } = req.body;
-        if (!(username && password)) {
+        const { name, password } = req.body;
+        if (!(name && password)) {
             res.status(400).end(JSON.stringify({ error: i18n.__("errors.usernameOrPasswordEmpty") }));
         }
 
@@ -18,7 +18,7 @@ class AuthController {
         try {
             user = await userRepository.createQueryBuilder("user")
                 .addSelect("user.password")
-                .where("user.username = :username", { username })
+                .where("user.name = :name", { name })
                 .getOne();
         } catch (error) {
             res.status(401).end(JSON.stringify({ message: i18n.__("errors.wrongUsername") }));
@@ -33,7 +33,7 @@ class AuthController {
             return;
         }
         const token = jwt.sign(
-            { userId: user.id, username: user.username, role: user.role },
+            { userId: user.id, name: user.name, role: user.role },
             req.app.locals.config.JWT_SECRET,
             { expiresIn: "1h" },
         );
@@ -63,8 +63,8 @@ class AuthController {
             res.status(401).send({ message: i18n.__("errors.unknownError") });
             return;
         }
-        const { userId, username, role } = jwtPayload;
-        const newToken = jwt.sign({ userId, username, role }, req.app.locals.config.JWT_SECRET, {
+        const { userId, name, role } = jwtPayload;
+        const newToken = jwt.sign({ userId, name, role }, req.app.locals.config.JWT_SECRET, {
             expiresIn: "1h",
         });
 
@@ -72,7 +72,7 @@ class AuthController {
         res.send({
             user: {
                 id: userId,
-                username,
+                name,
                 role,
                 jwtToken: newToken,
         } });

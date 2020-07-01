@@ -51,14 +51,14 @@ export class SelectUsersComponent {
     }
 
     public selected(event: MatAutocompleteSelectedEvent): void {
-        this.users.push(this.allUsers.filter((u) => u.username == event.option.viewValue)[0]);
+        this.users.push(this.allUsers.filter((u) => u.name == event.option.viewValue)[0]);
         this.userInput.nativeElement.value = "";
         this.userCtrl.setValue(null);
         this.emitNewUsers();
     }
 
     private _filter(searchTerm: string): User[] {
-        return this.allUsers.filter((u) => u.username.toLowerCase().indexOf(searchTerm) === 0);
+        return this.allUsers.filter((u) => u.name.toLowerCase().indexOf(searchTerm) === 0);
     }
 
     private emitNewUsers() {

@@ -28,8 +28,8 @@ export class AuthenticationService {
         private router: Router,
     ) { }
 
-    public login(username: string, password: string, rememberMe: boolean): Observable<User> {
-        return this.remoteService.post("auth/login", { password, username }).pipe(
+    public login(name: string, password: string, rememberMe: boolean): Observable<User> {
+        return this.remoteService.post("auth/login", { password, name }).pipe(
             map((user: User) => {
                 // login successful if there's a jwt token in the response
                 this.loggedIn(user, rememberMe);
