@@ -3,6 +3,7 @@ import * as i18n from "i18n";
 import { getRepository } from "typeorm";
 import { Assignment } from "../entity/Assignment";
 import { Course } from "../entity/Course";
+import { sanitizeHtml } from "../utils/html";
 
 class AssignmentsController {
     public static listCoursesWithAssignments = async (req: Request, res: Response) => {
@@ -26,7 +27,7 @@ class AssignmentsController {
 
         const assignment = new Assignment();
         assignment.title = title;
-        assignment.content = content;
+        assignment.content = sanitizeHtml(content);
         assignment.due = due;
         assignment.course = await getRepository(Course).findOne(course);
 
