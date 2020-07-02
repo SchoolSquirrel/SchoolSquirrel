@@ -58,10 +58,7 @@ export class CalendarComponent {
         } else {
             this.selectedCategories.push(category);
         }
-        this.eventSettings.dataSource = this.allEvents.filter(
-            (e) => this.selectedCategories.includes(e.Category),
-        );
-        this.refreshSchedule();
+        this.filterEvents();
     }
 
     public ngOnInit(): void {
@@ -88,8 +85,8 @@ export class CalendarComponent {
                     EndTimezone: ev.data[0].EndTimezone,
                     StartTimezone: ev.data[0].StartTimezone,
                 } as SchedulerEvent).subscribe((events) => {
-                    this.eventSettings.dataSource = events;
-                    this.refreshSchedule();
+                    this.allEvents = events;
+                    this.filterEvents();
                 });
                 break;
             case "eventChanged":
@@ -133,5 +130,12 @@ export class CalendarComponent {
 
     private refreshSchedule() {
         (document.querySelector("ejs-schedule") as any).ej2_instances[0].eventSettings.dataSource = this.eventSettings.dataSource;
+    }
+
+    private filterEvents() {
+        this.eventSettings.dataSource = this.allEvents.filter(
+            (e) => this.selectedCategories.includes(e.Category),
+        );
+        this.refreshSchedule();
     }
 }
