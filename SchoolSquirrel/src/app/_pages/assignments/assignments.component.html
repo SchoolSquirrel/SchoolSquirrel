@@ -3,7 +3,7 @@
 <button class="btn btn-outline-primary mb-4" (click)="newAssignment(assignmentModal)">{{'pages.assignments.newAssignment' | translate}}</button>
 
 <ngb-accordion #acc="ngbAccordion" class="tree-view-accordion" [activeIds]="activeIds">
-    <ngb-panel [title]="course.name" *ngFor="let course of courses" [id]="'panel-' + course.id">
+    <ngb-panel [title]="course.name + ' (' + course.assignments.length + ')'" *ngFor="let course of courses" [id]="'panel-' + course.id">
         <ng-template ngbPanelContent>
             <div class="card p-2 my-1" *ngFor="let assignment of course.assignments">
                 <div class="d-flex justify-content-between">
