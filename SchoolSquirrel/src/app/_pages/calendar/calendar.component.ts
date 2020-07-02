@@ -24,7 +24,7 @@ import { SchedulerEvent } from "../../_models/SchedulerEvent";
 })
 export class CalendarComponent {
     public weekFirstDay = 1;
-    public eventSettings: EventSettingsModel = {};
+    public eventSettings: any = {};
     public loading = true;
     @ViewChild("calendar") public calendar: ScheduleComponent;
     constructor(private fts: FastTranslateService, private remoteService: RemoteService) {
@@ -80,7 +80,11 @@ export class CalendarComponent {
                 if (!(ev && ev.data && ev.data[0] && ev.data[0].Id)) {
                     return;
                 }
-                this.remoteService.delete(`events/${ev.data[0].Id}`).subscribe();
+                this.remoteService.delete(`events/${ev.data[0].Id}`).subscribe(() => {
+                    this.eventSettings.dataSource = this.eventSettings
+                        .dataSource.filter((e) => e.Id != ev.data[0].Id);
+                    this.refreshSchedule();
+                });
                 break;
             default:
                 // eslint-disable-next-line no-console
