@@ -1,3 +1,4 @@
-<div class="py-3 h-100">
-    <ejs-schedule height="100%" locale="de" [firstDayOfWeek]="weekFirstDay"></ejs-schedule>
+<div class="py-3 h-100" *ngIf="!loading">
+    <ejs-schedule height="100%" locale="de" [firstDayOfWeek]="weekFirstDay" [eventSettings]="eventSettings"></ejs-schedule>
 </div>
+<app-full-page-loading *ngIf="loading"></app-full-page-loading>
