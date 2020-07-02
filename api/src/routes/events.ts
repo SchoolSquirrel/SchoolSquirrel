@@ -6,5 +6,6 @@ const router = Router();
 
 router.get("/", [checkJwt], EventController.listAll);
 router.post("/", [checkJwt], EventController.newEvent);
+router.post("/:id", [checkJwt], EventController.updateEvent);
 
 export default router;

@@ -58,6 +58,32 @@ class EventController {
         }
         res.redirect("events");
     }
+
+    public static updateEvent = async (req: Request, res: Response) => {
+        const { Subject, StartTimezone, EndTimezone, RecurrenceRule, IsAllDay, Description, EndTime, Location, StartTime }: SchedulerEvent = req.body;
+        if (!(Subject && EndTime && StartTime)) {
+            res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });
+            return;
+        }
+        const eventRepository = getRepository(Event);
+        try {
+            const event = await eventRepository.findOneOrFail(req.params.id);
+            event.Subject = Subject;
+            event.StartTimezone = StartTimezone;
+            event.EndTimezone = EndTimezone;
+            event.RecurrenceRule = RecurrenceRule;
+            event.IsAllDay = IsAllDay;
+            event.Description = Description;
+            event.EndTime = EndTime;
+            event.Location = Location;
+            event.StartTime = StartTime;
+            await eventRepository.save(event);
+        } catch {
+            res.status(400).send({ message: i18n.__("errors.eventNotFound") });
+            return;
+        }
+        res.send({ success: true });
+    }
 }
 
 export default EventController;
