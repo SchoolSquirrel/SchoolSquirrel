@@ -2,6 +2,7 @@ import { Component, ElementRef } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { RemoteService } from "../../_services/remote.service";
+import { TinyConfigService } from "../../_services/tiny-config.service";
 import { Assignment } from "../../_models/Assignment";
 import { NavbarActions } from "../../_decorators/navbar-actions.decorator";
 import { Course } from "../../_models/Course";
@@ -35,6 +36,7 @@ export class AssignmentsComponent {
     public submitted = false;
     public activeIds: string[] = [];
     constructor(
+        public tinyConfigService: TinyConfigService,
         private remoteService: RemoteService,
         private modalService: NgbModal,
     ) { }

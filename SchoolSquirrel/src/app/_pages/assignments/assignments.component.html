@@ -64,7 +64,8 @@
             <div class="form-group row">
                 <label for="content" class="col-sm-2 col-form-label">{{'pages.assignments.content' | translate}}</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="content" [class.is-invalid]="submitted && newAssignmentForm.controls.content.invalid" [class.is-valid]="newAssignmentForm.controls.content.valid" required formControlName="content" [placeholder]="'pages.assignments.content' | translate"></textarea>
+                    <editor id="content" [class.is-invalid]="submitted && newAssignmentForm.controls.content.invalid" [class.is-valid]="newAssignmentForm.controls.content.valid" required formControlName="content" [init]="tinyConfigService.getConfig('pages.assignments.content' | translate)"></editor>
+
                 </div>
             </div>
         </form>

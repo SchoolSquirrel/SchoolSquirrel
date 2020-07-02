@@ -137,6 +137,20 @@ span.emoji-pipe-image {
     }
 }
 
+editor {
+    border: 1px solid transparent;
+    &.is-valid,
+    &.is-invalid {
+        border-radius: 0.25rem;
+    }
+    &.is-valid {
+        border-color: #28a745;
+    }
+    &.is-invalid {
+        border-color: #dc3545;
+    }
+}
+
 
 /* Material Icons */
 

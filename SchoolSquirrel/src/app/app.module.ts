@@ -27,6 +27,7 @@ import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatIconModule } from "@angular/material/icon";
 import { SquirrelChatUiModule } from "@schoolsquirrel/squirrel-chat-ui";
 import { FileManagerModule } from "@syncfusion/ej2-angular-filemanager";
+import { EditorModule } from "@tinymce/tinymce-angular";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./_pages/home/home.component";
 import { LoginComponent } from "./_pages/login/login.component";
@@ -35,6 +36,7 @@ import { ToastComponent } from "./_components/toast/toast.component";
 import { SidebarComponent } from "./_components/sidebar/sidebar.component";
 import { NavbarComponent } from "./_components/navbar/navbar.component";
 import { AssignmentsComponent } from "./_pages/assignments/assignments.component";
+import { AssignmentComponent } from "./_pages/assignment/assignment.component";
 import { CalendarComponent } from "./_pages/calendar/calendar.component";
 import { UsersComponent } from "./_pages/_admin/users/users.component";
 import { SettingsComponent } from "./_pages/_admin/settings/settings.component";
@@ -47,6 +49,8 @@ import { CourseComponent } from "./_pages/course/course.component";
 import { FullPageLoadingComponent } from "./_components/full-page-loading/full-page-loading.component";
 import { ChatComponent } from "./_pages/chat/chat.component";
 import { NgbDateCustomParserFormatter } from "./_helpers/NgbDateCustomParserFormatter";
+import { SafeUserHtmlPipe } from "./_pipes/safe-user-html.pipe";
+import { HtmlToTextPipe } from "./_pipes/html-to-text.pipe";
 
 registerLocaleData(localeDe, localeDeExtra);
 declare const require: any;
@@ -82,6 +86,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         CourseComponent,
         FullPageLoadingComponent,
         ChatComponent,
+        AssignmentComponent,
+        SafeUserHtmlPipe,
+        HtmlToTextPipe,
     ],
     imports: [
         BrowserModule,
@@ -107,6 +114,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         MatChipsModule,
         MatAutocompleteModule,
         MatIconModule,
+        EditorModule,
     ],
     providers: [
         {
