@@ -12,6 +12,7 @@ import { TeacherGuard } from "./_guards/teacher.guard";
 import { CoursesComponent } from "./_pages/courses/courses.component";
 import { CourseComponent } from "./_pages/course/course.component";
 import { ChatComponent } from "./_pages/chat/chat.component";
+import { AssignmentComponent } from "./_pages/assignment/assignment.component";
 
 export const routes: Routes = [
     /* *** Main routes *** */
@@ -23,6 +24,11 @@ export const routes: Routes = [
     {
         path: "assignments",
         component: AssignmentsComponent,
+        canActivate: [AuthenticationGuard],
+    },
+    {
+        path: "assignments/:id",
+        component: AssignmentComponent,
         canActivate: [AuthenticationGuard],
     },
     {

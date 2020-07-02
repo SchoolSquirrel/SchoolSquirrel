@@ -1,0 +1,15 @@
+<div *ngIf="assignment">
+    <div class="row mt-2">
+        <div class="col col-12 col-md-8">
+            <div class="card p-4">
+                <h1>{{assignment.title}}</h1>
+                <div [innerHTML]="assignment.content | safeUserHtml"></div>
+            </div>
+        </div>
+        <div class="col col-12 col-md-4">
+            ...
+        </div>
+    </div>
+
+</div>
+<app-full-page-loading *ngIf="!assignment"></app-full-page-loading>
