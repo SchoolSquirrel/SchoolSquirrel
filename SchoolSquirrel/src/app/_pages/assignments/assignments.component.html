@@ -12,7 +12,7 @@
                 </div>
 
                 <div class="d-flex justify-content-between">
-                    <span class="w-100 text-truncate">{{assignment.content}}</span>
+                    <span class="w-100 text-truncate">{{assignment.content | htmlToText}}</span>
                     <a [routerLink]="['/assignments', assignment.id]" class="stretched-link ml-5">{{'pages.assignments.view' | translate}}</a>
                 </div>
             </div>
