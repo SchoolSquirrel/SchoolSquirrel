@@ -20,4 +20,5 @@
 /* do not edit */     EndTimezone: string;
 /* do not edit */     RecurrenceRule: string;
 /* do not edit */     Category: EventCategory;
+/* do not edit */     IsReadonly?: boolean
 /* do not edit */ }

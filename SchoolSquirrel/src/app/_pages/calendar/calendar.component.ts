@@ -1,6 +1,6 @@
 import { Component, ViewChild } from "@angular/core";
 import { L10n, setCulture } from "@syncfusion/ej2-base";
-import { ScheduleComponent } from "@syncfusion/ej2-angular-schedule";
+import { ScheduleComponent, ActionEventArgs, EventFieldsMapping } from "@syncfusion/ej2-angular-schedule";
 import { NavbarActions } from "../../_decorators/navbar-actions.decorator";
 import { FastTranslateService } from "../../_services/fast-translate.service";
 import { RemoteService } from "../../_services/remote.service";
@@ -90,6 +90,9 @@ export class CalendarComponent {
                 });
                 break;
             case "eventChanged":
+                if (ev.data.Category !== EventCategory.UserEvent) {
+                    return;
+                }
                 this.remoteService.post(`events/${ev.data.Id}`, {
                     Description: ev.data.Description ? ev.data.Description : "",
                     EndTime: ev.data.EndTime.toISOString(),
@@ -104,6 +107,9 @@ export class CalendarComponent {
                 break;
             case "eventRemoved":
                 if (!(ev && ev.data && ev.data[0] && ev.data[0].Id)) {
+                    return;
+                }
+                if (ev.data[0].Category !== EventCategory.UserEvent) {
                     return;
                 }
                 this.remoteService.delete(`events/${ev.data[0].Id}`).subscribe(() => {
