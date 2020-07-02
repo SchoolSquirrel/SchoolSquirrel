@@ -6,6 +6,8 @@
 /*    |    Then, run "npx redundancyjs" in the terminal.                      |    */
 /*    +-----------------------------------------------------------------------+    */
 
+/* do not edit */ import { EventCategory } from "./EventCategory";
+/* do not edit */ 
 /* do not edit */ export interface SchedulerEvent {
 /* do not edit */     Id: number;
 /* do not edit */     Subject: string;
@@ -17,5 +19,5 @@
 /* do not edit */     StartTimezone: string;
 /* do not edit */     EndTimezone: string;
 /* do not edit */     RecurrenceRule: string;
-/* do not edit */     Color: string;
+/* do not edit */     Category: EventCategory;
 /* do not edit */ }

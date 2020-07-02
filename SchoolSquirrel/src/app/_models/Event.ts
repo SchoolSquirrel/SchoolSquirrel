@@ -9,6 +9,7 @@
 /* do not edit */ import { SchedulerEvent } from "./SchedulerEvent";
 /* do not edit */ 
 /* do not edit */ import { User } from "./User";
+/* do not edit */ import { EventCategory } from "./EventCategory";
 /* do not edit */ 
 /* do not edit */ 
 /* do not edit */ export class Event implements SchedulerEvent {
@@ -45,5 +46,5 @@
 /* do not edit */     
 /* do not edit */     public user: User;
 /* do not edit */ 
-/* do not edit */     public Color: string;
+/* do not edit */     public Category: EventCategory;
 /* do not edit */ }

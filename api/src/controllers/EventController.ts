@@ -4,6 +4,7 @@ import { Assignment } from "../entity/Assignment";
 import { Event } from "../entity/Event";
 import { SchedulerEvent } from "../entity/SchedulerEvent";
 import { User } from "../entity/User";
+import { EventCategory } from "../entity/EventCategory";
 
 class EventController {
     public static listAll = async (req: Request, res: Response) => {
@@ -24,12 +25,12 @@ class EventController {
                 Subject: `${a.title} is due in 12 Hours`,
                 StartTime: startDate,
                 EndTime: a.due,
-                Color: "#27ae60",
+                Category: EventCategory.Assignment,
             } as SchedulerEvent;
         }));
         const userEvents = await eventRepository.find();
         for (const event of userEvents) {
-            event.Color = "#3498db";
+            event.Category = EventCategory.UserEvent;
             events.push(event);
         }
         res.send(events);

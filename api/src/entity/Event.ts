@@ -1,6 +1,7 @@
 import { SchedulerEvent } from "./SchedulerEvent";
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne } from "typeorm";
 import { User } from "./User";
+import { EventCategory } from "./EventCategory";
 
 @Entity()
 export class Event implements SchedulerEvent {
@@ -37,5 +38,5 @@ export class Event implements SchedulerEvent {
     @ManyToOne(() => User, (user) => user.events)
     public user: User;
 
-    public Color: string;
+    public Category: EventCategory;
 }

@@ -1,3 +1,5 @@
+import { EventCategory } from "./EventCategory";
+
 export interface SchedulerEvent {
     Id: number;
     Subject: string;
@@ -9,5 +11,5 @@ export interface SchedulerEvent {
     StartTimezone: string;
     EndTimezone: string;
     RecurrenceRule: string;
-    Color: string;
+    Category: EventCategory;
 }

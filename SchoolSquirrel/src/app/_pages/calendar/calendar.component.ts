@@ -5,6 +5,7 @@ import { NavbarActions } from "../../_decorators/navbar-actions.decorator";
 import { FastTranslateService } from "../../_services/fast-translate.service";
 import { RemoteService } from "../../_services/remote.service";
 import { SchedulerEvent } from "../../_models/SchedulerEvent";
+import { EventCategory } from "@src/app/_models/EventCategory";
 
 @NavbarActions([
     {
@@ -95,7 +96,18 @@ export class CalendarComponent {
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public onEventRendered(args: any) {
-        args.element.style.backgroundColor = args.data.Color;
+        let color;
+        switch (args.data.Category as EventCategory) {
+        case EventCategory.Assignment:
+            color = "#27ae60";
+            break;
+        case EventCategory.UserEvent:
+            color = "#3498db";
+            break;
+        default:
+            color = "#2c3e50";
+        }
+        args.element.style.backgroundColor = color;
     }
 
     private refreshSchedule() {
