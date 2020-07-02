@@ -7,8 +7,8 @@
 /*    +-----------------------------------------------------------------------+    */
 
 /* do not edit */ export enum EventCategory {
-/* do not edit */     Assignment,
-/* do not edit */     UserEvent,
-/* do not edit */     TeacherEvent,
-/* do not edit */     Conference,
+/* do not edit */     Assignment = "Assignment",
+/* do not edit */     UserEvent = "UserEvent",
+/* do not edit */     TeacherEvent = "TeacherEvent",
+/* do not edit */     Conference = "Conference",
 /* do not edit */ }

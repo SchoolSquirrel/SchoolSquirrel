@@ -1,5 +1,19 @@
-<div class="py-3 h-100" *ngIf="!loading">
-    <ejs-schedule height="100%" locale="de" [firstDayOfWeek]="weekFirstDay" #calendar [eventSettings]="eventSettings" (actionComplete)="onChange($event)" (actionFailure)="onChange($event)" (cellClick)="onChange($event)" (cellDoubleClick)="onChange($event)"
-        (created)="onChange($event)" (drag)="onChange($event)" (dragStart)="onChange($event)" (dragStop)="onChange($event)" (eventClick)="onChange($event)" (resizeStart)="onChange($event)" (resizeStop)="onChange($event)" (select)="onChange($event)" (eventRendered)="onEventRendered($event)"></ejs-schedule>
+<div *ngIf="!loading" class="h-100">
+    <mat-form-field class="w-100">
+        <mat-chip-list [disableRipple]="true" [(ngModel)]="selectedCategories" multiple>
+            <mat-chip [disableRipple]="true" *ngFor="let category of categoryColors | keyvalue" selectable="true" [selected]="isSelected(category.key)" (click)="toggleCategory(category.key)" [style.background-color]="isSelected(category.key) ? category.value : '#eee'"
+                [style.color]="isSelected(category.key) ? '#fff' : '#000'">
+                {{('pages.calendar.categories.' + category.key) | translate}}&nbsp;
+                <mat-icon>{{isSelected(category.key) ? "close" : "add"}}</mat-icon>
+            </mat-chip>
+        </mat-chip-list>
+    </mat-form-field>
+
+
+    <div class="py-3 calendar-holder">
+        <ejs-schedule height="100%" locale="de" [firstDayOfWeek]="weekFirstDay" #calendar [eventSettings]="eventSettings" (actionComplete)="onChange($event)" (actionFailure)="onChange($event)" (cellClick)="onChange($event)" (cellDoubleClick)="onChange($event)"
+            (created)="onChange($event)" (drag)="onChange($event)" (dragStart)="onChange($event)" (dragStop)="onChange($event)" (eventClick)="onChange($event)" (resizeStart)="onChange($event)" (resizeStop)="onChange($event)" (select)="onChange($event)" (eventRendered)="onEventRendered($event)"></ejs-schedule>
+    </div>
+
 </div>
 <app-full-page-loading *ngIf="loading"></app-full-page-loading>

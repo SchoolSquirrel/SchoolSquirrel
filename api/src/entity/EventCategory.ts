@@ -1,6 +1,6 @@
 export enum EventCategory {
-    Assignment,
-    UserEvent,
-    TeacherEvent,
-    Conference,
+    Assignment = "Assignment",
+    UserEvent = "UserEvent",
+    TeacherEvent = "TeacherEvent",
+    Conference = "Conference",
 }

@@ -1,11 +1,11 @@
 import { Component, ViewChild } from "@angular/core";
 import { L10n, setCulture } from "@syncfusion/ej2-base";
-import { EventSettingsModel, ScheduleComponent } from "@syncfusion/ej2-angular-schedule";
+import { ScheduleComponent } from "@syncfusion/ej2-angular-schedule";
 import { NavbarActions } from "../../_decorators/navbar-actions.decorator";
 import { FastTranslateService } from "../../_services/fast-translate.service";
 import { RemoteService } from "../../_services/remote.service";
 import { SchedulerEvent } from "../../_models/SchedulerEvent";
-import { EventCategory } from "@src/app/_models/EventCategory";
+import { EventCategory } from "../../_models/EventCategory";
 
 @NavbarActions([
     {
@@ -27,7 +27,16 @@ export class CalendarComponent {
     public weekFirstDay = 1;
     public eventSettings: any = {};
     public loading = true;
+    public categoryColors = {
+        [EventCategory.Assignment]: "#27ae60",
+        [EventCategory.UserEvent]: "#3498db",
+        [EventCategory.TeacherEvent]: "#f39c12",
+        [EventCategory.Conference]: "#8e44ad",
+        default: "#2c3e50",
+    };
+    public selectedCategories: string[] = [...Object.keys(EventCategory), "default"];
     @ViewChild("calendar") public calendar: ScheduleComponent;
+    private allEvents: SchedulerEvent[] = [];
     constructor(private fts: FastTranslateService, private remoteService: RemoteService) {
         setCulture("de");
         (async () => {
@@ -37,9 +46,28 @@ export class CalendarComponent {
         })();
     }
 
+    public isSelected(category: string): boolean {
+        const index = this.selectedCategories.indexOf(category);
+        return index >= 0;
+    }
+
+    public toggleCategory(category: string): void {
+        const index = this.selectedCategories.indexOf(category);
+        if (index >= 0) {
+            this.selectedCategories.splice(index, 1);
+        } else {
+            this.selectedCategories.push(category);
+        }
+        this.eventSettings.dataSource = this.allEvents.filter(
+            (e) => this.selectedCategories.includes(e.Category),
+        );
+        this.refreshSchedule();
+    }
+
     public ngOnInit(): void {
         this.remoteService.get("events").subscribe((data) => {
             this.eventSettings.dataSource = data;
+            this.allEvents = data;
             this.loading = false;
         });
     }
@@ -84,6 +112,8 @@ export class CalendarComponent {
                 this.remoteService.delete(`events/${ev.data[0].Id}`).subscribe(() => {
                     this.eventSettings.dataSource = this.eventSettings
                         .dataSource.filter((e: { Id: any; }) => e.Id != ev.data[0].Id);
+                    this.allEvents = this.allEvents
+                        .filter((e: { Id: any; }) => e.Id != ev.data[0].Id);
                     this.refreshSchedule();
                 });
                 break;
@@ -96,18 +126,9 @@ export class CalendarComponent {
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public onEventRendered(args: any) {
-        let color;
-        switch (args.data.Category as EventCategory) {
-        case EventCategory.Assignment:
-            color = "#27ae60";
-            break;
-        case EventCategory.UserEvent:
-            color = "#3498db";
-            break;
-        default:
-            color = "#2c3e50";
-        }
-        args.element.style.backgroundColor = color;
+        args.element.style.backgroundColor = this.categoryColors[args.data.Category]
+            ? this.categoryColors[args.data.Category]
+            : this.categoryColors.default;
     }
 
     private refreshSchedule() {

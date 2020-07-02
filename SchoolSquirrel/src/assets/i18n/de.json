@@ -45,6 +45,15 @@
             "content": "Inhalt",
             "due": "Abgabe am",
             "view": "Ansehen"
+        },
+        "calendar": {
+            "categories": {
+                "Assignment": "Aufgaben",
+                "Conference": "Konferenzen",
+                "TeacherEvent": "Lehrerevents",
+                "UserEvent": "Eigene Events",
+                "default": "Unbekannt"
+            }
         }
     },
     "libraries": {
