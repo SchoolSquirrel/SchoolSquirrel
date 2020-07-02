@@ -84,6 +84,18 @@ class EventController {
         }
         res.send({ success: true });
     }
+
+    public static deleteEvent = async (req: Request, res: Response) => {
+        const id = req.params.id;
+        const eventRepository = getRepository(Event);
+        try {
+            await eventRepository.delete(id);
+        } catch (e) {
+            res.status(500).send({ message: i18n.__("errors.errorWhileDeletingEvent") });
+            return;
+        }
+        res.status(200).send({ success: true });
+    }
 }
 
 export default EventController;
