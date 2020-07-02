@@ -1,4 +1,5 @@
 <div class="py-3 h-100" *ngIf="!loading">
-    <ejs-schedule height="100%" locale="de" [firstDayOfWeek]="weekFirstDay" [eventSettings]="eventSettings"></ejs-schedule>
+    <ejs-schedule height="100%" locale="de" [firstDayOfWeek]="weekFirstDay" #calendar [eventSettings]="eventSettings" (actionComplete)="onChange($event)" (actionFailure)="onChange($event)" (cellClick)="onChange($event)" (cellDoubleClick)="onChange($event)"
+        (created)="onChange($event)" (drag)="onChange($event)" (dragStart)="onChange($event)" (dragStop)="onChange($event)" (eventClick)="onChange($event)" (resizeStart)="onChange($event)" (resizeStop)="onChange($event)" (select)="onChange($event)"></ejs-schedule>
 </div>
 <app-full-page-loading *ngIf="loading"></app-full-page-loading>

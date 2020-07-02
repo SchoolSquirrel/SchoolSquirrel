@@ -21,6 +21,9 @@
 /* do not edit */   public content: string;
 /* do not edit */ 
 /* do not edit */   
+/* do not edit */   public due: Date;
+/* do not edit */ 
+/* do not edit */   
 /* do not edit */   public course: Course;
 /* do not edit */ }
 /* do not edit */
