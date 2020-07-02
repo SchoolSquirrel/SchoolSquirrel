@@ -36,4 +36,6 @@ export class Event implements SchedulerEvent {
 
     @ManyToOne(() => User, (user) => user.events)
     public user: User;
+
+    public Color: string;
 }

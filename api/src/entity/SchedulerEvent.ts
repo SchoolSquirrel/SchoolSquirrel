@@ -9,4 +9,5 @@ export interface SchedulerEvent {
     StartTimezone: string;
     EndTimezone: string;
     RecurrenceRule: string;
+    Color: string;
 }

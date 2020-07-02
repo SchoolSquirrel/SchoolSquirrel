@@ -24,9 +24,14 @@ class EventController {
                 Subject: `${a.title} is due in 12 Hours`,
                 StartTime: startDate,
                 EndTime: a.due,
-            };
+                Color: "#27ae60",
+            } as SchedulerEvent;
         }));
-        events.push(...await eventRepository.find());
+        const userEvents = await eventRepository.find();
+        for (const event of userEvents) {
+            event.Color = "#3498db";
+            events.push(event);
+        }
         res.send(events);
     }
 
