@@ -14,6 +14,7 @@ import { Grade } from "./Grade";
 import { Course } from "./Course";
 import { Chat } from "./Chat";
 import { Message } from "./Message";
+import { Event } from "./Event";
 
 @Entity()
 @Unique(["name"])
@@ -55,6 +56,9 @@ export class User {
 
     @OneToMany(() => Message, (message) => message.sender)
     public messages: Message[];
+
+    @OneToMany(() => Event, (event) => event.user)
+    public events: Event[];
 
 
     public jwtToken?: string;

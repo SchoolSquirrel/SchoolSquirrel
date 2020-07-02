@@ -5,5 +5,6 @@ import { checkJwt } from "../middlewares/checkJwt";
 const router = Router();
 
 router.get("/", [checkJwt], EventController.listAll);
+router.post("/", [checkJwt], EventController.newEvent);
 
 export default router;
