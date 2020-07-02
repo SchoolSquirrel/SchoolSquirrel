@@ -51,7 +51,7 @@ export class AssignmentsComponent {
                     course: this.newAssignmentForm.controls.course.value,
                     due: new Date(
                         this.newAssignmentForm.controls.date.value.year,
-                        this.newAssignmentForm.controls.date.value.month,
+                        this.newAssignmentForm.controls.date.value.month - 1,
                         this.newAssignmentForm.controls.date.value.day,
                         this.newAssignmentForm.controls.timeHours.value,
                         this.newAssignmentForm.controls.timeMinutes.value,
