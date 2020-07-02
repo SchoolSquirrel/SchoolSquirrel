@@ -17,4 +17,5 @@
 /* do not edit */     StartTimezone: string;
 /* do not edit */     EndTimezone: string;
 /* do not edit */     RecurrenceRule: string;
+/* do not edit */     Color: string;
 /* do not edit */ }

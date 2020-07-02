@@ -8,15 +8,42 @@
 
 /* do not edit */ import { SchedulerEvent } from "./SchedulerEvent";
 /* do not edit */ 
+/* do not edit */ import { User } from "./User";
+/* do not edit */ 
+/* do not edit */ 
 /* do not edit */ export class Event implements SchedulerEvent {
-/* do not edit */     Id: number;
-/* do not edit */     Subject: string;
-/* do not edit */     Description: string;
-/* do not edit */     Location: string;
-/* do not edit */     StartTime: Date;
-/* do not edit */     EndTime: Date;
-/* do not edit */     IsAllDay: boolean;
-/* do not edit */     StartTimezone: string;
-/* do not edit */     EndTimezone: string;
-/* do not edit */     RecurrenceRule: string;
+/* do not edit */     
+/* do not edit */     public Id: number;
+/* do not edit */ 
+/* do not edit */     
+/* do not edit */     public Subject: string;
+/* do not edit */ 
+/* do not edit */     
+/* do not edit */     public Description: string;
+/* do not edit */ 
+/* do not edit */     
+/* do not edit */     public Location: string;
+/* do not edit */ 
+/* do not edit */     
+/* do not edit */     public StartTime: Date;
+/* do not edit */ 
+/* do not edit */     
+/* do not edit */     public EndTime: Date;
+/* do not edit */ 
+/* do not edit */     
+/* do not edit */     public IsAllDay: boolean;
+/* do not edit */ 
+/* do not edit */     
+/* do not edit */     public StartTimezone: string;
+/* do not edit */ 
+/* do not edit */     
+/* do not edit */     public EndTimezone: string;
+/* do not edit */ 
+/* do not edit */     
+/* do not edit */     public RecurrenceRule: string;
+/* do not edit */ 
+/* do not edit */     
+/* do not edit */     public user: User;
+/* do not edit */ 
+/* do not edit */     public Color: string;
 /* do not edit */ }

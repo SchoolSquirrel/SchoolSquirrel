@@ -82,7 +82,7 @@ export class CalendarComponent {
                 }
                 this.remoteService.delete(`events/${ev.data[0].Id}`).subscribe(() => {
                     this.eventSettings.dataSource = this.eventSettings
-                        .dataSource.filter((e) => e.Id != ev.data[0].Id);
+                        .dataSource.filter((e: { Id: any; }) => e.Id != ev.data[0].Id);
                     this.refreshSchedule();
                 });
                 break;
@@ -91,6 +91,11 @@ export class CalendarComponent {
                 // console.log(ev);
             }
         }
+    }
+
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    public onEventRendered(args: any) {
+        args.element.style.backgroundColor = args.data.Color;
     }
 
     private refreshSchedule() {
