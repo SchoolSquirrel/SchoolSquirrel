@@ -29,7 +29,11 @@ class EventController {
                 IsReadonly: true,
             } as SchedulerEvent;
         }));
-        const userEvents = await eventRepository.find();
+        const userEvents = await eventRepository.find({
+            where: {
+                user: await getRepository(User).findOne(res.locals.jwtPayload.userId),
+            }
+        });
         for (const event of userEvents) {
             event.Category = EventCategory.UserEvent;
             events.push(event);
