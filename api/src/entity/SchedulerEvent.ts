@@ -12,4 +12,5 @@ export interface SchedulerEvent {
     EndTimezone: string;
     RecurrenceRule: string;
     Category: EventCategory;
+    IsReadonly?: boolean
 }

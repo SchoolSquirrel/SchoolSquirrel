@@ -26,6 +26,7 @@ class EventController {
                 StartTime: startDate,
                 EndTime: a.due,
                 Category: EventCategory.Assignment,
+                IsReadonly: true,
             } as SchedulerEvent;
         }));
         const userEvents = await eventRepository.find();
