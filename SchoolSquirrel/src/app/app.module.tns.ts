@@ -29,6 +29,7 @@ import { ChatComponent } from "./_pages/chat/chat.component";
 import { JwtInterceptor } from "./_interceptors/jwt.interceptor";
 import { ErrorInterceptor } from "./_interceptors/error.interceptor";
 import { HideActionBarDirective } from "./_directives/hideActionBar.directive";
+import { AssignmentItemComponent } from "./_components/assignment-item/assignment-item.component";
 
 registerElement(
     "Fab",
@@ -58,6 +59,7 @@ export function nativescriptTranslateLoaderFactory(): NativeScriptLoader {
         FullPageLoadingComponent,
         ChatComponent,
         HideActionBarDirective,
+        AssignmentItemComponent,
     ],
     imports: [
         ReactiveFormsModule,
