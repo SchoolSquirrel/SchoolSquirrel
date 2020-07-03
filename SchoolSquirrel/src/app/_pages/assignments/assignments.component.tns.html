@@ -1,13 +1,16 @@
-<GridLayout rows="auto, *, auto" columns="*" class="fix-statusbar-margin" hideActionBar [isModal]="currentCourseIdx !== undefined">
+<GridLayout rows="auto, *, auto" columns="*" class="fix-statusbar-margin" hideActionBar>
     <app-navbar row="0" col="0" [title]="'general.assignments' | translate"></app-navbar>
-    <ListView rowspan="2" row="1" col="0" [items]="currentCourseIdx === undefined ? courses : courses[currentCourseIdx].assignments" class="list-group">
-        <ng-template let-item="item" let-idx="index">
-            <GridLayout columns="*" rows="auto, auto" (tap)="currentCourseIdx = idx">
-                <Label col="0" row="0" [text]="item.name" class="list-group-item h2"></Label>
-                <Label col="0" row="0" [text]="item.title" class="list-group-item h2"></Label>
-                <!--<Label col="0" row="1" [text]="item.content" class="list-group-item"></Label>-->
-            </GridLayout>
-        </ng-template>
-    </ListView>
+    <StackLayout row="1">
+        <GridLayout rows="auto, auto" columns="*" *ngFor="let course of courses">
+            <Label row="0" [text]="course.name"></Label>
+            <StackLayout row="1">
+                <GridLayout rows="auto, auto" , columns="*, auto" *ngFor="let assignment of course.assignments">
+                    <Label row="0" col="0" [text]="assignment.title"></Label>
+                    <Label row="0" col="1" [text]="assignment.due | date"></Label>
+                    <Label row="1" col="0" colspan="2" [text]="assignment.content"></Label>
+                </GridLayout>
+            </StackLayout>
+        </GridLayout>
+    </StackLayout>
     <FAB row="2" col="0" text="&#xf067;" class="fab-button fas"></FAB>
 </GridLayout>
