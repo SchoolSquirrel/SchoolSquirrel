@@ -19,7 +19,8 @@
         "chat": "Chat",
         "files": "Dateien",
         "create": "Erstellen",
-        "pleaseSelect": "Bitte wählen"
+        "pleaseSelect": "Bitte wählen",
+        "info": "Info"
     },
     "components": {
         "navbar": {

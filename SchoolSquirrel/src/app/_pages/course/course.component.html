@@ -19,6 +19,27 @@
                 <p>Assignments</p>
             </ng-template>
         </ng-container>
+        <ng-container ngbNavItem>
+            <a ngbNavLink><i class="fas fa-info-circle"></i> {{'general.info' | translate}}</a>
+            <ng-template ngbNavContent>
+                <ngb-accordion #acc="ngbAccordion" class="tree-view-accordion" [activeIds]="['panel-users', 'panel-teachers']">
+                    <ngb-panel title="Teachers" id="panel-teachers">
+                        <ng-template ngbPanelContent>
+                            <div class="card p-2 my-1">
+                                <span *ngFor="let teacher of course.teachers">{{teacher.name}}</span>
+                            </div>
+                        </ng-template>
+                    </ngb-panel>
+                    <ngb-panel title="Users" id="panel-users">
+                        <ng-template ngbPanelContent>
+                            <div class="card p-2 my-1">
+                                <span *ngFor="let student of course.students">{{student.name}}</span>
+                            </div>
+                        </ng-template>
+                    </ngb-panel>
+                </ngb-accordion>
+            </ng-template>
+        </ng-container>
     </nav>
 
     <div [ngbNavOutlet]="nav" class="mt-2 flex-grow-1"></div>
