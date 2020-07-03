@@ -16,7 +16,9 @@
         <ng-container ngbNavItem>
             <a ngbNavLink><i class="fas fa-tasks"></i> {{'general.assignments' | translate}}</a>
             <ng-template ngbNavContent>
-                <p>Assignments</p>
+                <div class="px-4">
+                    <app-assignment-item *ngFor="let assignment of course.assignments" [assignment]="assignment"></app-assignment-item>
+                </div>
             </ng-template>
         </ng-container>
         <ng-container ngbNavItem>
