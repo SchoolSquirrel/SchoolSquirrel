@@ -10,7 +10,12 @@ class EventController {
     public static listAll = async (req: Request, res: Response) => {
         const assignmentsRepository = getRepository(Assignment);
         const eventRepository = getRepository(Event);
-        const assignments = await assignmentsRepository.find();
+        const assignments = await assignmentsRepository
+            .createQueryBuilder("assignment")
+            .leftJoin("assignment.course", "course")
+            .leftJoin("course.students", "user")
+            .where("user.id = :id", {id: res.locals.jwtPayload.userId})
+            .getMany();
         const events: {
             Id: number,
             Subject: string,
