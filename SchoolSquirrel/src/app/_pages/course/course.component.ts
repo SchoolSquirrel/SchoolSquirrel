@@ -21,12 +21,15 @@ export class CourseComponent implements OnInit {
     ) { }
 
     public ngOnInit(): void {
-        this.remoteService.get(`courses/${this.route.snapshot.params.id}`).subscribe((data) => {
-            this.course = data;
-            for (const message of this.course.messages) {
-                message.fromMe = message.sender.id
-                    == this.authenticationService.currentUser.id;
-            }
+        this.route.params.subscribe((params) => {
+            this.course = undefined;
+            this.remoteService.get(`courses/${params.id}`).subscribe((data) => {
+                this.course = data;
+                for (const message of this.course.messages) {
+                    message.fromMe = message.sender.id
+                        == this.authenticationService.currentUser.id;
+                }
+            });
         });
     }
 
