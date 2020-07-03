@@ -8,7 +8,12 @@ import { sanitizeHtml } from "../utils/html";
 class AssignmentsController {
     public static listCoursesWithAssignments = async (req: Request, res: Response) => {
         const courseRepository = getRepository(Course);
-        const assignments = await courseRepository.find({relations: ["assignments"]});
+        const assignments = await courseRepository
+            .createQueryBuilder("course")
+            .leftJoinAndSelect("course.assignments", "assignment")
+            .leftJoin("course.students", "user")
+            .where("user.id = :id", { id: res.locals.jwtPayload.userId })
+            .getMany();
         res.send(assignments);
     }
 
