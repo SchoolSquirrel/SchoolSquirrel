@@ -1,6 +1,6 @@
 import { Component, ViewChild } from "@angular/core";
 import { L10n, setCulture } from "@syncfusion/ej2-base";
-import { ScheduleComponent, ActionEventArgs, EventFieldsMapping } from "@syncfusion/ej2-angular-schedule";
+import { ScheduleComponent } from "@syncfusion/ej2-angular-schedule";
 import { NavbarActions } from "../../_decorators/navbar-actions.decorator";
 import { FastTranslateService } from "../../_services/fast-translate.service";
 import { RemoteService } from "../../_services/remote.service";
@@ -66,6 +66,7 @@ export class CalendarComponent {
             this.eventSettings.dataSource = data;
             this.allEvents = data;
             this.loading = false;
+            console.log(this.allEvents);
         });
     }
 

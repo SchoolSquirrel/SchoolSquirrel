@@ -1,12 +1,12 @@
 <GridLayout rows="auto, *, auto" columns="*" class="fix-statusbar-margin" hideActionBar>
     <app-navbar row="0" col="0" [title]="'general.assignments' | translate"></app-navbar>
-    <ListView rowspan="2" row="1" col="0" [items]="assignments" class="list-group">
+    <!--<ListView rowspan="2" row="1" col="0" [items]="assignments" class="list-group">
         <ng-template let-item="item">
             <GridLayout columns="*" rows="auto, auto">
                 <Label col="0" row="0" [text]="item.title" class="list-group-item h2"></Label>
                 <Label col="0" row="1" [text]="item.content" class="list-group-item"></Label>
             </GridLayout>
         </ng-template>
-    </ListView>
+    </ListView>-->
     <FAB row="2" col="0" text="&#xf067;" class="fab-button fas"></FAB>
 </GridLayout>
