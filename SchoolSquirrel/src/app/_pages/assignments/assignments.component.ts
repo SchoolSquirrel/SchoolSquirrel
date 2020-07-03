@@ -3,9 +3,9 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { RemoteService } from "../../_services/remote.service";
 import { TinyConfigService } from "../../_services/tiny-config.service";
-import { Assignment } from "../../_models/Assignment";
 import { NavbarActions } from "../../_decorators/navbar-actions.decorator";
 import { Course } from "../../_models/Course";
+import { AssignmentsComponentCommon } from "./assignments.component.common";
 
 @NavbarActions([
     {
@@ -23,23 +23,14 @@ import { Course } from "../../_models/Course";
     templateUrl: "./assignments.component.html",
     styleUrls: ["./assignments.component.scss"],
 })
-export class AssignmentsComponent {
-    public courses: Course[] = [];
-    public newAssignmentForm = new FormGroup({
-        title: new FormControl("", [Validators.required]),
-        content: new FormControl("", [Validators.required]),
-        course: new FormControl("", [Validators.required]),
-        date: new FormControl("", [Validators.required]),
-        timeHours: new FormControl("23", [Validators.required, Validators.min(0), Validators.max(23)]),
-        timeMinutes: new FormControl("59", [Validators.required, Validators.min(0), Validators.max(59)]),
-    });
-    public submitted = false;
-    public activeIds: string[] = [];
+export class AssignmentsComponent extends AssignmentsComponentCommon {
     constructor(
+        remoteService: RemoteService,
         public tinyConfigService: TinyConfigService,
-        private remoteService: RemoteService,
         private modalService: NgbModal,
-    ) { }
+    ) {
+        super(remoteService);
+    }
 
     public newAssignment(content: ElementRef): void {
         this.modalService.open(content, { size: "xl" }).result.then(() => {
@@ -64,25 +55,5 @@ export class AssignmentsComponent {
                 });
             }
         }, () => undefined);
-    }
-
-    public ngOnInit(): void {
-        this.loadAssignments();
-    }
-
-    public viewAssignment(assignment: Assignment): void {
-        this.remoteService.get(`assignments/${assignment.id}`).subscribe((data) => {
-            // eslint-disable-next-line no-alert
-            alert(JSON.stringify(data));
-        });
-    }
-
-    private loadAssignments() {
-        this.remoteService.get("assignments").subscribe((data: Course[]) => {
-            if (data) {
-                this.courses = data;
-                this.activeIds = this.courses.map((c) => (`panel-${c.id}`));
-            }
-        });
     }
 }
