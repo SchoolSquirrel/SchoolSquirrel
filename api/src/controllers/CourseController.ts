@@ -7,7 +7,11 @@ import { sendMessage } from "../utils/messages";
 class CourseController {
     public static listAll = async (req: Request, res: Response) => {
         const courseRepository = getRepository(Course);
-        const courses = await courseRepository.find({ relations: ["students", "teachers"]});
+        const courses = await courseRepository
+            .createQueryBuilder("course")
+            .leftJoin("course.students", "user")
+            .where("user.id = :id", { id: res.locals.jwtPayload.userId })
+            .getMany();
         res.send(courses);
     }
 
