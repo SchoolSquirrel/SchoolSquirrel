@@ -17,7 +17,7 @@ class CourseController {
 
     public static getCourse = async (req: Request, res: Response) => {
         const courseRepository = getRepository(Course);
-        const course = await courseRepository.findOne(req.params.id, { relations: ["students", "teachers", "messages", "messages.sender"]});
+        const course = await courseRepository.findOne(req.params.id, { relations: ["students", "teachers", "messages", "messages.sender", "assignments"]});
         res.send(course);
     }
 
