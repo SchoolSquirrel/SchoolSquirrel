@@ -52,6 +52,7 @@ import { NgbDateCustomParserFormatter } from "./_helpers/NgbDateCustomParserForm
 import { SafeUserHtmlPipe } from "./_pipes/safe-user-html.pipe";
 import { HtmlToTextPipe } from "./_pipes/html-to-text.pipe";
 import { AssignmentItemComponent } from "./_components/assignment-item/assignment-item.component";
+import { UserNameComponent } from "./_components/user-name/user-name.component";
 
 registerLocaleData(localeDe, localeDeExtra);
 declare const require: any;
@@ -92,6 +93,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         SafeUserHtmlPipe,
         HtmlToTextPipe,
         AssignmentItemComponent,
+        UserNameComponent,
     ],
     imports: [
         BrowserModule,
