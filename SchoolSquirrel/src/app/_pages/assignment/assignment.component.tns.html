@@ -1,0 +1,13 @@
+<StackLayout class="fix-statusbar-margin" hideActionBar>
+    <app-navbar [title]="assignment ? assignment.title : 'general.loading' | translate"></app-navbar>
+
+    <GridLayout rows="auto, auto" columns="*">
+        <StackLayout class="">
+            <Label [text]="assignment ? assignment.title : ''" class="h1"></Label>
+            <WebView [src]="'<meta name=\'viewport\' content=\'width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no\'>' + (assignment ? assignment.content : '')"></WebView>
+        </StackLayout>
+        <StackLayout class="">
+            <Label text="..."></Label>
+        </StackLayout>
+    </GridLayout>
+</StackLayout>

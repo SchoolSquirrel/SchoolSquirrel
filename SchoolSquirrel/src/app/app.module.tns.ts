@@ -10,6 +10,9 @@ import { NativeScriptLoader } from "@danvick/ngx-translate-nativescript-loader";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angular";
 import { NativeScriptUICalendarModule } from "nativescript-ui-calendar/angular";
+import localeDe from "@angular/common/locales/de";
+import localeDeExtra from "@angular/common/locales/extra/de";
+import { registerLocaleData } from "@angular/common";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./_pages/home/home.component";
@@ -30,6 +33,9 @@ import { JwtInterceptor } from "./_interceptors/jwt.interceptor";
 import { ErrorInterceptor } from "./_interceptors/error.interceptor";
 import { HideActionBarDirective } from "./_directives/hideActionBar.directive";
 import { AssignmentItemComponent } from "./_components/assignment-item/assignment-item.component";
+import { AssignmentComponent } from "./_pages/assignment/assignment.component";
+
+registerLocaleData(localeDe, localeDeExtra);
 
 registerElement(
     "Fab",
@@ -50,6 +56,7 @@ export function nativescriptTranslateLoaderFactory(): NativeScriptLoader {
         SidebarComponent,
         NavbarComponent,
         AssignmentsComponent,
+        AssignmentComponent,
         CalendarComponent,
         UsersComponent,
         SettingsComponent,
