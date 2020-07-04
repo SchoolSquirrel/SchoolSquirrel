@@ -1,10 +1,11 @@
 <GridLayout rows="auto, *, auto" columns="*" class="fix-statusbar-margin" hideActionBar>
     <app-navbar row="0" col="0" [title]="'general.assignments' | translate"></app-navbar>
     <StackLayout row="1">
-        <GridLayout rows="auto, auto" columns="*" *ngFor="let course of courses">
-            <Label row="0" [text]="course.name"></Label>
-            <StackLayout row="1">
-                <GridLayout rows="auto, auto" , columns="*, auto" *ngFor="let assignment of course.assignments">
+        <GridLayout rows="auto, auto" columns="auto, *" *ngFor="let course of courses">
+            <Label row="0" col="1" class="h2" [text]="course.name" (tap)="course.showAssignments = !course.showAssignments"></Label>
+            <Label row="0" col="0" class="h2 fas" [text]="course.showAssignments ? '&#xf107;' : '&#xf105;'" (tap)="course.showAssignments = !course.showAssignments"></Label>
+            <StackLayout row="1" col="1" [visibility]="course.showAssignments ? 'visible' : 'collapse'">
+                <GridLayout rows="auto, auto" , columns="*, auto" *ngFor="let assignment of course.assignments" (tap)="goToAssignment(assignment)">
                     <Label row="0" col="0" [text]="assignment.title"></Label>
                     <Label row="0" col="1" [text]="assignment.due | date"></Label>
                     <Label row="1" col="0" colspan="2" [text]="assignment.content"></Label>
