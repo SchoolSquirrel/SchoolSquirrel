@@ -79,6 +79,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         SidebarComponent,
         NavbarComponent,
         AssignmentsComponent,
+        AssignmentComponent,
         CalendarComponent,
         UsersComponent,
         SettingsComponent,
