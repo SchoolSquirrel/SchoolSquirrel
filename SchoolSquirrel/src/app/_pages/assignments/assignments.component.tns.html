@@ -10,8 +10,8 @@
                 </FormattedString>
             </Label>
             <StackLayout row="1" col="1" [visibility]="course.showAssignments ? 'visible' : 'collapse'">
-                <GridLayout rows="auto, auto" , columns="*, auto" *ngFor="let assignment of course.assignments" (tap)="goToAssignment(assignment)">
-                    <Label row="0" col="0" [text]="assignment.title"></Label>
+                <GridLayout rows="auto, auto" class="assignment m-y-5 p-5 p-x-10" columns="*, auto" *ngFor="let assignment of course.assignments" (tap)="goToAssignment(assignment)">
+                    <Label row="0" col="0" fontWeight="bold" [text]="assignment.title"></Label>
                     <Label row="0" col="1" [text]="assignment.due | date"></Label>
                     <Label row="1" col="0" colspan="2" [text]="assignment.content"></Label>
                 </GridLayout>
