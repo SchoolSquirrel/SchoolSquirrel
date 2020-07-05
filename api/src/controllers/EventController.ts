@@ -5,6 +5,7 @@ import { Event } from "../entity/Event";
 import { SchedulerEvent } from "../entity/SchedulerEvent";
 import { User } from "../entity/User";
 import { EventCategory } from "../entity/EventCategory";
+import * as i18n from "i18n";
 
 class EventController {
     public static listAll = async (req: Request, res: Response) => {
