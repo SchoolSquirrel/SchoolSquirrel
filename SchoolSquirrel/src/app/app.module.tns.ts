@@ -34,6 +34,7 @@ import { ErrorInterceptor } from "./_interceptors/error.interceptor";
 import { HideActionBarDirective } from "./_directives/hideActionBar.directive";
 import { AssignmentItemComponent } from "./_components/assignment-item/assignment-item.component";
 import { AssignmentComponent } from "./_pages/assignment/assignment.component";
+import { HtmlToTextPipe } from "./_pipes/html-to-text.pipe";
 
 registerLocaleData(localeDe, localeDeExtra);
 
@@ -67,6 +68,7 @@ export function nativescriptTranslateLoaderFactory(): NativeScriptLoader {
         ChatComponent,
         HideActionBarDirective,
         AssignmentItemComponent,
+        HtmlToTextPipe,
     ],
     imports: [
         ReactiveFormsModule,
