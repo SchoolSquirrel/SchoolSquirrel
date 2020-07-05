@@ -1,24 +1,12 @@
 import { Component, ViewChild } from "@angular/core";
-import { L10n, setCulture } from "@syncfusion/ej2-base";
-import { ScheduleComponent } from "@syncfusion/ej2-angular-schedule";
-import { NavbarActions } from "../../_decorators/navbar-actions.decorator";
+import { RadCalendarComponent } from "nativescript-ui-calendar/angular";
+import { CalendarEvent, CalendarEventsViewMode } from "nativescript-ui-calendar";
+import { Color } from "@nativescript/core";
 import { FastTranslateService } from "../../_services/fast-translate.service";
 import { RemoteService } from "../../_services/remote.service";
-import { SchedulerEvent } from "../../_models/SchedulerEvent";
-import { EventCategory } from "../../_models/EventCategory";
 import { CalendarComponentCommon } from "./calendar.component.common";
+import { SchedulerEvent } from "../../_models/SchedulerEvent";
 
-@NavbarActions([
-    {
-        name: "Calendar",
-        description: "Open the calendar",
-    },
-    {
-        name: "New event",
-        description: "Create a new event",
-        navigateTo: "new",
-    },
-], "calendar")
 @Component({
     selector: "app-calendar",
     templateUrl: "./calendar.component.html",
@@ -26,29 +14,32 @@ import { CalendarComponentCommon } from "./calendar.component.common";
 })
 export class CalendarComponent extends CalendarComponentCommon {
     public weekFirstDay = 1;
-    public eventSettings: any = {};
-    @ViewChild("calendar") public calendar: ScheduleComponent;
-    private allEvents: SchedulerEvent[] = [];
+    @ViewChild("calendar") public calendar: RadCalendarComponent;
+    private allEvents: CalendarEvent[] = [];
+    public events: CalendarEvent[] = [];
+    public eventsViewMode = CalendarEventsViewMode.Inline;
     constructor(fts: FastTranslateService, remoteService: RemoteService) {
         super(fts, remoteService);
-        setCulture("de");
-        (async () => {
-            L10n.load({
-                de: await this.fts.t("libraries"),
-            });
-        })();
     }
 
     public ngOnInit(): void {
-        this.remoteService.get("events").subscribe((data) => {
-            this.eventSettings.dataSource = data;
-            this.allEvents = data;
+        this.remoteService.get("events").subscribe((data: SchedulerEvent[]) => {
+            this.events = data.map((e) => new CalendarEvent(
+                e.Subject,
+                new Date(e.StartTime),
+                new Date(e.EndTime),
+                e.IsAllDay,
+                new Color(this.categoryColors[e.Category]
+                    ? this.categoryColors[e.Category]
+                    : this.categoryColors.default),
+            ));
+            this.allEvents = [...this.events];
             this.loading = false;
         });
     }
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    public onChange(ev: any): void {
+    /* public onChange(ev: any): void {
         if (ev) {
             switch (ev.requestType) {
             case "eventCreated":
@@ -91,7 +82,7 @@ export class CalendarComponent extends CalendarComponentCommon {
                     return;
                 }
                 this.remoteService.delete(`events/${ev.data[0].Id}`).subscribe(() => {
-                    this.eventSettings.dataSource = this.eventSettings
+                    this.events = this.eventSettings
                         .dataSource.filter((e: { Id: any; }) => e.Id != ev.data[0].Id);
                     this.allEvents = this.allEvents
                         .filter((e: { Id: any; }) => e.Id != ev.data[0].Id);
@@ -110,14 +101,14 @@ export class CalendarComponent extends CalendarComponentCommon {
         args.element.style.backgroundColor = this.categoryColors[args.data.Category]
             ? this.categoryColors[args.data.Category]
             : this.categoryColors.default;
-    }
+    } */
 
     private refreshSchedule() {
-        (document.querySelector("ejs-schedule") as any).ej2_instances[0].eventSettings.dataSource = this.eventSettings.dataSource;
+        //
     }
 
     public filterEvents(): void {
-        this.eventSettings.dataSource = this.allEvents.filter(
+        this.events = this.allEvents.filter(
             (e) => this.selectedCategories.includes(e.Category),
         );
         this.refreshSchedule();
