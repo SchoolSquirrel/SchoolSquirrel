@@ -24,9 +24,10 @@
             </GridLayout>
         </TabContentItem>
         <TabContentItem>
-            <GridLayout>
-                <Label text="Assignments" class="h2 text-center"></Label>
-            </GridLayout>
+            <StackLayout class="p-5">
+                <app-assignment-item *ngFor="let assignment of (course ? course.assignments : [])" [assignment]="assignment"></app-assignment-item>
+                <Label text="No assignments for this course!" *ngIf="!course.assignments.length"></Label>
+            </StackLayout>
         </TabContentItem>
     </Tabs>
 
