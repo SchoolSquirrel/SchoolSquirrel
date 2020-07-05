@@ -108,9 +108,9 @@ export class CalendarComponent extends CalendarComponentCommon {
     }
 
     public filterEvents(): void {
-        this.events = this.allEvents.filter(
+        /* this.events = this.allEvents.filter(
             (e) => this.selectedCategories.includes(e.Category),
         );
-        this.refreshSchedule();
+        this.refreshSchedule(); */
     }
 }
