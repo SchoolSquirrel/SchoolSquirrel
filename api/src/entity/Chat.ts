@@ -14,7 +14,7 @@ export class Chat {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column()
+  @Column({nullable: true})
   public name: string;
 
   @OneToMany(() => Message, (message) => message.chat)

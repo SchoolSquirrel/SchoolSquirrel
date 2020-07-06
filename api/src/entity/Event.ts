@@ -11,10 +11,10 @@ export class Event implements SchedulerEvent {
     @Column()
     public Subject: string;
 
-    @Column()
+    @Column({nullable: true})
     public Description: string;
 
-    @Column()
+    @Column({nullable: true})
     public Location: string;
 
     @Column()
@@ -23,16 +23,16 @@ export class Event implements SchedulerEvent {
     @Column()
     public EndTime: Date;
 
-    @Column()
+    @Column({default: false})
     public IsAllDay: boolean;
 
-    @Column()
+    @Column({nullable: true})
     public StartTimezone: string;
 
-    @Column()
+    @Column({nullable: true})
     public EndTimezone: string;
 
-    @Column()
+    @Column({nullable: true})
     public RecurrenceRule: string;
 
     @ManyToOne(() => User, (user) => user.events)
