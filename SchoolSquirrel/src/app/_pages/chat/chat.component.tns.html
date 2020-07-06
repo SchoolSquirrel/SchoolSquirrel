@@ -1,6 +1,15 @@
-<StackLayout class="fix-statusbar-margin" hideActionBar>
-    <app-navbar [title]="'general.chat' | translate"></app-navbar>
-    <StackLayout class="">
-        <Label class="h1" text="Chat"></Label>
-    </StackLayout>
-</StackLayout>
+<GridLayout rows="auto, *" class="fix-statusbar-margin" hideActionBar>
+    <app-navbar row="0" [title]="'general.chat' | translate"></app-navbar>
+    <RadListView row="1" *ngIf="!loading && chats.length > 0" [items]="chats">
+        <ng-template tkListItemTemplate let-item="item">
+            <StackLayout orientation="vertical">
+                <Label class="nameLabel" [text]="getChatName(item)"></Label>
+                <Label class="descriptionLabel" [text]=""></Label>
+            </StackLayout>
+        </ng-template>
+    </RadListView>
+    <app-full-screen-loading *ngIf="loading" row="1"></app-full-screen-loading>
+    <GridLayout row="1" rows="*, auto, *">
+        <Label row="1" textWrap="true" class="text-center" *ngIf="!loading && chats.length == 0" [text]="'pages.chat.noChats' | translate"></Label>
+    </GridLayout>
+</GridLayout>
