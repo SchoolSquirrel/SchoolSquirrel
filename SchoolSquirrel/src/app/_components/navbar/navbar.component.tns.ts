@@ -1,4 +1,6 @@
-import { Component, Input } from "@angular/core";
+import {
+    Component, Input, Output, EventEmitter,
+} from "@angular/core";
 import { Application } from "@nativescript/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 
@@ -10,12 +12,13 @@ import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 export class NavbarComponent {
     @Input() public title: string;
     @Input() public isModal: boolean;
+    @Output() public back: EventEmitter<void> = new EventEmitter<void>();
 
     public openSideDrawer(): void {
         (Application.getRootView() as any as RadSideDrawer).showDrawer();
     }
 
-    public back(): void {
-        //
+    public goBack(): void {
+        this.back.emit();
     }
 }

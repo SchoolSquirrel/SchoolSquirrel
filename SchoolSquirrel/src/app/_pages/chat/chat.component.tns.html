@@ -1,6 +1,6 @@
 <GridLayout rows="auto, *" class="fix-statusbar-margin" hideActionBar>
-    <app-navbar row="0" [title]="'general.chat' | translate"></app-navbar>
-    <ListView row="1" *ngIf="!loading && chats.length > 0" [items]="chats" (itemTap)="goToChat(item)">
+    <app-navbar row="0" [title]="'general.chat' | translate" *ngIf="!currentChat"></app-navbar>
+    <ListView row="1" *ngIf="!loading && chats.length > 0 && !currentChat" [items]="chats" (itemTap)="goToChat($event)">
         <ng-template let-item="item">
             <GridLayout rows="auto, auto" columns="50, *, auto">
                 <Image class="" row="0" rowspan="2" col="0" [src]="getChatImageUrl(item, true)"></Image>
@@ -12,6 +12,7 @@
     </ListView>
     <app-full-screen-loading *ngIf="loading" row="1"></app-full-screen-loading>
     <GridLayout row="1" rows="*, auto, *">
-        <Label row="1" textWrap="true" class="text-center" *ngIf="!loading && chats.length == 0" [text]="'pages.chat.noChats' | translate"></Label>
+        <Label row="1" textWrap="true" class="text-center" *ngIf="!loading && chats.length == 0 && !currentChat" [text]="'pages.chat.noChats' | translate"></Label>
     </GridLayout>
+    <nativescript-squirrel-chat-ui row="1" *ngIf="currentChat" (back)="currentChat = undefined" [messages]="currentChat.messages" [title]="getOtherUserInPrivateChat(currentChat).name" [profileImageSource]="getChatImageUrl(currentChat)"></nativescript-squirrel-chat-ui>
 </GridLayout>
