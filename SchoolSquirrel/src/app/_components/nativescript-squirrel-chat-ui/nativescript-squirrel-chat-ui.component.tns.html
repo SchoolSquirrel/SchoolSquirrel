@@ -1,0 +1,11 @@
+<GridLayout rows="auto, *">
+    <Label text="test" row="0"></Label>
+    <RadListView [items]="messages" row="1">
+        <ng-template tkListItemTemplate let-message="item">
+            <StackLayout orientation="vertical">
+                <Label class="nameLabel" [text]="message.sender.username"></Label>
+                <Label class="descriptionLabel" [text]="message.text"></Label>
+            </StackLayout>
+        </ng-template>
+    </RadListView>
+</GridLayout>

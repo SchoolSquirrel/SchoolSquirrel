@@ -68,6 +68,7 @@
         "electron-splashscreen": "^1.0.0",
         "nativescript-feedback": "^1.4.0",
         "nativescript-ui-calendar": "^5.0.0",
+        "nativescript-ui-listview": "^8.2.0",
         "nativescript-ui-sidedrawer": "^8.0.1",
         "ng-utf8-emojis-to-images": "^1.1.0",
         "reflect-metadata": "~0.1.13",

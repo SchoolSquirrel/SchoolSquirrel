@@ -10,6 +10,7 @@ import { NativeScriptLoader } from "@danvick/ngx-translate-nativescript-loader";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angular";
 import { NativeScriptUICalendarModule } from "nativescript-ui-calendar/angular";
+import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 import localeDe from "@angular/common/locales/de";
 import localeDeExtra from "@angular/common/locales/extra/de";
 import { registerLocaleData } from "@angular/common";
@@ -35,6 +36,7 @@ import { HideActionBarDirective } from "./_directives/hideActionBar.directive";
 import { AssignmentItemComponent } from "./_components/assignment-item/assignment-item.component";
 import { AssignmentComponent } from "./_pages/assignment/assignment.component";
 import { HtmlToTextPipe } from "./_pipes/html-to-text.pipe";
+import { NativescriptSquirrelChatUiComponent } from "./_components/nativescript-squirrel-chat-ui/nativescript-squirrel-chat-ui.component";
 
 registerLocaleData(localeDe, localeDeExtra);
 
@@ -69,6 +71,7 @@ export function nativescriptTranslateLoaderFactory(): NativeScriptLoader {
         HideActionBarDirective,
         AssignmentItemComponent,
         HtmlToTextPipe,
+        NativescriptSquirrelChatUiComponent,
     ],
     imports: [
         ReactiveFormsModule,
@@ -78,6 +81,7 @@ export function nativescriptTranslateLoaderFactory(): NativeScriptLoader {
         NativeScriptHttpClientModule,
         NativeScriptUISideDrawerModule,
         NativeScriptUICalendarModule,
+        NativeScriptUIListViewModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
