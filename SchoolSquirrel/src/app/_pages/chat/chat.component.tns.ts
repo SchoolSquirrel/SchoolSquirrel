@@ -24,4 +24,8 @@ export class ChatComponent extends ChatComponentCommon implements OnInit {
             this.loading = false;
         });
     }
+
+    public goToChat(chat: Chat): void {
+        //
+    }
 }

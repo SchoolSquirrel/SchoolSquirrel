@@ -1,13 +1,15 @@
 <GridLayout rows="auto, *" class="fix-statusbar-margin" hideActionBar>
     <app-navbar row="0" [title]="'general.chat' | translate"></app-navbar>
-    <RadListView row="1" *ngIf="!loading && chats.length > 0" [items]="chats">
-        <ng-template tkListItemTemplate let-item="item">
-            <StackLayout orientation="vertical">
-                <Label class="nameLabel" [text]="getChatName(item)"></Label>
-                <Label class="descriptionLabel" [text]=""></Label>
-            </StackLayout>
+    <ListView row="1" *ngIf="!loading && chats.length > 0" [items]="chats" (itemTap)="goToChat(item)">
+        <ng-template let-item="item">
+            <GridLayout rows="auto, auto" columns="50, *, auto">
+                <Image class="" row="0" rowspan="2" col="0" [src]="getChatImageUrl(item, true)"></Image>
+                <Label row="0" col="1" class="h2 p-0 m-0 m-l-5" [text]="getChatName(item)"></Label>
+                <Label row="0" col="2" class="" verticalAlign="top" text="timestamp"></Label>
+                <Label row="1" col="1" colspan="2" class="p-0 m-0 m-l-5" text="Last message, ..."></Label>
+            </GridLayout>
         </ng-template>
-    </RadListView>
+    </ListView>
     <app-full-screen-loading *ngIf="loading" row="1"></app-full-screen-loading>
     <GridLayout row="1" rows="*, auto, *">
         <Label row="1" textWrap="true" class="text-center" *ngIf="!loading && chats.length == 0" [text]="'pages.chat.noChats' | translate"></Label>
