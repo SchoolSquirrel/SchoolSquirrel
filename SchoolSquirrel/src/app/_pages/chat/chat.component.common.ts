@@ -1,14 +1,8 @@
-import { Component } from "@angular/core";
 import { RemoteService } from "../../_services/remote.service";
 import { Chat } from "../../_models/Chat";
 import { AuthenticationService } from "../../_services/authentication.service";
 import { User } from "../../_models/User";
 
-@Component({
-    selector: "app-chat",
-    templateUrl: "./chat.component.html",
-    styleUrls: ["./chat.component.css"],
-})
 export class ChatComponentCommon {
     public loading = true;
     constructor(
@@ -28,7 +22,7 @@ export class ChatComponentCommon {
         return chat.users.length > 2;
     }
 
-    public getChatImageUrl(chat: Chat): string {
-        return this.remoteService.getImageUrl(this.isGroupChat(chat) ? "" : `users/${this.getOtherUserInPrivateChat(chat).id}.svg`, this.authenticationService);
+    public getChatImageUrl(chat: Chat, usePNG = false): string {
+        return this.remoteService.getImageUrl(this.isGroupChat(chat) ? "" : `users/${this.getOtherUserInPrivateChat(chat).id}.${usePNG ? "png" : "svg"}`, this.authenticationService);
     }
 }
