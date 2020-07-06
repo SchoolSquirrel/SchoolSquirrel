@@ -15,7 +15,7 @@
         </TabStrip>
         <TabContentItem>
             <GridLayout>
-                <Label text="Chat" class="h2 text-center"></Label>
+                <nativescript-squirrel-chat-ui hideHeader="true" [messages]="course.messages" [me]="authenticationService.currentUser" (messageSent)="onMessageSent($event)"></nativescript-squirrel-chat-ui>
             </GridLayout>
         </TabContentItem>
         <TabContentItem>
