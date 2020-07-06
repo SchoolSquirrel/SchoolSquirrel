@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
+import { ItemEventData } from "@nativescript/core";
 import { RemoteService } from "../../_services/remote.service";
 import { Chat } from "../../_models/Chat";
 import { AuthenticationService } from "../../_services/authentication.service";
 import { ChatComponentCommon } from "./chat.component.common";
-import { ItemEventData } from "@nativescript/core";
 
 @Component({
     selector: "app-chat",
