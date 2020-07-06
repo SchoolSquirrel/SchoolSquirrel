@@ -23,7 +23,7 @@ export class Message {
   @Column({default: false})
   public edited?: boolean;
 
-  @Column()
+  @Column({nullable: true})
   public citation?: number;
 
   @Column()
