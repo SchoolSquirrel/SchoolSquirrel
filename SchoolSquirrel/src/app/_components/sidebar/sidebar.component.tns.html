@@ -1,4 +1,4 @@
-<StackLayout row="0" class="sidedrawer-header fix-statusbar-margin" [backgroundImage]="remoteService.getImageUrl('users/' + (authenticationService.currentUser ? authenticationService.currentUser.id : '') + '.png', authenticationService)">
+<StackLayout row="0" class="sidedrawer-header" [backgroundImage]="remoteService.getImageUrl('users/' + (authenticationService.currentUser ? authenticationService.currentUser.id : '') + '.png', authenticationService)">
     <StackLayout class="sidedrawer-header-infos p-10">
         <Label class="sidedrawer-header-username" [text]="authenticationService.currentUser ? authenticationService.currentUser.name : ''"></Label>
         <Label class="" [text]="authenticationService.currentUser && authenticationService.currentUser.grade ?authenticationService.currentUser.grade.name : ''"></Label>

@@ -1,4 +1,4 @@
-<GridLayout rows="auto, *, auto" columns="*" class="fix-statusbar-margin" hideActionBar>
+<GridLayout rows="auto, *, auto" columns="*" class="" hideActionBar>
     <app-navbar row="0" col="0" [title]="'general.calendar' | translate"></app-navbar>
     <RadCalendar #calendar rowspan="2" row="1" col="0" [eventSource]="events" *ngIf="!loading" [eventsViewMode]="eventsViewMode"></RadCalendar>
     <app-full-screen-loading rowspan="2" row="1" col="0" *ngIf="loading"></app-full-screen-loading>

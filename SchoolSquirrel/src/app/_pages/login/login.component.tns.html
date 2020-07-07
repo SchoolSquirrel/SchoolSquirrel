@@ -1,27 +1,29 @@
-<StackLayout class="fix-statusbar-margin" hideActionBar>
-    <app-full-page-loading *ngIf="tryingToAutoLogin || loading"></app-full-page-loading>
-    <StackLayout [formGroup]="loginForm" class="nt-form login-form" *ngIf="!tryingToAutoLogin" [visibility]="loading ? 'collapse' : 'visible'">
-        <Label class="h1 text-center" text="SchoolSquirrel"></Label>
-        <Image class="top-img" src="~/assets/logo.png"></Image>
-        <StackLayout class="nt-input" [class.d-none]="autoDetectDomain">
-            <TextField keyboardType="url" class="-border -rounded" [hint]="'pages.login.domain' | translate" formControlName="domain" autofocus [class.text-danger]="submitted && loginForm.controls.domain.invalid"></TextField>
-            <Label class="text-danger" *ngIf="submitted && loginForm.controls.domain.invalid" [text]="'errors.required' | translate"></Label>
-        </StackLayout>
+<ScrollView>
+    <StackLayout class="" hideActionBar>
+        <app-full-page-loading *ngIf="tryingToAutoLogin || loading"></app-full-page-loading>
+        <StackLayout [formGroup]="loginForm" class="nt-form login-form" *ngIf="!tryingToAutoLogin" [visibility]="loading ? 'collapse' : 'visible'">
+            <Label class="h1 text-center" text="SchoolSquirrel"></Label>
+            <Image class="top-img" src="~/assets/logo.png"></Image>
+            <StackLayout class="nt-input" [class.d-none]="autoDetectDomain">
+                <TextField keyboardType="url" class="-border -rounded" [hint]="'pages.login.domain' | translate" formControlName="domain" autofocus [class.text-danger]="submitted && loginForm.controls.domain.invalid"></TextField>
+                <Label class="text-danger" *ngIf="submitted && loginForm.controls.domain.invalid" [text]="'errors.required' | translate"></Label>
+            </StackLayout>
 
-        <StackLayout class="nt-input">
-            <TextField autocorrect="false" class="-border -rounded" [hint]="'general.name' | translate" formControlName="name" [class.text-danger]="submitted && loginForm.controls.name.invalid"></TextField>
-            <Label class="text-danger" *ngIf="submitted && loginForm.controls.name.invalid" [text]="'errors.required' | translate"></Label>
-        </StackLayout>
+            <StackLayout class="nt-input">
+                <TextField autocorrect="false" class="-border -rounded" [hint]="'general.name' | translate" formControlName="name" [class.text-danger]="submitted && loginForm.controls.name.invalid"></TextField>
+                <Label class="text-danger" *ngIf="submitted && loginForm.controls.name.invalid" [text]="'errors.required' | translate"></Label>
+            </StackLayout>
 
-        <StackLayout class="nt-input">
-            <TextField autocorrect="false" secure="true" class="-border -rounded" formControlName="password" [hint]="'general.password' | translate" [class.text-danger]="submitted && loginForm.controls.password.invalid"></TextField>
-            <Label class="text-danger" *ngIf="submitted && loginForm.controls.password.invalid" [text]="'errors.required' | translate"></Label>
-        </StackLayout>
+            <StackLayout class="nt-input">
+                <TextField autocorrect="false" secure="true" class="-border -rounded" formControlName="password" [hint]="'general.password' | translate" [class.text-danger]="submitted && loginForm.controls.password.invalid"></TextField>
+                <Label class="text-danger" *ngIf="submitted && loginForm.controls.password.invalid" [text]="'errors.required' | translate"></Label>
+            </StackLayout>
 
-        <GridLayout class="nt-input" rows="auto" columns="auto, *, auto">
-            <Label row="0" col="0" class="h1 p-t-10" [text]="'pages.login.rememberMe' | translate"></Label>
-            <Switch row="0" col="1" formControlName="rememberMe"></Switch>
-        </GridLayout>
-        <Button class="-primary" [disabled]="loading" (tap)="onSubmit()" [text]="'pages.login.login' | translate"></Button>
+            <GridLayout class="nt-input" rows="auto" columns="auto, *, auto">
+                <Label row="0" col="0" class="h1 p-t-10" [text]="'pages.login.rememberMe' | translate"></Label>
+                <Switch row="0" col="1" formControlName="rememberMe"></Switch>
+            </GridLayout>
+            <Button class="-primary" [disabled]="loading" (tap)="onSubmit()" [text]="'pages.login.login' | translate"></Button>
+        </StackLayout>
     </StackLayout>
-</StackLayout>
+</ScrollView>
