@@ -1,11 +1,19 @@
-<GridLayout rows="auto, *">
-    <Label text="test" row="0"></Label>
-    <RadListView [items]="messages" row="1">
-        <ng-template tkListItemTemplate let-message="item">
-            <StackLayout orientation="vertical">
-                <Label class="nameLabel" [text]="message.sender.username"></Label>
-                <Label class="descriptionLabel" [text]="message.text"></Label>
-            </StackLayout>
-        </ng-template>
-    </RadListView>
+<GridLayout rows="auto, *, auto">
+    <app-navbar row="0" [title]="title" *ngIf="!hideHeader" isModal="true" (back)="goBack()"></app-navbar>
+    <ScrollView row="1" class="conversation-container">
+        <RadListView [items]="_messages">
+            <ng-template tkListItemTemplate let-item="item">
+                <GridLayout orientation="vertical">
+                    <Label class="nameLabel" [text]="item.sender.name"></Label>
+                    <Label class="descriptionLabel" [text]="item.text"></Label>
+                </GridLayout>
+            </ng-template>
+        </RadListView>
+    </ScrollView>
+    <GridLayout row="2" columns="auto, auto, *, auto" class="px-2">
+        <Button col="0" text="&#xf599;" class="fas btn-rounded m-0 p-0"></Button>
+        <TextField col="2" class="m-x-5 m-y-0 message-input" hint="Type a message..."></TextField>
+        <Button col="1" text="&#xf0c6;" class="fas btn-rounded m-0 p-0"></Button>
+        <Button col="3" text="&#xf1d8;" class="fas btn-rounded m-0 p-0"></Button>
+    </GridLayout>
 </GridLayout>
