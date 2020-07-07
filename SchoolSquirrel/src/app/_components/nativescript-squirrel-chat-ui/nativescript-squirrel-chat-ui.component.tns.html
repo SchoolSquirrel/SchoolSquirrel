@@ -1,15 +1,24 @@
 <GridLayout rows="auto, *, auto">
     <app-navbar row="0" [title]="title" *ngIf="!hideHeader" isModal="true" (back)="goBack()"></app-navbar>
-    <ScrollView row="1" class="conversation-container">
-        <RadListView [items]="_messages">
-            <ng-template tkListItemTemplate let-item="item">
-                <GridLayout orientation="vertical">
-                    <Label class="nameLabel" [text]="item.sender.name"></Label>
-                    <Label class="descriptionLabel" [text]="item.text"></Label>
-                </GridLayout>
-            </ng-template>
-        </RadListView>
-    </ScrollView>
+    <RadListView row="1" [items]="_messages" class="conversation-container">
+        <ng-template tkListItemTemplate let-item="item">
+            <FlexboxLayout class="messages">
+                <StackLayout [shadow]="2" cornerRadius="20" class="message-bubble" [class.continuation]="isContinuing(item)" [class.fromMe]="item.fromMe">
+                    <FlexboxLayout class="message-bubble-content">
+                        <StackLayout>
+                            <Label class="sendername" *ngIf="!isContinuing(item) && !item.fromMe" [text]="' ' + item.sender.name"></Label>
+                            <Label class="message-text" [text]="item.text" textWrap="true"></Label>
+                        </StackLayout>
+
+                        <FlexboxLayout class="meta">
+                            <Label [text]="'timestamp'" class="time"></Label>
+                            <Label text="&#xf017;" class="check fas"></Label>
+                        </FlexboxLayout>
+                    </FlexboxLayout>
+                </StackLayout>
+            </FlexboxLayout>
+        </ng-template>
+    </RadListView>
     <GridLayout row="2" columns="auto, auto, *, auto" class="px-2">
         <Button col="0" text="&#xf599;" class="fas btn-rounded m-0 p-0"></Button>
         <TextField col="2" class="m-x-5 m-y-0 message-input" hint="Type a message..."></TextField>
@@ -17,3 +26,44 @@
         <Button col="3" text="&#xf1d8;" class="fas btn-rounded m-0 p-0"></Button>
     </GridLayout>
 </GridLayout>
+
+<!-- 
+<GridLayout rows="auto, auto, auto" columns="auto, auto" class="message" [class.fromMe]="item.fromMe">
+                    <Label class="" row="0" col="0" [text]="item.sender.name"></Label>
+                    <Label class="" row="0" col="1" text="reactions"></Label>
+                    <Label class="content" row="1" col="0" textWrap="true" colspan="2" [text]="item.text"></Label>
+                    <Label class="" row="2" col="0" text="timestamp"></Label>
+                    <Label class="fas" row="2" col="1" text="&#xf00c;"></Label>
+                </GridLayout>
+
+
+-->
+<!--
+    <GridLayout rows="auto, auto, auto" columns="auto" class="message" [class.fromMe]="item.fromMe">
+                    <Label class="" row="0" [text]="item.sender.name"></Label>
+                    <Label class="" row="0" text="reactions"></Label>
+                    <Label class="" row="1" textWrap="true" colspan="2" [text]="item.text"></Label>
+                    <Label row="2">
+                        <FormattedString>
+                            <Span text="timestamp"></Span>
+                            <Span text="&#xf00c;" class="fas"></Span>
+                        </FormattedString>
+                    </Label>
+                </GridLayout>
+-->
+
+<!--
+    <GridLayout class="message-container" [columns]="item.fromMe ? '100, *, auto' : 'auto, *, 100'">
+                <GridLayout rows="auto, auto, auto" columns="auto" [col]="item.fromMe ? 2 : 0" class="message" [class.fromMe]="item.fromMe">
+                    <Label class="" row="0" [text]="item.sender.name"></Label>
+                    <Label class="" row="0" text="reactions"></Label>
+                    <Label class="" row="1" textWrap="true" colspan="2" [text]="item.text"></Label>
+                    <Label row="2">
+                        <FormattedString>
+                            <Span text="timestamp"></Span>
+                            <Span text="&#xf00c;" class="fas"></Span>
+                        </FormattedString>
+                    </Label>
+                </GridLayout>
+            </GridLayout>
+-->

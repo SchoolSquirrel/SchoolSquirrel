@@ -31,6 +31,10 @@ export class ChatComponent extends ChatComponentCommon implements OnInit {
         this.loading = true;
         this.remoteService.get(`chats/${this.chats[event.index].id}`).subscribe((data: Chat) => {
             this.currentChat = data;
+            for (const message of this.currentChat.messages) {
+                message.fromMe = message.sender.id
+                    == this.authenticationService.currentUser.id;
+            }
             this.loading = false;
         });
     }

@@ -8,7 +8,7 @@ import { User } from "../../_models/User";
 @Component({
     selector: "nativescript-squirrel-chat-ui",
     templateUrl: "./nativescript-squirrel-chat-ui.component.html",
-    styleUrls: ["./nativescript-squirrel-chat-ui.component.css"],
+    styleUrls: ["./nativescript-squirrel-chat-ui.component.scss"],
 })
 export class NativescriptSquirrelChatUiComponent {
     @Input()
@@ -26,5 +26,12 @@ export class NativescriptSquirrelChatUiComponent {
 
     public goBack(): void {
         this.back.emit();
+    }
+
+    public isContinuing(message: Message): boolean {
+        const index = this._messages.indexOf(message);
+        return this._messages[index]
+            && this._messages[index - 1]
+            && this._messages[index].sender == this._messages[index - 1].sender;
     }
 }
