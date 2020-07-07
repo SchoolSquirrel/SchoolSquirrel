@@ -18,7 +18,8 @@
         "lint": "eslint . --ext .ts",
         "lint-fix": "eslint . --ext .ts --fix",
         "e2e": "ng e2e",
-        "clean": "npx rimraf hooks node_modules platforms package-lock.json && npm i",
+        "crazy-clean": "npx rimraf hooks node_modules platforms package-lock.json && npm i",
+        "clean": "npx rimraf hooks platforms package-lock.json",
         "android": "tns debug android --env.aot --no-hmr",
         "android:prod": "tns build android --env.aot",
         "ios": "tns debug ios --env.aot --no-hmr",
@@ -76,6 +77,7 @@
         "sanitize-html": "^1.27.0",
         "tinymce": "^5.4.0",
         "tinymce-i18n": "^20.4.4",
+        "tns-platform-declarations": "^6.5.8",
         "tslib": "2.0.0",
         "zone.js": "~0.10.3"
     },
