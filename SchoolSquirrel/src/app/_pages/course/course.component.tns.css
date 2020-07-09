@@ -1,5 +1,9 @@
 /* Add mobile styles for the component here.  */
 
+TabStrip {
+    background-color: #fff;
+}
+
 TabStripItem Label {
     font-size: 30;
 }
