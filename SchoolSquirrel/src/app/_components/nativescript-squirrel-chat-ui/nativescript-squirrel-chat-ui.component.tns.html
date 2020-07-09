@@ -12,7 +12,7 @@
 
                         <FlexboxLayout class="meta">
                             <Label [text]="'timestamp'" class="time"></Label>
-                            <Label text="clock" class="check fas"></Label>
+                            <Label [text]="getStatusIcon(item)" class="check fas"></Label>
                         </FlexboxLayout>
                     </FlexboxLayout>
                 </StackLayout>

@@ -56,7 +56,22 @@ export class NativescriptSquirrelChatUiComponent {
     }
 
     public lastMessageSentSuccessfully(id: number): void {
-        this._messages[this._messages.length - 1].id = id;
-        this._messages[this._messages.length - 1].status = MessageStatus.Sent;
+        const m = this._messages.pop();
+        m.status = MessageStatus.Sent;
+        m.id = id;
+        this._messages.push(m);
+    }
+
+    public getStatusIcon(message: Message): string {
+        switch (message.status) {
+        case MessageStatus.Seen:
+            return "check-double";
+        case MessageStatus.Delivered:
+            return "check-double";
+        case MessageStatus.Sent:
+            return "check";
+        default:
+            return "clock";
+        }
     }
 }
