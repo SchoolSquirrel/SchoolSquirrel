@@ -12,7 +12,7 @@
 
                         <FlexboxLayout class="meta">
                             <Label [text]="'timestamp'" class="time"></Label>
-                            <Label text="&#xf017;" class="check fas"></Label>
+                            <Label text="clock" class="check fas"></Label>
                         </FlexboxLayout>
                     </FlexboxLayout>
                 </StackLayout>
@@ -20,10 +20,10 @@
         </ng-template>
     </RadListView>
     <GridLayout row="2" columns="auto, auto, *, auto" class="px-2">
-        <Button col="0" text="&#xf599;" class="fas btn-rounded m-0 p-0" (tap)="toggleEmojiPicker()"></Button>
+        <Button col="0" text="laugh" class="fas btn-rounded m-0 p-0" (tap)="toggleEmojiPicker()"></Button>
         <EmojiPicker #messageInput col="2" class="m-x-5 m-y-0 message-input" hint="Type a message..."></EmojiPicker>
-        <Button col="1" text="&#xf0c6;" class="fas btn-rounded m-0 p-0"></Button>
-        <Button col="3" text="&#xf1d8;" (tap)="sendMessage()" class="fas btn-rounded m-0 p-0"></Button>
+        <Button col="1" text="paperclip" class="fas btn-rounded m-0 p-0"></Button>
+        <Button col="3" text="paper-plane" (tap)="sendMessage()" class="fas btn-rounded m-0 p-0"></Button>
     </GridLayout>
 </GridLayout>
 
@@ -33,7 +33,7 @@
                     <Label class="" row="0" col="1" text="reactions"></Label>
                     <Label class="content" row="1" col="0" textWrap="true" colspan="2" [text]="item.text"></Label>
                     <Label class="" row="2" col="0" text="timestamp"></Label>
-                    <Label class="fas" row="2" col="1" text="&#xf00c;"></Label>
+                    <Label class="fas" row="2" col="1" text="clock"></Label>
                 </GridLayout>
 
 
@@ -46,7 +46,7 @@
                     <Label row="2">
                         <FormattedString>
                             <Span text="timestamp"></Span>
-                            <Span text="&#xf00c;" class="fas"></Span>
+                            <Span text="clock" class="fas"></Span>
                         </FormattedString>
                     </Label>
                 </GridLayout>
@@ -61,7 +61,7 @@
                     <Label row="2">
                         <FormattedString>
                             <Span text="timestamp"></Span>
-                            <Span text="&#xf00c;" class="fas"></Span>
+                            <Span text="clock" class="fas"></Span>
                         </FormattedString>
                     </Label>
                 </GridLayout>

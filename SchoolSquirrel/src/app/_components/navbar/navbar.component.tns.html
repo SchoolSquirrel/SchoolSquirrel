@@ -1,5 +1,5 @@
 <GridLayout height="50" rows="*" columns="50, *, auto, 50" class="nt-action-bar">
-    <Button row="0" col="0" class="btn-invisible fas text-white icon" [text]="isModal ? '&#xf060;' : '&#xf0c9;'" (tap)="isModal ? goBack() : openSideDrawer()"></Button>
+    <Button row="0" col="0" class="btn-invisible fas text-white icon" [text]="isModal ? 'arrow-left' : 'bars'" (tap)="isModal ? goBack() : openSideDrawer()"></Button>
     <Label row="0" col="1" class="text-white headline" [text]="title ? title : 'SchoolSquirrel'"></Label>
-    <Button row="0" col="3" class="btn-invisible fas text-white icon" text="&#xf142;"></Button>
+    <Button row="0" col="3" class="btn-invisible fas text-white icon" text="ellipsis-v"></Button>
 </GridLayout>

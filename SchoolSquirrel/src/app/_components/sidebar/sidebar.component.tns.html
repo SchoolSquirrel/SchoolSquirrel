@@ -9,22 +9,22 @@
 <ScrollView row="1">
     <StackLayout class="sidedrawer-content">
         <GridLayout columns="auto, *" class="sidedrawer-list-item" [nsRouterLinkActive]="['selected']" [nsRouterLink]="['/home']" (tap)="hideDrawer()">
-            <Label col="0" text="&#xf015;" class="fas icon"></Label>
+            <Label col="0" text="home" class="fas icon"></Label>
             <Label col="1" [text]="'general.dashboard' | translate" class="p-r-10"></Label>
         </GridLayout>
 
         <GridLayout columns="auto, *" class="sidedrawer-list-item" [nsRouterLinkActive]="['selected']" nsRouterLink="chat" (tap)="hideDrawer()">
-            <Label col="0" text="&#xf086;" class="far icon"></Label>
+            <Label col="0" text="comments" class="far icon"></Label>
             <Label col="1" [text]="'general.chat' | translate" class="p-r-10"></Label>
         </GridLayout>
 
         <GridLayout columns="auto, *" class="sidedrawer-list-item" [nsRouterLinkActive]="['selected']" nsRouterLink="assignments" (tap)="hideDrawer()">
-            <Label col="0" text="&#xf0ae;" class="fas icon"></Label>
+            <Label col="0" text="tasks" class="fas icon"></Label>
             <Label col="1" [text]="'general.assignments' | translate" class="p-r-10"></Label>
         </GridLayout>
 
         <GridLayout columns="auto, *" class="sidedrawer-list-item" [nsRouterLinkActive]="['selected']" nsRouterLink="calendar" (tap)="hideDrawer()">
-            <Label col="0" text="&#xf073;" class="far icon"></Label>
+            <Label col="0" text="calendar-alt" class="far icon"></Label>
             <Label col="1" [text]="'general.calendar' | translate" class="p-r-10"></Label>
         </GridLayout>
 
@@ -33,7 +33,7 @@
         </StackLayout>
 
         <GridLayout columns="auto, *" *ngFor="let course of courses" class="sidedrawer-list-item" [nsRouterLinkActive]="['selected']" [nsRouterLink]="['courses', course.id]" (tap)="hideDrawer()">
-            <Label col="0" text="&#xf02d;" class="fas icon"></Label>
+            <Label col="0" text="book" class="fas icon"></Label>
             <Label col="1" [text]="course.name" class="p-r-10"></Label>
         </GridLayout>
     </StackLayout>
