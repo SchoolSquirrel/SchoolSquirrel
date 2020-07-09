@@ -1,4 +1,6 @@
+@import "../../../variables.scss";
 .spinner {
     width: 50;
     height: 50;
+    color: $primary;
 }

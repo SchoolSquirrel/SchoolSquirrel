@@ -1,7 +1,10 @@
-/* Add mobile styles for the component here.  */
-
+@import "../../../variables.scss";
 TabStrip {
-    background-color: #fff;
+    background-color: $white;
+    color: $dark;
+    un-selected-item-color: $dark;
+    selected-item-color: $primary;
+    highlight-color: $primary;
 }
 
 TabStripItem Label {

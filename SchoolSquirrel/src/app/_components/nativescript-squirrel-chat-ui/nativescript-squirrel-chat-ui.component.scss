@@ -1,3 +1,4 @@
+@import "../../../variables.scss";
 .conversation-container {
     background-color: rgb(235, 235, 235);
     /*.message {
@@ -40,7 +41,7 @@
             background-color: white;
             .sendername {
                 display: block;
-                color: #2b669a;
+                color: $primary;
                 font-weight: bold;
             }
             .message-text {
