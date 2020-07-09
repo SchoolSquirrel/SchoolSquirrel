@@ -5,10 +5,10 @@
             <FlexboxLayout class="messages">
                 <StackLayout [shadow]="2" cornerRadius="20" class="message-bubble" [class.continuation]="isContinuing(item)" [class.fromMe]="item.fromMe">
                     <FlexboxLayout class="message-bubble-content">
-                        <StackLayout>
-                            <Label class="sendername" *ngIf="!isContinuing(item) && !item.fromMe" [text]="' ' + item.sender.name"></Label>
-                            <Label class="message-text" [text]="item.text" textWrap="true"></Label>
-                        </StackLayout>
+                        <GridLayout rows="auto, auto">
+                            <Label class="sendername" row="0" *ngIf="!isContinuing(item) && !item.fromMe" [text]="item.sender.name"></Label>
+                            <EmojiLabel class="message-text" row="1" [text]="item.text" textWrap="true"></EmojiLabel>
+                        </GridLayout>
 
                         <FlexboxLayout class="meta">
                             <Label [text]="'timestamp'" class="time"></Label>
@@ -20,10 +20,10 @@
         </ng-template>
     </RadListView>
     <GridLayout row="2" columns="auto, auto, *, auto" class="px-2">
-        <Button col="0" text="&#xf599;" class="fas btn-rounded m-0 p-0"></Button>
-        <TextField col="2" class="m-x-5 m-y-0 message-input" hint="Type a message..."></TextField>
+        <Button col="0" text="&#xf599;" class="fas btn-rounded m-0 p-0" (tap)="toggleEmojiPicker()"></Button>
+        <EmojiPicker #messageInput col="2" class="m-x-5 m-y-0 message-input" hint="Type a message..."></EmojiPicker>
         <Button col="1" text="&#xf0c6;" class="fas btn-rounded m-0 p-0"></Button>
-        <Button col="3" text="&#xf1d8;" class="fas btn-rounded m-0 p-0"></Button>
+        <Button col="3" text="&#xf1d8;" (tap)="sendMessage()" class="fas btn-rounded m-0 p-0"></Button>
     </GridLayout>
 </GridLayout>
 

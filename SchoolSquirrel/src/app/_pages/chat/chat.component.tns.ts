@@ -1,9 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { ItemEventData } from "@nativescript/core";
 import { RemoteService } from "../../_services/remote.service";
 import { Chat } from "../../_models/Chat";
 import { AuthenticationService } from "../../_services/authentication.service";
 import { ChatComponentCommon } from "./chat.component.common";
+import { Message } from "../../_models/Message";
+import { NativescriptSquirrelChatUiComponent } from "../../_components/nativescript-squirrel-chat-ui/nativescript-squirrel-chat-ui.component";
 
 @Component({
     selector: "app-chat",
@@ -19,6 +21,7 @@ export class ChatComponent extends ChatComponentCommon implements OnInit {
     ) {
         super(authenticationService, remoteService);
     }
+    @ViewChild("chat") public chat: NativescriptSquirrelChatUiComponent;
 
     public ngOnInit(): void {
         this.remoteService.get("chats").subscribe((data) => {
@@ -36,6 +39,12 @@ export class ChatComponent extends ChatComponentCommon implements OnInit {
                     == this.authenticationService.currentUser.id;
             }
             this.loading = false;
+        });
+    }
+
+    public onMessageSent(message: Message): void {
+        this.remoteService.post(`chats/${this.currentChat.id}`, { text: message.text, citation: message.citation }).subscribe((m: Message) => {
+            this.chat.lastMessageSentSuccessfully(m.id);
         });
     }
 }

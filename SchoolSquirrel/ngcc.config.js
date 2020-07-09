@@ -101,5 +101,21 @@ module.exports = {
                 /@nativescript\/angular\//,
             ],
         },
+        "nativescript-emoji-picker": {
+            entryPoints: {
+                angular: {
+                    override: {
+                        main: "./emoji-picker.directives.js",
+                        typings: "./emoji-picker.directives.d.ts",
+                    },
+                    ignoreMissingDependencies: true,
+                },
+            },
+            ignorableDeepImportMatchers: [
+                /tns-core-modules\//,
+                /@nativescript\/core\//,
+                /@nativescript\/angular\//,
+            ],
+        },
     },
 };

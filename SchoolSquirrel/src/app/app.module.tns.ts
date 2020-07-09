@@ -1,5 +1,5 @@
 import {
-    NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID,
+    NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, Directive,
 } from "@angular/core";
 import {
     NativeScriptModule, NativeScriptFormsModule, NativeScriptHttpClientModule, registerElement,
@@ -45,6 +45,20 @@ registerElement(
     // eslint-disable-next-line
     () => require("@nstudio/nativescript-floatingactionbutton").Fab,
 );
+
+@Directive({
+    selector: "EmojiPicker",
+})
+export class EmojiPickerDirective { }
+
+@Directive({
+    selector: "EmojiLabel",
+})
+export class EmojiLabelDirective { }
+// eslint-disable-next-line
+registerElement("EmojiPicker", () => require("nativescript-emoji-picker").EmojiPicker);
+// eslint-disable-next-line
+registerElement("EmojiLabel", () => require("nativescript-emoji-picker").EmojiLabel);
 
 export function nativescriptTranslateLoaderFactory(): NativeScriptLoader {
     return new NativeScriptLoader("./assets/i18n/", ".json");

@@ -1,9 +1,10 @@
 import {
-    Component, Input, Output, EventEmitter,
+    Component, Input, Output, EventEmitter, ViewChild,
 } from "@angular/core";
 import { ObservableArray } from "@nativescript/core";
 import { Message } from "../../_models/Message";
 import { User } from "../../_models/User";
+import { MessageStatus } from "../../_models/MessageStatus";
 
 @Component({
     selector: "nativescript-squirrel-chat-ui",
@@ -21,6 +22,8 @@ export class NativescriptSquirrelChatUiComponent {
     @Input() profileImageSource: string;
     @Input() title: string;
     @Output() back: EventEmitter<void> = new EventEmitter<void>();
+    @Output() messageSent: EventEmitter<Message> = new EventEmitter<Message>();
+    @ViewChild("messageInput") public messageInput;
 
     public _messages: ObservableArray<Message> = new ObservableArray<Message>();
 
@@ -33,5 +36,27 @@ export class NativescriptSquirrelChatUiComponent {
         return this._messages[index]
             && this._messages[index - 1]
             && this._messages[index].sender == this._messages[index - 1].sender;
+    }
+
+    public toggleEmojiPicker(): void {
+        this.messageInput.nativeElement.togglePopup();
+    }
+
+    public sendMessage(): void {
+        const m = {
+            fromMe: true,
+            text: this.messageInput.nativeElement.text,
+            date: new Date(),
+            sender: this.me,
+            status: MessageStatus.Waiting,
+        } as any;
+        this._messages.push(m);
+        this.messageSent.emit(m);
+        this.messageInput.nativeElement.text = "";
+    }
+
+    public lastMessageSentSuccessfully(id: number): void {
+        this._messages[this._messages.length - 1].id = id;
+        this._messages[this._messages.length - 1].status = MessageStatus.Sent;
     }
 }

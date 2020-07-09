@@ -5,4 +5,7 @@ import { Component } from "@angular/core";
     templateUrl: "./nativescript-squirrel-chat-ui.component.html",
     styleUrls: ["./nativescript-squirrel-chat-ui.component.scss"],
 })
-export class NativescriptSquirrelChatUiComponent {}
+export class NativescriptSquirrelChatUiComponent {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public lastMessageSentSuccessfully(id: number): void { /* */ }
+}
