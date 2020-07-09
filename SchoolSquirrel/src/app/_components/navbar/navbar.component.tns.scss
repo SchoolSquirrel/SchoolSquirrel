@@ -1,10 +1,14 @@
+@import "../../../variables.scss";
 .nt-action-bar {
-    background-color: #ffffff;
-    color: #000000;
+    background-color: $white;
+    color: $black;
+    * {
+        color: $dark;
+    }
 }
 
 .text-white {
-    color: #ffffff;
+    color: $white;
 }
 
 .icon {
