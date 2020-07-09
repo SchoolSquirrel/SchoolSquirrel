@@ -11,7 +11,7 @@ import { RemoteService } from "../../_services/remote.service";
 @Component({
     selector: "app-select-users",
     templateUrl: "./select-users.component.html",
-    styleUrls: ["./select-users.component.css"],
+    styleUrls: ["./select-users.component.scss"],
 })
 export class SelectUsersComponent {
     public separatorKeysCodes: number[] = [];

@@ -10,7 +10,7 @@ import { ChatComponentCommon } from "./chat.component.common";
 @Component({
     selector: "app-chat",
     templateUrl: "./chat.component.html",
-    styleUrls: ["./chat.component.css"],
+    styleUrls: ["./chat.component.scss"],
 })
 export class ChatComponent extends ChatComponentCommon implements OnInit {
     public chats: Chat[] = [];
