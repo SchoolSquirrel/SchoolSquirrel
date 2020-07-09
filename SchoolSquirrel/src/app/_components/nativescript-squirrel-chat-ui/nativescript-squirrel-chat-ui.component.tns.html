@@ -21,11 +21,11 @@
     </RadListView>
     <GridLayout columns="*, auto" row="2" class="p-3">
         <GridLayout col="0" columns="auto, *, auto" class="px-2 input-container">
-            <Button col="0" text="laugh" class="fas btn-icon btn-invisible  m-0 p-0" (tap)="toggleEmojiPicker()"></Button>
+            <Button col="0" text="laugh" class="fas btn-icon btn-invisible btn-round m-0 p-0" (tap)="toggleEmojiPicker()"></Button>
             <EmojiPicker (textChange)="onTextChange($event)" #messageInput col="1" class="m-x-5 m-y-0 message-input" hint="Type a message..."></EmojiPicker>
-            <Button col="2" text="paperclip" class="fas btn-invisible btn-icon m-0 p-0"></Button>
+            <Button col="2" text="paperclip" class="fas btn-invisible btn-round btn-icon m-0 p-0"></Button>
         </GridLayout>
-        <Button col="1" [text]="canSendMesage ? 'paper-plane' : 'microphone'" (tap)="sendMessage()" class="fas btn-round btn-send m-0 p-0"></Button>
+        <Button col="1" [text]="canSendMesage ? 'paper-plane' : 'microphone'" (tap)="sendMessage()" class="fas btn-round btn-icon btn-send m-0 p-0"></Button>
     </GridLayout>
 </GridLayout>
 
