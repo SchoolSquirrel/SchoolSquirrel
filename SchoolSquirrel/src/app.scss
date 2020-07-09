@@ -16,9 +16,8 @@
 }
 
 .btn-invisible {
-    border-color: transparent;
-    background: #1a89c9;
-    border-width: 1;
+    background: #fff;
+    z-index: 0;
 }
 
 .text-white {
@@ -54,8 +53,7 @@
     border-radius: 50;
 }
 
-.btn-rounded {
-    border-radius: 50;
+.btn-icon {
     width: 50;
     height: 50;
     font-size: 20;
