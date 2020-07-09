@@ -11,7 +11,7 @@
                         </GridLayout>
 
                         <FlexboxLayout class="meta">
-                            <Label [text]="'timestamp'" class="time"></Label>
+                            <Label [text]="item.date | date:'shortTime'" class="time"></Label>
                             <Label [text]="getStatusIcon(item)" class="check fas"></Label>
                         </FlexboxLayout>
                     </FlexboxLayout>
