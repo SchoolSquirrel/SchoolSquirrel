@@ -1,6 +1,7 @@
 import {
     Component, Input, Output, EventEmitter, ViewChild,
 } from "@angular/core";
+import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
 import { ObservableArray } from "@nativescript/core";
 import { Message } from "../../_models/Message";
 import { User } from "../../_models/User";
@@ -25,6 +26,8 @@ export class NativescriptSquirrelChatUiComponent {
     @Output() messageSent: EventEmitter<Message> = new EventEmitter<Message>();
     @ViewChild("messageInput") public messageInput;
 
+    public canSendMesage = false;
+
     public _messages: ObservableArray<Message> = new ObservableArray<Message>();
 
     public goBack(): void {
@@ -43,6 +46,9 @@ export class NativescriptSquirrelChatUiComponent {
     }
 
     public sendMessage(): void {
+        if (!this.canSendMesage) {
+            return;
+        }
         const m = {
             fromMe: true,
             text: this.messageInput.nativeElement.text,
@@ -73,5 +79,13 @@ export class NativescriptSquirrelChatUiComponent {
         default:
             return "clock";
         }
+    }
+
+    public canSendMessage(): boolean {
+        return this.messageInput?.nativeElement?.text != "";
+    }
+
+    public onTextChange(e): void {
+        this.canSendMesage = e.value.trim() != "";
     }
 }
