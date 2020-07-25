@@ -42,6 +42,7 @@
         "helmet": "^3.22.0",
         "i18n": "^0.8.6",
         "jsonwebtoken": "^8.5.1",
+        "minio": "^7.0.16",
         "mysql": "^2.18.1",
         "reflect-metadata": "^0.1.13",
         "sanitize-html": "^1.27.0",
