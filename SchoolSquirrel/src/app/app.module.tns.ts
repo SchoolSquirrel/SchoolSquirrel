@@ -37,6 +37,8 @@ import { AssignmentItemComponent } from "./_components/assignment-item/assignmen
 import { AssignmentComponent } from "./_pages/assignment/assignment.component";
 import { HtmlToTextPipe } from "./_pipes/html-to-text.pipe";
 import { NativescriptSquirrelChatUiComponent } from "./_components/nativescript-squirrel-chat-ui/nativescript-squirrel-chat-ui.component";
+import { FileListComponent } from "./_components/file-list/file-list.component";
+import { FileIconComponent } from "./_components/file-icon/file-icon.component";
 
 registerLocaleData(localeDe, localeDeExtra);
 
@@ -86,6 +88,8 @@ export function nativescriptTranslateLoaderFactory(): NativeScriptLoader {
         AssignmentItemComponent,
         HtmlToTextPipe,
         NativescriptSquirrelChatUiComponent,
+        FileListComponent,
+        FileIconComponent,
     ],
     imports: [
         ReactiveFormsModule,

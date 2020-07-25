@@ -54,6 +54,8 @@ import { HtmlToTextPipe } from "./_pipes/html-to-text.pipe";
 import { AssignmentItemComponent } from "./_components/assignment-item/assignment-item.component";
 import { UserNameComponent } from "./_components/user-name/user-name.component";
 import { NativescriptSquirrelChatUiComponent } from "./_components/nativescript-squirrel-chat-ui/nativescript-squirrel-chat-ui.component";
+import { FileListComponent } from "./_components/file-list/file-list.component";
+import { FileIconComponent } from "./_components/file-icon/file-icon.component";
 
 registerLocaleData(localeDe, localeDeExtra);
 declare const require: any;
@@ -96,6 +98,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         AssignmentItemComponent,
         UserNameComponent,
         NativescriptSquirrelChatUiComponent,
+        FileListComponent,
+        FileIconComponent,
     ],
     imports: [
         BrowserModule,
