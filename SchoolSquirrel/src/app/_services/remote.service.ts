@@ -33,6 +33,17 @@ export class RemoteService {
         return this.httpClient.post(`${this.apiUrl}/${url}`, data, options);
     }
 
+    public postFile(
+        url: string, data: { [key: string]: any }, fileKey: string, file: File,
+    ): Observable<any> {
+        const formData = new FormData();
+        formData.append(fileKey, file, file.name);
+        for (const key of Object.keys(data)) {
+            formData.append(key, data[key]);
+        }
+        return this.httpClient.post(`${this.apiUrl}/${url}`, formData, { reportProgress: true });
+    }
+
     public delete(url: string): Observable<any> {
         return this.httpClient.delete(`${this.apiUrl}/${url}`);
     }
