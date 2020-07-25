@@ -28,6 +28,14 @@
                 "info": "/ oder @ eingeben, um eine Liste der Befehle anzuzeigen",
                 "placeholder": "Suchen oder Befehl eingeben"
             }
+        },
+        "file-list": {
+            "noFiles": "Keine Dateien hochgeladen",
+            "newDocx": "Neues Dokument",
+            "newXlsx": "Neue Tabellenkalkulation",
+            "newPptx": "Neue Präsentation",
+            "add": "Hinzufügen",
+            "upload": "Datei hochladen..."
         }
     },
     "pages": {
@@ -45,7 +53,9 @@
             "title": "Titel",
             "content": "Inhalt",
             "due": "Abgabe am",
-            "view": "Ansehen"
+            "view": "Ansehen",
+            "filesToView": "Materialien",
+            "filesToEdit": "Arbeitsblätter"
         },
         "calendar": {
             "categories": {
