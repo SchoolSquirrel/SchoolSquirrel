@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import * as i18n from "i18n";
 import { getRepository } from "typeorm";
+import * as minio from "minio";
 import { Assignment } from "../entity/Assignment";
 import { Course } from "../entity/Course";
 import { sanitizeHtml } from "../utils/html";
+import * as multer from "multer";
 
 class AssignmentsController {
     public static listCoursesWithAssignments = async (req: Request, res: Response) => {
@@ -21,6 +23,14 @@ class AssignmentsController {
         const assignmentRepository = getRepository(Assignment);
         const assignment = await assignmentRepository.findOne(req.params.id);
         res.send(assignment);
+    }
+
+    public static uploadFile = async (req: Request, res: Response) => {
+        (req.app.locals.minio as minio.Client).putObject("assignments", req.file.originalname, req.file.buffer).then((etag) => {
+            res.send({etag});
+        }, (e) => {
+            res.status(500).send({ message: e });
+        });
     }
 
     public static newAssignment = async (req: Request, res: Response) => {

@@ -19,6 +19,7 @@
     "devDependencies": {
         "@types/i18n": "^0.8.6",
         "@types/minio": "^7.0.6",
+        "@types/multer": "^1.4.3",
         "@types/node": "^13.9.3",
         "@types/request": "^2.48.4",
         "@types/sanitize-html": "^1.23.3",
@@ -44,6 +45,7 @@
         "i18n": "^0.8.6",
         "jsonwebtoken": "^8.5.1",
         "minio": "^7.0.16",
+        "multer": "^1.4.2",
         "mysql": "^2.18.1",
         "reflect-metadata": "^0.1.13",
         "sanitize-html": "^1.27.0",
