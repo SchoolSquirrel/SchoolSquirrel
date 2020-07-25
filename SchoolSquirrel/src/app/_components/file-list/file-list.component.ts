@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
 
 @Component({
     selector: "app-file-list",
@@ -6,5 +6,6 @@ import { Component } from "@angular/core";
     styleUrls: ["./file-list.component.scss"],
 })
 export class FileListComponent {
+  @Input() public edit = false;
   public files: any[] = [];
 }

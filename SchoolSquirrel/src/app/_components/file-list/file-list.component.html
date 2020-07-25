@@ -1,5 +1,5 @@
 <span class="text-muted d-block" *ngIf="!files || files.length == 0">{{"components.file-list.noFiles" | translate}}</span>
-<div ngbDropdown class="d-inline-block">
+<div ngbDropdown class="d-inline-block" *ngIf="edit">
     <button class="btn btn-outline-primary" ngbDropdownToggle>{{"components.file-list.add" | translate}}</button>
     <div ngbDropdownMenu>
         <button ngbDropdownItem>{{"components.file-list.upload" | translate}}</button>
