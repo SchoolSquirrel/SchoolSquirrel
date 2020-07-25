@@ -21,6 +21,8 @@ import { createGrades4684684684651 } from "./migration/4684684684651-createGrade
 import { Chat } from "./entity/Chat";
 import { Message } from "./entity/Message";
 import { Event } from "./entity/Event";
+import * as minio from "minio";
+import { Buckets } from "./entity/Buckets";
 
 // write env to config file
 if (!fs.existsSync(globals.configPath)) {
@@ -88,8 +90,24 @@ createConnection({
         // Create a new express application instance
         const app = express();
 
-        // we can get it in controllers using req.app.locals.config
+        // S3 Initialization
+        const minioClient = new minio.Client({
+            endPoint: config.MINIO_SERVER,
+            port: config.MINIO_PORT,
+            useSSL: config.MINIO_USESSL,
+            accessKey: config.MINIO_ACCESSKEY,
+            secretKey: config.MINIO_SECRETKEY
+        });
+
+        for (const bucket of Object.values(Buckets)) {
+            if (!await minioClient.bucketExists(bucket)) {
+                await minioClient.makeBucket(bucket, "eu-1");
+            }
+        }
+
+        // make config and minioClient available in the controllers using req.app.locals
         app.locals.config = config;
+        app.locals.minio = minioClient;
 
         // Call midlewares
         // This sets up secure rules for CORS, see https://developer.mozilla.org/de/docs/Web/HTTP/CORS

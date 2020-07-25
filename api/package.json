@@ -18,6 +18,7 @@
     "homepage": "https://github.com/SchoolSquirrel/SchoolSquirrel#readme",
     "devDependencies": {
         "@types/i18n": "^0.8.6",
+        "@types/minio": "^7.0.6",
         "@types/node": "^13.9.3",
         "@types/request": "^2.48.4",
         "@types/sanitize-html": "^1.23.3",
