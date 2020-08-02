@@ -50,6 +50,7 @@ import { FullPageLoadingComponent } from "./_components/full-page-loading/full-p
 import { ChatComponent } from "./_pages/chat/chat.component";
 import { NgbDateCustomParserFormatter } from "./_helpers/NgbDateCustomParserFormatter";
 import { SafeUserHtmlPipe } from "./_pipes/safe-user-html.pipe";
+import { FilenamePipe } from "./_pipes/filename.pipe";
 import { HtmlToTextPipe } from "./_pipes/html-to-text.pipe";
 import { AssignmentItemComponent } from "./_components/assignment-item/assignment-item.component";
 import { UserNameComponent } from "./_components/user-name/user-name.component";
@@ -95,6 +96,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         AssignmentComponent,
         SafeUserHtmlPipe,
         HtmlToTextPipe,
+        FilenamePipe,
         AssignmentItemComponent,
         UserNameComponent,
         NativescriptSquirrelChatUiComponent,
