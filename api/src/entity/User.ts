@@ -9,12 +9,15 @@ import {
     ManyToOne,
     ManyToMany,
     OneToMany,
+    OneToOne,
+    JoinColumn,
 } from "typeorm";
 import { Grade } from "./Grade";
 import { Course } from "./Course";
 import { Chat } from "./Chat";
 import { Message } from "./Message";
 import { Event } from "./Event";
+import { Assignment } from "./Assignment";
 
 @Entity()
 @Unique(["name"])
@@ -59,6 +62,10 @@ export class User {
 
     @OneToMany(() => Event, (event) => event.user)
     public events: Event[];
+
+    @OneToOne(() => Assignment, (assignment) => assignment.draftUser)
+    @JoinColumn()
+    public assignmentDraft: Assignment;
 
 
     public jwtToken?: string;

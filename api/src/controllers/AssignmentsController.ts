@@ -5,7 +5,7 @@ import * as minio from "minio";
 import { Assignment } from "../entity/Assignment";
 import { Course } from "../entity/Course";
 import { sanitizeHtml } from "../utils/html";
-import * as multer from "multer";
+import { User } from "../entity/User";
 
 class AssignmentsController {
     public static listCoursesWithAssignments = async (req: Request, res: Response) => {
@@ -26,11 +26,51 @@ class AssignmentsController {
     }
 
     public static uploadFile = async (req: Request, res: Response) => {
-        (req.app.locals.minio as minio.Client).putObject("assignments", req.file.originalname, req.file.buffer).then((etag) => {
-            res.send({etag});
+        (req.app.locals.minio as minio.Client).putObject("assignments", `${req.params.id}/${req.params.type == "materials" ? "materials" : "worksheets"}/${req.file.originalname}`, req.file.buffer, {
+            author: res.locals.jwtPayload.userId,
+        }).then((etag) => {
+            const s = (req.app.locals.minio as minio.Client).listObjectsV2("assignments");
+            const data = [];
+            s.on("data", (d) => {
+                data.push(d);
+            });
+            s.on("end", () => {
+                res.send(data);
+            })
         }, (e) => {
             res.status(500).send({ message: e });
         });
+    }
+
+    public static getAssignmentDraft = async (req: Request, res: Response) => {
+        const assignmentRepository = getRepository(Assignment);
+        const me = await getRepository(User).findOne(res.locals.jwtPayload.userId);
+        const assignment = await AssignmentsController.createDraftIfNotExisting(res, me);
+
+        res.status(200).send(assignment);
+    }
+
+    public static saveAssignmentDraft = async (req: Request, res: Response) => {
+        const assignment = await AssignmentsController.findAssignmentDraft(res.locals.jwtPayload.userId);
+        if (!assignment) {
+            const me = await getRepository(User).findOne(res.locals.jwtPayload.userId);
+            await AssignmentsController.createDraftIfNotExisting(res, me);
+            res.status(200).send({ success: true });
+            return;
+        }
+        assignment.title = req.body.title || "";
+        assignment.content = sanitizeHtml(req.body.content || "");
+        assignment.due = req.body.due;
+
+        const assignmentRepository = getRepository(Assignment);
+
+        try {
+            await assignmentRepository.save(assignment);
+        } catch (e) {
+            res.status(500).send({ message: i18n.__("errors.unknown") });
+            return;
+        }
+        res.status(200).send({ success: true });
     }
 
     public static newAssignment = async (req: Request, res: Response) => {
@@ -40,11 +80,12 @@ class AssignmentsController {
             return;
         }
 
-        const assignment = new Assignment();
+        const assignment = await AssignmentsController.findAssignmentDraft(res.locals.jwtPayload.userId);
         assignment.title = title;
         assignment.content = sanitizeHtml(content);
         assignment.due = due;
         assignment.course = await getRepository(Course).findOne(course);
+        assignment.draftUser = null;
 
         const assignmentRepository = getRepository(Assignment);
 
@@ -106,6 +147,30 @@ class AssignmentsController {
         }
 
         res.status(200).send({ success: true });
+    }
+
+    private static async createDraftIfNotExisting(res: Response, me: User) {
+        let assignment = await AssignmentsController.findAssignmentDraft(res.locals.jwtPayload.userId);
+        if (!assignment) {
+            assignment = new Assignment();
+            assignment.title = "";
+            assignment.content = "";
+            assignment.draftUser = me;
+            const d = new Date();
+            d.setDate(new Date().getDate() + 1);
+            d.setHours(23);
+            d.setMinutes(59);
+            assignment.due = d;
+            assignment = await getRepository(Assignment).save(assignment);
+        }
+        return assignment;
+    }
+
+    private static async findAssignmentDraft(id: number) {
+        return await getRepository(Assignment).createQueryBuilder("assignment")
+            .leftJoinAndSelect("assignment.draftUser", "user")
+            .where("user.id = :id", { id })
+            .getOne();
     }
 }
 

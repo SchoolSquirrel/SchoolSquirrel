@@ -3,8 +3,10 @@ Column,
 Entity,
 PrimaryGeneratedColumn,
 ManyToOne,
+OneToOne,
 } from "typeorm";
 import { Course } from "./Course";
+import { User } from "./User";
 
 @Entity()
 export class Assignment {
@@ -22,4 +24,7 @@ export class Assignment {
 
   @ManyToOne(() => Course, (course) => course.assignments)
   public course: Course;
+
+  @OneToOne(() => User, (user) => user.assignmentDraft)
+  public draftUser: User;
 }
