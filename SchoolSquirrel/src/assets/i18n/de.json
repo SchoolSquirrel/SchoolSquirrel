@@ -19,6 +19,7 @@
         "chat": "Chat",
         "files": "Dateien",
         "create": "Erstellen",
+        "saveAsDraft": "Als Entwurf speichern",
         "pleaseSelect": "Bitte wählen",
         "info": "Info"
     },

@@ -27,4 +27,7 @@ export class Assignment {
 
   @OneToOne(() => User, (user) => user.assignmentDraft)
   public draftUser: User;
+
+  public materials: any[];
+  public worksheets: any[];
 }
