@@ -13,6 +13,8 @@ export class FileListComponent {
     @Input() public type: "materials" | "worksheets" = "materials";
     @Input() public id: number;
     @Input() public files: any[] = [];
+    // eslint-disable-next-line react/static-property-placement
+    @Input() public context: string;
     @ViewChild("fileInput") private fileInput: ElementRef;
 
     constructor(private remoteService: RemoteService) {}
@@ -27,7 +29,7 @@ export class FileListComponent {
         }
         const { files } = event.target as HTMLInputElement;
         if (files[0]) {
-            this.remoteService.postFile(`upload/assignments/${this.id}/${this.type}`, {}, "file", files[0]).subscribe((e) => {
+            this.remoteService.postFile(`upload/${this.context}/${this.id}/${this.type}`, {}, "file", files[0]).subscribe((e) => {
                 if (e && typeof e == "object") {
                     this.files.push(e);
                 }
