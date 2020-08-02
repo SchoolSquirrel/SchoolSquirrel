@@ -52,6 +52,7 @@ import { NgbDateCustomParserFormatter } from "./_helpers/NgbDateCustomParserForm
 import { SafeUserHtmlPipe } from "./_pipes/safe-user-html.pipe";
 import { FilenamePipe } from "./_pipes/filename.pipe";
 import { FileextPipe } from "./_pipes/fileext.pipe";
+import { FilesizePipe } from "./_pipes/filesize.pipe";
 import { HtmlToTextPipe } from "./_pipes/html-to-text.pipe";
 import { AssignmentItemComponent } from "./_components/assignment-item/assignment-item.component";
 import { UserNameComponent } from "./_components/user-name/user-name.component";
@@ -99,6 +100,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         HtmlToTextPipe,
         FilenamePipe,
         FileextPipe,
+        FilesizePipe,
         AssignmentItemComponent,
         UserNameComponent,
         NativescriptSquirrelChatUiComponent,
