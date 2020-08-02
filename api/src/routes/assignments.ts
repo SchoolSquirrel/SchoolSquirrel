@@ -12,5 +12,6 @@ router.get("/:id", [checkJwt], AssignmentsController.getAssignment);
 router.post("/", [checkJwt], AssignmentsController.newAssignment);
 // router.post("/:id", [checkJwt], AssignmentsController.editAssignment);
 router.delete("/:id", [checkJwt], AssignmentsController.deleteAssignment);
+router.delete("/:id/:type/:file", [checkJwt], AssignmentsController.deleteFile);
 
 export default router;

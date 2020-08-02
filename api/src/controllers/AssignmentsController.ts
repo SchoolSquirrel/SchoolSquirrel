@@ -39,6 +39,15 @@ class AssignmentsController {
         });
     }
 
+    public static deleteFile = async (req: Request, res: Response) => {
+        const path = `${req.params.id}/${req.params.type == "materials" ? "materials" : "worksheets"}/${req.params.file}`;
+        (req.app.locals.minio as minio.Client).removeObject(Buckets.ASSIGNMENTS, path).then(async () => {
+            res.send({ success: true })
+        }, (e) => {
+            res.status(500).send({ message: e });
+        });
+    }
+
     public static getAssignmentDraft = async (req: Request, res: Response) => {
         const me = await getRepository(User).findOne(res.locals.jwtPayload.userId);
         const assignment = await AssignmentsController.createDraftIfNotExisting(res, me);
