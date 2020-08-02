@@ -14,5 +14,6 @@ router.post("/", [checkJwt], AssignmentsController.newAssignment);
 router.delete("/:id", [checkJwt], AssignmentsController.deleteAssignment);
 router.delete("/:id/:type/:file", [checkJwt], AssignmentsController.deleteFile);
 router.get("/:id/:type/:file", [checkJwt], AssignmentsController.downloadFile);
+router.post("/:id/:type/:fileExt", [checkJwt], AssignmentsController.newFile);
 
 export default router;
