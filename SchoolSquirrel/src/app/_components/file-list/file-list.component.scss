@@ -1,0 +1,10 @@
+.card {
+    .button-bar-autohide {
+        display: none;
+    }
+    &:hover {
+        .button-bar-autohide {
+            display: block;
+        }
+    }
+}
