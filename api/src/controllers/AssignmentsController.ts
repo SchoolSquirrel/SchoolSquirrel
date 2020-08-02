@@ -7,6 +7,7 @@ import { Course } from "../entity/Course";
 import { sanitizeHtml } from "../utils/html";
 import { User } from "../entity/User";
 import { listObjects } from "../utils/storage";
+import { Buckets } from "../entity/Buckets";
 
 class AssignmentsController {
     public static listCoursesWithAssignments = async (req: Request, res: Response) => {
@@ -29,10 +30,10 @@ class AssignmentsController {
 
     public static uploadFile = async (req: Request, res: Response) => {
         const path = `${req.params.id}/${req.params.type == "materials" ? "materials" : "worksheets"}/${req.file.originalname}`;
-        (req.app.locals.minio as minio.Client).putObject("assignments", path, req.file.buffer, {
+        (req.app.locals.minio as minio.Client).putObject(Buckets.ASSIGNMENTS, path, req.file.buffer, {
             author: res.locals.jwtPayload.userId,
         }).then(async () => {
-            res.send((await listObjects(req.app.locals.minio, "assignments", path))[0])
+            res.send((await listObjects(req.app.locals.minio, Buckets.ASSIGNMENTS, path))[0])
         }, (e) => {
             res.status(500).send({ message: e });
         });
@@ -145,8 +146,8 @@ class AssignmentsController {
     }
 
     private static async addFilesToAssignment(assignment: Assignment, req) {
-        assignment.worksheets = await listObjects(req.app.locals.minio, "assignments", `${assignment.id}/worksheets/`);
-        assignment.materials = await listObjects(req.app.locals.minio, "assignments", `${assignment.id}/materials/`);
+        assignment.worksheets = await listObjects(req.app.locals.minio, Buckets.ASSIGNMENTS, `${assignment.id}/worksheets/`);
+        assignment.materials = await listObjects(req.app.locals.minio, Buckets.ASSIGNMENTS, `${assignment.id}/materials/`);
     }
 
     private static async createDraftIfNotExisting(res: Response, me: User) {
