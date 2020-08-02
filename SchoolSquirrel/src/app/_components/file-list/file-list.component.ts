@@ -10,7 +10,9 @@ import { RemoteService } from "../../_services/remote.service";
 })
 export class FileListComponent {
     @Input() public edit = false;
-    public files: any[] = [];
+    @Input() public type: "materials" | "worksheets" = "materials";
+    @Input() public id: number;
+    @Input() public files: any[] = [];
     @ViewChild("fileInput") private fileInput: ElementRef;
 
     constructor(private remoteService: RemoteService) {}
@@ -20,11 +22,15 @@ export class FileListComponent {
     }
 
     public onFileSelected(event: Event): void {
+        if (!this.id || !this.edit) {
+            return;
+        }
         const { files } = event.target as HTMLInputElement;
         if (files[0]) {
-            this.remoteService.postFile("upload/assignments/5/material", {}, "file", files[0]).subscribe((e) => {
-                // eslint-disable-next-line no-console
-                console.log(e);
+            this.remoteService.postFile(`upload/assignments/${this.id}/${this.type}`, {}, "file", files[0]).subscribe((e) => {
+                if (e && typeof e == "object") {
+                    this.files.push(e);
+                }
             });
         }
     }
