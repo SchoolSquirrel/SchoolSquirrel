@@ -7,4 +7,5 @@ import { Component, Input } from "@angular/core";
 })
 export class FileIconComponent {
   @Input() public ext: string;
+  @Input() public size: "xxl" | "xl" | "lg" | "md" | "sm" | "xs" | "xxs" = "xxs";
 }
