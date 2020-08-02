@@ -6,9 +6,9 @@
 /*    |    Then, run "npx redundancyjs" in the terminal.                      |    */
 /*    +-----------------------------------------------------------------------+    */
 
-/* do not edit */ export enum EventCategory {
-/* do not edit */     Assignment = "Assignment",
-/* do not edit */     UserEvent = "UserEvent",
-/* do not edit */     TeacherEvent = "TeacherEvent",
-/* do not edit */     Conference = "Conference",
+/* do not edit */ export enum Buckets {
+/* do not edit */     ASSIGNMENTS = "assignments",
+/* do not edit */     CHAT_FILES = "chatfiles",
+/* do not edit */     COURSE_FILES = "coursefiles",
+/* do not edit */     LOGS = "logs",
 /* do not edit */ }

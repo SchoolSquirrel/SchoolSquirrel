@@ -8,6 +8,7 @@
 
 /* do not edit */ 
 /* do not edit */ import { Course } from "./Course";
+/* do not edit */ import { User } from "./User";
 /* do not edit */ 
 /* do not edit */ 
 /* do not edit */ export class Assignment {
@@ -25,5 +26,11 @@
 /* do not edit */ 
 /* do not edit */   
 /* do not edit */   public course: Course;
+/* do not edit */ 
+/* do not edit */   
+/* do not edit */   public draftUser: User;
+/* do not edit */ 
+/* do not edit */   public materials: any[];
+/* do not edit */   public worksheets: any[];
 /* do not edit */ }
 /* do not edit */

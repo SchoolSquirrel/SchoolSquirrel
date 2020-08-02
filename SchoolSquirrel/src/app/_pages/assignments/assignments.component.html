@@ -64,13 +64,13 @@
             <div class="form-group row">
                 <label for="content" class="col-sm-2 col-form-label">{{'pages.assignments.filesToView' | translate}}</label>
                 <div class="col-sm-10">
-                    <app-file-list context="assignments" type="worksheets" [id]="newAssignmentId" edit="true"></app-file-list>
+                    <app-file-list context="assignments" type="materials" [id]="newAssignmentId" [files]="assignmentMaterials" edit="true"></app-file-list>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="content" class="col-sm-2 col-form-label">{{'pages.assignments.filesToEdit' | translate}}</label>
                 <div class="col-sm-10">
-                    <app-file-list context="assignments" type="worksheets" [id]="newAssignmentId" edit="true"></app-file-list>
+                    <app-file-list context="assignments" type="worksheets" [id]="newAssignmentId" [files]="assignmentWorksheets" edit="true"></app-file-list>
                 </div>
             </div>
         </form>

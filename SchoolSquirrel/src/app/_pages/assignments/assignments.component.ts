@@ -29,6 +29,8 @@ import { Assignment } from "../../_models/Assignment";
 export class AssignmentsComponent extends AssignmentsComponentCommon {
     public saving: boolean;
     public saved: boolean;
+    public assignmentWorksheets: any[] = [];
+    public assignmentMaterials: any[] = [];
     constructor(
         remoteService: RemoteService,
         public tinyConfigService: TinyConfigService,
@@ -40,6 +42,8 @@ export class AssignmentsComponent extends AssignmentsComponentCommon {
     public newAssignment(content: ElementRef): void {
         this.remoteService.get("assignments/draft").subscribe((a: Assignment) => {
             this.newAssignmentId = a.id;
+            this.assignmentMaterials = a.materials;
+            this.assignmentWorksheets = a.worksheets;
             this.newAssignmentForm.controls.title.setValue(a.title);
             this.newAssignmentForm.controls.content.setValue(a.content);
             const due = new Date(a.due);

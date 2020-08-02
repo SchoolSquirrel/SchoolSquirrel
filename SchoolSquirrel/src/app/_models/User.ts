@@ -13,6 +13,7 @@
 /* do not edit */ import { Chat } from "./Chat";
 /* do not edit */ import { Message } from "./Message";
 /* do not edit */ import { Event } from "./Event";
+/* do not edit */ import { Assignment } from "./Assignment";
 /* do not edit */ 
 /* do not edit */ 
 /* do not edit */ 
@@ -57,6 +58,10 @@
 /* do not edit */ 
 /* do not edit */     
 /* do not edit */     public events: Event[];
+/* do not edit */ 
+/* do not edit */     
+/* do not edit */     
+/* do not edit */     public assignmentDraft: Assignment;
 /* do not edit */ 
 /* do not edit */ 
 /* do not edit */     public jwtToken?: string;
