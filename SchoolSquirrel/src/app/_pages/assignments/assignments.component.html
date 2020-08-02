@@ -19,7 +19,11 @@
       </button>
     </div>
     <div class="modal-body">
-        <form [formGroup]="newAssignmentForm">
+        <div *ngIf="!newAssignmentId" class="text-center py-5">
+            <div class="spinner-border"></div>
+            <div>Bitte warten...</div>
+        </div>
+        <form [formGroup]="newAssignmentForm" *ngIf="newAssignmentId">
 
             <div class="form-group row">
                 <label for="title" class="col-sm-2 col-form-label">{{'pages.assignments.title' | translate}}</label>
@@ -60,18 +64,27 @@
             <div class="form-group row">
                 <label for="content" class="col-sm-2 col-form-label">{{'pages.assignments.filesToView' | translate}}</label>
                 <div class="col-sm-10">
-                    <app-file-list mode="assignment-materials" edit="true"></app-file-list>
+                    <app-file-list context="assignments" type="worksheets" [id]="newAssignmentId" edit="true"></app-file-list>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="content" class="col-sm-2 col-form-label">{{'pages.assignments.filesToEdit' | translate}}</label>
                 <div class="col-sm-10">
-                    <app-file-list mode="assignment-worksheets" edit="true"></app-file-list>
+                    <app-file-list context="assignments" type="worksheets" [id]="newAssignmentId" edit="true"></app-file-list>
                 </div>
             </div>
         </form>
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-outline-success" (click)="submitted = true; newAssignmentForm.valid ? modal.close() : undefined">{{'general.create' | translate}}</button>
+    <div class="modal-footer" *ngIf="newAssignmentId">
+        <div class="mr-auto">
+            <div *ngIf="saving">
+                <div class="spinner-border spinner-border-sm"></div> Entwurf wird gespeichert...
+            </div>
+            <div *ngIf="saved">
+                <i class="fas fa-check text-success"></i> Entwurf gespeichert!
+            </div>
+        </div>
+        <button type="button" class="btn btn-outline-secondary" (click)="submitted = true; modal.close()">{{'general.saveAsDraft' | translate}}</button>
+        <button type="button" class="btn btn-outline-success" (click)="submitted = true; newAssignmentForm.valid ? modal.close(true) : undefined">{{'general.create' | translate}}</button>
     </div>
 </ng-template>
