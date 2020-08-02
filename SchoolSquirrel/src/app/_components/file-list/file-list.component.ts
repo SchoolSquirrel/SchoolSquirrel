@@ -2,6 +2,8 @@ import {
     Component, Input, ViewChild, ElementRef,
 } from "@angular/core";
 import { RemoteService } from "../../_services/remote.service";
+import { FilenamePipe } from "@src/app/_pipes/filename.pipe";
+import { FileextPipe } from "@src/app/_pipes/fileext.pipe";
 
 @Component({
     selector: "app-file-list",
@@ -21,6 +23,18 @@ export class FileListComponent {
 
     public uploadFile(): void {
         this.fileInput.nativeElement.click();
+    }
+
+    public delete(file: Record<string, unknown>): void {
+        // eslint-disable-next-line
+        if (!confirm("Soll diese Datei wirklich gelöscht werden?")) {
+            return;
+        }
+        this.remoteService.delete(`${this.context}/${this.id}/${this.type}/${new FilenamePipe().transform(file.name as string)}.${new FileextPipe().transform(file.name as string)}`).subscribe((data) => {
+            if (data && data.success) {
+                this.files = this.files.filter((f) => f.name !== file.name);
+            }
+        });
     }
 
     public onFileSelected(event: Event): void {
