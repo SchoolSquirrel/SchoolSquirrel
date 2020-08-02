@@ -40,9 +40,18 @@ class AssignmentsController {
     }
 
     public static deleteFile = async (req: Request, res: Response) => {
-        const path = `${req.params.id}/${req.params.type == "materials" ? "materials" : "worksheets"}/${req.params.file}`;
+        const path = AssignmentsController.getAssignmentFilePath(req);
         (req.app.locals.minio as minio.Client).removeObject(Buckets.ASSIGNMENTS, path).then(async () => {
             res.send({ success: true })
+        }, (e) => {
+            res.status(500).send({ message: e });
+        });
+    }
+
+    public static downloadFile = async (req: Request, res: Response) => {
+        const path = AssignmentsController.getAssignmentFilePath(req);
+        (req.app.locals.minio as minio.Client).getObject(Buckets.ASSIGNMENTS, path).then(async (s) => {
+            s.pipe(res);
         }, (e) => {
             res.status(500).send({ message: e });
         });
@@ -152,6 +161,10 @@ class AssignmentsController {
         }
 
         res.status(200).send({ success: true });
+    }
+
+    private static getAssignmentFilePath(req) {
+        return `${req.params.id}/${req.params.type == "materials" ? "materials" : "worksheets"}/${req.params.file}`;
     }
 
     private static async addFilesToAssignment(assignment: Assignment, req) {
