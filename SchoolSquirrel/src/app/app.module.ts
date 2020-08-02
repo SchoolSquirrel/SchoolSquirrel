@@ -26,7 +26,9 @@ import { MatChipsModule } from "@angular/material/chips";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatIconModule } from "@angular/material/icon";
 import { SquirrelChatUiModule } from "@schoolsquirrel/squirrel-chat-ui";
-import { FileManagerModule } from "@syncfusion/ej2-angular-filemanager";
+import {
+    FileManagerModule, NavigationPaneService, DetailsViewService, ToolbarService as FToolbarService,
+} from "@syncfusion/ej2-angular-filemanager";
 import { EditorModule } from "@tinymce/tinymce-angular";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./_pages/home/home.component";
@@ -159,6 +161,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         MonthAgendaService,
         TimelineViewsService,
         TimelineMonthService,
+        NavigationPaneService,
+        FToolbarService,
+        DetailsViewService,
         FileextPipe,
         FilenamePipe,
         FilesizePipe,

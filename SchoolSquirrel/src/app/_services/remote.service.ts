@@ -8,29 +8,33 @@ import { AuthenticationService } from "./authentication.service";
     providedIn: "root",
 })
 export class RemoteService {
-    private apiUrl = "";
+    private pApiUrl = "";
     constructor(private httpClient: HttpClient, private storageService: StorageService) {
-        this.apiUrl = this.storageService.get("apiUrl");
+        this.pApiUrl = this.storageService.get("apiUrl");
     }
 
     public setApiUrl(url: string): void {
-        this.apiUrl = url;
+        this.pApiUrl = url;
+    }
+
+    public get apiUrl(): string {
+        return this.pApiUrl;
     }
 
     public getImageUrl(url: string, authService: AuthenticationService): string {
-        return `${this.apiUrl}/${url}?authorization=${authService.currentUser?.jwtToken}`;
+        return `${this.pApiUrl}/${url}?authorization=${authService.currentUser?.jwtToken}`;
     }
 
     public get(url: string): Observable<any> {
-        if (!this.apiUrl) {
+        if (!this.pApiUrl) {
             return new Subject();
         }
-        return this.httpClient.get(`${this.apiUrl}/${url}`);
+        return this.httpClient.get(`${this.pApiUrl}/${url}`);
     }
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public post(url: string, data: { [key: string]: any }, options?: any): Observable<any> {
-        return this.httpClient.post(`${this.apiUrl}/${url}`, data, options);
+        return this.httpClient.post(`${this.pApiUrl}/${url}`, data, options);
     }
 
     public postFile(
@@ -41,10 +45,10 @@ export class RemoteService {
         for (const key of Object.keys(data)) {
             formData.append(key, data[key]);
         }
-        return this.httpClient.post(`${this.apiUrl}/${url}`, formData, { reportProgress: true });
+        return this.httpClient.post(`${this.pApiUrl}/${url}`, formData, { reportProgress: true });
     }
 
     public delete(url: string): Observable<any> {
-        return this.httpClient.delete(`${this.apiUrl}/${url}`);
+        return this.httpClient.delete(`${this.pApiUrl}/${url}`);
     }
 }
