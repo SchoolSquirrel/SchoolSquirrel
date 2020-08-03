@@ -97,6 +97,14 @@ class FileController {
             res.status(500).send("Unknown action");
         }
     }
+
+    public static handleServe = async (req: Request, res: Response) => {
+        try {
+            (await (req.app.locals.minio as minio.Client).getObject(Buckets.COURSE_FILES, `/${req.params.courseId}${req.query.path}`)).pipe(res);
+        } catch {
+            res.status(400).send("Error");
+        }
+    }
 }
 
 export default FileController;
