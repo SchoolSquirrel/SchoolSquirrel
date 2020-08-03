@@ -89,11 +89,12 @@ class FileController {
 
     public static handleUpload = async (req: Request, res: Response) => {
         if (req.body.action === "save") {
-            // const data = JSON.parse(req.body.data) as { dateCreated: Date, dateModified: Date, name: string };
-            await (req.app.locals.minio as minio.Client).putObject(Buckets.COURSE_FILES, `${req.params.courseId}${req.body.path}${req.files[0].originalname}`, req.files[0].buffer);
+            for (const file of req.files as Express.Multer.File[]) {
+                await (req.app.locals.minio as minio.Client).putObject(Buckets.COURSE_FILES, `${req.params.courseId}${req.body.path}${file.originalname}`, file.buffer);
+            }
             res.send("Success");
         } else {
-            res.send("Unknown action");
+            res.status(500).send("Unknown action");
         }
     }
 }
