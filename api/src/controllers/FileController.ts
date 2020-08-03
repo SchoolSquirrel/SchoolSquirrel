@@ -53,23 +53,7 @@ class FileController {
     public static handle = async (req: Request, res: Response) => {
         if (req.body.action == "read") {
             const items = await listObjects(req.app.locals.minio as minio.Client, Buckets.COURSE_FILES, `/${req.params.courseId}${req.body.path}`);
-            for (const item of items as any[]) {
-                if (item.etag) {
-                    // file
-                    item.isFile = true;
-                    item.hasChild = false;
-                    item.name = item.name.split("/").pop();
-                    item.type = item.name.split(".").pop();
-                } else {
-                    // folder
-                    item.isFile = false;
-                    item.hasChild = true;
-                    const path = item.prefix.split("/");
-                    path.pop();
-                    item.name = path.pop();
-                    item.type = "";
-                }
-            }
+            FileController.minioObjectsToFiles(items);
             res.send({
                 cwd: {
                     dateCreated: new Date(),
@@ -89,6 +73,17 @@ class FileController {
                 location: `Kurse/${await FileController.getCourseName(req)}${req.body.path}${req.body.data.length == 1 ? req.body.names[0] : ""}`.replace(/\//g, " / "),
                 modified: new Date(),
             }});
+        } else if (req.body.action == "search") {
+            const path = `/${req.params.courseId}${req.body.path}`;
+            let items = await listObjects(req.app.locals.minio as minio.Client, Buckets.COURSE_FILES, path, true);
+            items = items.filter((i) => checkForSearchResult(req.body.caseSensitive, req.body.searchString.replace(/\*/g, ""), i.name.split("/").pop(), req.body.searchString))
+            for (const item of items as any[]) {
+                item.filterPath = item.name.split("/");
+                item.filterPath.pop();
+                item.filterPath = `/${item.filterPath.join("/")}/`.replace(path, "");
+            }
+            FileController.minioObjectsToFiles(items);
+            res.send({files: items});
         } else {
             res.status(500).send("Unknown action");
         }
@@ -160,9 +155,47 @@ class FileController {
         }
     }
 
+    private static minioObjectsToFiles(items: minio.BucketItem[]) {
+        for (const item of items as any[]) {
+            if (item.etag) {
+                // file
+                item.isFile = true;
+                item.hasChild = false;
+                item.name = item.name.split("/").pop();
+                item.type = item.name.split(".").pop();
+            }
+            else {
+                // folder
+                item.isFile = false;
+                item.hasChild = true;
+                const path = item.prefix.split("/");
+                path.pop();
+                item.name = path.pop();
+                item.type = "";
+            }
+        }
+    }
+
     private static async getCourseName(req): Promise<string> {
         return (await getRepository(Course).findOne(req.params.courseId)).name;
     }
 }
 
 export default FileController;
+
+function checkForSearchResult(casesensitive, filter, fileName, searchString) {
+    if (searchString.substr(0, 1) == "*" && searchString.substr(searchString.length - 1, 1) == "*") {
+        if (casesensitive ? fileName.indexOf(filter) >= 0 : (fileName.indexOf(filter.toLowerCase()) >= 0 || fileName.indexOf(filter.toUpperCase()) >= 0)) {
+            return true;
+        }
+    } else if (searchString.substr(searchString.length - 1, 1) == "*") {
+        if (casesensitive ? fileName.startsWith(filter) : (fileName.startsWith(filter.toLowerCase()) || fileName.startsWith(filter.toUpperCase()))) {
+            return true;
+        }
+    } else {
+        if (casesensitive ? fileName.endsWith(filter) : (fileName.endsWith(filter.toLowerCase()) || fileName.endsWith(filter.toUpperCase()))) {
+            return true;
+        }
+    }
+    return false;
+}
