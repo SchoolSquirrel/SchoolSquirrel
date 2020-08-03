@@ -58,18 +58,20 @@ class FileController {
             const items = await listObjects(req.app.locals.minio as minio.Client, Buckets.COURSE_FILES, `/${req.params.courseId}${req.body.path}`);
             for (const item of items as any[]) {
                 if (item.etag) {
-                    // it's a file
+                    // file
                     item.isFile = true;
                     item.hasChild = false;
                     item.name = item.name.split("/").pop();
+                    item.type = item.name.split(".").pop();
                 } else {
+                    // folder
                     item.isFile = false;
                     item.hasChild = true;
                     const path = item.prefix.split("/");
                     path.pop();
                     item.name = path.pop();
+                    item.type = "";
                 }
-                item.type = "";
             }
             res.send({
                 cwd: {
