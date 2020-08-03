@@ -1,10 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { L10n, setCulture } from "@syncfusion/ej2-base";
 import { Course } from "../../_models/Course";
 import { RemoteService } from "../../_services/remote.service";
 import { AuthenticationService } from "../../_services/authentication.service";
 import { Message } from "../../_models/Message";
 import { MessageStatus } from "../../_models/MessageStatus";
+import { FastTranslateService } from "../../_services/fast-translate.service";
 
 @Component({
     selector: "app-course",
@@ -20,7 +22,15 @@ export class CourseComponent implements OnInit {
         public authenticationService: AuthenticationService,
         private remoteService: RemoteService,
         private route: ActivatedRoute,
-    ) { }
+        private fts: FastTranslateService,
+    ) {
+        setCulture("de");
+        (async () => {
+            L10n.load({
+                de: await this.fts.t("libraries"),
+            });
+        })();
+    }
 
     public ngOnInit(): void {
         this.route.params.subscribe((params) => {
