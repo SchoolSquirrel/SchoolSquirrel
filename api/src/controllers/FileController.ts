@@ -105,6 +105,22 @@ class FileController {
             res.status(400).send("Error");
         }
     }
+
+    public static handleDownload = async (req: Request, res: Response) => {
+        try {
+            const info = JSON.parse(req.body.downloadInput);
+            if (info.data.length == 1 && info.data[0].isFile) {
+                // download the file directly
+                res.contentType(info.data[0].name.split(".").pop());
+                res.attachment(info.data[0].name);
+                (await (req.app.locals.minio as minio.Client).getObject(Buckets.COURSE_FILES, `/${req.params.courseId}${info.path}${info.data[0].name}`)).pipe(res);
+            } else {
+                // create a zip file
+            }
+        } catch {
+            res.status(400).send("Error");
+        }
+    }
 }
 
 export default FileController;

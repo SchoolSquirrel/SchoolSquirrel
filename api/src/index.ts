@@ -115,6 +115,9 @@ createConnection({
         // This secures the app with some http headers
         app.use(helmet());
         // This transforms the incoming JSON body into objects
+        app.use(bodyParser.urlencoded({
+            extended: true
+        }));
         app.use(bodyParser.json());
 
         // Set all routes from routes folder
