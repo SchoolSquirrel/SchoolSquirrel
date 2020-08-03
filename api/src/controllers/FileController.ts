@@ -1,10 +1,7 @@
 import { Request, Response } from "express";
-import * as i18n from "i18n";
 import { getRepository } from "typeorm";
-import { Assignment } from "../entity/Assignment";
 import { Course } from "../entity/Course";
-import { sanitizeHtml } from "../utils/html";
-import { User } from "../entity/User";
+import * as archiver from "archiver";
 import { listObjects } from "../utils/storage";
 import { Buckets } from "../entity/Buckets";
 import * as minio from "minio";
@@ -77,7 +74,7 @@ class FileController {
                 cwd: {
                     dateCreated: new Date(),
                     dateModified: new Date(),
-                    name: req.body.path == "/" ? (await getRepository(Course).findOne(req.params.courseId)).name : "",
+                    name: req.body.path == "/" ? await FileController.getCourseName(req) : "",
                     hasChild: items.length > 0,
                 },
                 files: items as any,
@@ -107,19 +104,54 @@ class FileController {
     }
 
     public static handleDownload = async (req: Request, res: Response) => {
+        const minioClient = req.app.locals.minio as minio.Client;
         try {
             const info = JSON.parse(req.body.downloadInput);
             if (info.data.length == 1 && info.data[0].isFile) {
                 // download the file directly
                 res.contentType(info.data[0].name.split(".").pop());
                 res.attachment(info.data[0].name);
-                (await (req.app.locals.minio as minio.Client).getObject(Buckets.COURSE_FILES, `/${req.params.courseId}${info.path}${info.data[0].name}`)).pipe(res);
+                (await minioClient.getObject(Buckets.COURSE_FILES, `/${req.params.courseId}${info.path}${info.data[0].name}`)).pipe(res);
             } else {
                 // create a zip file
+                let archiveName;
+                if (info.data.length == 1) {
+                    // just one folder
+                    archiveName = info.data[0].name;
+                } else {
+                    // multiple folders / files
+                    archiveName = info.path == "/" ? await FileController.getCourseName(req) : info.path.slice(0, -1).split("/").pop();
+                }
+                res.contentType("zip");
+                res.attachment(`${archiveName}.zip`);
+                const archive = archiver("zip", {
+                    gzip: true,
+                    zlib: { level: 9 } // Sets the compression level.
+                });
+                archive.pipe(res);
+                for (const item of info.data) {
+                    const s3FilePath = `/${req.params.courseId}${info.path}${item.name}`;
+                    if (item.isFile) {
+                        const fileData = (await minioClient.getObject(Buckets.COURSE_FILES, s3FilePath));
+                        archive.append(fileData, { name: item.name });
+                    } else {
+                        const children = await listObjects(minioClient, Buckets.COURSE_FILES, s3FilePath, true);
+                        for (const child of children) {
+                            const fileData = (await minioClient.getObject(Buckets.COURSE_FILES, child.name));
+                            const filePath = `${info.data.length == 1 ? "" : info.data[0].name}${child.name.replace(s3FilePath, "/")}`;
+                            archive.append(fileData, { name: filePath });
+                        }
+                    }
+                }
+                archive.finalize();
             }
         } catch {
             res.status(400).send("Error");
         }
+    }
+
+    private static async getCourseName(req): Promise<string> {
+        return (await getRepository(Course).findOne(req.params.courseId)).name;
     }
 }
 
