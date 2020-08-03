@@ -78,7 +78,17 @@ class FileController {
                     hasChild: items.length > 0,
                 },
                 files: items as any,
-            } as FileList)
+            } as FileList);
+        } else if (req.body.action == "details") {
+            res.send({ details: {
+                name: req.body.names.length == 0 ? req.body.path.slice(0, -1).split("/").pop() : req.body.names.join(),
+                isFile: req.body.data.length == 1 ? req.body.data[0].isFile : undefined,
+                type: req.body.data.length == 1 && req.body.data[0].isFile ? req.body.names[0].split(".").pop() : "",
+                multipleFiles: req.body.data.length > 1,
+                size: "Unknown",
+                location: `Kurse/${await FileController.getCourseName(req)}${req.body.path}${req.body.data.length == 1 ? req.body.names[0] : ""}`.replace(/\//g, " / "),
+                modified: new Date(),
+            }});
         } else {
             res.status(500).send("Unknown action");
         }
