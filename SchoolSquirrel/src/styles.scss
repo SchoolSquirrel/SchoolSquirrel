@@ -1,21 +1,29 @@
+$border-radius: 0rem;
+$dropdown-border-width: 0rem;
+.dropdown-menu.show {
+    box-shadow: 0px 0px 41px -13px rgba(0, 0, 0, 0.75);
+}
+
 @import "~bootstrap/scss/bootstrap.scss";
+@import "node_modules/angular-bootstrap-md/assets/scss/mdb.scss";
+@import "node_modules/angular-bootstrap-md/assets/scss/bootstrap/bootstrap.scss";
 @import "~@fortawesome/fontawesome-free/css/all.css";
-@import '../node_modules/@syncfusion/ej2-base/styles/bootstrap4.css';
-@import '../node_modules/@syncfusion/ej2-buttons/styles/bootstrap4.css';
-@import '../node_modules/@syncfusion/ej2-calendars/styles/bootstrap4.css';
-@import '../node_modules/@syncfusion/ej2-dropdowns/styles/bootstrap4.css';
-@import '../node_modules/@syncfusion/ej2-inputs/styles/bootstrap4.css';
-@import '../node_modules/@syncfusion/ej2-navigations/styles/bootstrap4.css';
-@import '../node_modules/@syncfusion/ej2-popups/styles/bootstrap4.css';
-@import '../node_modules/@syncfusion/ej2-splitbuttons/styles/bootstrap4.css';
-@import '../node_modules/@syncfusion/ej2-angular-grids/styles/bootstrap4.css';
-@import '../node_modules/@syncfusion/ej2-lists/styles/bootstrap4.css';
-@import '../node_modules/@syncfusion/ej2-angular-schedule/styles/bootstrap4.css';
-@import '../node_modules/@syncfusion/ej2-layouts/styles/bootstrap4.css';
-@import '../node_modules/@syncfusion/ej2-grids/styles/bootstrap4.css';
-@import '../node_modules/@syncfusion/ej2-angular-filemanager/styles/bootstrap4.css';
-@import '../node_modules/css-file-icons/build/css-file-icons.css';
-@import '~@ctrl/ngx-emoji-mart/picker';
+@import "../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-buttons/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-calendars/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-dropdowns/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-inputs/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-navigations/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-popups/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-angular-grids/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-lists/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-angular-schedule/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-layouts/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-grids/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-angular-filemanager/styles/material.css";
+@import "../node_modules/css-file-icons/build/css-file-icons.css";
+@import "~@ctrl/ngx-emoji-mart/picker";
 .toast {
     min-width: 20rem;
     .toast-header {
@@ -164,14 +172,14 @@ editor {
 /* Material Icons */
 
 @font-face {
-    font-family: 'Material Icons';
+    font-family: "Material Icons";
     font-style: normal;
     font-weight: 400;
-    src: url(https://fonts.gstatic.com/s/materialicons/v52/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+    src: url(https://fonts.gstatic.com/s/materialicons/v52/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format("woff2");
 }
 
 .material-icons {
-    font-family: 'Material Icons';
+    font-family: "Material Icons";
     font-weight: normal;
     font-style: normal;
     font-size: 24px;
@@ -182,6 +190,6 @@ editor {
     white-space: nowrap;
     word-wrap: normal;
     direction: ltr;
-    -moz-font-feature-settings: 'liga';
+    -moz-font-feature-settings: "liga";
     -moz-osx-font-smoothing: grayscale;
 }
