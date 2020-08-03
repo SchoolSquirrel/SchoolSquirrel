@@ -24,15 +24,14 @@ class EventController {
             EndTime: Date,
         }[] = [];
         events.push(...assignments.map((a) => {
-            const startDate = new Date(a.due);
-            startDate.setHours(startDate.getHours() - 12);
             return {
                 Id: a.id,
-                Subject: `${a.title} is due in 12 Hours`,
-                StartTime: startDate,
+                Subject: `"${a.title}" is due (${a.due.getHours()}:${a.due.getMinutes()})`,
+                StartTime: a.due,
                 EndTime: a.due,
                 Category: EventCategory.Assignment,
                 IsReadonly: true,
+                IsAllDay: true,
             } as SchedulerEvent;
         }));
         const userEvents = await eventRepository.find({
