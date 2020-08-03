@@ -31,12 +31,13 @@ export class CourseComponent implements OnInit {
                     message.fromMe = message.sender.id
                         == this.authenticationService.currentUser.id;
                 }
+                const prefix = `${this.remoteService.apiUrl}/files/course/${this.course.id}`;
+                const suffix = `?authorization=${this.authenticationService.currentUser.jwtToken}`;
                 this.ajaxSettings = {
-                    // Replace the hosted port number in the place of "{port}"
-                    url: `${this.remoteService.apiUrl}/files/course/${this.course.id}?authorization=${this.authenticationService.currentUser.jwtToken}`,
-                    downloadUrl: "http://localhost:8090/Download",
-                    uploadUrl: "http://localhost:8090/Upload",
-                    getImageUrl: "http://localhost:8090/GetImage",
+                    url: `${prefix}${suffix}`,
+                    downloadUrl: `${prefix}/download`,
+                    uploadUrl: `${prefix}/upload${suffix}`,
+                    getImageUrl: `${prefix}/serve`,
                 };
             });
         });
