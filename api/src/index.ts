@@ -9,10 +9,7 @@ import { createConnection } from "typeorm";
 import { User } from "./entity/User";
 import { createAdminUser1574018391679 } from "./migration/1574018391679-createAdminUser";
 import routes from "./routes";
-import { toInt } from "./utils/utils";
-import { envOptions, globals } from "./globals";
 import * as fs from "fs";
-import { getConfig, setConfig } from "./utils/config";
 import ConfigController from "./controllers/ConfigController";
 import { Grade } from "./entity/Grade";
 import { Course } from "./entity/Course";
@@ -23,22 +20,9 @@ import { Message } from "./entity/Message";
 import { Event } from "./entity/Event";
 import * as minio from "minio";
 import { Buckets } from "./entity/Buckets";
+import { getConfig } from "container-env";
 
-// write env to config file
-if (!fs.existsSync(globals.configPath)) {
-    fs.writeFileSync(globals.configPath, JSON.stringify({}));
-}
-const config = getConfig();
-for (const key of Object.keys(envOptions)) {
-    if (config[key] == undefined) {
-        if (config.key !== process.env[key]) {
-            config[key] = process.env[key];
-        } else {
-            config[key] = envOptions[key];
-        }
-    }
-}
-setConfig(config);
+const config = getConfig(JSON.parse(fs.readFileSync(path.join(__dirname, "../../container-env.json")).toString()));
 
 // Setup i18n
 i18n.configure({
@@ -73,7 +57,7 @@ createConnection({
     migrations: [createAdminUser1574018391679, createGrades4684684684651],
     migrationsRun: true,
     password: config.DB_PASSWORD,
-    port: toInt(config.DB_PORT),
+    port: config.DB_PORT,
     synchronize: true,
     type: "mysql",
     username: config.DB_USER,
