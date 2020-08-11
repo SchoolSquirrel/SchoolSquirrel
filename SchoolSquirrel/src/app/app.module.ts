@@ -61,6 +61,7 @@ import { UserNameComponent } from "./_components/user-name/user-name.component";
 import { NativescriptSquirrelChatUiComponent } from "./_components/nativescript-squirrel-chat-ui/nativescript-squirrel-chat-ui.component";
 import { FileListComponent } from "./_components/file-list/file-list.component";
 import { FileIconComponent } from "./_components/file-icon/file-icon.component";
+import { EditDocumentComponent } from "./_pages/edit-document/edit-document.component";
 
 registerLocaleData(localeDe, localeDeExtra);
 declare const require: any;
@@ -108,6 +109,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         NativescriptSquirrelChatUiComponent,
         FileListComponent,
         FileIconComponent,
+        EditDocumentComponent,
     ],
     imports: [
         BrowserModule,

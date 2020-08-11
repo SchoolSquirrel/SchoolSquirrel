@@ -39,6 +39,7 @@ import { HtmlToTextPipe } from "./_pipes/html-to-text.pipe";
 import { NativescriptSquirrelChatUiComponent } from "./_components/nativescript-squirrel-chat-ui/nativescript-squirrel-chat-ui.component";
 import { FileListComponent } from "./_components/file-list/file-list.component";
 import { FileIconComponent } from "./_components/file-icon/file-icon.component";
+import { EditDocumentComponent } from "./_pages/edit-document/edit-document.component";
 
 registerLocaleData(localeDe, localeDeExtra);
 
@@ -90,6 +91,7 @@ export function nativescriptTranslateLoaderFactory(): NativeScriptLoader {
         NativescriptSquirrelChatUiComponent,
         FileListComponent,
         FileIconComponent,
+        EditDocumentComponent,
     ],
     imports: [
         ReactiveFormsModule,

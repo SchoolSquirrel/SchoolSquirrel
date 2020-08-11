@@ -13,6 +13,7 @@ import { CoursesComponent } from "./_pages/courses/courses.component";
 import { CourseComponent } from "./_pages/course/course.component";
 import { ChatComponent } from "./_pages/chat/chat.component";
 import { AssignmentComponent } from "./_pages/assignment/assignment.component";
+import { EditDocumentComponent } from "./_pages/edit-document/edit-document.component";
 
 export const routes: Routes = [
     /* *** Main routes *** */
@@ -64,6 +65,11 @@ export const routes: Routes = [
     {
         path: "chat/:id",
         component: ChatComponent,
+        canActivate: [AuthenticationGuard],
+    },
+    {
+        path: "document/:type",
+        component: EditDocumentComponent,
         canActivate: [AuthenticationGuard],
     },
 
