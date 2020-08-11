@@ -5,7 +5,7 @@ version: '3.7'
 # 9001 through 9004.
 services:
   onlyoffice:
-    image: onlyoffice/documentserver:latest
+    image: onlyoffice/documentserver:5.4.2.46
     tty: true
     ports:
       - '8080:80'
