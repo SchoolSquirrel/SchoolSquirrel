@@ -15,4 +15,7 @@
             <source [src]="fileUrl">
         </audio>
     </div>
+    <div *ngIf="type == 'pdf'" class="w-100 h-100">
+        <ngx-extended-pdf-viewer [textLayer]="true" [src]="fileUrl" useBrowserLocale="true"></ngx-extended-pdf-viewer>
+    </div>
 </div>
