@@ -17,10 +17,11 @@ export class EditDocumentComponent {
         audio: ["mp3", "wav"],
         pdf: ["pdf"],
     }
+    fileUrl: string;
 
     constructor(private router: Router, private route: ActivatedRoute) {
-        const fileUrl = this.getFileUrl();
-        this.setFileType(fileUrl);
+        this.fileUrl = this.getFileUrl();
+        this.setFileType(this.fileUrl);
         this.onlyofficeConfig = {
             editorConfig: {
                 document: {
@@ -35,7 +36,7 @@ export class EditDocumentComponent {
                         edit: true,
                     }, */
                     title: "TestTitle",
-                    url: fileUrl,
+                    url: this.fileUrl,
                 },
                 documentType: "text",
                 editorConfig: {

@@ -2,4 +2,7 @@
     <div *ngIf="type == 'document' && onlyofficeConfig" class="w-100 h-100">
         <onlyoffice [config]="onlyofficeConfig"></onlyoffice>
     </div>
+    <div *ngIf="type == 'image'" class="w-100 h-100">
+        <img [src]="fileUrl">
+    </div>
 </div>
