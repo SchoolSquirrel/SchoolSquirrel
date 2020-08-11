@@ -10,15 +10,20 @@ import { RemoteService } from "../../_services/remote.service";
 })
 export class EditDocumentComponent {
     public type: string;
+    public fileUrl: string;
     public onlyofficeConfig;
+    private documentFileTypes = {
+        text: ["docx", "doc", "txt", "rtf", "odt"],
+        spreadsheet: ["xlsx", "xls", "ods"],
+        presentation: ["pptx", "ppt", "odp"],
+    }
     private fileTypes = {
-        document: ["docx", "doc", "xlsx", "xls", "pptx", "ppt", "txt", "rtf", "odt", "ods", "odp"],
+        document: (Object.values(this.documentFileTypes) as any).flat(),
         image: ["jpg", "jpeg", "png", "tif", "svg", "gif", "bmp"],
         video: ["mp4", "avi", "mov"],
         audio: ["mp3", "wav"],
         pdf: ["pdf"],
     }
-    fileUrl: string;
 
     constructor(
         private router: Router,
@@ -30,7 +35,7 @@ export class EditDocumentComponent {
         this.onlyofficeConfig = {
             editorConfig: {
                 document: {
-                    fileType: "docx",
+                    fileType: new FileextPipe().transform(this.fileUrl),
                     /* info: {
                         author: "Me",
                         created: "26.11.19",
@@ -43,7 +48,6 @@ export class EditDocumentComponent {
                     title: "TestTitle",
                     url: this.fileUrl.replace(this.remoteService.apiUrl, "http://docker.for.win.localhost:3000/api/"),
                 },
-                documentType: "text",
                 editorConfig: {
                     embedded: {
                         embedUrl: "example.com",
