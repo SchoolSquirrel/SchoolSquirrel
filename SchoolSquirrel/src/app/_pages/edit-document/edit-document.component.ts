@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FileextPipe } from "../../_pipes/fileext.pipe";
-import { RemoteService } from "@src/app/_services/remote.service";
+import { RemoteService } from "../../_services/remote.service";
 
 @Component({
     selector: "app-edit-document",
@@ -20,7 +20,11 @@ export class EditDocumentComponent {
     }
     fileUrl: string;
 
-    constructor(private router: Router, private route: ActivatedRoute, private remoteService: RemoteService) {
+    constructor(
+        private router: Router,
+        private route: ActivatedRoute,
+        private remoteService: RemoteService,
+    ) {
         this.fileUrl = this.getFileUrl();
         this.setFileType(this.fileUrl);
         this.onlyofficeConfig = {

@@ -10,4 +10,9 @@
             <source [src]="fileUrl">
         </video>
     </div>
+    <div *ngIf="type == 'audio'">
+        <audio controls="controls">
+            <source [src]="fileUrl">
+        </audio>
+    </div>
 </div>
