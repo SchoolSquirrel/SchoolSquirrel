@@ -53,6 +53,11 @@ export const routes: Routes = [
         canActivate: [AuthenticationGuard],
     },
     {
+        path: "courses/:id/:tab",
+        component: CourseComponent,
+        canActivate: [AuthenticationGuard],
+    },
+    {
         path: "chat",
         component: ChatComponent,
         canActivate: [AuthenticationGuard],

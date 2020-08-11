@@ -9,6 +9,8 @@ import { Message } from "../../_models/Message";
 import { MessageStatus } from "../../_models/MessageStatus";
 import { FastTranslateService } from "../../_services/fast-translate.service";
 
+type Tab = "chat" | "files" | "assignments" | "info";
+
 @Component({
     selector: "app-course",
     templateUrl: "./course.component.html",
@@ -17,6 +19,7 @@ import { FastTranslateService } from "../../_services/fast-translate.service";
 export class CourseComponent implements OnInit {
     public course: Course;
     public ajaxSettings = {};
+    public activeTab: Tab = "chat";
     @ViewChild("filemanager") private filemanager: FileManagerComponent;
 
     constructor(
@@ -43,24 +46,31 @@ export class CourseComponent implements OnInit {
         }
     }
 
+    public tabChanged(tab: Tab): void {
+        this.router.navigate(["/courses", this.course.id, tab]);
+    }
+
     public ngOnInit(): void {
         this.route.params.subscribe((params) => {
-            this.course = undefined;
-            this.remoteService.get(`courses/${params.id}`).subscribe((data) => {
-                this.course = data;
-                for (const message of this.course.messages) {
-                    message.fromMe = message.sender.id
-                        == this.authenticationService.currentUser.id;
-                }
-                const prefix = `${this.remoteService.apiUrl}/files/course/${this.course.id}`;
-                const suffix = `?authorization=${this.authenticationService.currentUser.jwtToken}`;
-                this.ajaxSettings = {
-                    url: `${prefix}${suffix}`,
-                    downloadUrl: `${prefix}/download`,
-                    uploadUrl: `${prefix}/upload${suffix}`,
-                    getImageUrl: `${prefix}/serve`,
-                };
-            });
+            this.activeTab = params.tab || "chat";
+            if (parseInt(params.id, 10) != this.course?.id) {
+                this.course = undefined;
+                this.remoteService.get(`courses/${params.id}`).subscribe((data) => {
+                    this.course = data;
+                    for (const message of this.course.messages) {
+                        message.fromMe = message.sender.id
+                            == this.authenticationService.currentUser.id;
+                    }
+                    const prefix = `${this.remoteService.apiUrl}/files/course/${this.course.id}`;
+                    const suffix = `?authorization=${this.authenticationService.currentUser.jwtToken}`;
+                    this.ajaxSettings = {
+                        url: `${prefix}${suffix}`,
+                        downloadUrl: `${prefix}/download`,
+                        uploadUrl: `${prefix}/upload${suffix}`,
+                        getImageUrl: `${prefix}/serve`,
+                    };
+                });
+            }
         });
     }
 
