@@ -4,11 +4,16 @@ version: '3.7'
 # minio server's web interface will be accessible on the host at port
 # 9001 through 9004.
 services:
+  onlyoffice:
+    image: onlyoffice/documentserver:latest
+    tty: true
+    ports:
+      - '8080:80'
   minio1:
     image: minio/minio
     volumes:
-      - E:\miniotest\1-1:/data1
-      - E:\miniotest\1-2:/data2
+      - A:\miniotest\1-1:/data1
+      - A:\miniotest\1-2:/data2
     ports:
       - "9001:9000"
     environment:
@@ -24,8 +29,8 @@ services:
   minio2:
     image: minio/minio
     volumes:
-      - E:\miniotest\2-1:/data1
-      - E:\miniotest\2-2:/data2
+      - A:\miniotest\2-1:/data1
+      - A:\miniotest\2-2:/data2
     ports:
       - "9002:9000"
     environment:
@@ -41,8 +46,8 @@ services:
   minio3:
     image: minio/minio
     volumes:
-      - E:\miniotest\3-1:/data1
-      - E:\miniotest\3-2:/data2
+      - A:\miniotest\3-1:/data1
+      - A:\miniotest\3-2:/data2
     ports:
       - "9003:9000"
     environment:
@@ -58,8 +63,8 @@ services:
   minio4:
     image: minio/minio
     volumes:
-      - E:\miniotest\4-1:/data1
-      - E:\miniotest\4-2:/data2
+      - A:\miniotest\4-1:/data1
+      - A:\miniotest\4-2:/data2
     ports:
       - "9004:9000"
     environment:
