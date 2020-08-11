@@ -5,4 +5,9 @@
     <div *ngIf="type == 'image'" class="w-100 h-100">
         <img [src]="fileUrl">
     </div>
+    <div *ngIf="type == 'video'" class="w-100 h-100">
+        <video controls="controls">
+            <source [src]="fileUrl">
+        </video>
+    </div>
 </div>
