@@ -39,7 +39,7 @@ export class CourseComponent implements OnInit {
             const pathnames = this.filemanager.pathNames;
             pathnames.shift();
             pathnames.push((event.fileDetails as any).name);
-            this.router.navigate(["/document", "assignments"], { queryParams: { path: pathnames.join("/") } });
+            this.router.navigate(["/document", "course", this.course.id, ...pathnames]);
         }
     }
 
