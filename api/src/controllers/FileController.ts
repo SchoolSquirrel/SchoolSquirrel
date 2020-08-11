@@ -70,7 +70,7 @@ class FileController {
                 type: req.body.data.length == 1 && req.body.data[0].isFile ? req.body.names[0].split(".").pop() : "",
                 multipleFiles: req.body.data.length > 1,
                 size: "Unknown",
-                location: `Kurse/${await FileController.getCourseName(req)}${req.body.path}${req.body.data.length == 1 ? req.body.names[0] : ""}`.replace(/\//g, " / "),
+                location: `Kurse/${await FileController.getCourseName(req)}${req.body.path}${req.body.data.length == 1 ? req.body.names[0] || "" : ""}`.replace(/\//g, " / "),
                 modified: new Date(),
             }});
         } else if (req.body.action == "search") {
