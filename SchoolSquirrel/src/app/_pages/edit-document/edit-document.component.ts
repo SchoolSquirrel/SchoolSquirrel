@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FileextPipe } from "../../_pipes/fileext.pipe";
+import { RemoteService } from "@src/app/_services/remote.service";
 
 @Component({
     selector: "app-edit-document",
@@ -19,7 +20,7 @@ export class EditDocumentComponent {
     }
     fileUrl: string;
 
-    constructor(private router: Router, private route: ActivatedRoute) {
+    constructor(private router: Router, private route: ActivatedRoute, private remoteService: RemoteService) {
         this.fileUrl = this.getFileUrl();
         this.setFileType(this.fileUrl);
         this.onlyofficeConfig = {
@@ -36,7 +37,7 @@ export class EditDocumentComponent {
                         edit: true,
                     }, */
                     title: "TestTitle",
-                    url: this.fileUrl,
+                    url: this.fileUrl.replace(this.remoteService.apiUrl, "http://docker.for.win.localhost:3000/api/"),
                 },
                 documentType: "text",
                 editorConfig: {
@@ -75,7 +76,7 @@ export class EditDocumentComponent {
         for (let i = 0; i < 4; i++) {
             path.shift();
         }
-        const fileUrl = `http://docker.for.win.localhost:3000/api/files/${this.route.snapshot.params.type}/${this.route.snapshot.params.id}/serve?path=/${path.join("/")}`;
+        const fileUrl = `${this.remoteService.apiUrl}/files/${this.route.snapshot.params.type}/${this.route.snapshot.params.id}/serve?path=/${path.join("/")}`;
         return fileUrl;
     }
 
