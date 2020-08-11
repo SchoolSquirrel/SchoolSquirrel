@@ -1,6 +1,7 @@
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import { L10n, setCulture } from "@syncfusion/ej2-base";
+import { FileOpenEventArgs, FileManagerComponent } from "@syncfusion/ej2-angular-filemanager";
 import { Course } from "../../_models/Course";
 import { RemoteService } from "../../_services/remote.service";
 import { AuthenticationService } from "../../_services/authentication.service";
@@ -15,14 +16,15 @@ import { FastTranslateService } from "../../_services/fast-translate.service";
 })
 export class CourseComponent implements OnInit {
     public course: Course;
-
     public ajaxSettings = {};
+    @ViewChild("filemanager") private filemanager: FileManagerComponent;
 
     constructor(
         public authenticationService: AuthenticationService,
         private remoteService: RemoteService,
         private route: ActivatedRoute,
         private fts: FastTranslateService,
+        private router: Router,
     ) {
         setCulture("de");
         (async () => {
@@ -30,6 +32,15 @@ export class CourseComponent implements OnInit {
                 de: await this.fts.t("libraries"),
             });
         })();
+    }
+
+    public fileOpen(event: FileOpenEventArgs): void {
+        if ((event.fileDetails as any).isFile) {
+            const pathnames = this.filemanager.pathNames;
+            pathnames.shift();
+            pathnames.push((event.fileDetails as any).name);
+            this.router.navigate(["/document", "assignments"], { queryParams: { path: pathnames.join("/") } });
+        }
     }
 
     public ngOnInit(): void {
