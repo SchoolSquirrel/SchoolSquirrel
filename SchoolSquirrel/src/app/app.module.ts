@@ -30,6 +30,7 @@ import {
     FileManagerModule, NavigationPaneService, DetailsViewService, ToolbarService as FToolbarService,
 } from "@syncfusion/ej2-angular-filemanager";
 import { EditorModule } from "@tinymce/tinymce-angular";
+import { NgxOnlyOfficeModule } from "ngx-onlyoffice";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./_pages/home/home.component";
 import { LoginComponent } from "./_pages/login/login.component";
@@ -136,6 +137,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         MatAutocompleteModule,
         MatIconModule,
         EditorModule,
+        NgxOnlyOfficeModule,
     ],
     providers: [
         {

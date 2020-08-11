@@ -74,6 +74,7 @@
         "nativescript-ui-listview": "^8.2.0",
         "nativescript-ui-sidedrawer": "^8.0.1",
         "ng-utf8-emojis-to-images": "^1.1.0",
+        "ngx-onlyoffice": "0.0.5",
         "reflect-metadata": "~0.1.13",
         "rxjs": "~6.5.5",
         "sanitize-html": "^1.27.0",

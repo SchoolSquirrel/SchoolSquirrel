@@ -1,1 +1,5 @@
-<p>edit-document works!</p>
+<div class="row h-100">
+    <div *ngIf="type == 'document' && onlyofficeConfig" class="w-100 h-100">
+        <onlyoffice [config]="onlyofficeConfig"></onlyoffice>
+    </div>
+</div>
