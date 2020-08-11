@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { DeviceDetectorService } from "ngx-device-detector";
 import { FileextPipe } from "../../_pipes/fileext.pipe";
 import { RemoteService } from "../../_services/remote.service";
 
@@ -29,6 +30,7 @@ export class EditDocumentComponent {
         private router: Router,
         private route: ActivatedRoute,
         private remoteService: RemoteService,
+        private deviceService: DeviceDetectorService,
     ) {
         this.fileUrl = this.getFileUrl();
         this.setFileType(this.fileUrl);
@@ -65,8 +67,8 @@ export class EditDocumentComponent {
                     onReady: console.log,
                     onRequestEditRights: console.log,
                     onSave: console.log,
-                },
-                type: "desktop", */
+                }, */
+                type: this.deviceService.isDesktop() ? "desktop" : "mobile",
                 height: "100%",
                 width: "100%",
             },
