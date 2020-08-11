@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { DeviceDetectorService } from "ngx-device-detector";
 import { FileextPipe } from "../../_pipes/fileext.pipe";
 import { RemoteService } from "../../_services/remote.service";
+import { FilenamePipe } from "../../_pipes/filename.pipe";
 
 @Component({
     selector: "app-edit-document",
@@ -47,7 +48,7 @@ export class EditDocumentComponent {
                         download: true,
                         edit: true,
                     }, */
-                    title: "TestTitle",
+                    title: `${new FilenamePipe().transform(this.fileUrl)}.${new FileextPipe().transform(this.fileUrl)}`,
                     url: this.fileUrl.replace(this.remoteService.apiUrl, "http://docker.for.win.localhost:3000/api/"),
                 },
                 editorConfig: {
