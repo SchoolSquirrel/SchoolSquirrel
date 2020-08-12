@@ -1,4 +1,4 @@
-<div class="row h-100">
+<div class="row h-100" *ngIf="!loading">
     <div *ngIf="type == 'document' && onlyofficeConfig" class="w-100 h-100">
         <onlyoffice [config]="onlyofficeConfig"></onlyoffice>
     </div>
@@ -19,3 +19,4 @@
         <ngx-extended-pdf-viewer [textLayer]="true" [src]="fileUrl" useBrowserLocale="true"></ngx-extended-pdf-viewer>
     </div>
 </div>
+<app-full-page-loading *ngIf="loading"></app-full-page-loading>
