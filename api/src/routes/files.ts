@@ -5,11 +5,11 @@ import multer = require("multer");
 
 const router = Router();
 
-router.post("/course/:courseId/", [checkJwt], FileController.handle);
-router.post("/course/:courseId/upload", [checkJwt,  multer({ storage: multer.memoryStorage() }).any()], FileController.handleUpload);
-router.post("/course/:courseId/download", [], FileController.handleDownload);
-router.get("/course/:courseId/serve", FileController.handleServe);
-router.post("/course/:courseId/save", FileController.handleSave);
-router.get("/course/:courseId/editKey", FileController.getEditKey);
+router.post("/:bucket/:courseId/", [checkJwt], FileController.handle);
+router.post("/:bucket/:courseId/upload", [checkJwt,  multer({ storage: multer.memoryStorage() }).any()], FileController.handleUpload);
+router.post("/:bucket/:courseId/download", [], FileController.handleDownload);
+router.get("/:bucket/:courseId/serve", FileController.handleServe);
+router.post("/:bucket/:courseId/save", FileController.handleSave);
+router.get("/:bucket/:courseId/editKey", FileController.getEditKey);
 
 export default router;

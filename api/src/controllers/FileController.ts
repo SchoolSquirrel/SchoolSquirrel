@@ -70,9 +70,20 @@ interface FileMetdata {
 }
 
 class FileController {
+    public static getBucketName(req: Request): Buckets {
+        if (req.params.bucket == "course") {
+            return Buckets.COURSE_FILES;
+        } else if (req.params.bucket == "assignment") {
+            return Buckets.ASSIGNMENTS;
+        } else if (req.params.bucket == "chat") {
+            return Buckets.CHAT_FILES;
+        } else {
+            return undefined;
+        }
+    }
     public static handle = async (req: Request, res: Response) => {
         if (req.body.action == "read") {
-            const items = await listObjects(req.app.locals.minio as minio.Client, Buckets.COURSE_FILES, `/${req.params.courseId}${req.body.path}`);
+            const items = await listObjects(req.app.locals.minio as minio.Client, FileController.getBucketName(req), `/${req.params.courseId}${req.body.path}`);
             FileController.minioObjectsToFiles(items);
             res.send({
                 cwd: {
@@ -95,7 +106,7 @@ class FileController {
             }});
         } else if (req.body.action == "search") {
             const path = `/${req.params.courseId}${req.body.path}`;
-            let items = await listObjects(req.app.locals.minio as minio.Client, Buckets.COURSE_FILES, path, true);
+            let items = await listObjects(req.app.locals.minio as minio.Client, FileController.getBucketName(req), path, true);
             items = items.filter((i) => checkForSearchResult(req.body.caseSensitive, req.body.searchString.replace(/\*/g, ""), i.name.split("/").pop(), req.body.searchString))
             for (const item of items as any[]) {
                 item.filterPath = item.name.split("/");
@@ -113,8 +124,8 @@ class FileController {
         if (req.body.action === "save") {
             for (const file of req.files as Express.Multer.File[]) {
                 const path = `${req.params.courseId}${req.body.path}${file.originalname}`;
-                await (req.app.locals.minio as minio.Client).putObject(Buckets.COURSE_FILES, path, file.buffer);
-                await FileController.setFileMetadata(req, Buckets.COURSE_FILES, path, {
+                await (req.app.locals.minio as minio.Client).putObject(FileController.getBucketName(req), path, file.buffer);
+                await FileController.setFileMetadata(req, FileController.getBucketName(req), path, {
                     modified: new Date(),
                     authorId: res.locals.jwtPayload.userId,
                 });
@@ -127,7 +138,7 @@ class FileController {
 
     public static handleServe = async (req: Request, res: Response) => {
         try {
-            (await (req.app.locals.minio as minio.Client).getObject(Buckets.COURSE_FILES, `/${req.params.courseId}${req.query.path}`)).pipe(res);
+            (await (req.app.locals.minio as minio.Client).getObject(FileController.getBucketName(req), `/${req.params.courseId}${req.query.path}`)).pipe(res);
         } catch {
             res.status(400).send("Error");
         }
@@ -139,8 +150,8 @@ class FileController {
         } else if (req.body.status == DocumentStatus.READY_TO_SAVE) {
             http.get(req.body.url, async (response) => {
                 const path = `${req.params.courseId}${req.query.path}`;
-                await (req.app.locals.minio as minio.Client).putObject(Buckets.COURSE_FILES, path, response);
-                await FileController.generateNewEditKey(req, Buckets.COURSE_FILES, path);
+                await (req.app.locals.minio as minio.Client).putObject(FileController.getBucketName(req), path, response);
+                await FileController.generateNewEditKey(req, FileController.getBucketName(req), path);
                 res.send({ error: 0 });
             });
         } else {
@@ -152,9 +163,9 @@ class FileController {
 
     public static getEditKey = async (req: Request, res: Response) => {
         const path = `${req.params.courseId}${req.query.path}`;
-        let editKey = (await FileController.getFileMetadata(req, Buckets.COURSE_FILES, path))?.editKey;
+        let editKey = (await FileController.getFileMetadata(req, FileController.getBucketName(req), path))?.editKey;
         if (!editKey) {
-            editKey = await FileController.generateNewEditKey(req, Buckets.COURSE_FILES, path);
+            editKey = await FileController.generateNewEditKey(req, FileController.getBucketName(req), path);
         }
         res.send({ editKey });
     }
@@ -167,7 +178,7 @@ class FileController {
                 // download the file directly
                 res.contentType(info.data[0].name.split(".").pop());
                 res.attachment(info.data[0].name);
-                (await minioClient.getObject(Buckets.COURSE_FILES, `/${req.params.courseId}${info.path}${info.data[0].name}`)).pipe(res);
+                (await minioClient.getObject(FileController.getBucketName(req), `/${req.params.courseId}${info.path}${info.data[0].name}`)).pipe(res);
             } else {
                 // create a zip file
                 let archiveName;
@@ -188,12 +199,12 @@ class FileController {
                 for (const item of info.data) {
                     const s3FilePath = `/${req.params.courseId}${info.path}${item.name}`;
                     if (item.isFile) {
-                        const fileData = (await minioClient.getObject(Buckets.COURSE_FILES, s3FilePath));
+                        const fileData = (await minioClient.getObject(FileController.getBucketName(req), s3FilePath));
                         archive.append(fileData, { name: item.name });
                     } else {
-                        const children = await listObjects(minioClient, Buckets.COURSE_FILES, s3FilePath, true);
+                        const children = await listObjects(minioClient, FileController.getBucketName(req), s3FilePath, true);
                         for (const child of children) {
-                            const fileData = (await minioClient.getObject(Buckets.COURSE_FILES, child.name));
+                            const fileData = (await minioClient.getObject(FileController.getBucketName(req), child.name));
                             const filePath = `${info.data.length == 1 ? "" : info.data[0].name}${child.name.replace(s3FilePath, "/")}`;
                             archive.append(fileData, { name: filePath });
                         }
