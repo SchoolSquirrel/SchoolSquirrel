@@ -6,12 +6,13 @@ import { NoErrorToastHttpParams } from "../../_helpers/noErrorToastHttpParams";
 import { AuthenticationService } from "../../_services/authentication.service";
 import { ToastService } from "../../_services/toast.service";
 import { StorageService } from "../../_services/storage.service";
+import { isElectron } from "../../_helpers/isElectron";
 
 export class LoginComponentCommon {
     public loginForm: FormGroup;
     public submitted = false;
     public loading = false;
-    public readonly autoDetectDomain = true; // toDo: for Electron this needs to be false
+    public readonly autoDetectDomain = !isElectron();
     public tryingToAutoLogin = false;
 
     constructor(
