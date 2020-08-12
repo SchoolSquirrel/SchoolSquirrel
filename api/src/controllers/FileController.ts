@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import { Course } from "../entity/Course";
 import * as archiver from "archiver";
-import { listObjects } from "../utils/storage";
+import { listObjects, METADATA_SUFFIX } from "../utils/storage";
 import { Buckets } from "../entity/Buckets";
 import * as minio from "minio";
 import * as http from "http";
@@ -69,12 +69,10 @@ interface FileMetdata {
     protected?: boolean, // if yes, only author can edit
 }
 
-const METADATA_SUFFIX = ".schoolsquirrel-metadata";
-
 class FileController {
     public static handle = async (req: Request, res: Response) => {
         if (req.body.action == "read") {
-            const items = await listObjects(req.app.locals.minio as minio.Client, METADATA_SUFFIX, Buckets.COURSE_FILES, `/${req.params.courseId}${req.body.path}`);
+            const items = await listObjects(req.app.locals.minio as minio.Client, Buckets.COURSE_FILES, `/${req.params.courseId}${req.body.path}`);
             FileController.minioObjectsToFiles(items);
             res.send({
                 cwd: {
@@ -97,7 +95,7 @@ class FileController {
             }});
         } else if (req.body.action == "search") {
             const path = `/${req.params.courseId}${req.body.path}`;
-            let items = await listObjects(req.app.locals.minio as minio.Client, METADATA_SUFFIX, Buckets.COURSE_FILES, path, true);
+            let items = await listObjects(req.app.locals.minio as minio.Client, Buckets.COURSE_FILES, path, true);
             items = items.filter((i) => checkForSearchResult(req.body.caseSensitive, req.body.searchString.replace(/\*/g, ""), i.name.split("/").pop(), req.body.searchString))
             for (const item of items as any[]) {
                 item.filterPath = item.name.split("/");
@@ -193,7 +191,7 @@ class FileController {
                         const fileData = (await minioClient.getObject(Buckets.COURSE_FILES, s3FilePath));
                         archive.append(fileData, { name: item.name });
                     } else {
-                        const children = await listObjects(minioClient, METADATA_SUFFIX, Buckets.COURSE_FILES, s3FilePath, true);
+                        const children = await listObjects(minioClient, Buckets.COURSE_FILES, s3FilePath, true);
                         for (const child of children) {
                             const fileData = (await minioClient.getObject(Buckets.COURSE_FILES, child.name));
                             const filePath = `${info.data.length == 1 ? "" : info.data[0].name}${child.name.replace(s3FilePath, "/")}`;
