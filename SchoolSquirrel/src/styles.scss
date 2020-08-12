@@ -174,6 +174,37 @@ editor {
     -webkit-app-region: none;
 }
 
+.wi {
+    padding-top: 0;
+    &.minimize {
+        padding-top: .3rem;
+    }
+    &.maximize,
+    &.minimize {
+        &:hover {
+            background-color: rgb(240, 240, 240);
+        }
+    }
+    &.close {
+        margin-top: -.2rem;
+        &:hover {
+            background-color: red;
+            fill: #fff;
+        }
+    }
+}
+
+.dark {
+    .wi {
+        &.maximize,
+        &.minimize {
+            &:hover {
+                background-color: rgb(95, 95, 95);
+            }
+        }
+    }
+}
+
 
 /* Material Icons */
 

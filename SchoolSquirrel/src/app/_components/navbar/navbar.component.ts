@@ -6,6 +6,8 @@ import { Router } from "@angular/router";
 import { NavbarAction } from "../../_services/NavbarAction";
 import { NavbarActionsService } from "../../_services/navbar-actions.service";
 import { AuthenticationService } from "../../_services/authentication.service";
+import { ElectronService } from "../../_services/electron.service";
+import { isElectron } from "../../_helpers/isElectron";
 
 @Component({
     selector: "app-navbar",
@@ -16,11 +18,14 @@ export class NavbarComponent {
     public actionValue = "";
     public inputFocused = false;
     public typeaheadWidth: number;
+    public isMaximized = false;
+    public isElectron = isElectron();
 
     constructor(
         public authenticationService: AuthenticationService,
         private navbarActionsService: NavbarActionsService,
         private router: Router,
+        private electronService: ElectronService,
     ) {
         this.action = this.action.bind(this);
     }
@@ -89,5 +94,27 @@ export class NavbarComponent {
             return t.substr(1);
         }
         return t;
+    }
+
+    public minWindow(): void {
+        this.electronService.runIfElectron((_, currentWindow) => {
+            currentWindow.minimize();
+        });
+    }
+
+    public maxWindow(): void {
+        this.isMaximized = !this.isMaximized;
+        this.electronService.runIfElectron((_, currentWindow) => {
+            if (currentWindow.isMaximized()) {
+                currentWindow.unmaximize();
+            } else {
+                currentWindow.maximize();
+            }
+        });
+    }
+    public closeWindow(): void {
+        this.electronService.runIfElectron((_, currentWindow) => {
+            currentWindow.hide();
+        });
     }
 }

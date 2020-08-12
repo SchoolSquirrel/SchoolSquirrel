@@ -11,25 +11,6 @@
         position: absolute;
         top: 0;
         padding: 0;
-        .wi {
-            padding-top: 0;
-            &.minimize {
-                padding-top: .3rem;
-            }
-            &.maximize,
-            &.minimize {
-                &:hover {
-                    background-color: rgb(240, 240, 240);
-                }
-            }
-            &.close {
-                margin-top: -.2rem;
-                &:hover {
-                    background-color: red;
-                    fill: #fff;
-                }
-            }
-        }
     }
 }
 
