@@ -1,10 +1,10 @@
 import {
-Column,
-Entity,
-PrimaryGeneratedColumn,
-OneToMany,
-ManyToMany,
-JoinTable,
+    Column,
+    Entity,
+    PrimaryGeneratedColumn,
+    OneToMany,
+    ManyToMany,
+    JoinTable,
 } from "typeorm";
 import { User } from "./User";
 import { Message } from "./Message";
@@ -14,7 +14,7 @@ export class Chat {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   public name: string;
 
   @OneToMany(() => Message, (message) => message.chat)

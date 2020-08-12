@@ -6,10 +6,12 @@ import * as i18n from "i18n";
 import * as path from "path";
 import "reflect-metadata";
 import { createConnection } from "typeorm";
+import * as fs from "fs";
+import * as minio from "minio";
+import { getConfig } from "container-env";
 import { User } from "./entity/User";
 import { createAdminUser1574018391679 } from "./migration/1574018391679-createAdminUser";
 import routes from "./routes";
-import * as fs from "fs";
 import ConfigController from "./controllers/ConfigController";
 import { Grade } from "./entity/Grade";
 import { Course } from "./entity/Course";
@@ -18,15 +20,12 @@ import { createGrades4684684684651 } from "./migration/4684684684651-createGrade
 import { Chat } from "./entity/Chat";
 import { Message } from "./entity/Message";
 import { Event } from "./entity/Event";
-import * as minio from "minio";
 import { Buckets } from "./entity/Buckets";
-import { getConfig } from "container-env";
 
 const config = getConfig(JSON.parse(fs.readFileSync(path.join(__dirname, "../../container-env.json")).toString()));
 
 // Setup i18n
 i18n.configure({
-    // tslint:disable-next-line: no-bitwise
     defaultLocale: config.DEFAULT_LANGUAGE,
     directory: path.join(__dirname, "../assets/i18n"),
     objectNotation: true,
@@ -63,13 +62,12 @@ createConnection({
     username: config.DB_USER,
 })
     .then(async (connection) => {
-
         // Fix problems with UTF8 chars
         await connection.query("SET NAMES utf8mb4;");
         // In case entities have changed, sync the database
         await connection.synchronize();
         // Run migrations, see https://github.com/typeorm/typeorm/blob/master/docs/migrations.md
-        // tslint:disable-next-line: no-console
+        // eslint-disable-next-line no-console
         console.log("Migrations: ", await connection.runMigrations());
         // Create a new express application instance
         const app = express();
@@ -80,7 +78,7 @@ createConnection({
             port: config.MINIO_PORT,
             useSSL: config.MINIO_USESSL,
             accessKey: config.MINIO_ACCESSKEY,
-            secretKey: config.MINIO_SECRETKEY
+            secretKey: config.MINIO_SECRETKEY,
         });
 
         for (const bucket of Object.values(Buckets)) {
@@ -100,7 +98,7 @@ createConnection({
         app.use(helmet());
         // This transforms the incoming JSON body into objects
         app.use(bodyParser.urlencoded({
-            extended: true
+            extended: true,
         }));
         app.use(bodyParser.json());
 
@@ -117,10 +115,10 @@ createConnection({
         }
         // That starts the server on the given port
         app.listen(port, () => {
-            // tslint:disable-next-line: no-console
+            // eslint-disable-next-line no-console
             console.log(`Server started on port ${port}!`);
         });
     })
     // If an error happens, print it on the console
-    // tslint:disable-next-line: no-console
+    // eslint-disable-next-line no-console
     .catch((error) => console.log(error));

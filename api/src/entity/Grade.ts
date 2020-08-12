@@ -1,9 +1,9 @@
 import {
-Column,
-Entity,
-PrimaryGeneratedColumn,
-Unique,
-OneToMany,
+    Column,
+    Entity,
+    PrimaryGeneratedColumn,
+    Unique,
+    OneToMany,
 } from "typeorm";
 import { User } from "./User";
 

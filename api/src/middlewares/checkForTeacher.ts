@@ -4,14 +4,15 @@ import { getRepository } from "typeorm";
 
 import { User } from "../entity/User";
 
-export const checkForTeacher = async (req: Request, res: Response, next: NextFunction) => {
+export async function checkForTeacher(req: Request,
+    res: Response, next: NextFunction): Promise<void> {
     const id = res.locals.jwtPayload.userId;
 
     const userRepository = getRepository(User);
     let user: User;
     try {
         user = await userRepository.findOneOrFail(id);
-    } catch (id) {
+    } catch {
         res.status(401).send({ message: i18n.__("errors.userNotFound"), logout: true });
     }
 
@@ -20,4 +21,4 @@ export const checkForTeacher = async (req: Request, res: Response, next: NextFun
     } else {
         res.status(401).send({ message: i18n.__("errors.notAllowed") });
     }
-};
+}

@@ -2,7 +2,8 @@ import * as minio from "minio";
 
 export const METADATA_SUFFIX = ".schoolsquirrel-metadata";
 
-export function listObjects(client: minio.Client, bucketName: string, prefix?: string, recursive?: boolean): Promise<minio.BucketItem[]> {
+export function listObjects(client: minio.Client,
+    bucketName: string, prefix?: string, recursive?: boolean): Promise<minio.BucketItem[]> {
     return new Promise((resolve) => {
         const s = client.listObjects(bucketName, prefix, recursive);
         const data = [];

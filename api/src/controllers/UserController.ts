@@ -1,21 +1,21 @@
 import { Request, Response } from "express";
 import * as i18n from "i18n";
 import { getRepository } from "typeorm";
-import { User } from "../entity/User";
-import { Grade } from "../entity/Grade";
 import Avatars from "@dicebear/avatars";
 import initialsSprites from "@dicebear/avatars-initials-sprites";
+import { User } from "../entity/User";
+import { Grade } from "../entity/Grade";
 
 const avatars = new Avatars(initialsSprites, {});
 
 class UserController {
-    public static listAll = async (req: Request, res: Response) => {
+    public static async listAll(req: Request, res: Response): Promise<void> {
         const userRepository = getRepository(User);
-        const users = await userRepository.find({relations: ["grade"]});
+        const users = await userRepository.find({ relations: ["grade"] });
         res.send(users);
     }
 
-    public static avatar = async (req: Request, res: Response) => {
+    public static async avatar(req: Request, res: Response): Promise<void> {
         const userRepository = getRepository(User);
         const user = await userRepository.findOne(req.params.id);
         if (req.params.ext == "svg") {
@@ -23,11 +23,11 @@ class UserController {
             res.send(avatars.create(user.name));
         } else {
             const parts = user.name.split(" ");
-            res.redirect(`https://eu.ui-avatars.com/api/?name=${parts[0][0]}+${parts[parts.length - 1][0]}&size=512`)
+            res.redirect(`https://eu.ui-avatars.com/api/?name=${parts[0][0]}+${parts[parts.length - 1][0]}&size=512`);
         }
     }
 
-    public static newUser = async (req: Request, res: Response) => {
+    public static async newUser(req: Request, res: Response): Promise<void> {
         const { name, role, grade } = req.body;
         if (!(name && ["student", "teacher", "admin"].includes(role) && grade)) {
             res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });
@@ -54,8 +54,8 @@ class UserController {
         res.status(200).send({ success: true });
     }
 
-    public static editUser = async (req: Request, res: Response) => {
-        const id = req.params.id;
+    public static async editUser(req: Request, res: Response): Promise<void> {
+        const { id } = req.params;
 
         const { name, role, grade } = req.body;
 
@@ -89,9 +89,8 @@ class UserController {
         res.status(200).send({ success: true });
     }
 
-    public static deleteUser = async (req: Request, res: Response) => {
-
-        const id = req.params.id;
+    public static async deleteUser(req: Request, res: Response): Promise<void> {
+        const { id } = req.params;
 
         const userRepository = getRepository(User);
         try {

@@ -10,7 +10,7 @@ import { listObjects } from "../utils/storage";
 import { Buckets } from "../entity/Buckets";
 
 class AssignmentsController {
-    public static listCoursesWithAssignments = async (req: Request, res: Response) => {
+    public static async listCoursesWithAssignments(req: Request, res: Response): Promise<void> {
         const courseRepository = getRepository(Course);
         const assignments = await courseRepository
             .createQueryBuilder("course")
@@ -21,25 +21,26 @@ class AssignmentsController {
         res.send(assignments);
     }
 
-    public static getAssignment = async (req: Request, res: Response) => {
+    public static async getAssignment(req: Request, res: Response): Promise<void> {
         const assignmentRepository = getRepository(Assignment);
         const assignment = await assignmentRepository.findOne(req.params.id);
         await AssignmentsController.addFilesToAssignment(assignment, req);
         res.send(assignment);
     }
 
-    public static uploadFile = async (req: Request, res: Response) => {
+    public static async uploadFile(req: Request, res: Response): Promise<void> {
         const path = `${req.params.id}/${req.params.type == "materials" ? "materials" : "worksheets"}/${req.file.originalname}`;
-        (req.app.locals.minio as minio.Client).putObject(Buckets.ASSIGNMENTS, path, req.file.buffer, {
-            author: res.locals.jwtPayload.userId,
-        }).then(async () => {
-            res.send((await listObjects(req.app.locals.minio, Buckets.ASSIGNMENTS, path))[0])
-        }, (e) => {
-            res.status(500).send({ message: e });
-        });
+        (req.app.locals.minio as minio.Client)
+            .putObject(Buckets.ASSIGNMENTS, path, req.file.buffer, {
+                author: res.locals.jwtPayload.userId,
+            }).then(async () => {
+                res.send((await listObjects(req.app.locals.minio, Buckets.ASSIGNMENTS, path))[0]);
+            }, (e) => {
+                res.status(500).send({ message: e });
+            });
     }
 
-    public static newFile = async (req: Request, res: Response) => {
+    public static async newFile(req: Request, res: Response): Promise<void> {
         if (req.params.fileExt.indexOf(".") !== -1 || req.params.fileExt.indexOf("/") !== -1) {
             res.status(400).send({ message: "Error" });
             return;
@@ -48,39 +49,42 @@ class AssignmentsController {
         (req.app.locals.minio as minio.Client).putObject(Buckets.ASSIGNMENTS, path, Buffer.from(""), {
             author: res.locals.jwtPayload.userId,
         }).then(async () => {
-            res.send((await listObjects(req.app.locals.minio, Buckets.ASSIGNMENTS, path))[0])
+            res.send((await listObjects(req.app.locals.minio, Buckets.ASSIGNMENTS, path))[0]);
         }, (e) => {
             res.status(500).send({ message: e });
         });
     }
 
-    public static deleteFile = async (req: Request, res: Response) => {
+    public static async deleteFile(req: Request, res: Response): Promise<void> {
         const path = AssignmentsController.getAssignmentFilePath(req);
-        (req.app.locals.minio as minio.Client).removeObject(Buckets.ASSIGNMENTS, path).then(async () => {
-            res.send({ success: true })
-        }, (e) => {
-            res.status(500).send({ message: e });
-        });
+        (req.app.locals.minio as minio.Client)
+            .removeObject(Buckets.ASSIGNMENTS, path).then(async () => {
+                res.send({ success: true });
+            }, (e) => {
+                res.status(500).send({ message: e });
+            });
     }
 
-    public static downloadFile = async (req: Request, res: Response) => {
+    public static async downloadFile(req: Request, res: Response): Promise<void> {
         const path = AssignmentsController.getAssignmentFilePath(req);
-        (req.app.locals.minio as minio.Client).getObject(Buckets.ASSIGNMENTS, path).then(async (s) => {
-            s.pipe(res);
-        }, (e) => {
-            res.status(500).send({ message: e });
-        });
+        (req.app.locals.minio as minio.Client)
+            .getObject(Buckets.ASSIGNMENTS, path).then(async (s) => {
+                s.pipe(res);
+            }, (e) => {
+                res.status(500).send({ message: e });
+            });
     }
 
-    public static getAssignmentDraft = async (req: Request, res: Response) => {
+    public static async getAssignmentDraft(req: Request, res: Response): Promise<void> {
         const me = await getRepository(User).findOne(res.locals.jwtPayload.userId);
         const assignment = await AssignmentsController.createDraftIfNotExisting(res, me);
         await AssignmentsController.addFilesToAssignment(assignment, req);
         res.status(200).send(assignment);
     }
 
-    public static saveAssignmentDraft = async (req: Request, res: Response) => {
-        const assignment = await AssignmentsController.findAssignmentDraft(res.locals.jwtPayload.userId);
+    public static async saveAssignmentDraft(req: Request, res: Response): Promise<void> {
+        const assignment = await AssignmentsController
+            .findAssignmentDraft(res.locals.jwtPayload.userId);
         if (!assignment) {
             const me = await getRepository(User).findOne(res.locals.jwtPayload.userId);
             await AssignmentsController.createDraftIfNotExisting(res, me);
@@ -102,14 +106,17 @@ class AssignmentsController {
         res.status(200).send({ success: true });
     }
 
-    public static newAssignment = async (req: Request, res: Response) => {
-        const { title, content, course, due } = req.body;
+    public static async newAssignment(req: Request, res: Response): Promise<void> {
+        const {
+            title, content, course, due,
+        } = req.body;
         if (!(title && content && course && due)) {
             res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });
             return;
         }
 
-        const assignment = await AssignmentsController.findAssignmentDraft(res.locals.jwtPayload.userId);
+        const assignment = await AssignmentsController
+            .findAssignmentDraft(res.locals.jwtPayload.userId);
         assignment.title = title;
         assignment.content = sanitizeHtml(content);
         assignment.due = due;
@@ -163,9 +170,8 @@ class AssignmentsController {
         res.status(200).send({ success: true });
     }
 */
-    public static deleteAssignment = async (req: Request, res: Response) => {
-
-        const id = req.params.id;
+    public static async deleteAssignment(req: Request, res: Response): Promise<void> {
+        const { id } = req.params;
 
         const assignmentRepository = getRepository(Assignment);
         try {
@@ -178,17 +184,18 @@ class AssignmentsController {
         res.status(200).send({ success: true });
     }
 
-    private static getAssignmentFilePath(req) {
+    private static getAssignmentFilePath(req): string {
         return `${req.params.id}/${req.params.type == "materials" ? "materials" : "worksheets"}/${req.params.file}`;
     }
 
-    private static async addFilesToAssignment(assignment: Assignment, req) {
+    private static async addFilesToAssignment(assignment: Assignment, req): Promise<void> {
         assignment.worksheets = await listObjects(req.app.locals.minio, Buckets.ASSIGNMENTS, `${assignment.id}/worksheets/`);
         assignment.materials = await listObjects(req.app.locals.minio, Buckets.ASSIGNMENTS, `${assignment.id}/materials/`);
     }
 
-    private static async createDraftIfNotExisting(res: Response, me: User) {
-        let assignment = await AssignmentsController.findAssignmentDraft(res.locals.jwtPayload.userId);
+    private static async createDraftIfNotExisting(res: Response, me: User): Promise<Assignment> {
+        let assignment = await AssignmentsController
+            .findAssignmentDraft(res.locals.jwtPayload.userId);
         if (!assignment) {
             assignment = new Assignment();
             assignment.title = "";
@@ -204,8 +211,8 @@ class AssignmentsController {
         return assignment;
     }
 
-    private static async findAssignmentDraft(id: number) {
-        return await getRepository(Assignment).createQueryBuilder("assignment")
+    private static async findAssignmentDraft(id: number): Promise<Assignment> {
+        return getRepository(Assignment).createQueryBuilder("assignment")
             .leftJoinAndSelect("assignment.draftUser", "user")
             .where("user.id = :id", { id })
             .getOne();

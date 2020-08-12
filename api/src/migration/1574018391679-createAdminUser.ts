@@ -1,10 +1,8 @@
-import {getRepository, MigrationInterface, QueryRunner} from "typeorm";
+import { getRepository, MigrationInterface } from "typeorm";
 import { User } from "../entity/User";
 
-// tslint:disable-next-line: class-name
 export class createAdminUser1574018391679 implements MigrationInterface {
-
-    public async up(queryRunner: QueryRunner): Promise<any> {
+    public async up(): Promise<any> {
         const user = new User();
         user.name = "admin";
         user.password = "admin";
@@ -14,8 +12,7 @@ export class createAdminUser1574018391679 implements MigrationInterface {
         await userRepository.save(user);
     }
 
-    // tslint:disable-next-line: no-empty
-    public async down(queryRunner: QueryRunner): Promise<any> {
+    public async down(): Promise<any> {
+        //
     }
-
 }

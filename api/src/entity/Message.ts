@@ -1,8 +1,8 @@
 import {
-Column,
-Entity,
-PrimaryGeneratedColumn,
-ManyToOne,
+    Column,
+    Entity,
+    PrimaryGeneratedColumn,
+    ManyToOne,
 } from "typeorm";
 import { User } from "./User";
 import { MessageStatus } from "./MessageStatus";
@@ -14,16 +14,16 @@ export class Message {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column({length: 10000})
+  @Column({ length: 10000 })
   public text: string;
 
   @ManyToOne(() => User, (user) => (user.messages))
   public sender: User;
 
-  @Column({default: false})
+  @Column({ default: false })
   public edited?: boolean;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   public citation?: number;
 
   @Column()

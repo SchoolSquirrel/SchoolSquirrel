@@ -1,7 +1,7 @@
 import { Router } from "express";
+import * as multer from "multer";
 import AssignmentsController from "../controllers/AssignmentsController";
 import { checkJwt } from "../middlewares/checkJwt";
-import * as multer from "multer";
 
 const router = Router();
 

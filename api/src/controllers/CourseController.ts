@@ -4,8 +4,9 @@ import { getRepository } from "typeorm";
 import { Course } from "../entity/Course";
 import { User } from "../entity/User";
 import { sendMessage } from "../utils/messages";
+
 class CourseController {
-    public static listAll = async (req: Request, res: Response) => {
+    public static async listAll(req: Request, res: Response): Promise<void> {
         const courseRepository = getRepository(Course);
         const courses = await courseRepository
             .createQueryBuilder("course")
@@ -15,17 +16,17 @@ class CourseController {
         res.send(courses);
     }
 
-    public static getCourse = async (req: Request, res: Response) => {
+    public static async getCourse(req: Request, res: Response): Promise<void> {
         const courseRepository = getRepository(Course);
-        const course = await courseRepository.findOne(req.params.id, { relations: ["students", "teachers", "messages", "messages.sender", "assignments"]});
+        const course = await courseRepository.findOne(req.params.id, { relations: ["students", "teachers", "messages", "messages.sender", "assignments"] });
         res.send(course);
     }
 
-    public static sendMessage = async (req: Request, res: Response) => {
+    public static async sendMessage(req: Request, res: Response): Promise<void> {
         sendMessage(req, res, "course");
     }
 
-    public static newCourse = async (req: Request, res: Response) => {
+    public static async newCourse(req: Request, res: Response): Promise<void> {
         const { name, users }: {name: string, users: number[]} = req.body;
         if (!(name && users && users.length)) {
             res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });
@@ -39,7 +40,7 @@ class CourseController {
         course.students = [];
         course.teachers = [];
         for (const user of users) {
-            course.students.push(await userRepository.findOne(user))
+            course.students.push(await userRepository.findOne(user));
         }
         course.teachers.push(await userRepository.findOne(res.locals.jwtPayload.userId));
         try {
@@ -51,8 +52,8 @@ class CourseController {
         res.status(200).send({ success: true });
     }
 
-    public static deleteCourse = async (req: Request, res: Response) => {
-        const id = req.params.id;
+    public static async deleteCourse(req: Request, res: Response): Promise<void> {
+        const { id } = req.params;
         const courseRepository = getRepository(Course);
         try {
             await courseRepository.delete(id);

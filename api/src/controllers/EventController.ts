@@ -1,21 +1,21 @@
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
+import * as i18n from "i18n";
 import { Assignment } from "../entity/Assignment";
 import { Event } from "../entity/Event";
 import { SchedulerEvent } from "../entity/SchedulerEvent";
 import { User } from "../entity/User";
 import { EventCategory } from "../entity/EventCategory";
-import * as i18n from "i18n";
 
 class EventController {
-    public static listAll = async (req: Request, res: Response) => {
+    public static async listAll(req: Request, res: Response): Promise<void> {
         const assignmentsRepository = getRepository(Assignment);
         const eventRepository = getRepository(Event);
         const assignments = await assignmentsRepository
             .createQueryBuilder("assignment")
             .leftJoin("assignment.course", "course")
             .leftJoin("course.students", "user")
-            .where("user.id = :id", {id: res.locals.jwtPayload.userId})
+            .where("user.id = :id", { id: res.locals.jwtPayload.userId })
             .getMany();
         const events: {
             Id: number,
@@ -23,21 +23,19 @@ class EventController {
             StartTime: Date,
             EndTime: Date,
         }[] = [];
-        events.push(...assignments.map((a) => {
-            return {
-                Id: a.id,
-                Subject: `"${a.title}" is due (${a.due.getHours()}:${a.due.getMinutes()})`,
-                StartTime: a.due,
-                EndTime: a.due,
-                Category: EventCategory.Assignment,
-                IsReadonly: true,
-                IsAllDay: true,
-            } as SchedulerEvent;
-        }));
+        events.push(...assignments.map((a) => ({
+            Id: a.id,
+            Subject: `"${a.title}" is due (${a.due.getHours()}:${a.due.getMinutes()})`,
+            StartTime: a.due,
+            EndTime: a.due,
+            Category: EventCategory.Assignment,
+            IsReadonly: true,
+            IsAllDay: true,
+        } as SchedulerEvent)));
         const userEvents = await eventRepository.find({
             where: {
                 user: await getRepository(User).findOne(res.locals.jwtPayload.userId),
-            }
+            },
         });
         for (const event of userEvents) {
             event.Category = EventCategory.UserEvent;
@@ -46,8 +44,11 @@ class EventController {
         res.send(events);
     }
 
-    public static newEvent = async (req: Request, res: Response) => {
-        const { Subject, StartTimezone, EndTimezone, RecurrenceRule, IsAllDay, Description, EndTime, Location, StartTime }: SchedulerEvent = req.body;
+    public static async newEvent(req: Request, res: Response): Promise<void> {
+        const {
+            Subject, StartTimezone, EndTimezone, RecurrenceRule,
+            IsAllDay, Description, EndTime, Location, StartTime,
+        }: SchedulerEvent = req.body;
         if (!(Subject && EndTime && StartTime)) {
             res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });
             return;
@@ -75,8 +76,11 @@ class EventController {
         res.redirect("events");
     }
 
-    public static updateEvent = async (req: Request, res: Response) => {
-        const { Subject, StartTimezone, EndTimezone, RecurrenceRule, IsAllDay, Description, EndTime, Location, StartTime }: SchedulerEvent = req.body;
+    public static async updateEvent(req: Request, res: Response): Promise<void> {
+        const {
+            Subject, StartTimezone, EndTimezone, RecurrenceRule,
+            IsAllDay, Description, EndTime, Location, StartTime,
+        }: SchedulerEvent = req.body;
         if (!(Subject && EndTime && StartTime)) {
             res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });
             return;
@@ -101,8 +105,8 @@ class EventController {
         res.send({ success: true });
     }
 
-    public static deleteEvent = async (req: Request, res: Response) => {
-        const id = req.params.id;
+    public static async deleteEvent(req: Request, res: Response): Promise<void> {
+        const { id } = req.params;
         const eventRepository = getRepository(Event);
         try {
             await eventRepository.delete(id);

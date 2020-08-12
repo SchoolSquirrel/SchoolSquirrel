@@ -1,10 +1,8 @@
-import {getRepository, MigrationInterface, QueryRunner} from "typeorm";
+import { getRepository, MigrationInterface } from "typeorm";
 import { Grade } from "../entity/Grade";
 
-// tslint:disable-next-line: class-name
 export class createGrades4684684684651 implements MigrationInterface {
-
-    public async up(queryRunner: QueryRunner): Promise<any> {
+    public async up(): Promise<any> {
         const grade1 = new Grade();
         grade1.name = "Lehrer";
         const grade2 = new Grade();
@@ -13,8 +11,7 @@ export class createGrades4684684684651 implements MigrationInterface {
         await gradeRepository.save([grade1, grade2]);
     }
 
-    // tslint:disable-next-line: no-empty
-    public async down(queryRunner: QueryRunner): Promise<any> {
+    public async down(): Promise<any> {
+        //
     }
-
 }

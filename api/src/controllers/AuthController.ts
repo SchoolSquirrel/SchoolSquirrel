@@ -5,8 +5,7 @@ import { getRepository } from "typeorm";
 import { User } from "../entity/User";
 
 class AuthController {
-
-    public static login = async (req: Request, res: Response) => {
+    public static async login(req: Request, res: Response): Promise<void> {
         const { name, password } = req.body;
         if (!(name && password)) {
             res.status(400).end(JSON.stringify({ error: i18n.__("errors.usernameOrPasswordEmpty") }));
@@ -48,7 +47,7 @@ class AuthController {
         res.send(response);
     }
 
-    public static renewToken = async (req: Request, res: Response) => {
+    public static async renewToken(req: Request, res: Response): Promise<void> {
         const { jwtToken } = req.body;
         if (!(jwtToken)) {
             res.status(400).end(JSON.stringify({ error: i18n.__("errors.notAllFieldsProvided") }));
@@ -57,7 +56,8 @@ class AuthController {
 
         let jwtPayload;
         try {
-            jwtPayload = (jwt.verify(jwtToken, req.app.locals.config.JWT_SECRET, { ignoreExpiration: true }) as any);
+            jwtPayload = (jwt.verify(jwtToken, req.app.locals.config.JWT_SECRET,
+                { ignoreExpiration: true }) as any);
             i18n.setLocale(req.app.locals.config.DEFAULT_LANGUAGE);
         } catch (error) {
             res.status(401).send({ message: i18n.__("errors.unknownError") });
@@ -75,7 +75,8 @@ class AuthController {
                 name,
                 role,
                 jwtToken: newToken,
-        } });
+            },
+        });
     }
 }
 export default AuthController;

@@ -1,5 +1,7 @@
+import {
+    Entity, PrimaryGeneratedColumn, Column, ManyToOne,
+} from "typeorm";
 import { SchedulerEvent } from "./SchedulerEvent";
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne } from "typeorm";
 import { User } from "./User";
 import { EventCategory } from "./EventCategory";
 
@@ -11,10 +13,10 @@ export class Event implements SchedulerEvent {
     @Column()
     public Subject: string;
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     public Description: string;
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     public Location: string;
 
     @Column()
@@ -23,16 +25,16 @@ export class Event implements SchedulerEvent {
     @Column()
     public EndTime: Date;
 
-    @Column({default: false})
+    @Column({ default: false })
     public IsAllDay: boolean;
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     public StartTimezone: string;
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     public EndTimezone: string;
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     public RecurrenceRule: string;
 
     @ManyToOne(() => User, (user) => user.events)

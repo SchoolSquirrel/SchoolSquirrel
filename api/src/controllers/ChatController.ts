@@ -4,14 +4,15 @@ import { getRepository } from "typeorm";
 import { Chat } from "../entity/Chat";
 import { User } from "../entity/User";
 import { sendMessage } from "../utils/messages";
+
 class ChatController {
-    public static listAll = async (req: Request, res: Response) => {
+    public static async listAll(req: Request, res: Response): Promise<void> {
         const chatRepository = getRepository(Chat);
-        const chats = await chatRepository.find({ relations: ["users"]});
+        const chats = await chatRepository.find({ relations: ["users"] });
         res.send(chats);
     }
 
-    public static getChatFromUserId = async (req: Request, res: Response) => {
+    public static async getChatFromUserId(req: Request, res: Response): Promise<void> {
         const chatRepository = getRepository(Chat);
         const userRepository = getRepository(User);
         let chat = await chatRepository.query(`
@@ -31,11 +32,11 @@ class ChatController {
         res.send(chat);
     }
 
-    public static sendMessage = async (req: Request, res: Response) => {
+    public static async sendMessage(req: Request, res: Response): Promise<void> {
         sendMessage(req, res, "chat");
     }
 
-    public static getChat = async (req: Request, res: Response) => {
+    public static async getChat(req: Request, res: Response): Promise<void> {
         const chatRepository = getRepository(Chat);
         try {
             const chat = await chatRepository.findOneOrFail(req.params.id, { relations: ["users", "messages", "messages.sender"] });
@@ -51,7 +52,7 @@ class ChatController {
         }
     }
 
-    public static newGroupChat = async (req: Request, res: Response) => {
+    public static async newGroupChat(req: Request, res: Response): Promise<void> {
         const { name, user } = req.body;
         if (!(name && user)) {
             res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });
@@ -74,8 +75,8 @@ class ChatController {
         res.status(200).send({ success: true });
     }
 
-    public static deleteChat = async (req: Request, res: Response) => {
-        const id = req.params.id;
+    public static async deleteChat(req: Request, res: Response): Promise<void> {
+        const { id } = req.params;
         const chatRepository = getRepository(Chat);
         try {
             await chatRepository.delete(id);

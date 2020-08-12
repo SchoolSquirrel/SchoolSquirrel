@@ -1,9 +1,9 @@
 import {
-Column,
-Entity,
-PrimaryGeneratedColumn,
-ManyToOne,
-OneToOne,
+    Column,
+    Entity,
+    PrimaryGeneratedColumn,
+    ManyToOne,
+    OneToOne,
 } from "typeorm";
 import { Course } from "./Course";
 import { User } from "./User";
@@ -16,7 +16,7 @@ export class Assignment {
   @Column()
   public title: string;
 
-  @Column({length: 10000})
+  @Column({ length: 10000 })
   public content: string;
 
   @Column()

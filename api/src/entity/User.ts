@@ -67,18 +67,16 @@ export class User {
     @JoinColumn()
     public assignmentDraft: Assignment;
 
-
     public jwtToken?: string;
 
-    public hashPassword() {
+    public hashPassword(): void {
         this.password = bcrypt.hashSync(this.password, 8);
     }
 
-    public checkIfUnencryptedPasswordIsValid(unencryptedPassword: string) {
+    public checkIfUnencryptedPasswordIsValid(unencryptedPassword: string): boolean {
         if (unencryptedPassword) {
             return bcrypt.compareSync(unencryptedPassword, this.password);
-        } else {
-            return false;
         }
+        return false;
     }
 }

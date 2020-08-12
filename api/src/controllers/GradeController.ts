@@ -2,14 +2,15 @@ import { Request, Response } from "express";
 import * as i18n from "i18n";
 import { getRepository } from "typeorm";
 import { Grade } from "../entity/Grade";
+
 class GradeController {
-    public static listAll = async (req: Request, res: Response) => {
+    public static async listAll(req: Request, res: Response): Promise<void> {
         const gradeRepository = getRepository(Grade);
-        const grades = await gradeRepository.find({ relations: ["users"]});
+        const grades = await gradeRepository.find({ relations: ["users"] });
         res.send(grades);
     }
 
-    public static newGrade = async (req: Request, res: Response) => {
+    public static async newGrade(req: Request, res: Response): Promise<void> {
         const { name } = req.body;
         if (!name) {
             res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });
@@ -28,8 +29,8 @@ class GradeController {
         res.status(200).send({ success: true });
     }
 
-    public static deleteGrade = async (req: Request, res: Response) => {
-        const id = req.params.id;
+    public static async deleteGrade(req: Request, res: Response): Promise<void> {
+        const { id } = req.params;
         const gradeRepository = getRepository(Grade);
         try {
             await gradeRepository.delete(id);
