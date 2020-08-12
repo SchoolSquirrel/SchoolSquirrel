@@ -7,6 +7,7 @@ import { Buckets } from "../entity/Buckets";
 import * as minio from "minio";
 import * as http from "http";
 import * as stream from "stream";
+import { randomString } from "../utils/random";
 
 interface FileItem {/*
     dev: number,
@@ -139,7 +140,9 @@ class FileController {
             res.send({ error: 0 });
         } else if (req.body.status == DocumentStatus.READY_TO_SAVE) {
             http.get(req.body.url, async (response) => {
-                await (req.app.locals.minio as minio.Client).putObject(Buckets.COURSE_FILES, `${req.params.courseId}${req.query.path}`, response);
+                const path = `${req.params.courseId}${req.query.path}`;
+                await (req.app.locals.minio as minio.Client).putObject(Buckets.COURSE_FILES, path, response);
+                await FileController.generateNewEditKey(req, Buckets.COURSE_FILES, path);
                 res.send({ error: 0 });
             });
         } else {
@@ -147,6 +150,15 @@ class FileController {
             // tslint:disable-next-line: no-console
             console.log("Unknown status:", req.body);
         }
+    }
+
+    public static getEditKey = async (req: Request, res: Response) => {
+        const path = `${req.params.courseId}${req.query.path}`;
+        let editKey = (await FileController.getFileMetadata(req, Buckets.COURSE_FILES, path))?.editKey;
+        if (!editKey) {
+            editKey = await FileController.generateNewEditKey(req, Buckets.COURSE_FILES, path);
+        }
+        res.send({ editKey });
     }
 
     public static handleDownload = async (req: Request, res: Response) => {
@@ -194,6 +206,12 @@ class FileController {
         } catch {
             res.status(400).send("Error");
         }
+    }
+
+    private static async generateNewEditKey(req: Request, bucket: Buckets, path: string) {
+        const editKey = randomString();
+        await FileController.setFileMetadataKey(req, bucket, path, "editKey", editKey);
+        return editKey;
     }
 
     private static minioObjectsToFiles(items: minio.BucketItem[]) {

@@ -10,5 +10,6 @@ router.post("/course/:courseId/upload", [checkJwt,  multer({ storage: multer.mem
 router.post("/course/:courseId/download", [], FileController.handleDownload);
 router.get("/course/:courseId/serve", FileController.handleServe);
 router.post("/course/:courseId/save", FileController.handleSave);
+router.get("/course/:courseId/editKey", FileController.getEditKey);
 
 export default router;
