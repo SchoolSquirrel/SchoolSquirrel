@@ -16,7 +16,6 @@ export class FileListComponent {
     @Input() public type: "materials" | "worksheets";
     @Input() public id: number;
     @Input() public files: any[] = [];
-    // eslint-disable-next-line react/static-property-placement
     @Input() public context: string;
     @ViewChild("fileInput") private fileInput: ElementRef;
 

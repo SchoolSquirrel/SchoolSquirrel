@@ -1,9 +1,6 @@
 import { Component, ElementRef } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { debounceTime, map } from "rxjs/operators";
-import {
-    trigger, transition, style, animate,
-} from "@angular/animations";
 import { RemoteService } from "../../_services/remote.service";
 import { TinyConfigService } from "../../_services/tiny-config.service";
 import { NavbarActions } from "../../_decorators/navbar-actions.decorator";

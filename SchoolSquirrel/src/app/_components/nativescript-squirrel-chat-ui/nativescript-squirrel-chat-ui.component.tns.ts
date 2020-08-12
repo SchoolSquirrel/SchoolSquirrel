@@ -1,7 +1,6 @@
 import {
     Component, Input, Output, EventEmitter, ViewChild,
 } from "@angular/core";
-import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
 import { ObservableArray } from "@nativescript/core";
 import { Message } from "../../_models/Message";
 import { User } from "../../_models/User";
@@ -85,7 +84,7 @@ export class NativescriptSquirrelChatUiComponent {
         return this.messageInput?.nativeElement?.text != "";
     }
 
-    public onTextChange(e): void {
+    public onTextChange(e: {value: string}): void {
         this.canSendMesage = e.value.trim() != "";
     }
 }
