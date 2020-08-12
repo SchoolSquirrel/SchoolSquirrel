@@ -5,6 +5,7 @@ import * as archiver from "archiver";
 import { listObjects } from "../utils/storage";
 import { Buckets } from "../entity/Buckets";
 import * as minio from "minio";
+import * as http from "http";
 
 interface FileItem {/*
     dev: number,
@@ -47,6 +48,15 @@ interface FileItem {/*
 interface FileList {
     cwd: FileItem,
     files: FileItem[],
+}
+
+enum DocumentStatus {
+    BEING_EDITED = 1,
+    READY_TO_SAVE = 2,
+    SAVING_ERROR = 3,
+    CLOSED_WITHOUT_CHANGES = 4,
+    BEING_EDITED_BUT_SAVED = 6,
+    FORCE_SAVE_ERROR = 7,
 }
 
 class FileController {
@@ -105,6 +115,21 @@ class FileController {
             (await (req.app.locals.minio as minio.Client).getObject(Buckets.COURSE_FILES, `/${req.params.courseId}${req.query.path}`)).pipe(res);
         } catch {
             res.status(400).send("Error");
+        }
+    }
+
+    public static handleSave = async (req: Request, res: Response) => {
+        if (req.body.status == DocumentStatus.BEING_EDITED) {
+            res.send({ error: 0 });
+        } else if (req.body.status == DocumentStatus.READY_TO_SAVE) {
+            http.get(req.body.url, async (response) => {
+                await (req.app.locals.minio as minio.Client).putObject(Buckets.COURSE_FILES, `${req.params.courseId}${req.query.path}`, response);
+                res.send({ error: 0 });
+            });
+        } else {
+            res.send({ error: "Unknown status:" + req.body.status });
+            // tslint:disable-next-line: no-console
+            console.log("Unknown status:", req.body);
         }
     }
 
