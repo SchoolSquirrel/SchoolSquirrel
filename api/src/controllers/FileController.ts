@@ -6,6 +6,7 @@ import { listObjects } from "../utils/storage";
 import { Buckets } from "../entity/Buckets";
 import * as minio from "minio";
 import * as http from "http";
+import * as stream from "stream";
 
 interface FileItem {/*
     dev: number,
@@ -59,10 +60,20 @@ enum DocumentStatus {
     FORCE_SAVE_ERROR = 7,
 }
 
+interface FileMetdata {
+    modified: Date,
+    // created: Date,
+    authorId: number,
+    editKey?: string,
+    protected?: boolean, // if yes, only author can edit
+}
+
+const METADATA_SUFFIX = ".schoolsquirrel-metadata";
+
 class FileController {
     public static handle = async (req: Request, res: Response) => {
         if (req.body.action == "read") {
-            const items = await listObjects(req.app.locals.minio as minio.Client, Buckets.COURSE_FILES, `/${req.params.courseId}${req.body.path}`);
+            const items = await listObjects(req.app.locals.minio as minio.Client, METADATA_SUFFIX, Buckets.COURSE_FILES, `/${req.params.courseId}${req.body.path}`);
             FileController.minioObjectsToFiles(items);
             res.send({
                 cwd: {
@@ -85,7 +96,7 @@ class FileController {
             }});
         } else if (req.body.action == "search") {
             const path = `/${req.params.courseId}${req.body.path}`;
-            let items = await listObjects(req.app.locals.minio as minio.Client, Buckets.COURSE_FILES, path, true);
+            let items = await listObjects(req.app.locals.minio as minio.Client, METADATA_SUFFIX, Buckets.COURSE_FILES, path, true);
             items = items.filter((i) => checkForSearchResult(req.body.caseSensitive, req.body.searchString.replace(/\*/g, ""), i.name.split("/").pop(), req.body.searchString))
             for (const item of items as any[]) {
                 item.filterPath = item.name.split("/");
@@ -102,7 +113,12 @@ class FileController {
     public static handleUpload = async (req: Request, res: Response) => {
         if (req.body.action === "save") {
             for (const file of req.files as Express.Multer.File[]) {
-                await (req.app.locals.minio as minio.Client).putObject(Buckets.COURSE_FILES, `${req.params.courseId}${req.body.path}${file.originalname}`, file.buffer);
+                const path = `${req.params.courseId}${req.body.path}${file.originalname}`;
+                await (req.app.locals.minio as minio.Client).putObject(Buckets.COURSE_FILES, path, file.buffer);
+                await FileController.setFileMetadata(req, Buckets.COURSE_FILES, path, {
+                    modified: new Date(),
+                    authorId: res.locals.jwtPayload.userId,
+                });
             }
             res.send("Success");
         } else {
@@ -165,7 +181,7 @@ class FileController {
                         const fileData = (await minioClient.getObject(Buckets.COURSE_FILES, s3FilePath));
                         archive.append(fileData, { name: item.name });
                     } else {
-                        const children = await listObjects(minioClient, Buckets.COURSE_FILES, s3FilePath, true);
+                        const children = await listObjects(minioClient, METADATA_SUFFIX, Buckets.COURSE_FILES, s3FilePath, true);
                         for (const child of children) {
                             const fileData = (await minioClient.getObject(Buckets.COURSE_FILES, child.name));
                             const filePath = `${info.data.length == 1 ? "" : info.data[0].name}${child.name.replace(s3FilePath, "/")}`;
@@ -204,6 +220,20 @@ class FileController {
     private static async getCourseName(req): Promise<string> {
         return (await getRepository(Course).findOne(req.params.courseId)).name;
     }
+
+    private static async setFileMetadata(req: Request, bucket: Buckets, path: string, metadata: FileMetdata) {
+        await (req.app.locals.minio as minio.Client).putObject(bucket, trimLeadingSlashes(`${path}${METADATA_SUFFIX}`), JSON.stringify(metadata));
+    }
+
+    private static async setFileMetadataKey(req: Request, bucket: Buckets, path: string, key: string, value: any) {
+        const metadata = await FileController.getFileMetadata(req, bucket, path);
+        metadata[key] = value;
+        await this.setFileMetadata(req, bucket, path, metadata);
+    }
+
+    private static async getFileMetadata(req: Request, bucket: Buckets, path: string): Promise<FileMetdata> {
+        return JSON.parse(await streamToString((await (req.app.locals.minio as minio.Client).getObject(bucket, `${path}${METADATA_SUFFIX}`))) || "{}") as FileMetdata;
+    }
 }
 
 export default FileController;
@@ -223,4 +253,17 @@ function checkForSearchResult(casesensitive, filter, fileName, searchString) {
         }
     }
     return false;
+}
+
+function streamToString(s: stream.Readable): Promise<string> {
+    const chunks = []
+    return new Promise((resolve, reject) => {
+      s.on('data', chunk => chunks.push(chunk))
+      s.on('error', reject)
+      s.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')))
+    })
+}
+
+function trimLeadingSlashes(s: string) {
+    return s.replace(/^\/+/, '');
 }
