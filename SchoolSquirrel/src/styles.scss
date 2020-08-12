@@ -175,18 +175,24 @@ editor {
 }
 
 .wi {
-    padding-top: 0;
-    &.minimize {
-        padding-top: .3rem;
-    }
     &.maximize,
     &.minimize {
+        .window-icon {
+            margin-bottom: .45rem;
+        }
         &:hover {
             background-color: rgb(240, 240, 240);
         }
     }
+    &.minimize {
+        .window-icon {
+            margin-bottom: -.2rem;
+        }
+    }
     &.close {
-        margin-top: -.2rem;
+        .window-icon {
+            margin-bottom: .45rem;
+        }
         &:hover {
             background-color: red;
             fill: #fff;

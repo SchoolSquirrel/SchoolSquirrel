@@ -11,6 +11,21 @@
     right: 1rem;
 }
 
+.navbar.nav.dark {
+    .dropdown-toggle:after {
+        content: none
+    }
+    .nav-link {
+        color: #fff;
+        &:not(.wi) {
+            cursor: pointer;
+            &:hover {
+                background-color: rgb(80, 80, 80);
+            }
+        }
+    }
+}
+
 .navbar .form-control {
     padding: .75rem 1rem;
     border-width: 0;
