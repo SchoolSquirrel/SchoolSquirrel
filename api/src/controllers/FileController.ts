@@ -83,7 +83,7 @@ class FileController {
     }
     public static handle = async (req: Request, res: Response) => {
         if (req.body.action == "read") {
-            const items = await listObjects(req.app.locals.minio as minio.Client, FileController.getBucketName(req), `/${req.params.courseId}${req.body.path}`);
+            const items = await listObjects(req.app.locals.minio as minio.Client, FileController.getBucketName(req), `/${req.params.itemId}${req.body.path}`);
             FileController.minioObjectsToFiles(items);
             res.send({
                 cwd: {
@@ -105,7 +105,7 @@ class FileController {
                 modified: new Date(),
             }});
         } else if (req.body.action == "search") {
-            const path = `/${req.params.courseId}${req.body.path}`;
+            const path = `/${req.params.itemId}${req.body.path}`;
             let items = await listObjects(req.app.locals.minio as minio.Client, FileController.getBucketName(req), path, true);
             items = items.filter((i) => checkForSearchResult(req.body.caseSensitive, req.body.searchString.replace(/\*/g, ""), i.name.split("/").pop(), req.body.searchString))
             for (const item of items as any[]) {
@@ -123,7 +123,7 @@ class FileController {
     public static handleUpload = async (req: Request, res: Response) => {
         if (req.body.action === "save") {
             for (const file of req.files as Express.Multer.File[]) {
-                const path = `${req.params.courseId}${req.body.path}${file.originalname}`;
+                const path = `${req.params.itemId}${req.body.path}${file.originalname}`;
                 await (req.app.locals.minio as minio.Client).putObject(FileController.getBucketName(req), path, file.buffer);
                 await FileController.setFileMetadata(req, FileController.getBucketName(req), path, {
                     modified: new Date(),
@@ -138,7 +138,7 @@ class FileController {
 
     public static handleServe = async (req: Request, res: Response) => {
         try {
-            (await (req.app.locals.minio as minio.Client).getObject(FileController.getBucketName(req), `/${req.params.courseId}${req.query.path}`)).pipe(res);
+            (await (req.app.locals.minio as minio.Client).getObject(FileController.getBucketName(req), `/${req.params.itemId}${req.query.path}`)).pipe(res);
         } catch {
             res.status(400).send("Error");
         }
@@ -149,7 +149,7 @@ class FileController {
             res.send({ error: 0 });
         } else if (req.body.status == DocumentStatus.READY_TO_SAVE) {
             http.get(req.body.url, async (response) => {
-                const path = `${req.params.courseId}${req.query.path}`;
+                const path = `${req.params.itemId}${req.query.path}`;
                 await (req.app.locals.minio as minio.Client).putObject(FileController.getBucketName(req), path, response);
                 await FileController.generateNewEditKey(req, FileController.getBucketName(req), path);
                 res.send({ error: 0 });
@@ -162,7 +162,7 @@ class FileController {
     }
 
     public static getEditKey = async (req: Request, res: Response) => {
-        const path = `${req.params.courseId}${req.query.path}`;
+        const path = `${req.params.itemId}${req.query.path}`;
         let editKey = (await FileController.getFileMetadata(req, FileController.getBucketName(req), path))?.editKey;
         if (!editKey) {
             editKey = await FileController.generateNewEditKey(req, FileController.getBucketName(req), path);
@@ -178,7 +178,7 @@ class FileController {
                 // download the file directly
                 res.contentType(info.data[0].name.split(".").pop());
                 res.attachment(info.data[0].name);
-                (await minioClient.getObject(FileController.getBucketName(req), `/${req.params.courseId}${info.path}${info.data[0].name}`)).pipe(res);
+                (await minioClient.getObject(FileController.getBucketName(req), `/${req.params.itemId}${info.path}${info.data[0].name}`)).pipe(res);
             } else {
                 // create a zip file
                 let archiveName;
@@ -197,7 +197,7 @@ class FileController {
                 });
                 archive.pipe(res);
                 for (const item of info.data) {
-                    const s3FilePath = `/${req.params.courseId}${info.path}${item.name}`;
+                    const s3FilePath = `/${req.params.itemId}${info.path}${item.name}`;
                     if (item.isFile) {
                         const fileData = (await minioClient.getObject(FileController.getBucketName(req), s3FilePath));
                         archive.append(fileData, { name: item.name });
@@ -245,7 +245,7 @@ class FileController {
     }
 
     private static async getCourseName(req): Promise<string> {
-        return (await getRepository(Course).findOne(req.params.courseId)).name;
+        return (await getRepository(Course).findOne(req.params.itemId)).name;
     }
 
     private static async setFileMetadata(req: Request, bucket: Buckets, path: string, metadata: FileMetdata) {
