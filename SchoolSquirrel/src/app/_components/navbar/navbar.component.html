@@ -4,7 +4,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <input type="text" #actionInput (selectItem)="itemSelected($event)" (focus)="inputFocused = true; openTypeahead(actionInput)" (blur)="inputFocused = false" [placeholder]="(inputFocused ? 'components.navbar.actions.info' : 'components.navbar.actions.placeholder') | translate"
-        class="form-control form-control-dark w-100" [(ngModel)]="actionValue" [ngbTypeahead]="action" [resultTemplate]="rt" />
+        class="form-control form-control-dark col-md-6 col-lg-8" [(ngModel)]="actionValue" [ngbTypeahead]="action" [resultTemplate]="rt" />
 
     <ng-template #rt let-r="result" let-t="term">
         <div class="row py-1" [style.width]="typeaheadWidth + 'px'">
@@ -19,7 +19,7 @@
         </div>
     </ng-template>
 
-    <ul class="navbar nav dark p-0 flex-grow-1 flex-nowrap m-0">
+    <ul class="navbar nav dark p-0 col-md-3 col-lg-2 flex-nowrap m-0 d-flex justify-content-end app-region-drag">
         <li class="nav-item text-nowrap app-region-no-drag">
             <a class="nav-link" routerLink="" (click)="authenticationService.logout()" [title]="'general.logout' | translate"><i class="fas fa-sign-out-alt"></i></a>
         </li>
