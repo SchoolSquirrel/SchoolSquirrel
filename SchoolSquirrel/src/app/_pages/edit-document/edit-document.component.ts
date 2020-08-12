@@ -33,7 +33,7 @@ export class EditDocumentComponent {
         private remoteService: RemoteService,
         private deviceService: DeviceDetectorService,
     ) {
-        this.fileUrl = this.getFileUrl();
+        this.fileUrl = this.getFileUrl("serve");
         this.setFileType(this.fileUrl);
         this.onlyofficeConfig = {
             editorConfig: {
@@ -49,7 +49,7 @@ export class EditDocumentComponent {
                         edit: true,
                     }, */
                     title: `${new FilenamePipe().transform(this.fileUrl)}.${new FileextPipe().transform(this.fileUrl)}`,
-                    url: this.fileUrl.replace(this.remoteService.apiUrl, "http://docker.for.win.localhost:3000/api/"),
+                    url: this.fixUrlForContainer(this.fileUrl),
                 },
                 editorConfig: {
                     embedded: {
@@ -60,6 +60,7 @@ export class EditDocumentComponent {
                     },
                     lang: "de",
                     mode: "edit",
+                    callbackUrl: this.fixUrlForContainer(this.getFileUrl("save")),
                 }, /*
                 events: {
                     onBack: console.log,
@@ -77,7 +78,11 @@ export class EditDocumentComponent {
         };
     }
 
-    private getFileUrl() {
+    private fixUrlForContainer(url) {
+        return url.replace(this.remoteService.apiUrl, "http://docker.for.win.localhost:3000/api/");
+    }
+
+    private getFileUrl(type: "serve" | "save") {
         let { url } = this.router;
         // Firefox does weird stuff on page refresh: the encoded chars are encoded again...
         do {
@@ -87,7 +92,7 @@ export class EditDocumentComponent {
         for (let i = 0; i < 4; i++) {
             path.shift();
         }
-        const fileUrl = `${this.remoteService.apiUrl}/files/${this.route.snapshot.params.type}/${this.route.snapshot.params.id}/serve?path=/${path.join("/")}`;
+        const fileUrl = `${this.remoteService.apiUrl}/files/${this.route.snapshot.params.type}/${this.route.snapshot.params.id}/${type == "serve" ? "serve" : "save"}?path=/${path.join("/")}`;
         return fileUrl;
     }
 
