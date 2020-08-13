@@ -1,7 +1,7 @@
 import { Router } from "express";
+import * as multer from "multer";
 import FileController from "../controllers/FileController";
 import { checkJwt } from "../middlewares/checkJwt";
-import multer = require("multer");
 
 const router = Router();
 

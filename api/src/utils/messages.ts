@@ -5,7 +5,7 @@ import { User } from "../entity/User";
 import { Message } from "../entity/Message";
 import { Course } from "../entity/Course";
 
-export async function sendMessage(req: Request, res: Response, type: "chat" | "course") {
+export async function sendMessage(req: Request, res: Response, type: "chat" | "course"): Promise<void> {
     const { text, citation } = req.body;
     if (!text) {
         res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });
