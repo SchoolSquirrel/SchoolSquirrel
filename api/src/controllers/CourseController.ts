@@ -60,6 +60,34 @@ class CourseController {
         res.status(200).send({ success: true });
     }
 
+    public static async editCourse(req: Request, res: Response): Promise<void> {
+        const { name, users, description }:
+            { name: string, users: number[], description: string } = req.body;
+        if (!(name && users && users.length)) {
+            res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });
+            return;
+        }
+
+        const courseRepository = getRepository(Course);
+        const userRepository = getRepository(User);
+        const course = await courseRepository.findOne(req.params.id, { relations: ["students", "teachers"] });
+        course.name = name;
+        course.description = description;
+        course.students = [];
+        course.teachers = [];
+        for (const userId of users) {
+            course.students.push(await userRepository.findOne(userId));
+        }
+        course.teachers.push(await userRepository.findOne(res.locals.jwtPayload.userId));
+        try {
+            await courseRepository.save(course);
+        } catch (e) {
+            res.status(409).send({ message: i18n.__("errors.existingCoursename") });
+            return;
+        }
+        res.status(200).send({ success: true });
+    }
+
     public static async deleteCourse(req: Request, res: Response): Promise<void> {
         const { id } = req.params;
         const courseRepository = getRepository(Course);
