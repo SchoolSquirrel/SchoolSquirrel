@@ -34,7 +34,8 @@ export class SelectUsersComponent implements OnInit {
     }
 
     public getFilteredUsers(): User[] {
-        return this.allUsers.filter((u) => u.name.indexOf(this.searchTerm) !== -1
+        return this.allUsers.filter((u) => u.name.toLowerCase()
+            .indexOf(this.searchTerm.toLowerCase()) !== -1
             && !this.users.includes(u));
     }
 
