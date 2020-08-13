@@ -27,6 +27,12 @@ export class SelectUsersComponent implements OnInit {
         });
     }
 
+    public openModal(content: unknown): void {
+        this.modalService.open(content).result.then(() => {
+            this.usersChange.emit(this.users);
+        }, () => this.usersChange.emit(this.users));
+    }
+
     public getFilteredUsers(): User[] {
         return this.allUsers.filter((u) => u.name.toLowerCase()
             .indexOf(this.searchTerm.toLowerCase()) !== -1
