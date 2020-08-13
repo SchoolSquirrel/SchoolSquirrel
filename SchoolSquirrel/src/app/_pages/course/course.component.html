@@ -38,7 +38,9 @@
                         <ng-template ngbPanelContent>
                             <div class="card p-2 my-1">
                                 <button class="btn card-top-fab" (click)="configureCourse()"><i class="fas fa-cog"></i></button>
-                                <span *ngFor="let teacher of course.teachers">{{teacher.name}}</span>
+                                <div>
+                                    <app-user-chip *ngFor="let user of course.teachers" [user]="user"></app-user-chip>
+                                </div>
                             </div>
                         </ng-template>
                     </ngb-panel>
@@ -46,7 +48,9 @@
                         <ng-template ngbPanelContent>
                             <div class="card p-2 my-1">
                                 <button class="btn card-top-fab" (click)="configureCourse()"><i class="fas fa-cog"></i></button>
-                                <span *ngFor="let student of course.students">{{student.name}}</span>
+                                <div>
+                                    <app-user-chip *ngFor="let user of course.students" [user]="user"></app-user-chip>
+                                </div>
                             </div>
                         </ng-template>
                     </ngb-panel>
