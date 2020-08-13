@@ -65,9 +65,9 @@ export class FileListComponent {
     }
 
     public newFile(type: "docx" | "xlsx" | "pptx"): void {
-        this.remoteService.post(`${this.context}/${this.id}/${this.type}/${type}`, {}).subscribe((e) => {
-            if (e && typeof e == "object") {
-                this.files.push(e);
+        this.remoteService.post(`files/${this.context}/${this.id}/new/${this.type}/Unbenannt.${type}`, {}).subscribe((e) => {
+            if (e && Array.isArray(e)) {
+                this.files = e;
             }
         });
     }
