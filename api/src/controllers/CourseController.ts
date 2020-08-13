@@ -33,7 +33,8 @@ class CourseController {
     }
 
     public static async newCourse(req: Request, res: Response): Promise<void> {
-        const { name, users }: {name: string, users: number[]} = req.body;
+        const { name, users, description }:
+            { name: string, users: number[], description: string } = req.body;
         if (!(name && users && users.length)) {
             res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });
             return;
@@ -43,6 +44,7 @@ class CourseController {
         const userRepository = getRepository(User);
         const course = new Course();
         course.name = name;
+        course.description = description;
         course.students = [];
         course.teachers = [];
         for (const user of users) {

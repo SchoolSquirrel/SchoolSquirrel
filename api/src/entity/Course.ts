@@ -18,6 +18,9 @@ export class Course {
     @Column()
     public name: string;
 
+    @Column()
+    public description: string;
+
     @JoinTable()
     @ManyToMany(() => User, (user) => user.courses)
     public students: User[];
