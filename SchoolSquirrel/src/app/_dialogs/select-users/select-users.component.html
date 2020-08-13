@@ -19,6 +19,7 @@
                 <div *ngFor="let user of getFilteredUsers()" (click)="users.push(user); searchTerm = ''">
                     {{user.name}}
                 </div>
+                <span class="text-muted" *ngIf="getFilteredUsers().length == 0">Keine Benutzer gefunden!</span>
             </div>
         </div>
 
