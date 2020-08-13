@@ -37,16 +37,6 @@ class AssignmentsController {
         res.send(assignment);
     }
 
-    public static async downloadFile(req: Request, res: Response): Promise<void> {
-        const path = AssignmentsController.getAssignmentFilePath(req);
-        (req.app.locals.minio as minio.Client)
-            .getObject(Buckets.ASSIGNMENTS, path).then(async (s) => {
-                s.pipe(res);
-            }, (e) => {
-                res.status(500).send({ message: e });
-            });
-    }
-
     public static async getAssignmentDraft(req: Request, res: Response): Promise<void> {
         const me = await getRepository(User).findOne(res.locals.jwtPayload.userId);
         const assignment = await AssignmentsController.createDraftIfNotExisting(res, me);
@@ -154,10 +144,6 @@ class AssignmentsController {
         }
 
         res.status(200).send({ success: true });
-    }
-
-    private static getAssignmentFilePath(req): string {
-        return `${req.params.id}/${req.params.type == "materials" ? "materials" : "worksheets"}/${req.params.file}`;
     }
 
     private static async addFilesToAssignment(assignment: Assignment, req): Promise<void> {

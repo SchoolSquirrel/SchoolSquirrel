@@ -176,6 +176,18 @@ class FileController {
         }
     }
 
+    public static async getFile(req: Request, res: Response): Promise<void> {
+        try {
+            const filePath = `${req.params.itemId}/${req.params.path}${req.params["0"]}`;
+            res.setHeader("Content-disposition", "attachment");
+            res.type(req.params[0]);
+            (await (req.app.locals.minio as minio.Client)
+                .getObject(FileController.getBucketName(req), filePath)).pipe(res);
+        } catch {
+            res.status(400).send("Error");
+        }
+    }
+
     public static async handleSave(req: Request, res: Response): Promise<void> {
         if (req.body.status == DocumentStatus.BEING_EDITED) {
             res.send({ error: 0 });
