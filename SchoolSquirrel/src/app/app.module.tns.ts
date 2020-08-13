@@ -42,6 +42,7 @@ import { FileIconComponent } from "./_components/file-icon/file-icon.component";
 import { EditDocumentComponent } from "./_pages/edit-document/edit-document.component";
 import { AvatarComponent } from "./_components/avatar/avatar.component";
 import { CourseConfigComponent } from "./_dialogs/course-config/course-config.component";
+import { UserChipComponent } from "./_components/user-chip/user-chip.component";
 
 registerLocaleData(localeDe, localeDeExtra);
 
@@ -96,6 +97,7 @@ export function nativescriptTranslateLoaderFactory(): NativeScriptLoader {
         EditDocumentComponent,
         AvatarComponent,
         CourseConfigComponent,
+        UserChipComponent,
     ],
     imports: [
         ReactiveFormsModule,
