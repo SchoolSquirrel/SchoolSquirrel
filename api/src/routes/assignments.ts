@@ -12,8 +12,9 @@ router.get("/:id", [checkJwt], AssignmentsController.getAssignment);
 router.post("/", [checkJwt], AssignmentsController.newAssignment);
 // router.post("/:id", [checkJwt], AssignmentsController.editAssignment);
 router.delete("/:id", [checkJwt], AssignmentsController.deleteAssignment);
-router.delete("/:id/:type/:file", [checkJwt], AssignmentsController.deleteFile);
-router.get("/:id/:type/:file", [checkJwt], AssignmentsController.downloadFile);
-router.post("/:id/:type/:fileExt", [checkJwt], AssignmentsController.newFile);
+
+// router.delete("/:id/:type/:file", [checkJwt], AssignmentsController.deleteFile);
+// router.get("/:id/:type/:file", [checkJwt], AssignmentsController.downloadFile);
+// router.post("/:id/:type/:fileExt", [checkJwt], AssignmentsController.newFile);
 
 export default router;

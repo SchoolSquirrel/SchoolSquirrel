@@ -74,7 +74,7 @@ class FileController {
     public static getBucketName(req: Request): Buckets {
         if (req.params.bucket == "course") {
             return Buckets.COURSE_FILES;
-        } if (req.params.bucket == "assignment") {
+        } if (req.params.bucket == "assignments") {
             return Buckets.ASSIGNMENTS;
         } if (req.params.bucket == "chat") {
             return Buckets.CHAT_FILES;
@@ -124,20 +124,25 @@ class FileController {
     }
 
     public static async handleUpload(req: Request, res: Response): Promise<void> {
-        if (req.body.action === "save") {
-            for (const file of req.files as Express.Multer.File[]) {
-                const path = `${req.params.itemId}${req.body.path}${file.originalname}`;
-                await (req.app.locals.minio as minio.Client)
-                    .putObject(FileController.getBucketName(req), path, file.buffer);
-                await FileController.setFileMetadata(req, FileController.getBucketName(req), path, {
-                    modified: new Date(),
-                    authorId: res.locals.jwtPayload.userId,
-                });
-            }
+        // if (req.body.action === "save") {
+        for (const file of req.files as Express.Multer.File[]) {
+            const path = `${req.params.itemId}${req.body.path}${file.originalname}`;
+            await (req.app.locals.minio as minio.Client)
+                .putObject(FileController.getBucketName(req), path, file.buffer);
+            await FileController.setFileMetadata(req, FileController.getBucketName(req), path, {
+                modified: new Date(),
+                authorId: res.locals.jwtPayload.userId,
+            });
+        }
+        if (req.body.action) {
             res.send("Success");
         } else {
-            res.status(500).send("Unknown action");
+            res.send(await listObjects(req.app.locals.minio,
+                Buckets.ASSIGNMENTS, `${req.params.itemId}${req.body.path}`));
         }
+        // } else {
+        //     res.status(500).send("Unknown action");
+        // }
     }
 
     public static async handleServe(req: Request, res: Response): Promise<void> {

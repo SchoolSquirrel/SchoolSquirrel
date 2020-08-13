@@ -6,7 +6,6 @@ import courses from "./courses";
 import events from "./events";
 import chats from "./chats";
 import assignments from "./assignments";
-import upload from "./upload";
 import files from "./files";
 
 const routes = Router();
@@ -18,7 +17,6 @@ routes.use("/users", users);
 routes.use("/courses", courses);
 routes.use("/events", events);
 routes.use("/chats", chats);
-routes.use("/upload", upload);
 routes.use("/files", files);
 
 export default routes;
