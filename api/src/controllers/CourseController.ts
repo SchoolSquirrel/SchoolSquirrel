@@ -4,15 +4,21 @@ import { getRepository } from "typeorm";
 import { Course } from "../entity/Course";
 import { User } from "../entity/User";
 import { sendMessage } from "../utils/messages";
+import { isAdmin } from "../utils/roles";
 
 class CourseController {
     public static async listAll(req: Request, res: Response): Promise<void> {
         const courseRepository = getRepository(Course);
-        const courses = await courseRepository
-            .createQueryBuilder("course")
-            .leftJoin("course.students", "user")
-            .where("user.id = :id", { id: res.locals.jwtPayload.userId })
-            .getMany();
+        let courses: Course[];
+        if (await isAdmin(res.locals.jwtPayload.userId)) {
+            courses = await courseRepository.find();
+        } else {
+            courses = await courseRepository
+                .createQueryBuilder("course")
+                .leftJoin("course.students", "user")
+                .where("user.id = :id", { id: res.locals.jwtPayload.userId })
+                .getMany();
+        }
         res.send(courses);
     }
 

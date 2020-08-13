@@ -8,16 +8,25 @@ import { sanitizeHtml } from "../utils/html";
 import { User } from "../entity/User";
 import { listObjects } from "../utils/storage";
 import { Buckets } from "../entity/Buckets";
+import { isAdmin } from "../utils/roles";
 
 class AssignmentsController {
     public static async listCoursesWithAssignments(req: Request, res: Response): Promise<void> {
         const courseRepository = getRepository(Course);
-        const assignments = await courseRepository
-            .createQueryBuilder("course")
-            .leftJoinAndSelect("course.assignments", "assignment")
-            .leftJoin("course.students", "user")
-            .where("user.id = :id", { id: res.locals.jwtPayload.userId })
-            .getMany();
+        let assignments: Course[];
+        if (await isAdmin(res.locals.jwtPayload.userId)) {
+            assignments = await courseRepository
+                .createQueryBuilder("course")
+                .leftJoinAndSelect("course.assignments", "assignment")
+                .getMany();
+        } else {
+            assignments = await courseRepository
+                .createQueryBuilder("course")
+                .leftJoinAndSelect("course.assignments", "assignment")
+                .leftJoin("course.students", "user")
+                .where("user.id = :id", { id: res.locals.jwtPayload.userId })
+                .getMany();
+        }
         res.send(assignments);
     }
 
