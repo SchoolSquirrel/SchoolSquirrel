@@ -24,7 +24,15 @@
         <ng-container ngbNavItem="settings">
             <a ngbNavLink><i class="fas fa-cog"></i> {{'general.settings' | translate}}</a>
             <ng-template ngbNavContent>
-                <ngb-accordion #acc="ngbAccordion" class="tree-view-accordion" [activeIds]="['panel-users', 'panel-teachers']">
+                <ngb-accordion #acc="ngbAccordion" class="tree-view-accordion" [activeIds]="['panel-info', 'panel-users', 'panel-teachers']">
+                    <ngb-panel title="Info" id="panel-info">
+                        <ng-template ngbPanelContent>
+                            <div class="card p-2 my-1">
+                                <b>{{course.name}}</b>
+                                <span>{{course.description}}<span class="text-muted" *ngIf="!course.description">Keine Kursbeschreibung vorhanden</span></span>
+                            </div>
+                        </ng-template>
+                    </ngb-panel>
                     <ngb-panel title="Teachers" id="panel-teachers">
                         <ng-template ngbPanelContent>
                             <div class="card p-2 my-1">
