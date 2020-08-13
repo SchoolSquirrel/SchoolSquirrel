@@ -154,6 +154,20 @@ class FileController {
         res.send({ success: true });
     }
 
+    public static async newFile(req: Request, res: Response): Promise<void> {
+        const filePath = `${req.params.itemId}/${req.params.path}${req.params["0"]}`;
+        (req.app.locals.minio as minio.Client).putObject(FileController.getBucketName(req), filePath, Buffer.from("")).then(async () => {
+            await FileController.setFileMetadata(req, FileController.getBucketName(req), filePath, {
+                modified: new Date(),
+                authorId: res.locals.jwtPayload.userId,
+            });
+            res.send(await listObjects(req.app.locals.minio,
+                FileController.getBucketName(req), filePath));
+        }, (e) => {
+            res.status(500).send({ message: e });
+        });
+    }
+
     public static async handleServe(req: Request, res: Response): Promise<void> {
         try {
             (await (req.app.locals.minio as minio.Client).getObject(FileController.getBucketName(req), `/${req.params.itemId}${req.query.path}`)).pipe(res);

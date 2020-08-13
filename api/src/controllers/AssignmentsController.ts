@@ -37,21 +37,6 @@ class AssignmentsController {
         res.send(assignment);
     }
 
-    public static async newFile(req: Request, res: Response): Promise<void> {
-        if (req.params.fileExt.indexOf(".") !== -1 || req.params.fileExt.indexOf("/") !== -1) {
-            res.status(400).send({ message: "Error" });
-            return;
-        }
-        const path = `${req.params.id}/${req.params.type == "materials" ? "materials" : "worksheets"}/Unbenannt.${req.params.fileExt}`;
-        (req.app.locals.minio as minio.Client).putObject(Buckets.ASSIGNMENTS, path, Buffer.from(""), {
-            author: res.locals.jwtPayload.userId,
-        }).then(async () => {
-            res.send((await listObjects(req.app.locals.minio, Buckets.ASSIGNMENTS, path))[0]);
-        }, (e) => {
-            res.status(500).send({ message: e });
-        });
-    }
-
     public static async downloadFile(req: Request, res: Response): Promise<void> {
         const path = AssignmentsController.getAssignmentFilePath(req);
         (req.app.locals.minio as minio.Client)
