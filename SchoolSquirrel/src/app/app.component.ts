@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { Router, NavigationEnd } from "@angular/router";
-import { NgbModalConfig, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModalConfig, NgbModal, NgbDropdownConfig } from "@ng-bootstrap/ng-bootstrap";
 import { isElectron } from "./_helpers/isElectron";
 import { PushService } from "./_services/push.service";
 import { NavbarUsersService } from "./_services/navbar-users.service";
@@ -10,7 +10,7 @@ import { AuthenticationService } from "./_services/authentication.service";
     selector: "app-root",
     templateUrl: "./app.component.html",
     styleUrls: ["./app.component.scss"],
-    providers: [NgbModalConfig, NgbModal],
+    providers: [NgbModalConfig, NgbModal, NgbDropdownConfig],
 })
 export class AppComponent {
     isFullScreenPage: boolean;
@@ -20,8 +20,10 @@ export class AppComponent {
         private navbarUsersService: NavbarUsersService,
         private authenticationService: AuthenticationService,
         modalConfig: NgbModalConfig,
+        dropdownConfig: NgbDropdownConfig,
     ) {
         modalConfig.scrollable = true;
+        dropdownConfig.container = "body";
         this.router.events.subscribe((r) => {
             if (r instanceof NavigationEnd) {
                 if (r.url.indexOf("login") == -1) {
