@@ -26,7 +26,7 @@ export class CourseConfigComponent {
         }
         this.modal.close({
             name: this.name,
-            users: this.users,
+            users,
             description: this.description,
         });
     }
