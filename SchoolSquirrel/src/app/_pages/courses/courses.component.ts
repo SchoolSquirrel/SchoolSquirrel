@@ -14,6 +14,7 @@ import { Course } from "../../_models/Course";
 })
 export class CoursesComponent implements OnInit {
     public newCourseName = "";
+    public newCourseDescription = "";
     public newCourseUsers: User[] = [];
     public loading = false;
     public invalid = false;
@@ -48,7 +49,7 @@ export class CoursesComponent implements OnInit {
         this.loading = true;
         this.invalid = false;
         const users = this.newCourseUsers.map((u) => u.id);
-        if (!(this.newCourseName && users && users.length > 0)) {
+        if (!(this.newCourseName && this.newCourseDescription && users && users.length > 0)) {
             this.invalid = true;
             this.loading = false;
             return;
@@ -56,6 +57,7 @@ export class CoursesComponent implements OnInit {
         this.modalService.dismissAll();
         this.remoteService.post("courses", {
             name: this.newCourseName,
+            description: this.newCourseDescription,
             users,
         }).subscribe((data) => {
             if (data && data.success) {
