@@ -12,6 +12,7 @@ import { AuthenticationService } from "../../_services/authentication.service";
 export class AvatarComponent {
     @Input() chat: Chat;
     @Input() user: User;
+    @Input() small = false;
 
     constructor(
         public authenticationService: AuthenticationService,

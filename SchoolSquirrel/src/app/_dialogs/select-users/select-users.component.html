@@ -11,6 +11,7 @@
             <div>
                 <input ngbAutofocus placeholder="Suchen" class="form-control mb-3" [(ngModel)]="searchTerm">
                 <div *ngFor="let user of users" class="badge badge-light badge-chip m-1">
+                    <app-avatar class="mr-1" small="true" [user]="user"></app-avatar>
                     {{user.name}}
                     <button class="btn p-0" (click)="removeUser(user)"><i class="fas fa-times"></i></button>
                 </div>
