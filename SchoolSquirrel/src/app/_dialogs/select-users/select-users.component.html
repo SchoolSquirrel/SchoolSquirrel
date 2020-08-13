@@ -8,11 +8,11 @@
     <div class="modal-body">
         <app-full-page-loading *ngIf="!allUsers || !allUsers.length"></app-full-page-loading>
         <div *ngIf="allUsers && allUsers.length">
-            <div *ngFor="let user of users">
+            <div *ngFor="let user of users" class="badge badge-light badge-chip m-1">
                 {{user.name}}
-                <button class="btn" (click)="removeUser(user)"><i class="fas fa-times"></i></button>
+                <button class="btn p-0" (click)="removeUser(user)"><i class="fas fa-times"></i></button>
             </div>
-            <input class="form-control" [(ngModel)]="searchTerm">
+            <input ngbAutofocus placeholder="Suchen" class="form-control" [(ngModel)]="searchTerm">
             <div *ngFor="let user of getFilteredUsers()" (click)="users.push(user); searchTerm = ''">
                 {{user.name}}
             </div>

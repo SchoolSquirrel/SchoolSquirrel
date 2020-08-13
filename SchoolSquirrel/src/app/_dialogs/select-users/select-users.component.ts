@@ -24,6 +24,12 @@ export class SelectUsersComponent implements OnInit {
     public ngOnInit(): void {
         this.remoteService.get("users").subscribe((u) => {
             this.allUsers = u;
+            this.allUsers.push(...u);
+            this.allUsers.push(...u);
+            this.allUsers.push(...u);
+            this.allUsers.push(...u);
+            this.allUsers.push(...u);
+            this.allUsers.push(...u);
         });
     }
 
