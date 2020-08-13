@@ -39,6 +39,11 @@
             "upload": "Datei hochladen..."
         }
     },
+    "dialogs": {
+        "selectUsers": {
+            "selectUsers": "Benutzer auswählen"
+        }
+    },
     "pages": {
         "login": {
             "domain": "Domain",

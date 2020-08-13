@@ -26,7 +26,7 @@ import { NavbarComponent } from "./_components/navbar/navbar.component";
 import { SidebarComponent } from "./_components/sidebar/sidebar.component";
 import { ToastComponent } from "./_components/toast/toast.component";
 import { CoursesComponent } from "./_pages/courses/courses.component";
-import { SelectUsersComponent } from "./_components/select-users/select-users.component";
+import { SelectUsersComponent } from "./_dialogs/select-users/select-users.component";
 import { CourseComponent } from "./_pages/course/course.component";
 import { FullPageLoadingComponent } from "./_components/full-page-loading/full-page-loading.component";
 import { ChatComponent } from "./_pages/chat/chat.component";
