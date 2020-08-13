@@ -30,7 +30,7 @@ export class SelectUsersComponent implements OnInit {
     public getFilteredUsers(): User[] {
         return this.allUsers.filter((u) => u.name.toLowerCase()
             .indexOf(this.searchTerm.toLowerCase()) !== -1
-            && !this.users.includes(u));
+            && !this.users.find((user) => user.id == u.id));
     }
 
     public removeUser(user: User): void {
