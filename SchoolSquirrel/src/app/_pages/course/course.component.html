@@ -1,4 +1,4 @@
-<div *ngIf="course" class="row flex-wrap-none h-100 d-flex flex-column">
+<div *ngIf="course && !loading" class="row flex-wrap-none h-100 d-flex flex-column">
     <nav ngbNav #nav="ngbNav" class="nav-tabs modern-tabs pl-3" [activeId]="activeTab" (activeIdChange)="tabChanged($event)">
         <h4 class="pt-2 mr-4">{{course.name}}</h4>
         <ng-container ngbNavItem="chat">
@@ -28,6 +28,7 @@
                     <ngb-panel title="Info" id="panel-info">
                         <ng-template ngbPanelContent>
                             <div class="card p-2 my-1">
+                                <button class="btn card-top-fab" (click)="configureCourse()"><i class="fas fa-cog"></i></button>
                                 <b>{{course.name}}</b>
                                 <span>{{course.description}}<span class="text-muted" *ngIf="!course.description">Keine Kursbeschreibung vorhanden</span></span>
                             </div>
@@ -36,6 +37,7 @@
                     <ngb-panel title="Teachers" id="panel-teachers">
                         <ng-template ngbPanelContent>
                             <div class="card p-2 my-1">
+                                <button class="btn card-top-fab" (click)="configureCourse()"><i class="fas fa-cog"></i></button>
                                 <span *ngFor="let teacher of course.teachers">{{teacher.name}}</span>
                             </div>
                         </ng-template>
@@ -43,6 +45,7 @@
                     <ngb-panel title="Users" id="panel-users">
                         <ng-template ngbPanelContent>
                             <div class="card p-2 my-1">
+                                <button class="btn card-top-fab" (click)="configureCourse()"><i class="fas fa-cog"></i></button>
                                 <span *ngFor="let student of course.students">{{student.name}}</span>
                             </div>
                         </ng-template>
@@ -55,4 +58,4 @@
     <div [ngbNavOutlet]="nav" class="flex-grow-1 overflow-auto"></div>
 </div>
 
-<app-full-page-loading *ngIf="!course"></app-full-page-loading>
+<app-full-page-loading *ngIf="!course || loading"></app-full-page-loading>
