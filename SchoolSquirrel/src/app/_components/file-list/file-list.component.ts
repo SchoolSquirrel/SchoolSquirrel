@@ -54,9 +54,11 @@ export class FileListComponent {
         }
         const { files } = event.target as HTMLInputElement;
         if (files[0]) {
-            this.remoteService.postFile(`upload/${this.context}/${this.id}/${this.type}`, {}, "file", files[0]).subscribe((e) => {
-                if (e && typeof e == "object") {
-                    this.files.push(e);
+            this.remoteService.postFile(`files/${this.context}/${this.id}/upload`, {
+                path: `/${this.type}/`,
+            }, "file", files[0]).subscribe((e) => {
+                if (e && Array.isArray(e)) {
+                    this.files = e;
                 }
             });
         }
