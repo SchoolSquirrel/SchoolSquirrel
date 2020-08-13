@@ -138,11 +138,20 @@ class FileController {
             res.send("Success");
         } else {
             res.send(await listObjects(req.app.locals.minio,
-                Buckets.ASSIGNMENTS, `${req.params.itemId}${req.body.path}`));
+                FileController.getBucketName(req), `${req.params.itemId}${req.body.path}`));
         }
         // } else {
         //     res.status(500).send("Unknown action");
         // }
+    }
+
+    public static async deleteFile(req: Request, res: Response): Promise<void> {
+        const filePath = `${req.params.itemId}/${req.params.path}${req.params["0"]}`;
+        await (req.app.locals.minio as minio.Client)
+            .removeObject(FileController.getBucketName(req), filePath);
+        await (req.app.locals.minio as minio.Client)
+            .removeObject(FileController.getBucketName(req), `${filePath}${METADATA_SUFFIX}`);
+        res.send({ success: true });
     }
 
     public static async handleServe(req: Request, res: Response): Promise<void> {

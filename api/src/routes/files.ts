@@ -11,5 +11,6 @@ router.post("/:bucket/:itemId/download", [], FileController.handleDownload);
 router.get("/:bucket/:itemId/serve", FileController.handleServe);
 router.post("/:bucket/:itemId/save", FileController.handleSave);
 router.get("/:bucket/:itemId/editKey", FileController.getEditKey);
+router.delete("/:bucket/:itemId/:path*", FileController.deleteFile);
 
 export default router;

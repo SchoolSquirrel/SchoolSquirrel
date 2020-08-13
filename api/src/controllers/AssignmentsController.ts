@@ -52,16 +52,6 @@ class AssignmentsController {
         });
     }
 
-    public static async deleteFile(req: Request, res: Response): Promise<void> {
-        const path = AssignmentsController.getAssignmentFilePath(req);
-        (req.app.locals.minio as minio.Client)
-            .removeObject(Buckets.ASSIGNMENTS, path).then(async () => {
-                res.send({ success: true });
-            }, (e) => {
-                res.status(500).send({ message: e });
-            });
-    }
-
     public static async downloadFile(req: Request, res: Response): Promise<void> {
         const path = AssignmentsController.getAssignmentFilePath(req);
         (req.app.locals.minio as minio.Client)
