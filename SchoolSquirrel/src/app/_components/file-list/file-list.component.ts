@@ -41,11 +41,7 @@ export class FileListComponent {
     }
 
     public download(file: { name: string }): void {
-        window.open(this.remoteService.getImageUrl(this.getContextUrl(file), this.authenticationService), "_blank");
-    }
-
-    private getContextUrl(file: { name: string; }): string {
-        return `${this.context}/${this.id}/${this.type}/${new FilenamePipe().transform(file.name as string)}.${new FileextPipe().transform(file.name as string)}`;
+        window.open(this.remoteService.getImageUrl(`files/${this.context}/${file.name}`, this.authenticationService), "_blank");
     }
 
     public onFileSelected(event: Event): void {
