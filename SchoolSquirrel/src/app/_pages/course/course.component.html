@@ -21,8 +21,8 @@
                 </div>
             </ng-template>
         </ng-container>
-        <ng-container ngbNavItem="info">
-            <a ngbNavLink><i class="fas fa-info-circle"></i> {{'general.info' | translate}}</a>
+        <ng-container ngbNavItem="settings">
+            <a ngbNavLink><i class="fas fa-cog"></i> {{'general.settings' | translate}}</a>
             <ng-template ngbNavContent>
                 <ngb-accordion #acc="ngbAccordion" class="tree-view-accordion" [activeIds]="['panel-users', 'panel-teachers']">
                     <ngb-panel title="Teachers" id="panel-teachers">

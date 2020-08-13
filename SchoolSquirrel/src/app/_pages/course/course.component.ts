@@ -9,7 +9,7 @@ import { Message } from "../../_models/Message";
 import { MessageStatus } from "../../_models/MessageStatus";
 import { FastTranslateService } from "../../_services/fast-translate.service";
 
-type Tab = "chat" | "files" | "assignments" | "info";
+type Tab = "chat" | "files" | "assignments" | "settings";
 
 @Component({
     selector: "app-course",
