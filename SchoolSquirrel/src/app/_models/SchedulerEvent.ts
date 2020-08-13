@@ -7,7 +7,7 @@
 /*    +-----------------------------------------------------------------------+    */
 
 /* do not edit */ import { EventCategory } from "./EventCategory";
-/* do not edit */ 
+/* do not edit */
 /* do not edit */ export interface SchedulerEvent {
 /* do not edit */     Id: number;
 /* do not edit */     Subject: string;
@@ -22,3 +22,4 @@
 /* do not edit */     Category: EventCategory;
 /* do not edit */     IsReadonly?: boolean
 /* do not edit */ }
+/* do not edit */

@@ -12,3 +12,4 @@
 /* do not edit */     TeacherEvent = "TeacherEvent",
 /* do not edit */     Conference = "Conference",
 /* do not edit */ }
+/* do not edit */

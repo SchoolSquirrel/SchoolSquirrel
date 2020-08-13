@@ -6,8 +6,8 @@
 /*    |    Then, run "npx redundancyjs" in the terminal.                      |    */
 /*    +-----------------------------------------------------------------------+    */
 
-/* do not edit */ import { SchedulerEvent } from "./SchedulerEvent";
 /* do not edit */ 
+/* do not edit */ import { SchedulerEvent } from "./SchedulerEvent";
 /* do not edit */ import { User } from "./User";
 /* do not edit */ import { EventCategory } from "./EventCategory";
 /* do not edit */ 
@@ -48,3 +48,4 @@
 /* do not edit */ 
 /* do not edit */     public Category: EventCategory;
 /* do not edit */ }
+/* do not edit */
