@@ -1,9 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
+import {
+    Component, OnInit, ViewChild, ElementRef,
+} from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { User } from "../../_models/User";
 import { RemoteService } from "../../_services/remote.service";
 import { Course } from "../../_models/Course";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: "app-courses",
