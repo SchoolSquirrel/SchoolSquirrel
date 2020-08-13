@@ -1,11 +1,9 @@
-import {
-    Component, OnInit, ViewChild, ElementRef,
-} from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { User } from "../../_models/User";
 import { RemoteService } from "../../_services/remote.service";
 import { Course } from "../../_models/Course";
+import { CourseConfigComponent } from "../../_dialogs/course-config/course-config.component";
 
 @Component({
     selector: "app-courses",
@@ -13,14 +11,8 @@ import { Course } from "../../_models/Course";
     styleUrls: ["./courses.component.scss"],
 })
 export class CoursesComponent implements OnInit {
-    public newCourseName = "";
-    public newCourseDescription = "";
-    public newCourseUsers: User[] = [];
-    public loading = false;
-    public invalid = false;
     public courses: Course[] = [];
-    @ViewChild("content") private modal: ElementRef;
-
+    public loading = false;
     constructor(
         private route: ActivatedRoute,
         private remoteService: RemoteService,
@@ -34,36 +26,22 @@ export class CoursesComponent implements OnInit {
         });
         if (this.route.snapshot.url[this.route.snapshot.url.length - 1].path == "new") {
             setTimeout(() => {
-                this.modalService.open(this.modal).result.then(() => {
-                    if (!this.invalid) {
-                        this.createCourse();
-                    }
+                this.modalService.open(CourseConfigComponent).result.then((result) => {
+                    this.loading = true;
+                    this.remoteService.post("courses", {
+                        name: result.name,
+                        description: result.description,
+                        users: result.users,
+                    }).subscribe((data) => {
+                        if (data && data.success) {
+                            this.loading = false;
+                            this.router.navigate(["/courses"]);
+                        }
+                    });
                 }, () => {
                     this.router.navigate(["/courses"]);
                 });
             });
         }
-    }
-
-    public createCourse(): void {
-        this.loading = true;
-        this.invalid = false;
-        const users = this.newCourseUsers.map((u) => u.id);
-        if (!(this.newCourseName && this.newCourseDescription && users && users.length > 0)) {
-            this.invalid = true;
-            this.loading = false;
-            return;
-        }
-        this.modalService.dismissAll();
-        this.remoteService.post("courses", {
-            name: this.newCourseName,
-            description: this.newCourseDescription,
-            users,
-        }).subscribe((data) => {
-            if (data && data.success) {
-                this.loading = false;
-                this.router.navigate(["/courses"]);
-            }
-        });
     }
 }

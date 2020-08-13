@@ -17,38 +17,3 @@
     </div>
 </div>
 <app-full-page-loading *ngIf="loading"></app-full-page-loading>
-
-<ng-template #content let-modal>
-    <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">New course</h4>
-        <button type="button" class="close" (click)="modal.dismiss()">
-        <span>&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-        <div class="alert alert-danger" *ngIf="invalid">
-            Bitte geben Sie einen Titel ein und wählen Sie mindestens einen Benutzer aus!
-        </div>
-        <div class="form-group row">
-            <label for="name" class="col-sm-2 col-form-label">Name</label>
-            <div class="col-sm-10">
-                <input type="text" ngbAutofocus class="form-control" id="name" [(ngModel)]="newCourseName" placeholder="Kurstitel">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="description" class="col-sm-2 col-form-label">Description</label>
-            <div class="col-sm-10">
-                <textarea class="form-control" id="description" [(ngModel)]="newCourseDescription" placeholder="Kursbeschreibung"></textarea>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Schüler</label>
-            <div class="col-sm-10">
-                <app-select-users [placeholder]="'general.users' | translate" [(users)]="newCourseUsers" class="d-block w-100"></app-select-users>
-            </div>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-outline-success" (click)="createCourse()" [disabled]="loading">Kurs erstellen</button>
-    </div>
-</ng-template>
