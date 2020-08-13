@@ -1,9 +1,8 @@
 import {
     Component, Input, ViewChild, ElementRef,
 } from "@angular/core";
+import { Router } from "@angular/router";
 import { RemoteService } from "../../_services/remote.service";
-import { FilenamePipe } from "../../_pipes/filename.pipe";
-import { FileextPipe } from "../../_pipes/fileext.pipe";
 import { AuthenticationService } from "../../_services/authentication.service";
 
 @Component({
@@ -22,10 +21,17 @@ export class FileListComponent {
     constructor(
         private remoteService: RemoteService,
         private authenticationService: AuthenticationService,
+        private router: Router,
     ) { }
 
     public uploadFile(): void {
         this.fileInput.nativeElement.click();
+    }
+
+    public viewOrEdit(file: { name: string }): void {
+        const parts = file.name.split("/");
+        parts.shift();
+        this.router.navigate(["/document", "assignments", this.id, ...parts]);
     }
 
     public delete(file: {name: string}): void {
