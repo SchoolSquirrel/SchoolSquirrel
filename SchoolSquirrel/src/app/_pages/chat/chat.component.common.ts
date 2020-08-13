@@ -21,8 +21,4 @@ export class ChatComponentCommon {
     public isGroupChat(chat: Chat): boolean {
         return chat.users.length > 2;
     }
-
-    public getChatImageUrl(chat: Chat, usePNG = false): string {
-        return this.remoteService.getImageUrl(this.isGroupChat(chat) ? "" : `users/${this.getOtherUserInPrivateChat(chat).id}.${usePNG ? "png" : "svg"}`, this.authenticationService);
-    }
 }

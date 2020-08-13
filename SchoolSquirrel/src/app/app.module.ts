@@ -33,38 +33,39 @@ import { EditorModule } from "@tinymce/tinymce-angular";
 import { NgxOnlyOfficeModule } from "ngx-onlyoffice";
 import { NgxExtendedPdfViewerModule } from "ngx-extended-pdf-viewer";
 import { DeviceDetectorModule } from "ngx-device-detector";
-import { AppComponent } from "./app.component";
-import { HomeComponent } from "./_pages/home/home.component";
-import { LoginComponent } from "./_pages/login/login.component";
-import { ErrorInterceptor } from "./_interceptors/error.interceptor";
-import { ToastComponent } from "./_components/toast/toast.component";
-import { SidebarComponent } from "./_components/sidebar/sidebar.component";
-import { NavbarComponent } from "./_components/navbar/navbar.component";
-import { AssignmentsComponent } from "./_pages/assignments/assignments.component";
-import { AssignmentComponent } from "./_pages/assignment/assignment.component";
-import { CalendarComponent } from "./_pages/calendar/calendar.component";
-import { UsersComponent } from "./_pages/_admin/users/users.component";
-import { SettingsComponent } from "./_pages/_admin/settings/settings.component";
-import { JwtInterceptor } from "./_interceptors/jwt.interceptor";
-import { NavbarActionsService } from "./_services/navbar-actions.service";
-import { CoursesComponent } from "./_pages/courses/courses.component";
-import { SelectUsersComponent } from "./_dialogs/select-users/select-users.component";
-import { AppRoutingModule } from "./app-routing.module";
-import { CourseComponent } from "./_pages/course/course.component";
-import { FullPageLoadingComponent } from "./_components/full-page-loading/full-page-loading.component";
-import { ChatComponent } from "./_pages/chat/chat.component";
-import { NgbDateCustomParserFormatter } from "./_helpers/NgbDateCustomParserFormatter";
-import { SafeUserHtmlPipe } from "./_pipes/safe-user-html.pipe";
-import { FilenamePipe } from "./_pipes/filename.pipe";
-import { FileextPipe } from "./_pipes/fileext.pipe";
-import { FilesizePipe } from "./_pipes/filesize.pipe";
-import { HtmlToTextPipe } from "./_pipes/html-to-text.pipe";
-import { AssignmentItemComponent } from "./_components/assignment-item/assignment-item.component";
-import { UserNameComponent } from "./_components/user-name/user-name.component";
-import { NativescriptSquirrelChatUiComponent } from "./_components/nativescript-squirrel-chat-ui/nativescript-squirrel-chat-ui.component";
-import { FileListComponent } from "./_components/file-list/file-list.component";
-import { FileIconComponent } from "./_components/file-icon/file-icon.component";
-import { EditDocumentComponent } from "./_pages/edit-document/edit-document.component";
+import { AppComponent } from '@src/app/app.component';
+import { HomeComponent } from '@src/app/_pages/home/home.component';
+import { LoginComponent } from '@src/app/_pages/login/login.component';
+import { ErrorInterceptor } from '@src/app/_interceptors/error.interceptor';
+import { ToastComponent } from '@src/app/_components/toast/toast.component';
+import { SidebarComponent } from '@src/app/_components/sidebar/sidebar.component';
+import { NavbarComponent } from '@src/app/_components/navbar/navbar.component';
+import { AssignmentsComponent } from '@src/app/_pages/assignments/assignments.component';
+import { AssignmentComponent } from '@src/app/_pages/assignment/assignment.component';
+import { CalendarComponent } from '@src/app/_pages/calendar/calendar.component';
+import { UsersComponent } from '@src/app/_pages/_admin/users/users.component';
+import { SettingsComponent } from '@src/app/_pages/_admin/settings/settings.component';
+import { JwtInterceptor } from '@src/app/_interceptors/jwt.interceptor';
+import { NavbarActionsService } from '@src/app/_services/navbar-actions.service';
+import { CoursesComponent } from '@src/app/_pages/courses/courses.component';
+import { SelectUsersComponent } from '@src/app/_dialogs/select-users/select-users.component';
+import { AppRoutingModule } from '@src/app/app-routing.module';
+import { CourseComponent } from '@src/app/_pages/course/course.component';
+import { FullPageLoadingComponent } from '@src/app/_components/full-page-loading/full-page-loading.component';
+import { ChatComponent } from '@src/app/_pages/chat/chat.component';
+import { NgbDateCustomParserFormatter } from '@src/app/_helpers/NgbDateCustomParserFormatter';
+import { SafeUserHtmlPipe } from '@src/app/_pipes/safe-user-html.pipe';
+import { FilenamePipe } from '@src/app/_pipes/filename.pipe';
+import { FileextPipe } from '@src/app/_pipes/fileext.pipe';
+import { FilesizePipe } from '@src/app/_pipes/filesize.pipe';
+import { HtmlToTextPipe } from '@src/app/_pipes/html-to-text.pipe';
+import { AssignmentItemComponent } from '@src/app/_components/assignment-item/assignment-item.component';
+import { UserNameComponent } from '@src/app/_components/user-name/user-name.component';
+import { NativescriptSquirrelChatUiComponent } from '@src/app/_components/nativescript-squirrel-chat-ui/nativescript-squirrel-chat-ui.component';
+import { FileListComponent } from '@src/app/_components/file-list/file-list.component';
+import { FileIconComponent } from '@src/app/_components/file-icon/file-icon.component';
+import { EditDocumentComponent } from '@src/app/_pages/edit-document/edit-document.component';
+import { AvatarComponent } from '@src/app/_components/avatar/avatar.component';
 
 registerLocaleData(localeDe, localeDeExtra);
 declare const require: any;
@@ -113,6 +114,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         FileListComponent,
         FileIconComponent,
         EditDocumentComponent,
+        AvatarComponent,
     ],
     imports: [
         BrowserModule,
