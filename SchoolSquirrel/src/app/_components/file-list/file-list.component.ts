@@ -33,7 +33,7 @@ export class FileListComponent {
         if (!confirm("Soll diese Datei wirklich gelöscht werden?")) {
             return;
         }
-        this.remoteService.delete(this.getContextUrl(file)).subscribe((data) => {
+        this.remoteService.delete(`files/${this.context}/${file.name}`).subscribe((data) => {
             if (data && data.success) {
                 this.files = this.files.filter((f) => f.name !== file.name);
             }
