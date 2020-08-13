@@ -6,6 +6,7 @@ import { TinyConfigService } from "../../_services/tiny-config.service";
 import { NavbarActions } from "../../_decorators/navbar-actions.decorator";
 import { AssignmentsComponentCommon } from "./assignments.component.common";
 import { Assignment } from "../../_models/Assignment";
+import { AuthenticationService } from "../../_services/authentication.service";
 
 @NavbarActions([
     {
@@ -32,6 +33,7 @@ export class AssignmentsComponent extends AssignmentsComponentCommon {
         remoteService: RemoteService,
         public tinyConfigService: TinyConfigService,
         private modalService: NgbModal,
+        public authenticationService: AuthenticationService,
     ) {
         super(remoteService);
     }
