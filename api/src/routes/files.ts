@@ -10,7 +10,7 @@ router.post("/:bucket/:itemId/upload", [checkJwt, multer({ storage: multer.memor
 router.post("/:bucket/:itemId/download", [], FileController.handleDownload);
 router.get("/:bucket/:itemId/serve", FileController.handleServe);
 router.post("/:bucket/:itemId/save", FileController.handleSave);
-router.get("/:bucket/:itemId/editKey", FileController.getEditKey);
+router.get("/:bucket/:itemId/editKey", [checkJwt], FileController.getEditKey);
 router.get("/:bucket/:itemId/:path*", [checkJwt], FileController.getFile);
 router.post("/:bucket/:itemId/new/:path*", [checkJwt], FileController.newFile);
 router.delete("/:bucket/:itemId/:path*", [checkJwt], FileController.deleteFile);

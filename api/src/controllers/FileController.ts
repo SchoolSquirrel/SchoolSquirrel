@@ -11,6 +11,7 @@ import { Buckets } from "../entity/Buckets";
 import { listObjects, METADATA_SUFFIX } from "../utils/storage";
 import { Course } from "../entity/Course";
 import { randomString } from "../utils/random";
+import { User } from "../entity/User";
 
 interface FileItem {/*
     dev: number,
@@ -221,6 +222,30 @@ class FileController {
     }
 
     public static async getEditKey(req: Request, res: Response): Promise<void> {
+        if (FileController.isAssignmentFile(req)) {
+            if ((req.query.path as string).startsWith("/worksheets/")) {
+                // file is a worksheet
+                if (await FileController
+                    .isDraftAssignmentFile(req.params.itemId, res.locals.jwtPayload.userId)) {
+                    // file is a DRAFT, allow direct editing
+                } else {
+                    // file is NOT a draft, create own copy for each student
+                    // ToDo
+                }
+            } else if ((req.query.path as string).startsWith("/materials/")) {
+                // file is a material
+                if (await FileController
+                    .isDraftAssignmentFile(req.params.itemId, res.locals.jwtPayload.userId)) {
+                    // file is a DRAFT, allow editing
+                } else {
+                    // file is NOT a draft, don't allow editing
+                    res.status(404).send({ message: "Diese Datei kann nicht bearbeitet werden! Du kannst sie nur ansehen.", redirectToViewMode: true });
+                    return;
+                }
+            } else {
+                throw Error(`${req.query.path} neither starts with /worksheets not with /materials`);
+            }
+        }
         const path = `${req.params.itemId}${req.query.path}`;
         let editKey = (await FileController.getFileMetadata(req,
             FileController.getBucketName(req), path))?.editKey;
@@ -229,6 +254,14 @@ class FileController {
                 FileController.getBucketName(req), path);
         }
         res.send({ editKey });
+    }
+
+    private static async isDraftAssignmentFile(assignmentId: string, userId: string | number) {
+        return parseInt(assignmentId, 10) == (await getRepository(User).findOne(userId, { relations: ["assignmentDraft"] })).assignmentDraft.id;
+    }
+
+    private static isAssignmentFile(req) {
+        return FileController.getBucketName(req) == Buckets.ASSIGNMENTS;
     }
 
     public static async handleDownload(req: Request, res: Response): Promise<void> {
