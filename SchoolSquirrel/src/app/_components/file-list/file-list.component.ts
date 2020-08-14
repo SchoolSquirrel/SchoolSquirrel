@@ -31,7 +31,12 @@ export class FileListComponent {
     public viewOrEdit(file: { name: string }): void {
         const parts = file.name.split("/");
         parts.shift();
-        this.router.navigate(["/document", "assignments", this.id, ...parts]);
+        const data = ["/document", "assignments", this.id, ...parts];
+        if (this.edit) {
+            window.open(this.router.serializeUrl(this.router.createUrlTree(data)), "_blank");
+        } else {
+            this.router.navigate(data);
+        }
     }
 
     public delete(file: {name: string}): void {
