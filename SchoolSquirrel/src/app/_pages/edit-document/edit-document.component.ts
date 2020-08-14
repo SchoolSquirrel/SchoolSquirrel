@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DeviceDetectorService } from "ngx-device-detector";
+import { ToastService } from "../../_services/toast.service";
 import { AuthenticationService } from "../../_services/authentication.service";
 import { FileextPipe } from "../../_pipes/fileext.pipe";
 import { RemoteService } from "../../_services/remote.service";
@@ -35,70 +36,77 @@ export class EditDocumentComponent {
         private remoteService: RemoteService,
         private deviceService: DeviceDetectorService,
         private authenticationService: AuthenticationService,
+        private toastService: ToastService,
     ) {
-        this.fileUrl = this.getFileUrl("serve");
-        this.setFileType(this.fileUrl);
-        if (this.type !== "document") {
-            this.loading = false;
-        } else {
-            this.remoteService.get(this.getFileUrl("editKey", true)).subscribe((d) => {
-                if (d?.editKey) {
-                    this.loading = false;
-                    this.onlyofficeConfig = {
-                        editorConfig: {
-                            document: {
-                                fileType: new FileextPipe().transform(this.fileUrl),
-                                /* info: {
-                                    author: "Me",
-                                    created: "26.11.19",
-                                },
-                                permissions: {
-                                    download: true,
-                                    edit: true,
-                                }, */
-                                key: d.editKey,
-                                title: `${new FilenamePipe().transform(this.fileUrl)}.${new FileextPipe().transform(this.fileUrl)}`,
-                                url: this.fixUrlForContainer(this.fileUrl),
-                            },
-                            editorConfig: {
-                                embedded: {
-                                    embedUrl: "example.com",
-                                    saveUrl: "example.com",
-                                    shareUrl: "example.com",
-                                    toolbarDocked: "top",
-                                },
-                                lang: "de",
-                                mode: this.route.snapshot.params.action == "edit" ? "edit" : "view",
-                                callbackUrl: this.fixUrlForContainer(this.getFileUrl("save")),
-                                user: {
-                                    name: this.authenticationService.currentUser.name,
-                                    id: this.authenticationService.currentUser.id,
-                                },
-                            }, /*
-                            events: {
-                                onBack: console.log,
-                                onDocumentStateChange: console.log,
-                                onError: console.log,
-                                onReady: console.log,
-                                onRequestEditRights: console.log,
-                                onSave: console.log,
-                            }, */
-                            type: this.deviceService.isDesktop() ? "desktop" : "mobile",
-                            height: "100%",
-                            width: "100%",
-                        },
-                        script: "http://localhost:8080/web-apps/apps/api/documents/api.js",
-                    };
-                }
-            });
-        }
+        this.route.params.subscribe((params) => {
+            this.fileUrl = this.getFileUrl(params, "serve");
+            this.setFileType(this.fileUrl);
+            if (this.type !== "document") {
+                this.loading = false;
+            } else if (params.action == "view") {
+                this.loading = false;
+                this.setOnlyOfficeConfig(params);
+            } else {
+                this.remoteService.get(this.getFileUrl(params, "editKey", true)).subscribe((d) => {
+                    if (d?.editKey) {
+                        this.loading = false;
+                        this.setOnlyOfficeConfig(params, d.editKey);
+                    }
+                }, (e) => {
+                    if (e?.redirectToViewMode) {
+                        this.router.navigateByUrl(this.router.url.replace("/edit/", "/view/"));
+                    }
+                });
+            }
+        });
+    }
+
+    private setOnlyOfficeConfig(params, editKey?: string) {
+        this.onlyofficeConfig = {
+            editorConfig: {
+                document: {
+                    fileType: new FileextPipe().transform(this.fileUrl),
+                    /* info: {
+                        author: "Me",
+                        created: "26.11.19",
+                    },
+                    permissions: {
+                        download: true,
+                        edit: true,
+                    }, */
+                    key: editKey || "",
+                    title: `${new FilenamePipe().transform(this.fileUrl)}.${new FileextPipe().transform(this.fileUrl)}`,
+                    url: this.fixUrlForContainer(this.fileUrl),
+                },
+                editorConfig: {
+                    embedded: {
+                        embedUrl: "example.com",
+                        saveUrl: "example.com",
+                        shareUrl: "example.com",
+                        toolbarDocked: "top",
+                    },
+                    lang: "de",
+                    mode: params.action == "edit" ? "edit" : "view",
+                    callbackUrl: this.fixUrlForContainer(this.getFileUrl(params, "save")),
+                    user: {
+                        name: this.authenticationService.currentUser.name,
+                        id: this.authenticationService.currentUser.id,
+                    },
+                },
+
+                type: this.deviceService.isDesktop() ? "desktop" : "mobile",
+                height: "100%",
+                width: "100%",
+            },
+            script: "http://localhost:8080/web-apps/apps/api/documents/api.js",
+        };
     }
 
     private fixUrlForContainer(url) {
         return url.replace(this.remoteService.apiUrl, "http://docker.for.win.localhost:3000/api/");
     }
 
-    private getFileUrl(type: "serve" | "save" | "editKey", skipApiUrl = false) {
+    private getFileUrl(params, type: "serve" | "save" | "editKey", skipApiUrl = false) {
         let { url } = this.router;
         // Firefox does weird stuff on page refresh: the encoded chars are encoded again...
         do {
@@ -108,7 +116,7 @@ export class EditDocumentComponent {
         for (let i = 0; i < 5; i++) {
             path.shift();
         }
-        const fileUrl = `${skipApiUrl ? "" : this.remoteService.apiUrl}/files/${this.route.snapshot.params.type}/${this.route.snapshot.params.id}/${type}?path=/${path.join("/")}`;
+        const fileUrl = `${skipApiUrl ? "" : this.remoteService.apiUrl}/files/${params.type}/${params.id}/${type}?path=/${path.join("/")}`;
         return fileUrl;
     }
 
