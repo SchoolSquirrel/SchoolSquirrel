@@ -27,7 +27,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                         && request.params.dontShowToast)) {
                         this.toastService.error(errorMessage);
                     }
-                    return throwError(errorMessage);
+                    return throwError(error.error);
                 }),
             );
     }
