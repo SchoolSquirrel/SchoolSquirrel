@@ -31,7 +31,7 @@ export class FileListComponent {
     public viewOrEdit(file: { name: string }): void {
         const parts = file.name.split("/");
         parts.shift();
-        const data = ["/document", this.type == "materials" ? "view" : "edit", "assignments", this.id, ...parts];
+        const data = ["/document", this.type == "materials" && !this.edit ? "view" : "edit", "assignments", this.id, ...parts];
         if (this.edit) {
             window.open(this.router.serializeUrl(this.router.createUrlTree(data)), "_blank");
         } else {
