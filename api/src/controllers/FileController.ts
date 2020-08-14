@@ -5,6 +5,8 @@ import * as archiver from "archiver";
 import * as minio from "minio";
 import * as http from "http";
 import * as stream from "stream";
+import * as fs from "fs";
+import { join } from "path";
 import { Buckets } from "../entity/Buckets";
 import { listObjects, METADATA_SUFFIX } from "../utils/storage";
 import { Course } from "../entity/Course";
@@ -156,12 +158,20 @@ class FileController {
 
     public static async newFile(req: Request, res: Response): Promise<void> {
         const filePath = `${req.params.itemId}/${req.params.path}${req.params["0"]}`;
-        (req.app.locals.minio as minio.Client).putObject(FileController.getBucketName(req), filePath, Buffer.from("")).then(async () => {
-            await FileController.setFileMetadata(req, FileController.getBucketName(req), filePath, {
-                modified: new Date(),
-                authorId: res.locals.jwtPayload.userId,
-            });
-            res.send(await listObjects(req.app.locals.minio,
+        const fileExtension = filePath.split(".").pop();
+        let fileData = Buffer.from("");
+        const template = join(__dirname, `../../assets/resources/templates/empty.${fileExtension}`);
+        if (fs.existsSync(template)) {
+            fileData = fs.readFileSync(template);
+        }
+        (req.app.locals.minio as minio.Client)
+            .putObject(FileController.getBucketName(req), filePath, fileData).then(async () => {
+                await FileController.setFileMetadata(req,
+                    FileController.getBucketName(req), filePath, {
+                        modified: new Date(),
+                        authorId: res.locals.jwtPayload.userId,
+                    });
+                res.send(await listObjects(req.app.locals.minio,
                 FileController.getBucketName(req), filePath));
         }, (e) => {
             res.status(500).send({ message: e });
