@@ -171,11 +171,14 @@ class FileController {
                         modified: new Date(),
                         authorId: res.locals.jwtPayload.userId,
                     });
+                const folder = `${req.params.itemId}/${req.params.path}${req.params["0"]}`;
+                const parts = folder.split("/");
+                parts.pop();
                 res.send(await listObjects(req.app.locals.minio,
-                FileController.getBucketName(req), filePath));
-        }, (e) => {
-            res.status(500).send({ message: e });
-        });
+                    FileController.getBucketName(req), `${parts.join("/")}/`));
+            }, (e) => {
+                res.status(500).send({ message: e });
+            });
     }
 
     public static async handleServe(req: Request, res: Response): Promise<void> {
