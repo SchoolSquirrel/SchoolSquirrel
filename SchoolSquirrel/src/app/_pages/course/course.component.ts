@@ -46,7 +46,7 @@ export class CourseComponent implements OnInit {
             const pathnames = this.filemanager.pathNames;
             pathnames.shift();
             pathnames.push((event.fileDetails as any).name);
-            this.router.navigate(["/document", "course", this.course.id, ...pathnames]);
+            this.router.navigate(["/document/edit", "course", this.course.id, ...pathnames]); // ToDo
         }
     }
 

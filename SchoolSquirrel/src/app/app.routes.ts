@@ -73,7 +73,7 @@ export const routes: Routes = [
         canActivate: [AuthenticationGuard],
     },
     {
-        path: "document/:type/:id",
+        path: "document/:action/:type/:id",
         component: EditDocumentComponent,
         canActivate: [AuthenticationGuard],
         children: [

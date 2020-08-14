@@ -68,7 +68,7 @@ export class EditDocumentComponent {
                                     toolbarDocked: "top",
                                 },
                                 lang: "de",
-                                mode: "edit",
+                                mode: this.route.snapshot.params.action == "edit" ? "edit" : "view",
                                 callbackUrl: this.fixUrlForContainer(this.getFileUrl("save")),
                                 user: {
                                     name: this.authenticationService.currentUser.name,
@@ -105,7 +105,7 @@ export class EditDocumentComponent {
             url = decodeURI(url);
         } while (url.indexOf("%") !== -1);
         const path = url.split("/");
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 5; i++) {
             path.shift();
         }
         const fileUrl = `${skipApiUrl ? "" : this.remoteService.apiUrl}/files/${this.route.snapshot.params.type}/${this.route.snapshot.params.id}/${type}?path=/${path.join("/")}`;
