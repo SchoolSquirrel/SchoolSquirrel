@@ -183,8 +183,11 @@ class FileController {
     }
 
     public static async handleServe(req: Request, res: Response): Promise<void> {
+        let path = `/${req.params.itemId}${req.query.path}`;
+        path = await FileController.fixPathForAssignmentWorksheets(req, res, path);
         try {
-            (await (req.app.locals.minio as minio.Client).getObject(FileController.getBucketName(req), `/${req.params.itemId}${req.query.path}`)).pipe(res);
+            (await (req.app.locals.minio as minio.Client)
+                .getObject(FileController.getBucketName(req), path)).pipe(res);
         } catch {
             res.status(400).send("Error");
         }
@@ -207,7 +210,8 @@ class FileController {
             res.send({ error: 0 });
         } else if (req.body.status == DocumentStatus.READY_TO_SAVE) {
             http.get(req.body.url, async (response) => {
-                const path = `${req.params.itemId}${req.query.path}`;
+                let path = `${req.params.itemId}${req.query.path}`;
+                path = await FileController.fixPathForAssignmentWorksheets(req, res, path);
                 await (req.app.locals.minio as minio.Client)
                     .putObject(FileController.getBucketName(req), path, response);
                 await FileController.generateNewEditKey(req,
@@ -221,7 +225,19 @@ class FileController {
         }
     }
 
+    private static async fixPathForAssignmentWorksheets(req, res: Response, path: string) {
+        if (FileController.isAssignmentFile(req)
+            && !await FileController.isDraftAssignmentFile(req.params.itemId,
+                res.locals.jwtPayload.userId)
+            && (req.query.path as string).startsWith("/worksheets/")) {
+            path = FileController.worksheetPathToSubmissionPath(path, res);
+        }
+        return path;
+    }
+
     public static async getEditKey(req: Request, res: Response): Promise<void> {
+        let path = `${req.params.itemId}${req.query.path}`;
+        let forceNewEditKey = false;
         if (FileController.isAssignmentFile(req)) {
             if ((req.query.path as string).startsWith("/worksheets/")) {
                 // file is a worksheet
@@ -230,7 +246,19 @@ class FileController {
                     // file is a DRAFT, allow direct editing
                 } else {
                     // file is NOT a draft, create own copy for each student
-                    // ToDo
+                    const source = path;
+                    path = `${req.params.itemId}${req.query.path}`;
+                    path = await FileController.fixPathForAssignmentWorksheets(req, res, path);
+                    const bucket = FileController.getBucketName(req);
+                    try {
+                        await (req.app.locals.minio as minio.Client)
+                            .statObject(bucket, path);
+                    } catch {
+                        await FileController.copyObject(req, source, path);
+                        await FileController.copyObject(req,
+                            `${source}${METADATA_SUFFIX}`, `${path}${METADATA_SUFFIX}`);
+                        forceNewEditKey = true;
+                    }
                 }
             } else if ((req.query.path as string).startsWith("/materials/")) {
                 // file is a material
@@ -246,18 +274,28 @@ class FileController {
                 throw Error(`${req.query.path} neither starts with /worksheets not with /materials`);
             }
         }
-        const path = `${req.params.itemId}${req.query.path}`;
         let editKey = (await FileController.getFileMetadata(req,
             FileController.getBucketName(req), path))?.editKey;
-        if (!editKey) {
+        if (!editKey || forceNewEditKey) {
             editKey = await FileController.generateNewEditKey(req,
                 FileController.getBucketName(req), path);
         }
         res.send({ editKey });
     }
 
+    private static worksheetPathToSubmissionPath(path: string, res: Response) {
+        return path.replace("/worksheets/", `/submissions/${res.locals.jwtPayload.userId}/`);
+    }
+
+    private static async copyObject(req, source: string, dest: string) {
+        const bucket = FileController.getBucketName(req);
+        await (req.app.locals.minio as minio.Client)
+            .putObject(bucket, dest, await (req.app.locals.minio as minio.Client)
+                .getObject(bucket, source));
+    }
+
     private static async isDraftAssignmentFile(assignmentId: string, userId: string | number) {
-        return parseInt(assignmentId, 10) == (await getRepository(User).findOne(userId, { relations: ["assignmentDraft"] })).assignmentDraft.id;
+        return parseInt(assignmentId, 10) == (await getRepository(User).findOne(userId, { relations: ["assignmentDraft"] })).assignmentDraft?.id;
     }
 
     private static isAssignmentFile(req) {

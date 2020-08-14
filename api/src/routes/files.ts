@@ -7,9 +7,9 @@ const router = Router();
 
 router.post("/:bucket/:itemId/", [checkJwt], FileController.handle);
 router.post("/:bucket/:itemId/upload", [checkJwt, multer({ storage: multer.memoryStorage() }).any()], FileController.handleUpload);
-router.post("/:bucket/:itemId/download", [], FileController.handleDownload);
-router.get("/:bucket/:itemId/serve", FileController.handleServe);
-router.post("/:bucket/:itemId/save", FileController.handleSave);
+router.post("/:bucket/:itemId/download", [checkJwt], FileController.handleDownload);
+router.get("/:bucket/:itemId/serve", [checkJwt], FileController.handleServe);
+router.post("/:bucket/:itemId/save", [checkJwt], FileController.handleSave);
 router.get("/:bucket/:itemId/editKey", [checkJwt], FileController.getEditKey);
 router.get("/:bucket/:itemId/:path*", [checkJwt], FileController.getFile);
 router.post("/:bucket/:itemId/new/:path*", [checkJwt], FileController.newFile);

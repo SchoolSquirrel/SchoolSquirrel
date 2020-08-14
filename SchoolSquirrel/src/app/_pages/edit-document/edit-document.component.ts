@@ -29,6 +29,7 @@ export class EditDocumentComponent {
         audio: ["mp3", "wav"],
         pdf: ["pdf"],
     }
+    filePath: string;
 
     constructor(
         private router: Router,
@@ -40,7 +41,7 @@ export class EditDocumentComponent {
     ) {
         this.route.params.subscribe((params) => {
             this.fileUrl = this.getFileUrl(params, "serve");
-            this.setFileType(this.fileUrl);
+            this.setFileType();
             if (this.type !== "document") {
                 this.loading = false;
             } else if (params.action == "view") {
@@ -65,7 +66,7 @@ export class EditDocumentComponent {
         this.onlyofficeConfig = {
             editorConfig: {
                 document: {
-                    fileType: new FileextPipe().transform(this.fileUrl),
+                    fileType: new FileextPipe().transform(this.filePath),
                     /* info: {
                         author: "Me",
                         created: "26.11.19",
@@ -75,7 +76,7 @@ export class EditDocumentComponent {
                         edit: true,
                     }, */
                     key: editKey || "",
-                    title: `${new FilenamePipe().transform(this.fileUrl)}.${new FileextPipe().transform(this.fileUrl)}`,
+                    title: `${new FilenamePipe().transform(this.filePath)}.${new FileextPipe().transform(this.filePath)}`,
                     url: this.fixUrlForContainer(this.fileUrl),
                 },
                 editorConfig: {
@@ -87,7 +88,7 @@ export class EditDocumentComponent {
                     },
                     lang: "de",
                     mode: params.action == "edit" ? "edit" : "view",
-                    callbackUrl: this.fixUrlForContainer(this.getFileUrl(params, "save")),
+                    callbackUrl: `${this.fixUrlForContainer(this.getFileUrl(params, "save"))}`,
                     user: {
                         name: this.authenticationService.currentUser.name,
                         id: this.authenticationService.currentUser.id,
@@ -116,14 +117,15 @@ export class EditDocumentComponent {
         for (let i = 0; i < 5; i++) {
             path.shift();
         }
-        const fileUrl = `${skipApiUrl ? "" : this.remoteService.apiUrl}/files/${params.type}/${params.id}/${type}?path=/${path.join("/")}`;
+        const fileUrl = `${skipApiUrl ? "" : this.remoteService.apiUrl}/files/${params.type}/${params.id}/${type}?path=/${path.join("/")}&authorization=${this.authenticationService.currentUser.jwtToken}`;
+        this.filePath = path.join("/");
         return fileUrl;
     }
 
-    private setFileType(fileUrl: string) {
+    private setFileType() {
         const fileextPipe = new FileextPipe();
         for (const [type, extensions] of Object.entries(this.fileTypes)) {
-            if (extensions.includes(fileextPipe.transform(fileUrl))) {
+            if (extensions.includes(fileextPipe.transform(this.filePath))) {
                 this.type = type;
                 return;
             }
