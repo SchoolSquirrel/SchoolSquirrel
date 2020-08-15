@@ -64,7 +64,8 @@
             "filesToEdit": "Arbeitsblätter",
             "studentView": "Schüleransicht",
             "teacherView": "Lehreransicht",
-            "submissions": "Abgaben"
+            "submissions": "Abgaben",
+            "myFiles": "Meine Dateien"
         },
         "calendar": {
             "categories": {

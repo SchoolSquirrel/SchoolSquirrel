@@ -41,15 +41,22 @@
             </div>
         </div>
         <div class="col col-12 col-md-4">
-            <div class="mb-4">
+            <div>
                 <h5>{{"pages.assignments.filesToView" | translate}}</h5>
                 <app-file-list [files]="assignment.materials" context="assignments" type="materials" [id]="assignment.id"></app-file-list>
             </div>
-            <div>
+            <hr>
+            <div class="my-4">
                 <h5>{{"pages.assignments.filesToEdit" | translate}}</h5>
                 <app-file-list [files]="assignment.worksheets" context="assignments" type="worksheets" [id]="assignment.id"></app-file-list>
-                <!--context="assignments" type="worksheets" [id]="assignment.id"-->
             </div>
+            <ng-container *ngIf="!authenticationService.isTeacher()">
+                <hr>
+                <div>
+                    <h5>{{"pages.assignments.myFiles" | translate}}</h5>
+                    <app-file-list [files]="assignment.submissions" context="assignments" type="submissions" [id]="assignment.id" edit="true"></app-file-list>
+                </div>
+            </ng-container>
         </div>
     </div>
 </ng-template>

@@ -12,7 +12,7 @@ import { AuthenticationService } from "../../_services/authentication.service";
 })
 export class FileListComponent {
     @Input() public edit = false;
-    @Input() public type: "materials" | "worksheets";
+    @Input() public type: "materials" | "worksheets" | "submissions";
     @Input() public id: number;
     @Input() public files: any[] = [];
     @Input() public context: string;
@@ -32,7 +32,7 @@ export class FileListComponent {
         const parts = file.name.split("/");
         parts.shift();
         const data = ["/document", this.type == "materials" && !this.edit ? "view" : "edit", "assignments", this.id, ...parts];
-        if (this.edit) {
+        if (this.edit && this.type !== "submissions") {
             window.open(this.router.serializeUrl(this.router.createUrlTree(data)), "_blank");
         } else {
             this.router.navigate(data);
