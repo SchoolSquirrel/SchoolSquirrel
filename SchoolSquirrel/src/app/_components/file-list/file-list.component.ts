@@ -4,6 +4,7 @@ import {
 import { Router } from "@angular/router";
 import { RemoteService } from "../../_services/remote.service";
 import { AuthenticationService } from "../../_services/authentication.service";
+import { FileextPipe } from "../../_pipes/fileext.pipe";
 
 @Component({
     selector: "app-file-list",
@@ -17,6 +18,7 @@ export class FileListComponent {
     @Input() public files: any[] = [];
     @Input() public context: string;
     @ViewChild("fileInput") private fileInput: ElementRef;
+    public filesWhichCanBeEdited: string[] = ["docx", "xlsx", "pptx"];
 
     constructor(
         private remoteService: RemoteService,
@@ -77,5 +79,9 @@ export class FileListComponent {
                 this.files = e;
             }
         });
+    }
+
+    public canBeEdited(file: { name: string }): boolean {
+        return this.filesWhichCanBeEdited.includes(new FileextPipe().transform(file.name));
     }
 }
