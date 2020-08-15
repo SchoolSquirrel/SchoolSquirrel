@@ -1,8 +1,11 @@
 import { Component } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { RemoteService } from "../../_services/remote.service";
 import { Assignment } from "../../_models/Assignment";
+import { AuthenticationService } from "../../_services/authentication.service";
+
+type Tab = "student" | "teacher" | "submissions";
 
 @Component({
     selector: "app-assignment",
@@ -11,15 +14,28 @@ import { Assignment } from "../../_models/Assignment";
 })
 export class AssignmentComponent {
     public assignment: Assignment;
+    public activeTab: Tab = "student";
     constructor(
+        public authenticationService: AuthenticationService,
         private remoteService: RemoteService,
         private modalService: NgbModal,
+        private router: Router,
         private route: ActivatedRoute,
     ) { }
 
     public ngOnInit(): void {
-        this.remoteService.get(`assignments/${this.route.snapshot.params.id}`).subscribe((data: Assignment) => {
-            this.assignment = data;
+        this.route.params.subscribe((params) => {
+            this.activeTab = params.tab || "student";
+            if (parseInt(params.id, 10) != this.assignment?.id) {
+                this.assignment = undefined;
+                this.remoteService.get(`assignments/${params.id}`).subscribe((data: Assignment) => {
+                    this.assignment = data;
+                });
+            }
         });
+    }
+
+    public tabChanged(tab: Tab): void {
+        this.router.navigate(["/assignments", this.assignment.id, tab]);
     }
 }

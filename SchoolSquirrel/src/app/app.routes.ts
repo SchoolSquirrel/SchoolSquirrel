@@ -33,6 +33,11 @@ export const routes: Routes = [
         canActivate: [AuthenticationGuard],
     },
     {
+        path: "assignments/:id/:tab",
+        component: AssignmentComponent,
+        canActivate: [AuthenticationGuard],
+    },
+    {
         path: "calendar",
         component: CalendarComponent,
         canActivate: [AuthenticationGuard],

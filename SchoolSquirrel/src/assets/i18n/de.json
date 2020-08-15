@@ -61,7 +61,10 @@
             "due": "Abgabe am",
             "view": "Ansehen",
             "filesToView": "Materialien",
-            "filesToEdit": "Arbeitsblätter"
+            "filesToEdit": "Arbeitsblätter",
+            "studentView": "Schüleransicht",
+            "teacherView": "Lehreransicht",
+            "submissions": "Abgaben"
         },
         "calendar": {
             "categories": {
