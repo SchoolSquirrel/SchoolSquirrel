@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { RemoteService } from "../../_services/remote.service";
 import { AuthenticationService } from "../../_services/authentication.service";
 import { FileextPipe } from "../../_pipes/fileext.pipe";
+import { editableFileTypes } from "../../_resources/file-types";
 
 @Component({
     selector: "app-file-list",
@@ -82,6 +83,6 @@ export class FileListComponent {
     }
 
     public canBeEdited(file: { name: string }): boolean {
-        return this.filesWhichCanBeEdited.includes(new FileextPipe().transform(file.name));
+        return editableFileTypes.includes(new FileextPipe().transform(file.name));
     }
 }
