@@ -8,6 +8,6 @@ export function listObjects(client: minio.Client,
         const s = client.listObjects(bucketName, prefix, recursive);
         const data = [];
         s.on("data", (d) => data.push(d));
-        s.on("end", () => resolve(data.filter((f) => !(f.name as string).endsWith(METADATA_SUFFIX))));
+        s.on("end", () => resolve(data.filter((f) => !(f.name as string)?.endsWith(METADATA_SUFFIX))));
     });
 }

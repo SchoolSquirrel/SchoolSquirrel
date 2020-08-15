@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import * as i18n from "i18n";
 import { getRepository } from "typeorm";
-import * as minio from "minio";
 import { Assignment } from "../entity/Assignment";
 import { Course } from "../entity/Course";
 import { sanitizeHtml } from "../utils/html";
@@ -33,14 +32,14 @@ class AssignmentsController {
     public static async getAssignment(req: Request, res: Response): Promise<void> {
         const assignmentRepository = getRepository(Assignment);
         const assignment = await assignmentRepository.findOne(req.params.id);
-        await AssignmentsController.addFilesToAssignment(assignment, req);
+        await AssignmentsController.addFilesToAssignment(assignment, req, res);
         res.send(assignment);
     }
 
     public static async getAssignmentDraft(req: Request, res: Response): Promise<void> {
         const me = await getRepository(User).findOne(res.locals.jwtPayload.userId);
         const assignment = await AssignmentsController.createDraftIfNotExisting(res, me);
-        await AssignmentsController.addFilesToAssignment(assignment, req);
+        await AssignmentsController.addFilesToAssignment(assignment, req, res);
         res.status(200).send(assignment);
     }
 
@@ -146,9 +145,11 @@ class AssignmentsController {
         res.status(200).send({ success: true });
     }
 
-    private static async addFilesToAssignment(assignment: Assignment, req): Promise<void> {
+    private static async addFilesToAssignment(assignment: Assignment,
+        req: Request, res: Response): Promise<void> {
         assignment.worksheets = await listObjects(req.app.locals.minio, Buckets.ASSIGNMENTS, `${assignment.id}/worksheets/`);
         assignment.materials = await listObjects(req.app.locals.minio, Buckets.ASSIGNMENTS, `${assignment.id}/materials/`);
+        assignment.submissions = await listObjects(req.app.locals.minio, Buckets.ASSIGNMENTS, `${assignment.id}/submissions/${res.locals.jwtPayload.userId}/`);
     }
 
     private static async createDraftIfNotExisting(res: Response, me: User): Promise<Assignment> {

@@ -12,6 +12,7 @@ import { listObjects, METADATA_SUFFIX } from "../utils/storage";
 import { Course } from "../entity/Course";
 import { randomString } from "../utils/random";
 import { User } from "../entity/User";
+import { isTeacher } from "../utils/roles";
 
 interface FileItem {/*
     dev: number,
@@ -129,7 +130,8 @@ class FileController {
     public static async handleUpload(req: Request, res: Response): Promise<void> {
         // if (req.body.action === "save") {
         for (const file of req.files as Express.Multer.File[]) {
-            const path = `${req.params.itemId}${req.body.path}${file.originalname}`;
+            let path = `${req.params.itemId}${req.body.path}${file.originalname}`;
+            path = await FileController.fixPathForAssignmentSubmissions(req, res, path);
             await (req.app.locals.minio as minio.Client)
                 .putObject(FileController.getBucketName(req), path, file.buffer);
             await FileController.setFileMetadata(req, FileController.getBucketName(req), path, {
@@ -140,8 +142,10 @@ class FileController {
         if (req.body.action) {
             res.send("Success");
         } else {
+            let folder = `${req.params.itemId}${req.body.path}`;
+            folder = await FileController.fixPathForAssignmentSubmissions(req, res, folder);
             res.send(await listObjects(req.app.locals.minio,
-                FileController.getBucketName(req), `${req.params.itemId}${req.body.path}`));
+                FileController.getBucketName(req), folder));
         }
         // } else {
         //     res.status(500).send("Unknown action");
@@ -158,7 +162,8 @@ class FileController {
     }
 
     public static async newFile(req: Request, res: Response): Promise<void> {
-        const filePath = `${req.params.itemId}/${req.params.path}${req.params["0"]}`;
+        let filePath = `${req.params.itemId}/${req.params.path}${req.params["0"]}`;
+        filePath = await FileController.fixPathForAssignmentSubmissions(req, res, filePath);
         const fileExtension = filePath.split(".").pop();
         let fileData = Buffer.from("");
         const template = join(__dirname, `../../assets/resources/templates/empty.${fileExtension}`);
@@ -172,7 +177,8 @@ class FileController {
                         modified: new Date(),
                         authorId: res.locals.jwtPayload.userId,
                     });
-                const folder = `${req.params.itemId}/${req.params.path}${req.params["0"]}`;
+                let folder = `${req.params.itemId}/${req.params.path}${req.params["0"]}`;
+                folder = await FileController.fixPathForAssignmentSubmissions(req, res, folder);
                 const parts = folder.split("/");
                 parts.pop();
                 res.send(await listObjects(req.app.locals.minio,
@@ -185,6 +191,7 @@ class FileController {
     public static async handleServe(req: Request, res: Response): Promise<void> {
         let path = `/${req.params.itemId}${req.query.path}`;
         path = await FileController.fixPathForAssignmentWorksheets(req, res, path);
+        path = await FileController.fixPathForAssignmentSubmissions(req, res, path);
         try {
             (await (req.app.locals.minio as minio.Client)
                 .getObject(FileController.getBucketName(req), path)).pipe(res);
@@ -199,6 +206,8 @@ class FileController {
             if (req.params.path == "worksheets") {
                 filePath = await FileController
                     .fixPathForAssignmentWorksheets(req, res, filePath, true);
+            } else {
+                filePath = await FileController.fixPathForAssignmentSubmissions(req, res, filePath);
             }
             res.setHeader("Content-disposition", "attachment");
             res.type(req.params[0]);
@@ -216,6 +225,7 @@ class FileController {
             http.get(req.body.url, async (response) => {
                 let path = `${req.params.itemId}${req.query.path}`;
                 path = await FileController.fixPathForAssignmentWorksheets(req, res, path);
+                path = await FileController.fixPathForAssignmentSubmissions(req, res, path);
                 await (req.app.locals.minio as minio.Client)
                     .putObject(FileController.getBucketName(req), path, response);
                 await FileController.generateNewEditKey(req,
@@ -236,6 +246,22 @@ class FileController {
                 res.locals.jwtPayload.userId)
             && (isWorksheet || (req.query.path as string).startsWith("/worksheets/"))) {
             path = FileController.worksheetPathToSubmissionPath(path, res);
+        }
+        return path;
+    }
+
+    private static async fixPathForAssignmentSubmissions(req,
+        res: Response, path: string) {
+        if (FileController.isAssignmentFile(req)
+            && !await FileController.isDraftAssignmentFile(req.params.itemId,
+                res.locals.jwtPayload.userId)
+            && !await isTeacher(res.locals.jwtPayload.userId)
+            && path.indexOf("/submissions/") !== -1) {
+            const parts = path.split("/");
+            // check that no user id comes after /submissions/
+            if (!parseInt(parts[parts.indexOf("submissions") + 1])) {
+                path = path.replace("/submissions/", `/submissions/${res.locals.jwtPayload.userId}/`);
+            }
         }
         return path;
     }
@@ -275,6 +301,8 @@ class FileController {
                     res.status(404).send({ message: "Diese Datei kann nicht bearbeitet werden! Du kannst sie nur ansehen.", redirectToViewMode: true });
                     return;
                 }
+            } else if ((req.query.path as string).startsWith("/submissions/")) {
+                // file is a submission, allow editing
             } else {
                 throw Error(`${req.query.path} neither starts with /worksheets not with /materials`);
             }

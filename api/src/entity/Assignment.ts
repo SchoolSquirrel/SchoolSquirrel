@@ -30,4 +30,5 @@ export class Assignment {
 
   public materials: any[];
   public worksheets: any[];
+  public submissions: any[];
 }
