@@ -195,7 +195,11 @@ class FileController {
 
     public static async getFile(req: Request, res: Response): Promise<void> {
         try {
-            const filePath = `${req.params.itemId}/${req.params.path}${req.params["0"]}`;
+            let filePath = `${req.params.itemId}/${req.params.path}${req.params["0"]}`;
+            if (req.params.path == "worksheets") {
+                filePath = await FileController
+                    .fixPathForAssignmentWorksheets(req, res, filePath, true);
+            }
             res.setHeader("Content-disposition", "attachment");
             res.type(req.params[0]);
             (await (req.app.locals.minio as minio.Client)
@@ -225,11 +229,12 @@ class FileController {
         }
     }
 
-    private static async fixPathForAssignmentWorksheets(req, res: Response, path: string) {
+    private static async fixPathForAssignmentWorksheets(req,
+        res: Response, path: string, isWorksheet = false) {
         if (FileController.isAssignmentFile(req)
             && !await FileController.isDraftAssignmentFile(req.params.itemId,
                 res.locals.jwtPayload.userId)
-            && (req.query.path as string).startsWith("/worksheets/")) {
+            && (isWorksheet || (req.query.path as string).startsWith("/worksheets/"))) {
             path = FileController.worksheetPathToSubmissionPath(path, res);
         }
         return path;
