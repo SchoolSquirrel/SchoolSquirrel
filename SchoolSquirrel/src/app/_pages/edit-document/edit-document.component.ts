@@ -6,6 +6,7 @@ import { AuthenticationService } from "../../_services/authentication.service";
 import { FileextPipe } from "../../_pipes/fileext.pipe";
 import { RemoteService } from "../../_services/remote.service";
 import { FilenamePipe } from "../../_pipes/filename.pipe";
+import { fileTypes } from "../../_resources/file-types";
 
 @Component({
     selector: "app-edit-document",
@@ -17,18 +18,6 @@ export class EditDocumentComponent {
     public fileUrl: string;
     public onlyofficeConfig;
     public loading = true;
-    private documentFileTypes = {
-        text: ["docx", "doc", "txt", "rtf", "odt"],
-        spreadsheet: ["xlsx", "xls", "ods"],
-        presentation: ["pptx", "ppt", "odp"],
-    }
-    private fileTypes = {
-        document: (Object.values(this.documentFileTypes) as any).flat(),
-        image: ["jpg", "jpeg", "png", "tif", "svg", "gif", "bmp"],
-        video: ["mp4", "avi", "mov"],
-        audio: ["mp3", "wav"],
-        pdf: ["pdf"],
-    }
     filePath: string;
 
     constructor(
@@ -124,7 +113,7 @@ export class EditDocumentComponent {
 
     private setFileType() {
         const fileextPipe = new FileextPipe();
-        for (const [type, extensions] of Object.entries(this.fileTypes)) {
+        for (const [type, extensions] of Object.entries(fileTypes)) {
             if (extensions.includes(fileextPipe.transform(this.filePath))) {
                 this.type = type;
                 return;
