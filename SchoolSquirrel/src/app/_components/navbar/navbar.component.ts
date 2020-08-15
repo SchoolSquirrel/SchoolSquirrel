@@ -1,7 +1,7 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { debounceTime, map } from "rxjs/operators";
 import { Observable } from "rxjs";
-import { NgbTypeaheadSelectItemEvent } from "@ng-bootstrap/ng-bootstrap";
+import { NgbTypeaheadSelectItemEvent, NgbDropdown } from "@ng-bootstrap/ng-bootstrap";
 import { Router } from "@angular/router";
 import { NavbarAction } from "../../_services/NavbarAction";
 import { NavbarActionsService } from "../../_services/navbar-actions.service";
@@ -20,6 +20,7 @@ export class NavbarComponent {
     public typeaheadWidth: number;
     public isMaximized = false;
     public isElectron = isElectron();
+    @ViewChild(NgbDropdown) public dropdownElement: NgbDropdown;
 
     constructor(
         public authenticationService: AuthenticationService,
@@ -28,6 +29,14 @@ export class NavbarComponent {
         private electronService: ElectronService,
     ) {
         this.action = this.action.bind(this);
+    }
+
+    public setDropDownOpenState(isOpen: boolean): void {
+        if (isOpen) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            this.dropdownElement._menuElement.nativeElement.parentElement.classList.add("settings-dropdown");
+        }
     }
 
     public openTypeahead(element: HTMLInputElement): void {

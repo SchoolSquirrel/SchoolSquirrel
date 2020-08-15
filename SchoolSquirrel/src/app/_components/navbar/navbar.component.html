@@ -20,7 +20,7 @@
     </ng-template>
 
     <ul class="navbar nav dark p-0 col-md-3 col-lg-2 flex-nowrap m-0 d-flex justify-content-end app-region-drag">
-        <li class="nav-item app-region-no-drag" ngbDropdown>
+        <li class="nav-item app-region-no-drag" ngbDropdown (openChange)="setDropDownOpenState($event)">
             <a class="nav-link" ngbDropdownToggle>
                 <i class="fas fa-cog"></i>
             </a>
