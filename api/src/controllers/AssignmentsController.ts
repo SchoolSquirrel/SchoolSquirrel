@@ -87,10 +87,17 @@ class AssignmentsController {
     }
 
     public static async submitAssignment(req: Request, res: Response): Promise<void> {
+        const user = await getRepository(User).findOne(res.locals.jwtPayload.userId);
+        const assignment = await getRepository(Assignment).findOne(req.params.id);
+        await AssignmentsController.checkIfSubmitted(res, assignment, user);
+        if (assignment.submitted) {
+            res.send({ success: true });
+            return;
+        }
         const assignmentSubmission = new AssignmentSubmission();
         assignmentSubmission.message = req.body.message || "";
-        assignmentSubmission.user = await getRepository(User).findOne(res.locals.jwtPayload.userId);
-        assignmentSubmission.assignment = await getRepository(Assignment).findOne(req.params.id);
+        assignmentSubmission.user = user;
+        assignmentSubmission.assignment = assignment;
         assignmentSubmission.date = new Date();
         try {
             await getRepository(AssignmentSubmission).save(assignmentSubmission);
