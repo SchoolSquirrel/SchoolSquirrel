@@ -38,7 +38,7 @@ class AssignmentsController {
 
     public static async getAssignment(req: Request, res: Response): Promise<void> {
         const assignmentRepository = getRepository(Assignment);
-        const teacher = isTeacher(res.locals.jwtPayload.userId);
+        const teacher = await isTeacher(res.locals.jwtPayload.userId);
         const assignment = await assignmentRepository.findOne(req.params.id,
             teacher ? { relations: ["course", "course.students", "userSubmissions", "userSubmissions.user"] } : {});
         await AssignmentsController.addFilesToAssignment(assignment, req, res);
@@ -218,10 +218,12 @@ class AssignmentsController {
         req: Request, res: Response): Promise<void> {
         assignment.worksheets = await listObjects(req.app.locals.minio, Buckets.ASSIGNMENTS, `${assignment.id}/worksheets/`);
         assignment.materials = await listObjects(req.app.locals.minio, Buckets.ASSIGNMENTS, `${assignment.id}/materials/`);
-        assignment.submissions = await listObjects(req.app.locals.minio, Buckets.ASSIGNMENTS, `${assignment.id}/submissions/${res.locals.jwtPayload.userId}/`);
-        for (const worksheet of assignment.worksheets) {
-            if (assignment.submissions.find((s) => s.name.split(".").pop() == worksheet.name.split(".").pop())) {
-                worksheet.worksheetHasAlreadyBeenEdited = true;
+        if (!await isTeacher(res.locals.jwtPayload.userId)) {
+            assignment.submissions = await listObjects(req.app.locals.minio, Buckets.ASSIGNMENTS, `${assignment.id}/submissions/${res.locals.jwtPayload.userId}/`);
+            for (const worksheet of assignment.worksheets) {
+                if (assignment.submissions.find((s) => s.name.split(".").pop() == worksheet.name.split(".").pop())) {
+                    worksheet.worksheetHasAlreadyBeenEdited = true;
+                }
             }
         }
     }
