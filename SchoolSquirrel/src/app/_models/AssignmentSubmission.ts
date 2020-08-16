@@ -26,5 +26,7 @@
 /* do not edit */ 
 /* do not edit */   
 /* do not edit */   public assignment: Assignment;
+/* do not edit */ 
+/* do not edit */   public files: any[];
 /* do not edit */ }
 /* do not edit */

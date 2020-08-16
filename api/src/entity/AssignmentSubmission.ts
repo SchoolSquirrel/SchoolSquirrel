@@ -23,4 +23,6 @@ export class AssignmentSubmission {
 
   @ManyToOne(() => Assignment, (assignment) => assignment.userSubmissions)
   public assignment: Assignment;
+
+  public files: any[];
 }
