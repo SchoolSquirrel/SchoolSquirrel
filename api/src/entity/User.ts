@@ -18,6 +18,7 @@ import { Chat } from "./Chat";
 import { Message } from "./Message";
 import { Event } from "./Event";
 import { Assignment } from "./Assignment";
+import { AssignmentSubmission } from "./AssignmentSubmission";
 
 @Entity()
 @Unique(["name"])
@@ -62,6 +63,9 @@ export class User {
 
     @OneToMany(() => Event, (event) => event.user)
     public events: Event[];
+
+    @OneToMany(() => AssignmentSubmission, (assignmentSubmission) => assignmentSubmission.user)
+    public submittedAssignments: AssignmentSubmission[];
 
     @OneToOne(() => Assignment, (assignment) => assignment.draftUser)
     @JoinColumn()

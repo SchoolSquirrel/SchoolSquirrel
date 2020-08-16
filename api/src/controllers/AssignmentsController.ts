@@ -8,6 +8,7 @@ import { User } from "../entity/User";
 import { listObjects } from "../utils/storage";
 import { Buckets } from "../entity/Buckets";
 import { isAdmin } from "../utils/roles";
+import { AssignmentSubmission } from "../entity/AssignmentSubmission";
 
 class AssignmentsController {
     public static async listCoursesWithAssignments(req: Request, res: Response): Promise<void> {
@@ -65,6 +66,20 @@ class AssignmentsController {
             return;
         }
         res.status(200).send({ success: true });
+    }
+
+    public static async submitAssignment(req: Request, res: Response): Promise<void> {
+        const assignmentSumission = new AssignmentSubmission();
+        assignmentSumission.message = req.body.message || "";
+        assignmentSumission.user = await getRepository(User).findOne(res.locals.jwtPayload.userId);
+        assignmentSumission.assignment = await getRepository(Assignment).findOne(req.params.id);
+        assignmentSumission.date = new Date();
+        try {
+            await getRepository(AssignmentSubmission).save(assignmentSumission);
+            res.send({ success: true });
+        } catch {
+            res.status(500).send({ message: "Error" });
+        }
     }
 
     public static async newAssignment(req: Request, res: Response): Promise<void> {

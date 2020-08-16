@@ -4,9 +4,11 @@ import {
     PrimaryGeneratedColumn,
     ManyToOne,
     OneToOne,
+    OneToMany,
 } from "typeorm";
 import { Course } from "./Course";
 import { User } from "./User";
+import { AssignmentSubmission } from "./AssignmentSubmission";
 
 @Entity()
 export class Assignment {
@@ -28,7 +30,12 @@ export class Assignment {
   @OneToOne(() => User, (user) => user.assignmentDraft)
   public draftUser: User;
 
-  public materials: any[];
-  public worksheets: any[];
-  public submissions: any[];
+  @OneToMany(() => AssignmentSubmission, (assignmentSubmission) => assignmentSubmission.assignment)
+  public userSubmissions: AssignmentSubmission[];
+
+  public materials?: any[];
+  public worksheets?: any[];
+  public submissions?: any[];
+
+  public submitted?: boolean;
 }

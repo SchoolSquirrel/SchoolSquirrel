@@ -21,6 +21,7 @@ import { Chat } from "./entity/Chat";
 import { Message } from "./entity/Message";
 import { Event } from "./entity/Event";
 import { Buckets } from "./entity/Buckets";
+import { AssignmentSubmission } from "./entity/AssignmentSubmission";
 
 const config = getConfig(JSON.parse(fs.readFileSync(path.join(__dirname, "../../container-env.json")).toString()));
 
@@ -46,6 +47,7 @@ createConnection({
         Grade,
         Course,
         Assignment,
+        AssignmentSubmission,
         Chat,
         Message,
         Event,
