@@ -1,0 +1,27 @@
+site_name: SchoolSquirrel Docs
+nav:
+    - Home:
+        - home.md
+    - Über:
+        - about/index.md
+    - Schüler:
+        - Login: students/login.md
+        - Aufgaben: students/assignments.md
+    - Lehrer:
+        - Login: teachers/login.md
+        - Aufgaben: teachers/assignments.md
+    - Administratoren:
+        - Login: admins/login.md
+        - Aufgaben: admins/assignments.md
+theme:
+    name: material
+    features:
+        - instant
+        - tabs
+repo_url: https://github.com/SchoolSquirrel/SchoolSquirrel
+plugins:
+    - search
+markdown_extensions:
+    - admonition
+    - pymdownx.details
+    - pymdownx.superfences
