@@ -135,6 +135,10 @@ ngb-accordion.tree-view-accordion {
     }
 }
 
+.fix-accordeon-content-width {
+    width: calc(100% - 2rem);
+}
+
 nav.nav-tabs.nav.modern-tabs {
     border-bottom: 1px solid lightgrey;
     .nav-link.nav-item {

@@ -17,6 +17,7 @@ export class AssignmentComponent {
     public activeTab: Tab = "student";
     public showSubmissionMessageField = false;
     public submissionMessage = "";
+    public currentSubmissionIdx: number;
     constructor(
         public authenticationService: AuthenticationService,
         private remoteService: RemoteService,

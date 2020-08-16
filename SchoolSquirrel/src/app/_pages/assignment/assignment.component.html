@@ -20,7 +20,106 @@
         <ng-container ngbNavItem="submissions">
             <a ngbNavLink><i class="far fa-folder-open"></i> {{'pages.assignments.submissions' | translate}}</a>
             <ng-template ngbNavContent>
-                ToDo
+                <div class="h-100">
+                    <div *ngIf="currentSubmissionIdx !== undefined" class="h-100 container-fluid">
+                        <div class="row h-100">
+                            <div class="h-100 col col-12 col-md-8">
+                                <span class="text-muted mt-3">Keine Datei ausgewählt</span>
+                            </div>
+                            <div class="h-100 col col-12 col-md-4 overflow-auto p-0">
+                                <div class="bg-light p-3">
+                                    <app-avatar class="mr-3 float-left" [user]="assignment.userSubmissions[currentSubmissionIdx].user"></app-avatar>
+                                    <div>
+                                        <span>{{assignment.userSubmissions[currentSubmissionIdx].user.name}}</span><br>
+                                        <span class="text-muted">Abgegeben am {{assignment.userSubmissions[currentSubmissionIdx].date | date:"short"}} Uhr</span>
+                                    </div>
+                                </div>
+                                <ngb-accordion ngbAccordion class="tree-view-accordion" [activeIds]="['panel-feedback', 'panel-message', 'panel-files']">
+                                    <ngb-panel title="Feedback" id="panel-feedback">
+                                        <ng-template ngbPanelContent>
+                                            <div class="fix-accordeon-content-width">
+                                                <textarea class="form-control" placeholder="Feedback eingeben"></textarea>
+                                                <button class="btn btn-outline-success float-right mt-3">Zurückgeben</button>
+                                            </div>
+                                        </ng-template>
+                                    </ngb-panel>
+                                    <ngb-panel title="Nachricht" id="panel-message">
+                                        <ng-template ngbPanelContent>
+                                            <div class="card">
+                                                <div class="card-body p-1">
+                                                    {{assignment.userSubmissions[currentSubmissionIdx].message}}
+                                                    <span class="text-muted" *ngIf="!assignment.userSubmissions[currentSubmissionIdx].message.trim()">
+                                                        Keine Nachricht geschrieben.
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </ngb-panel>
+                                    <ngb-panel title="Dateien" id="panel-files">
+                                        <ng-template ngbPanelContent>
+                                            <app-file-list [files]="assignment.userSubmissions[currentSubmissionIdx].files" context="assignments" type="submissions" [id]="assignment.id" [edit]="false"></app-file-list>
+                                        </ng-template>
+                                    </ngb-panel>
+                                </ngb-accordion>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="currentSubmissionIdx === undefined" class="p-3">
+                        <h5>Abgegeben:</h5>
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Benutzer</th>
+                                    <th>Abgegeben am</th>
+                                    <th>Nachricht</th>
+                                    <th>Zurückgegeben</th>
+                                    <th>Feedback</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let submission of assignment.userSubmissions, let idx = index" class="cursor-pointer" (click)="currentSubmissionIdx = idx">
+                                    <td>
+                                        <app-avatar class="mr-3" [user]="submission.user"></app-avatar>
+                                        <span>{{submission.user.name}}</span>
+                                    </td>
+                                    <td>{{submission.date | date:"short"}} Uhr</td>
+                                    <td>
+                                        {{submission.message}}
+                                        <span class="text-muted" *ngIf="!submission.message.trim()">
+                                            Keine Nachricht geschrieben.
+                                        </span>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h5 class="mt-5">Nicht abgegeben:</h5>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Benutzer</th>
+                                    <th>Aktionen</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let user of assignment.submissionsMissing">
+                                    <td>
+                                        <app-avatar class="mr-3" [user]="user"></app-avatar>
+                                        <span>{{user.name}}</span>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-outline-primary">Im Chat kontaktieren</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </ng-template>
         </ng-container>
     </nav>

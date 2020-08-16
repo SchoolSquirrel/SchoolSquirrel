@@ -34,6 +34,8 @@
 /* do not edit */   
 /* do not edit */   public userSubmissions: AssignmentSubmission[];
 /* do not edit */ 
+/* do not edit */   public submissionsMissing?: User[];
+/* do not edit */ 
 /* do not edit */   public materials?: any[];
 /* do not edit */   public worksheets?: any[];
 /* do not edit */   public submissions?: any[];
