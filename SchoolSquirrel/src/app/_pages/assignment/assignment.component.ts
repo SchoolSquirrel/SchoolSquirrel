@@ -15,6 +15,8 @@ type Tab = "student" | "teacher" | "submissions";
 export class AssignmentComponent {
     public assignment: Assignment;
     public activeTab: Tab = "student";
+    public showSubmissionMessageField = false;
+    public submissionMessage = "";
     constructor(
         public authenticationService: AuthenticationService,
         private remoteService: RemoteService,
@@ -37,5 +39,13 @@ export class AssignmentComponent {
 
     public tabChanged(tab: Tab): void {
         this.router.navigate(["/assignments", this.assignment.id, tab]);
+    }
+
+    public submitAssignment(): void {
+        this.remoteService.post(`assignments/${this.assignment.id}/submit`, { message: this.submissionMessage }).subscribe((d) => {
+            if (d.success) {
+                this.assignment.submitted = true;
+            }
+        });
     }
 }

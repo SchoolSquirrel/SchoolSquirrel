@@ -41,6 +41,25 @@
             </div>
         </div>
         <div class="col col-12 col-md-4">
+            <ng-container *ngIf="!authenticationService.isTeacher()">
+                <div>
+                    <div class="alert alert-success" *ngIf="assignment.submitted">
+                        <h5><i class="fas fa-check"></i> Aufgabe abgegeben</h5>
+                        <small class="text-muted mb-2 d-block">Abgegeben am <i>{{assignment.submitted | date}}</i></small>
+                        <button class="btn btn-outline-secondary">Abgabe rückgängig machen</button>
+                    </div>
+                    <div class="alert alert-info" *ngIf="!assignment.submitted">
+                        <h5>Aufgabe abgeben</h5>
+                        <small class="text-muted d-block">Klicke auf den Button, um die Aufgabe abzugeben. Du kannst danach keine Dateien mehr ändern. Wenn Du möchtest, kannst du hier noch eine Nachricht hinzufügen:</small>
+                        <textarea class="form-control mt-2" [(ngModel)]="submissionMessage" *ngIf="showSubmissionMessageField" placeholder="Nachricht eingeben"></textarea>
+                        <div class="d-flex justify-content-between mt-2">
+                            <button class="btn btn-outline-primary mr-1" *ngIf="!showSubmissionMessageField" (click)="showSubmissionMessageField = true"><i class="fas fa-pen"></i> Nachricht hinzufügen</button>
+                            <button class="btn btn-outline-primary ml-auto" (click)="submitAssignment()"><i class="fas fa-paper-plane"></i> Abgeben</button>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </ng-container>
             <div>
                 <h5>{{"pages.assignments.filesToView" | translate}}</h5>
                 <app-file-list [files]="assignment.materials" context="assignments" type="materials" [id]="assignment.id"></app-file-list>
