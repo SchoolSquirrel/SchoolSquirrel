@@ -5,6 +5,7 @@ import { Course } from "../entity/Course";
 import { User } from "../entity/User";
 import { sendMessage } from "../utils/messages";
 import { isAdmin } from "../utils/roles";
+import AssignmentsController from "./AssignmentsController";
 
 class CourseController {
     public static async listAll(req: Request, res: Response): Promise<void> {
@@ -25,6 +26,10 @@ class CourseController {
     public static async getCourse(req: Request, res: Response): Promise<void> {
         const courseRepository = getRepository(Course);
         const course = await courseRepository.findOne(req.params.id, { relations: ["students", "teachers", "messages", "messages.sender", "assignments"] });
+        const user = await getRepository(User).findOne(res.locals.jwtPayload.userId);
+        for (const assignment of course.assignments) {
+            await AssignmentsController.checkIfSubmitted(res, assignment, user);
+        }
         res.send(course);
     }
 

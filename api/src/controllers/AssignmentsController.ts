@@ -13,35 +13,46 @@ import { AssignmentSubmission } from "../entity/AssignmentSubmission";
 class AssignmentsController {
     public static async listCoursesWithAssignments(req: Request, res: Response): Promise<void> {
         const courseRepository = getRepository(Course);
-        let assignments: Course[];
+        let courses: Course[];
         if (await isAdmin(res.locals.jwtPayload.userId)) {
-            assignments = await courseRepository
+            courses = await courseRepository
                 .createQueryBuilder("course")
                 .leftJoinAndSelect("course.assignments", "assignment")
                 .getMany();
         } else {
-            assignments = await courseRepository
+            courses = await courseRepository
                 .createQueryBuilder("course")
                 .leftJoinAndSelect("course.assignments", "assignment")
                 .leftJoin("course.students", "user")
                 .where("user.id = :id", { id: res.locals.jwtPayload.userId })
                 .getMany();
         }
-        res.send(assignments);
+        const user = await getRepository(User).findOne(res.locals.jwtPayload.userId);
+        for (const course of courses) {
+            for (const assignment of course.assignments) {
+                await AssignmentsController.checkIfSubmitted(res, assignment, user);
+            }
+        }
+        res.send(courses);
     }
 
     public static async getAssignment(req: Request, res: Response): Promise<void> {
         const assignmentRepository = getRepository(Assignment);
         const assignment = await assignmentRepository.findOne(req.params.id);
         await AssignmentsController.addFilesToAssignment(assignment, req, res);
+        await AssignmentsController.checkIfSubmitted(res, assignment);
+        res.send(assignment);
+    }
+
+    public static async checkIfSubmitted(res: Response,
+        assignment: Assignment, user?: User): Promise<void> {
         const assignmentSubmission = await getRepository(AssignmentSubmission).findOne({
             where: {
-                user: await getRepository(User).findOne(res.locals.jwtPayload.userId),
+                user: user || await getRepository(User).findOne(res.locals.jwtPayload.userId),
                 assignment,
             },
         });
         assignment.submitted = assignmentSubmission?.date || undefined;
-        res.send(assignment);
     }
 
     public static async getAssignmentDraft(req: Request, res: Response): Promise<void> {
