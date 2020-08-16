@@ -73,7 +73,7 @@
                 <hr>
                 <div>
                     <h5>{{"pages.assignments.myFiles" | translate}}</h5>
-                    <app-file-list [files]="assignment.submissions" context="assignments" type="submissions" [id]="assignment.id" edit="true"></app-file-list>
+                    <app-file-list [files]="assignment.submissions" context="assignments" type="submissions" [id]="assignment.id" [edit]="!assignment.submitted" [viewOnlyMode]="!!assignment.submitted"></app-file-list>
                 </div>
             </ng-container>
         </div>
