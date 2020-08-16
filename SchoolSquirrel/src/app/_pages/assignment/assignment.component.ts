@@ -18,6 +18,7 @@ export class AssignmentComponent {
     public showSubmissionMessageField = false;
     public submissionMessage = "";
     public currentSubmissionIdx: number;
+    public selectedFileUrl: string;
     constructor(
         public authenticationService: AuthenticationService,
         private remoteService: RemoteService,
@@ -36,6 +37,15 @@ export class AssignmentComponent {
                 });
             }
         });
+    }
+
+    public removePrefix(url: string): string {
+        if (!url) {
+            url = "";
+        }
+        const parts = url.split("/");
+        parts.shift();
+        return parts.join("/");
     }
 
     public tabChanged(tab: Tab): void {

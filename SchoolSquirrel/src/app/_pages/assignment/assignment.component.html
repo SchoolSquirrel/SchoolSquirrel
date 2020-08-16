@@ -24,7 +24,8 @@
                     <div *ngIf="currentSubmissionIdx !== undefined" class="h-100 container-fluid">
                         <div class="row h-100">
                             <div class="h-100 col col-12 col-md-8">
-                                <span class="text-muted mt-3">Keine Datei ausgewählt</span>
+                                <span class="text-muted mt-3" *ngIf="!selectedFileUrl">Keine Datei ausgewählt</span>
+                                <app-edit-document *ngIf="selectedFileUrl" [config]="{action: 'edit', type: 'assignments', id: assignment.id, path: removePrefix(selectedFileUrl)}"></app-edit-document>
                             </div>
                             <div class="h-100 col col-12 col-md-4 overflow-auto p-0">
                                 <div class="bg-light p-3">
@@ -57,7 +58,7 @@
                                     </ngb-panel>
                                     <ngb-panel title="Dateien" id="panel-files">
                                         <ng-template ngbPanelContent>
-                                            <app-file-list [files]="assignment.userSubmissions[currentSubmissionIdx].files" context="assignments" type="submissions" [id]="assignment.id" [edit]="false"></app-file-list>
+                                            <app-file-list (fileSelected)="selectedFileUrl = $event.name" [files]="assignment.userSubmissions[currentSubmissionIdx].files" [selectMode]="true" context="assignments" type="submissions" [id]="assignment.id" [edit]="false"></app-file-list>
                                         </ng-template>
                                     </ngb-panel>
                                 </ngb-accordion>
