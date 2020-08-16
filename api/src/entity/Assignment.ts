@@ -37,5 +37,5 @@ export class Assignment {
   public worksheets?: any[];
   public submissions?: any[];
 
-  public submitted?: boolean;
+  public submitted?: Date;
 }

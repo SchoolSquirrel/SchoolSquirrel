@@ -44,7 +44,7 @@ export class AssignmentComponent {
     public submitAssignment(): void {
         this.remoteService.post(`assignments/${this.assignment.id}/submit`, { message: this.submissionMessage }).subscribe((d) => {
             if (d.success) {
-                this.assignment.submitted = true;
+                this.assignment.submitted = new Date();
             }
         });
     }

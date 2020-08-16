@@ -38,6 +38,6 @@
 /* do not edit */   public worksheets?: any[];
 /* do not edit */   public submissions?: any[];
 /* do not edit */ 
-/* do not edit */   public submitted?: boolean;
+/* do not edit */   public submitted?: Date;
 /* do not edit */ }
 /* do not edit */
