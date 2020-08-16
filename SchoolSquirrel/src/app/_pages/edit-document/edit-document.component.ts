@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DeviceDetectorService } from "ngx-device-detector";
 import { ToastService } from "../../_services/toast.service";
@@ -7,6 +7,13 @@ import { FileextPipe } from "../../_pipes/fileext.pipe";
 import { RemoteService } from "../../_services/remote.service";
 import { FilenamePipe } from "../../_pipes/filename.pipe";
 import { fileTypes } from "../../_resources/file-types";
+
+type Config = {
+    action: "view" | "edit",
+    type: string,
+    path: string,
+    id: string,
+};
 
 @Component({
     selector: "app-edit-document",
@@ -18,7 +25,21 @@ export class EditDocumentComponent {
     public fileUrl: string;
     public onlyofficeConfig;
     public loading = true;
-    filePath: string;
+    public filePath: string;
+    private _config;
+    @Input()
+    public set config(config: Config) {
+        this._config = config;
+        this.init({
+            type: config.type,
+            id: config.id,
+            action: config.action,
+            overwritePath: config.path,
+        });
+    }
+    public get config(): Config {
+        return this._config;
+    }
 
     constructor(
         private router: Router,
@@ -27,28 +48,36 @@ export class EditDocumentComponent {
         private deviceService: DeviceDetectorService,
         private authenticationService: AuthenticationService,
         private toastService: ToastService,
-    ) {
-        this.route.params.subscribe((params) => {
-            this.fileUrl = this.getFileUrl(params, "serve");
-            this.setFileType();
-            if (this.type !== "document") {
-                this.loading = false;
-            } else if (params.action == "view") {
-                this.loading = false;
-                this.setOnlyOfficeConfig(params);
-            } else {
-                this.remoteService.get(this.getFileUrl(params, "editKey", true)).subscribe((d) => {
-                    if (d?.editKey) {
-                        this.loading = false;
-                        this.setOnlyOfficeConfig(params, d.editKey);
-                    }
-                }, (e) => {
-                    if (e?.redirectToViewMode) {
-                        this.router.navigateByUrl(this.router.url.replace("/edit/", "/view/"));
-                    }
-                });
-            }
-        });
+    ) {}
+
+    public ngOnInit(): void {
+        if (!this._config) {
+            this.route.params.subscribe((params) => {
+                this.init(params);
+            });
+        }
+    }
+
+    private init(params) {
+        this.fileUrl = this.getFileUrl(params, "serve");
+        this.setFileType();
+        if (this.type !== "document") {
+            this.loading = false;
+        } else if (params.action == "view") {
+            this.loading = false;
+            this.setOnlyOfficeConfig(params);
+        } else {
+            this.remoteService.get(this.getFileUrl(params, "editKey", true)).subscribe((d) => {
+                if (d?.editKey) {
+                    this.loading = false;
+                    this.setOnlyOfficeConfig(params, d.editKey);
+                }
+            }, (e) => {
+                if (e?.redirectToViewMode) {
+                    this.router.navigateByUrl(this.router.url.replace("/edit/", "/view/"));
+                }
+            });
+        }
     }
 
     private setOnlyOfficeConfig(params, editKey?: string) {
@@ -97,17 +126,21 @@ export class EditDocumentComponent {
     }
 
     private getFileUrl(params, type: "serve" | "save" | "editKey", skipApiUrl = false) {
-        let { url } = this.router;
-        // Firefox does weird stuff on page refresh: the encoded chars are encoded again...
-        do {
-            url = decodeURI(url);
-        } while (url.indexOf("%") !== -1);
-        const path = url.split("/");
-        for (let i = 0; i < 5; i++) {
-            path.shift();
+        if (params.overwritePath) {
+            this.filePath = params.overwritePath;
+        } else {
+            let { url } = this.router;
+            // Firefox does weird stuff on page refresh: the encoded chars are encoded again...
+            do {
+                url = decodeURI(url);
+            } while (url.indexOf("%") !== -1);
+            const path = url.split("/");
+            for (let i = 0; i < 5; i++) {
+                path.shift();
+            }
+            this.filePath = path.join("/");
         }
-        const fileUrl = `${skipApiUrl ? "" : this.remoteService.apiUrl}/files/${params.type}/${params.id}/${type}?path=/${path.join("/")}&authorization=${this.authenticationService.currentUser.jwtToken}`;
-        this.filePath = path.join("/");
+        const fileUrl = `${skipApiUrl ? "" : this.remoteService.apiUrl}/files/${params.type}/${params.id}/${type}?path=/${this.filePath}&authorization=${this.authenticationService.currentUser.jwtToken}`;
         return fileUrl;
     }
 
