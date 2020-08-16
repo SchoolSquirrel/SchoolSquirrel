@@ -42,6 +42,18 @@ export class AssignmentComponent {
     }
 
     public submitAssignment(): void {
+        if (this.assignment.worksheets.filter((w) => !w.worksheetHasAlreadyBeenEdited).length) {
+            // eslint-disable-next-line
+            if (!confirm("Du hast nicht alle Arbeitsblätter bearbeitet. Willst du die Aufgabe wirklich abgeben?")) {
+                return;
+            }
+        }
+        if (!this.assignment.submissions?.length && !this.submissionMessage.trim()) {
+            // eslint-disable-next-line
+            if (!confirm("Du hast keine Dateien angehängt und keine Nachricht geschrieben. Möchtest du diese Aufgabe also ohne weitere Infos abgeben? Wenn nicht, klicke jetzt auf 'Abbrechen'.")) {
+                return;
+            }
+        }
         this.remoteService.post(`assignments/${this.assignment.id}/submit`, { message: this.submissionMessage }).subscribe((d) => {
             if (d.success) {
                 this.assignment.submitted = new Date();
