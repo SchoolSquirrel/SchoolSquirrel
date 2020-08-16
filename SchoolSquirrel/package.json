@@ -76,7 +76,7 @@
         "ng-utf8-emojis-to-images": "^1.1.0",
         "ngx-device-detector": "^1.4.6",
         "ngx-extended-pdf-viewer": "^4.1.0",
-        "ngx-onlyoffice": "0.0.6",
+        "ngx-onlyoffice": "0.0.7",
         "reflect-metadata": "~0.1.13",
         "rxjs": "~6.5.5",
         "sanitize-html": "^1.27.0",
