@@ -33,6 +33,8 @@ export class Assignment {
   @OneToMany(() => AssignmentSubmission, (assignmentSubmission) => assignmentSubmission.assignment)
   public userSubmissions: AssignmentSubmission[];
 
+  public submissionsMissing?: User[];
+
   public materials?: any[];
   public worksheets?: any[];
   public submissions?: any[];

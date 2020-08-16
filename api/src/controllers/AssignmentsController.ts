@@ -7,7 +7,7 @@ import { sanitizeHtml } from "../utils/html";
 import { User } from "../entity/User";
 import { listObjects } from "../utils/storage";
 import { Buckets } from "../entity/Buckets";
-import { isAdmin } from "../utils/roles";
+import { isAdmin, isTeacher } from "../utils/roles";
 import { AssignmentSubmission } from "../entity/AssignmentSubmission";
 
 class AssignmentsController {
@@ -38,9 +38,19 @@ class AssignmentsController {
 
     public static async getAssignment(req: Request, res: Response): Promise<void> {
         const assignmentRepository = getRepository(Assignment);
-        const assignment = await assignmentRepository.findOne(req.params.id);
+        const teacher = isTeacher(res.locals.jwtPayload.userId);
+        const assignment = await assignmentRepository.findOne(req.params.id,
+            teacher ? { relations: ["course", "course.students", "userSubmissions", "userSubmissions.user"] } : {});
         await AssignmentsController.addFilesToAssignment(assignment, req, res);
         await AssignmentsController.checkIfSubmitted(res, assignment);
+        if (teacher) {
+            assignment.submissionsMissing = [];
+            for (const user of assignment.course.students) {
+                if (!assignment.userSubmissions.find((s) => s.user.id == user.id)) {
+                    assignment.submissionsMissing.push(user);
+                }
+            }
+        }
         res.send(assignment);
     }
 
