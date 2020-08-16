@@ -1,6 +1,6 @@
 <span class="text-muted d-block" *ngIf="!files || files.length == 0">{{"components.file-list.noFiles" | translate}}</span>
 
-<div *ngFor="let file of files" class="card p-3 mb-1">
+<div *ngFor="let file of files" class="card p-3 mb-1" [class.cursor-pointer]="selectMode" [class.selectable]="selectMode" (click)="fileSelected.emit(file)">
     <div class="media">
 
         <app-file-icon [ext]="file.name | fileext" size="sm" class="mr-3"></app-file-icon>
@@ -13,10 +13,10 @@
     <small class="text-muted button-bar-autohide" *ngIf="file.worksheetHasAlreadyBeenEdited">
         Du hast dieses Arbeitsblatt bereits geöffnet und verändert. Um diese <b>bereits bearbeitete Version</b> zu öffnen, wähle die Datei unter <i>Meine Dateien</i>. Wenn du das <b>Original-Arbeitsblatt</b> öffnen willst, wähle diese Datei.
     </small>
-    <div class="mt-3 button-bar-autohide" *ngIf="!file.worksheetHasAlreadyBeenEdited">
+    <div class="mt-3 button-bar-autohide" *ngIf="!file.worksheetHasAlreadyBeenEdited && !selectMode">
         <button class="btn btn-outline-primary mr-2" (click)="viewOrEdit(file)"><i class="fas" [class.fa-eye]="!canBeEdited(file) || (type == 'materials' && !edit)" [class.fa-pen]="canBeEdited(file) && (type != 'materials' || edit) "></i> {{(type == "materials" && !edit) || !canBeEdited(file) ? "Ansehen" : "Bearbeiten"}}</button>
         <button class="btn btn-outline-primary mr-2" (click)="download(file)"><i class="fas fa-download"></i> Herunterladen</button>
-        <button class="btn btn-outline-primary"><i class="fas fa-share"></i> Teilen</button>
+        <!--<button class="btn btn-outline-primary"><i class="fas fa-share"></i> Teilen</button>-->
         <button class="btn btn-outline-danger ml-2" *ngIf="edit" (click)="delete(file)"><i class="fas fa-trash"></i> Löschen</button>
     </div>
 </div>

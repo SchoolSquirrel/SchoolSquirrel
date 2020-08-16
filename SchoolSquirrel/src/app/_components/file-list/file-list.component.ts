@@ -1,5 +1,5 @@
 import {
-    Component, Input, ViewChild, ElementRef,
+    Component, Input, ViewChild, ElementRef, Output, EventEmitter,
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { RemoteService } from "../../_services/remote.service";
@@ -15,10 +15,12 @@ import { editableFileTypes } from "../../_resources/file-types";
 export class FileListComponent {
     @Input() public edit = false;
     @Input() public viewOnlyMode = false;
+    @Input() public selectMode = false;
     @Input() public type: "materials" | "worksheets" | "submissions";
     @Input() public id: number;
     @Input() public files: any[] = [];
     @Input() public context: string;
+    @Output() public fileSelected: EventEmitter<any> = new EventEmitter<any>();
     @ViewChild("fileInput") private fileInput: ElementRef;
     public filesWhichCanBeEdited: string[] = ["docx", "xlsx", "pptx"];
 
