@@ -14,6 +14,7 @@ import { editableFileTypes } from "../../_resources/file-types";
 })
 export class FileListComponent {
     @Input() public edit = false;
+    @Input() public viewOnlyMode = false;
     @Input() public type: "materials" | "worksheets" | "submissions";
     @Input() public id: number;
     @Input() public files: any[] = [];
@@ -34,7 +35,7 @@ export class FileListComponent {
     public viewOrEdit(file: { name: string }): void {
         const parts = file.name.split("/");
         parts.shift();
-        const data = ["/document", this.type == "materials" && !this.edit ? "view" : "edit", "assignments", this.id, ...parts];
+        const data = ["/document", this.viewOnlyMode || (this.type == "materials" && !this.edit) ? "view" : "edit", "assignments", this.id, ...parts];
         if (this.edit && this.type !== "submissions") {
             window.open(this.router.serializeUrl(this.router.createUrlTree(data)), "_blank");
         } else {
@@ -83,6 +84,7 @@ export class FileListComponent {
     }
 
     public canBeEdited(file: { name: string }): boolean {
-        return editableFileTypes.includes(new FileextPipe().transform(file.name));
+        return !this.viewOnlyMode
+            && editableFileTypes.includes(new FileextPipe().transform(file.name));
     }
 }
