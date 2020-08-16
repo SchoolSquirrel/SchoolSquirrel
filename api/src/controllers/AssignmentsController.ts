@@ -34,6 +34,13 @@ class AssignmentsController {
         const assignmentRepository = getRepository(Assignment);
         const assignment = await assignmentRepository.findOne(req.params.id);
         await AssignmentsController.addFilesToAssignment(assignment, req, res);
+        const assignmentSubmission = await getRepository(AssignmentSubmission).findOne({
+            where: {
+                user: await getRepository(User).findOne(res.locals.jwtPayload.userId),
+                assignment,
+            },
+        });
+        assignment.submitted = assignmentSubmission?.date || undefined;
         res.send(assignment);
     }
 
@@ -69,13 +76,13 @@ class AssignmentsController {
     }
 
     public static async submitAssignment(req: Request, res: Response): Promise<void> {
-        const assignmentSumission = new AssignmentSubmission();
-        assignmentSumission.message = req.body.message || "";
-        assignmentSumission.user = await getRepository(User).findOne(res.locals.jwtPayload.userId);
-        assignmentSumission.assignment = await getRepository(Assignment).findOne(req.params.id);
-        assignmentSumission.date = new Date();
+        const assignmentSubmission = new AssignmentSubmission();
+        assignmentSubmission.message = req.body.message || "";
+        assignmentSubmission.user = await getRepository(User).findOne(res.locals.jwtPayload.userId);
+        assignmentSubmission.assignment = await getRepository(Assignment).findOne(req.params.id);
+        assignmentSubmission.date = new Date();
         try {
-            await getRepository(AssignmentSubmission).save(assignmentSumission);
+            await getRepository(AssignmentSubmission).save(assignmentSubmission);
             res.send({ success: true });
         } catch {
             res.status(500).send({ message: "Error" });
