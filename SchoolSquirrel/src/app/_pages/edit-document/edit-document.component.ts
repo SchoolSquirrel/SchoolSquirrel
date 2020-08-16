@@ -122,7 +122,7 @@ export class EditDocumentComponent {
     }
 
     private fixUrlForContainer(url) {
-        return url.replace(this.remoteService.apiUrl, "http://docker.for.win.localhost:3000/api/");
+        return url.replace(this.remoteService.apiUrl, "http://host.docker.internal:3000/api/");
     }
 
     private getFileUrl(params, type: "serve" | "save" | "editKey", skipApiUrl = false) {
