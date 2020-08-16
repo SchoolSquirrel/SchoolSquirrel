@@ -28,19 +28,19 @@
     <div [ngbNavOutlet]="nav" class="flex-grow-1 overflow-auto"></div>
 </div>
 
-<div *ngIf="assignment && !authenticationService.isTeacher()">
+<div *ngIf="assignment && !authenticationService.isTeacher()" class="h-100">
     <ng-container *ngTemplateOutlet="assignmentTemplate"></ng-container>
 </div>
 
 <ng-template #assignmentTemplate>
-    <div class="row pt-2">
-        <div class="col col-12 col-md-8">
+    <div class="row pt-2 h-100">
+        <div class="h-100 col col-12 col-md-8 overflow-auto">
             <div class="card p-4">
                 <h1>{{assignment.title}}</h1>
                 <div [innerHTML]="assignment.content | safeUserHtml"></div>
             </div>
         </div>
-        <div class="col col-12 col-md-4">
+        <div class="h-100 col col-12 col-md-4 overflow-auto">
             <ng-container *ngIf="!authenticationService.isTeacher()">
                 <div>
                     <div class="alert alert-success" *ngIf="assignment.submitted">
