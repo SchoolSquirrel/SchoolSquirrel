@@ -60,4 +60,16 @@ export class AssignmentComponent {
             }
         });
     }
+
+    public unsubmitAssignment(): void {
+        // eslint-disable-next-line
+        if (!confirm("Bist du sicher, dass Du die Abgabe rückgänig machen willst? Wenn du eine Nachricht geschrieben hast, wird diese dadurch verloren gehen.")) {
+            return;
+        }
+        this.remoteService.post(`assignments/${this.assignment.id}/unsubmit`, {}).subscribe((d) => {
+            if (d.success) {
+                this.assignment.submitted = undefined;
+            }
+        });
+    }
 }
