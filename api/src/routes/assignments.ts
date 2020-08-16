@@ -10,6 +10,7 @@ router.get("/draft", [checkJwt, checkForTeacher], AssignmentsController.getAssig
 router.post("/draft", [checkJwt, checkForTeacher], AssignmentsController.saveAssignmentDraft);
 router.get("/:id", [checkJwt], AssignmentsController.getAssignment);
 router.post("/:id/submit", [checkJwt], AssignmentsController.submitAssignment);
+router.post("/:id/unsubmit", [checkJwt], AssignmentsController.unsubmitAssignment);
 router.post("/", [checkJwt], AssignmentsController.newAssignment);
 // router.post("/:id", [checkJwt], AssignmentsController.editAssignment);
 router.delete("/:id", [checkJwt], AssignmentsController.deleteAssignment);

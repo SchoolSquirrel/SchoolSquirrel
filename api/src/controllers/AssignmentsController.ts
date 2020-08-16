@@ -107,6 +107,22 @@ class AssignmentsController {
         }
     }
 
+    public static async unsubmitAssignment(req: Request, res: Response): Promise<void> {
+        const user = await getRepository(User).findOne(res.locals.jwtPayload.userId);
+        const assignment = await getRepository(Assignment).findOne(req.params.id);
+        await AssignmentsController.checkIfSubmitted(res, assignment, user);
+        if (!assignment.submitted) {
+            res.send({ success: true });
+            return;
+        }
+        try {
+            await getRepository(AssignmentSubmission).delete({ assignment, user });
+            res.send({ success: true });
+        } catch {
+            res.status(500).send({ message: "Error" });
+        }
+    }
+
     public static async newAssignment(req: Request, res: Response): Promise<void> {
         const {
             title, content, course, due,
