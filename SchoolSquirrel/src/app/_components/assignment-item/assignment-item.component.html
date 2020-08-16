@@ -1,6 +1,6 @@
-<div class="card p-2 my-1">
+<div class="card p-2 my-1" [class.alert-success]="assignment.submitted">
     <div class="d-flex justify-content-between">
-        <h6><b>{{assignment.title}}</b></h6>
+        <h6><i class="fas fa-check mr-2" *ngIf="assignment.submitted"></i><b>{{assignment.title}}</b><span class="ml-2" *ngIf="assignment.submitted">(Abgegeben am {{assignment.submitted | date:"short"}} Uhr)</span></h6>
         <span class="text-muted float-right">{{'pages.assignments.due' | translate}} {{assignment.due | date}}, {{assignment.due | date:'shortTime'}} Uhr</span>
     </div>
 
