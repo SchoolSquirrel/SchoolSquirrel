@@ -150,6 +150,11 @@ class AssignmentsController {
         assignment.worksheets = await listObjects(req.app.locals.minio, Buckets.ASSIGNMENTS, `${assignment.id}/worksheets/`);
         assignment.materials = await listObjects(req.app.locals.minio, Buckets.ASSIGNMENTS, `${assignment.id}/materials/`);
         assignment.submissions = await listObjects(req.app.locals.minio, Buckets.ASSIGNMENTS, `${assignment.id}/submissions/${res.locals.jwtPayload.userId}/`);
+        for (const worksheet of assignment.worksheets) {
+            if (assignment.submissions.find((s) => s.name.split(".").pop() == worksheet.name.split(".").pop())) {
+                worksheet.worksheetHasAlreadyBeenEdited = true;
+            }
+        }
     }
 
     private static async createDraftIfNotExisting(res: Response, me: User): Promise<Assignment> {
