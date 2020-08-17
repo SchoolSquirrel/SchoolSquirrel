@@ -43,8 +43,18 @@ extra:
 ### Theme Configuration ###
 theme:
     name: material
+    language: de
     features:
         - tabs
+    palette:
+        scheme: default
+        primary: blue
+        accent: orange
+    font:
+        text: Roboto
+        code: Roboto Mono
+    favicon: assets/logo/favicon.ico
+    logo: assets/logo/favicon.ico
 
 
 ### Plugin Configuration ###
