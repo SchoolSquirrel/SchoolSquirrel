@@ -6,6 +6,7 @@ class ConfigController {
             // eslint-disable-next-line
             version: require("../../package.json").version,
             apiUrl: "/api",
+            onlyofficeUrl: res.app.locals.config.ONLYOFFICE_URL,
         }));
     }
 }
