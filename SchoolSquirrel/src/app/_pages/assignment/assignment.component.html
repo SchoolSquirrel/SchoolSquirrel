@@ -28,7 +28,7 @@
                                 <app-edit-document *ngIf="selectedFileUrl" [config]="{action: 'edit', type: 'assignments', id: assignment.id, path: removePrefix(selectedFileUrl)}"></app-edit-document>
                             </div>
                             <div class="h-100 col col-12 col-md-4 overflow-auto p-0">
-                                <div class="bg-light p-3">
+                                <div [class]="'p-3 ' + (assignment.userSubmissions[currentSubmissionIdx].returned ? 'alert-success' : 'bg-light')">
                                     <div class="d-flex justify-content-between">
                                         <div>
                                             <app-avatar class="mr-3 float-left" [user]="assignment.userSubmissions[currentSubmissionIdx].user"></app-avatar>
