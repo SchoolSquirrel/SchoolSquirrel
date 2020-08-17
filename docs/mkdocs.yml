@@ -1,11 +1,19 @@
-### Project information ###
+### Project Information ###
 site_name: SchoolSquirrel Docs
 site_url: https://schoolsquirrel.github.io
 site_author: Hannes Rüger
 site_description: >-
-  SchoolSquirrel - Die Platform für digitalen Unterricht.
-  Mit Chat, Aufgaben, Video-Konferenzen und mehr!
+    SchoolSquirrel - Die Platform für digitalen Unterricht.
+    Mit Chat, Aufgaben, Video-Konferenzen und mehr!
+copyright: Copyright &copy; 2019 - 2020 Hannes Rüger
 
+
+### Repository ###
+repo_name: SchoolSquirrel
+repo_url: https://github.com/SchoolSquirrel/SchoolSquirrel
+edit_uri: edit/master/docs/docs
+
+### Navigation ###
 nav:
     - Home:
         - index.md
@@ -20,13 +28,17 @@ nav:
     - Administratoren:
         - Login: admins/login.md
         - Aufgaben: admins/assignments.md
+
+
+### Theme Configuration ###
 theme:
     name: material
     features:
         - instant
         - tabs
-repo_url: https://github.com/SchoolSquirrel/SchoolSquirrel
-edit_uri: edit/master/docs/docs
+
+
+### Plugin Configuration ###
 plugins:
     - search
 markdown_extensions:
