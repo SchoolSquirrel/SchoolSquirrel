@@ -19,6 +19,7 @@ theme:
         - instant
         - tabs
 repo_url: https://github.com/SchoolSquirrel/SchoolSquirrel
+edit_uri: edit/master/docs/docs
 plugins:
     - search
 markdown_extensions:
