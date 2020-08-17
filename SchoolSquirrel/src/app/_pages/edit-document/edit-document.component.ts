@@ -1,12 +1,12 @@
 import { Component, Input } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DeviceDetectorService } from "ngx-device-detector";
-import { ToastService } from "../../_services/toast.service";
 import { AuthenticationService } from "../../_services/authentication.service";
 import { FileextPipe } from "../../_pipes/fileext.pipe";
 import { RemoteService } from "../../_services/remote.service";
 import { FilenamePipe } from "../../_pipes/filename.pipe";
 import { fileTypes } from "../../_resources/file-types";
+import { ConfigService } from "../../_services/config.service";
 
 type Config = {
     action: "view" | "edit",
@@ -47,7 +47,7 @@ export class EditDocumentComponent {
         private remoteService: RemoteService,
         private deviceService: DeviceDetectorService,
         private authenticationService: AuthenticationService,
-        private toastService: ToastService,
+        private configService: ConfigService,
     ) {}
 
     public ngOnInit(): void {
@@ -117,7 +117,7 @@ export class EditDocumentComponent {
                 height: "100%",
                 width: "100%",
             },
-            script: "http://localhost:8080/web-apps/apps/api/documents/api.js",
+            script: `${this.configService.config.onlyofficeUrl}/web-apps/apps/api/documents/api.js`,
         };
     }
 
