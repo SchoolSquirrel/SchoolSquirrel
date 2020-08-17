@@ -18,7 +18,7 @@ export class Assignment {
   @Column()
   public title: string;
 
-  @Column({ length: 10000 })
+  @Column({ type: "text" })
   public content: string;
 
   @Column()
@@ -40,4 +40,7 @@ export class Assignment {
   public submissions?: any[];
 
   public submitted?: Date;
+
+  public returned?: Date;
+  public feedback?: string;
 }

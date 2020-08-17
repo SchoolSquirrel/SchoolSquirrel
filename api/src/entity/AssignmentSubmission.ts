@@ -12,11 +12,17 @@ export class AssignmentSubmission {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column({ length: 10000 })
+  @Column({ type: "text" })
   public message: string;
 
   @Column()
   public date: Date;
+
+  @Column({ nullable: true })
+  public returned: Date;
+
+  @Column({ type: "text" })
+  public feedback: string;
 
   @ManyToOne(() => User, (user) => user.submittedAssignments)
   public user: User;

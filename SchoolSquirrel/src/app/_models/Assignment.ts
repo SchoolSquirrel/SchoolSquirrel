@@ -41,5 +41,8 @@
 /* do not edit */   public submissions?: any[];
 /* do not edit */ 
 /* do not edit */   public submitted?: Date;
+/* do not edit */ 
+/* do not edit */   public returned?: Date;
+/* do not edit */   public feedback?: string;
 /* do not edit */ }
 /* do not edit */

@@ -22,6 +22,12 @@
 /* do not edit */   public date: Date;
 /* do not edit */ 
 /* do not edit */   
+/* do not edit */   public returned: Date;
+/* do not edit */ 
+/* do not edit */   
+/* do not edit */   public feedback: string;
+/* do not edit */ 
+/* do not edit */   
 /* do not edit */   public user: User;
 /* do not edit */ 
 /* do not edit */   

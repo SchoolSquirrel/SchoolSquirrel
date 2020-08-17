@@ -67,6 +67,8 @@ class AssignmentsController {
             },
         });
         assignment.submitted = assignmentSubmission?.date || undefined;
+        assignment.returned = assignmentSubmission?.returned || undefined;
+        assignment.feedback = assignmentSubmission?.feedback || "";
     }
 
     public static async getAssignmentDraft(req: Request, res: Response): Promise<void> {
@@ -134,6 +136,23 @@ class AssignmentsController {
             res.send({ success: true });
         } catch {
             res.status(500).send({ message: "Error" });
+        }
+    }
+
+    public static async returnAssignment(req: Request, res: Response): Promise<void> {
+        const user = await getRepository(User).findOne(req.params.userId);
+        const assignment = await getRepository(Assignment).findOne(req.params.id);
+        const assignmentSubmissionRepository = getRepository(AssignmentSubmission);
+        try {
+            const assignmentSubmission = await assignmentSubmissionRepository.findOne({
+                assignment, user,
+            });
+            assignmentSubmission.feedback = req.body.feedback || "";
+            assignmentSubmission.returned = new Date();
+            await assignmentSubmissionRepository.save(assignmentSubmission);
+            res.send({ success: true });
+        } catch {
+            res.status(404).send({ message: "Not found" });
         }
     }
 
