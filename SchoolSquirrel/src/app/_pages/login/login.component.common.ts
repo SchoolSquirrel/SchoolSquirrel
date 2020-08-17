@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { RemoteService } from "../../_services/remote.service";
 import { NoErrorToastHttpParams } from "../../_helpers/noErrorToastHttpParams";
 import { AuthenticationService } from "../../_services/authentication.service";
+import { ConfigService } from "../../_services/config.service";
 import { ToastService } from "../../_services/toast.service";
 import { StorageService } from "../../_services/storage.service";
 import { isElectron } from "../../_helpers/isElectron";
@@ -23,6 +24,7 @@ export class LoginComponentCommon {
         private router: Router,
         private storageService: StorageService,
         private route: ActivatedRoute,
+        private configService: ConfigService,
     ) {
         this.loginForm = new FormGroup({
             domain: new FormControl("", [Validators.required, Validators.pattern(/((?:[0-9]{1,3}\.){3}[0-9]{1,3})|((http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*))|http(s)?:\/\/localhost/)]),
@@ -67,6 +69,7 @@ export class LoginComponentCommon {
         this.httpClient.get(`${this.loginForm.controls.domain.value}/config.json`, { params: new NoErrorToastHttpParams(true) }).subscribe((data: any) => {
             this.loading = false;
             if (data && data.apiUrl) {
+                this.configService.setConfig(data);
                 const apiUrl = `${this.loginForm.controls.domain.value}${data.apiUrl}`;
                 this.storageService.set("apiUrl", apiUrl);
                 this.remoteService.setApiUrl(apiUrl);

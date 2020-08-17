@@ -7,6 +7,7 @@ import { ToastService } from "../../_services/toast.service";
 import { RemoteService } from "../../_services/remote.service";
 import { AuthenticationService } from "../../_services/authentication.service";
 import { StorageService } from "../../_services/storage.service";
+import { ConfigService } from "../../_services/config.service";
 
 @Component({
     selector: "app-login",
@@ -22,9 +23,10 @@ export class LoginComponent extends LoginComponentCommon {
         router: Router,
         storageService: StorageService,
         route: ActivatedRoute,
+        configService: ConfigService,
         private page: Page,
     ) {
         super(httpClient, toastService, remoteService,
-            authenticationService, router, storageService, route);
+            authenticationService, router, storageService, route, configService);
     }
 }
