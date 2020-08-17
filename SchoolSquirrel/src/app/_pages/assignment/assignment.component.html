@@ -84,6 +84,7 @@
                     </div>
 
                     <div *ngIf="currentSubmissionIdx === undefined" class="p-3">
+                        <app-assignment-statusbar [assignment]="assignment"></app-assignment-statusbar>
                         <h5>Abgegeben:</h5>
                         <table class="table table-striped table-hover">
                             <thead>

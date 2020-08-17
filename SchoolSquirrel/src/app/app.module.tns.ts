@@ -43,6 +43,7 @@ import { EditDocumentComponent } from "./_pages/edit-document/edit-document.comp
 import { AvatarComponent } from "./_components/avatar/avatar.component";
 import { CourseConfigComponent } from "./_dialogs/course-config/course-config.component";
 import { UserChipComponent } from "./_components/user-chip/user-chip.component";
+import { AssignmentStatusbarComponent } from "./_components/assignment-statusbar/assignment-statusbar.component";
 
 registerLocaleData(localeDe, localeDeExtra);
 
@@ -98,6 +99,7 @@ export function nativescriptTranslateLoaderFactory(): NativeScriptLoader {
         AvatarComponent,
         CourseConfigComponent,
         UserChipComponent,
+        AssignmentStatusbarComponent,
     ],
     imports: [
         ReactiveFormsModule,

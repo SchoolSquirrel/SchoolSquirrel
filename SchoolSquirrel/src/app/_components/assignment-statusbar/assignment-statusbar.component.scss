@@ -1,0 +1,14 @@
+.progress {
+    transition: height .5s ease;
+    line-height: 75%;
+    .appear {
+        display: none;
+    }
+    &:hover {
+        height: 3rem;
+        transition: height .5s ease;
+        .appear {
+            display: block;
+        }
+    }
+}
