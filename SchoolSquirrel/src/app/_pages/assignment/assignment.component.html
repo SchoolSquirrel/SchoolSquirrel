@@ -134,7 +134,7 @@
                                         <span>{{user.name}}</span>
                                     </td>
                                     <td>
-                                        <button class="btn btn-outline-primary">Im Chat kontaktieren</button>
+                                        <a class="btn btn-outline-primary" [routerLink]="['/chat/user', user.id]">Im Chat kontaktieren</a>
                                     </td>
                                 </tr>
                             </tbody>
