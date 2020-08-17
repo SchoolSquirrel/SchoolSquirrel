@@ -38,9 +38,16 @@
                                 <ngb-accordion ngbAccordion class="tree-view-accordion" [activeIds]="['panel-feedback', 'panel-message', 'panel-files']">
                                     <ngb-panel title="Feedback" id="panel-feedback">
                                         <ng-template ngbPanelContent>
-                                            <div class="fix-accordeon-content-width">
-                                                <textarea class="form-control" placeholder="Feedback eingeben"></textarea>
-                                                <button class="btn btn-outline-success float-right mt-3">Zurückgeben</button>
+                                            <div class="fix-accordeon-content-width" *ngIf="!assignment.userSubmissions[currentSubmissionIdx].returned">
+                                                <textarea class="form-control" placeholder="Feedback eingeben" [(ngModel)]="feedback"></textarea>
+                                                <button class="btn btn-outline-success float-right mt-3 mb-1" (click)="returnAssignment()">Zurückgeben</button>
+                                            </div>
+                                            <div class="fix-accordeon-content-width" *ngIf="assignment.userSubmissions[currentSubmissionIdx].returned">
+                                                <span class="d-block">{{assignment.userSubmissions[currentSubmissionIdx].feedback}}</span>
+                                                <span class="d-block text-muted" *ngIf="!assignment.userSubmissions[currentSubmissionIdx].feedback.trim()">
+                                                    Kein Feedback geschrieben.
+                                                </span>
+                                                <span class="d-block mt-2 text-muted">Zurückgegeben am {{assignment.userSubmissions[currentSubmissionIdx].returned | date:"short"}}</span>
                                             </div>
                                         </ng-template>
                                     </ngb-panel>

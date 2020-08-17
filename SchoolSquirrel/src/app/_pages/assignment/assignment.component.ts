@@ -19,6 +19,8 @@ export class AssignmentComponent {
     public submissionMessage = "";
     public currentSubmissionIdx: number;
     public selectedFileUrl: string;
+    public feedback = "";
+
     constructor(
         public authenticationService: AuthenticationService,
         private remoteService: RemoteService,
@@ -80,6 +82,20 @@ export class AssignmentComponent {
         this.remoteService.post(`assignments/${this.assignment.id}/unsubmit`, {}).subscribe((d) => {
             if (d.success) {
                 this.assignment.submitted = undefined;
+            }
+        });
+    }
+
+    public returnAssignment(): void {
+        // eslint-disable-next-line
+        if (!this.feedback.trim() && !confirm("Bist du sicher, dass Du die Aufgabe ohne Feedback zurückgeben willst?")) {
+            return;
+        }
+        this.remoteService.post(`assignments/${this.assignment.id}/return/${this.assignment.userSubmissions[this.currentSubmissionIdx].user.id}`, { feedback: this.feedback }).subscribe((d) => {
+            if (d.success) {
+                this.assignment.userSubmissions[this.currentSubmissionIdx].returned = new Date();
+                this.assignment.userSubmissions[this.currentSubmissionIdx]
+                    .feedback = this.feedback.trim();
             }
         });
     }
