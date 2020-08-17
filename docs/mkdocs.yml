@@ -1,7 +1,7 @@
 site_name: SchoolSquirrel Docs
 nav:
     - Home:
-        - home.md
+        - index.md
     - Über:
         - about/index.md
     - Schüler:
