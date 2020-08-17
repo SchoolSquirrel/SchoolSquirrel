@@ -50,8 +50,9 @@ class AssignmentsController {
                     assignment.submissionsMissing.push(user);
                 }
             }
+            const allSubmissions = await listObjects(req.app.locals.minio, Buckets.ASSIGNMENTS, `${assignment.id}/submissions/`, true);
             for (const submission of assignment.userSubmissions) {
-                submission.files = await listObjects(req.app.locals.minio, Buckets.ASSIGNMENTS, `${assignment.id}/submissions/${submission.user.id}/`);
+                submission.files = allSubmissions.filter((s) => s.name?.startsWith(`${assignment.id}/submissions/${submission.user.id}/`));
             }
         }
         res.send(assignment);
