@@ -13,6 +13,7 @@ repo_name: SchoolSquirrel
 repo_url: https://github.com/SchoolSquirrel/SchoolSquirrel
 edit_uri: edit/master/docs/docs
 
+
 ### Navigation ###
 nav:
     - Home:
@@ -30,11 +31,19 @@ nav:
         - Aufgaben: admins/assignments.md
 
 
+### Extra Configuration ###
+extra:
+    social:
+      - icon: fontawesome/brands/github
+        link: https://github.com/SchoolSquirrel
+      - icon: fontawesome/brands/docker
+        link: https://hub.docker.com/r/schoolsquirrel/schoolsquirrel
+
+
 ### Theme Configuration ###
 theme:
     name: material
     features:
-        - instant
         - tabs
 
 
