@@ -22,10 +22,7 @@ jobs:
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@3.5.9
       with:
-        ACCESS_TOKEN: ${{ secrets.BOT_ACCESS_TOKEN }}
-        BRANCH: master
+        BRANCH: gh-pages
         FOLDER: docs/site
-        TARGET_FOLDER: docs
-        REPOSITORY_NAME: SchoolSquirrel/schoolsquirrel.github.io
         GIT_CONFIG_NAME: schoolsquirrel-bot
         GIT_CONFIG_EMAIL: team.schoolsquirrel@gmail.com
