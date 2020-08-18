@@ -27,3 +27,5 @@ jobs:
         FOLDER: docs/site
         TARGET_FOLDER: docs
         REPOSITORY_NAME: SchoolSquirrel/schoolsquirrel.github.io
+        GIT_CONFIG_NAME: schoolsquirrel-bot
+        GIT_CONFIG_EMAIL: team.schoolsquirrel@gmail.com
