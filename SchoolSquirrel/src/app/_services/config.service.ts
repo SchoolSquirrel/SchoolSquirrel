@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { StorageService } from "./storage.service";
 
 type Config = Record<string, unknown>;
 
@@ -7,14 +8,14 @@ type Config = Record<string, unknown>;
 })
 export class ConfigService {
     private _config: Config = {};
-    constructor() {
-        this._config = JSON.parse(localStorage.getItem("config") || "{}");
+    constructor(private storageService: StorageService) {
+        this._config = this.storageService.get("config");
     }
     public get config(): Config {
         return this._config;
     }
     public setConfig(config: Config): void {
         this._config = config;
-        localStorage.setItem("config", JSON.stringify(this._config));
+        this.storageService.set("config", this._config);
     }
 }

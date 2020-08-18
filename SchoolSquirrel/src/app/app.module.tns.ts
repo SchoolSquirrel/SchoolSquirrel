@@ -76,11 +76,11 @@ export function nativescriptTranslateLoaderFactory(): NativeScriptLoader {
         AppComponent,
         HomeComponent,
         LoginComponent,
+        AssignmentsComponent,
+        AssignmentComponent,
         ToastComponent,
         SidebarComponent,
         NavbarComponent,
-        AssignmentsComponent,
-        AssignmentComponent,
         CalendarComponent,
         UsersComponent,
         SettingsComponent,
@@ -99,7 +99,8 @@ export function nativescriptTranslateLoaderFactory(): NativeScriptLoader {
         AvatarComponent,
         CourseConfigComponent,
         UserChipComponent,
-        AssignmentStatusbarComponent,
+        /*
+        AssignmentStatusbarComponent,*/
     ],
     imports: [
         ReactiveFormsModule,
