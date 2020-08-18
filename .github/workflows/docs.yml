@@ -22,8 +22,8 @@ jobs:
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
-        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        ACCESS_TOKEN: ${{ secrets.BOT_ACCESS_TOKEN }}
         BRANCH: master
         FOLDER: docs/site
         TARGET_FOLDER: docs
-        REPOSITORY_NAME: SchoolSquirrel/SchoolSquirrel
+        REPOSITORY_NAME: SchoolSquirrel/schoolsquirrel.github.io
