@@ -20,12 +20,8 @@ jobs:
       working-directory: docs
       run: mkdocs build
     - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@3.5.9
+      uses: ad-m/github-push-action@master
       with:
-        ACCESS_TOKEN: ${{ secrets.BOT_ACCESS_TOKEN }}
-        BRANCH: master
-        FOLDER: docs/site
-        TARGET_FOLDER: docs
-        REPOSITORY_NAME: SchoolSquirrel/schoolsquirrel.github.io
-        GIT_CONFIG_NAME: schoolsquirrel-bot
-        GIT_CONFIG_EMAIL: team.schoolsquirrel@gmail.com
+        github_token: ${{ secrets.BOT_ACCESS_TOKEN }}
+        directory: docs/site
+        repository: SchoolSquirrel/schoolsquirrel.github.io
