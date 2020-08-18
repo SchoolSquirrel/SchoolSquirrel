@@ -1,10 +1,9 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component } from "@angular/core";
 import { User } from "../../../_models/User";
 import { RemoteService } from "../../../_services/remote.service";
 import { ToastService } from "../../../_services/toast.service";
 import { FastTranslateService } from "../../../_services/fast-translate.service";
 import { Grade } from "../../../_models/Grade";
-import { getDropdownFilterParams, getDropdownEditParams } from "../../../_helpers/gridFilterUI";
 
 @Component({
     selector: "app-users",

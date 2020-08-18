@@ -99,8 +99,7 @@ export function nativescriptTranslateLoaderFactory(): NativeScriptLoader {
         AvatarComponent,
         CourseConfigComponent,
         UserChipComponent,
-        /*
-        AssignmentStatusbarComponent,*/
+        AssignmentStatusbarComponent,
     ],
     imports: [
         ReactiveFormsModule,

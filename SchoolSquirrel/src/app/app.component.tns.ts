@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
-import { Router, NavigationEnd } from "@angular/router";
-import { isElectron } from "./_helpers/isElectron";
+import { Router } from "@angular/router";
 import { PushService } from "./_services/push.service";
 import { NavbarUsersService } from "./_services/navbar-users.service";
 import { AuthenticationService } from "./_services/authentication.service";
