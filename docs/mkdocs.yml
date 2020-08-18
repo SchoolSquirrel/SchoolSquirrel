@@ -68,7 +68,6 @@ markdown_extensions:
     - pymdownx.snippets:
         check_paths: true
     - markdown.extensions.meta
-    
     - markdown.extensions.admonition
     - markdown.extensions.attr_list
     - markdown.extensions.def_list

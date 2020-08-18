@@ -43,29 +43,16 @@
 
 <!-- Announcement bar -->
 {% block announce %}
-<a href="https://github.com/SchoolSquirrel">
-    Some important text
-  </a> {% endblock %}
+<div class="tx-center">Version 1.0.0 wird bald verfügbar sein!</div>
+{% endblock %}
 
 <!-- Content -->
 {% block content %} {{ super() }}
 
 <!-- Content footer -->
-<footer class="tx-content__footer md-typeset">
-    <a href="{{ 'insiders/' | url }}" title="Material for MkDocs Insiders">
-        <hr />
-        <span class="twemoji">
-        {% include ".icons/logo.svg" %}
-      </span>
-        <span class="twemoji">
-        {% include ".icons/material/plus.svg" %}
-      </span>
-        <span class="twemoji tx-heart">
-        {% include ".icons/octicons/heart-fill-24.svg" %}
-      </span>
-        <hr />
-    </a>
-</footer>
+<!--<footer class="tx-content__footer md-typeset">
+    
+</footer>-->
 {% endblock %}
 
 <!-- Analytics -->
