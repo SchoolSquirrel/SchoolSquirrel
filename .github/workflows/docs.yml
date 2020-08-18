@@ -20,9 +20,9 @@ jobs:
       working-directory: docs
       run: mkdocs build
     - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@releases/v3
+      uses: JamesIves/github-pages-deploy-action@3.5.9
       with:
-        GITHUB_TOKEN: ${{ secrets.BOT_ACCESS_TOKEN }}
+        ACCESS_TOKEN: ${{ secrets.BOT_ACCESS_TOKEN }}
         BRANCH: master
         FOLDER: docs/site
         TARGET_FOLDER: docs
