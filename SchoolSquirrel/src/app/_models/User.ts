@@ -15,6 +15,7 @@
 /* do not edit */ import { Event } from "./Event";
 /* do not edit */ import { Assignment } from "./Assignment";
 /* do not edit */ import { AssignmentSubmission } from "./AssignmentSubmission";
+/* do not edit */ import { Device } from "./Device";
 /* do not edit */ 
 /* do not edit */ 
 /* do not edit */ 
@@ -62,6 +63,9 @@
 /* do not edit */ 
 /* do not edit */     
 /* do not edit */     public submittedAssignments: AssignmentSubmission[];
+/* do not edit */ 
+/* do not edit */     
+/* do not edit */     public devices: Device[];
 /* do not edit */ 
 /* do not edit */     
 /* do not edit */     

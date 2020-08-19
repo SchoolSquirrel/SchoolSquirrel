@@ -22,6 +22,7 @@ import { Message } from "./entity/Message";
 import { Event } from "./entity/Event";
 import { Buckets } from "./entity/Buckets";
 import { AssignmentSubmission } from "./entity/AssignmentSubmission";
+import { Device } from "./entity/Device";
 
 const config = getConfig(JSON.parse(fs.readFileSync(path.join(__dirname, "../../container-env.json")).toString()));
 
@@ -51,6 +52,7 @@ createConnection({
         Chat,
         Message,
         Event,
+        Device,
     ],
     host: config.DB_HOST,
     logging: false,

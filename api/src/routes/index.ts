@@ -7,6 +7,7 @@ import events from "./events";
 import chats from "./chats";
 import assignments from "./assignments";
 import files from "./files";
+import devices from "./devices";
 
 const routes = Router();
 
@@ -17,6 +18,7 @@ routes.use("/users", users);
 routes.use("/courses", courses);
 routes.use("/events", events);
 routes.use("/chats", chats);
+routes.use("/devices", devices);
 routes.use("/files", files);
 
 export default routes;
