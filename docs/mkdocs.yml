@@ -20,6 +20,10 @@ nav:
         - index.md
     - Über:
         - about/index.md
+        - about/about.md
+        - about/features.md
+        - about/vs.md
+        - about/help.md
     - Schüler:
         - Login: students/login.md
         - Aufgaben: students/assignments.md
