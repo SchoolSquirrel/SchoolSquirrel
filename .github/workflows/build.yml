@@ -74,6 +74,11 @@ jobs:
     - name: Install frontend dependencies
       working-directory: SchoolSquirrel
       run: npm i
+    - run: 'base64 --decode "$GOOGLE_SERVICES_JSON" > App_Resources/Android/google_services.json'
+      shell: bash
+      working-directory: SchoolSquirrel
+      env:
+        GOOGLE_SERVICES_JSON: ${{secrets.GOOGLE_SERVICES_JSON}}
     - name: Build
       working-directory: SchoolSquirrel
       run: npm run android:prod
