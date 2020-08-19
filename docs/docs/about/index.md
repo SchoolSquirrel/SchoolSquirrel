@@ -6,5 +6,7 @@ Schön, dass Du SchoolSquirrel verwendest. Hier haben wir dir einige Links zusam
 
 [Funktionen](features.md){: .md-button }
 
+[Vergleich mit anderen Plattformen](vs.md){: .md-button }
+
 !!! info "Information"
     Aus Gründen der Lesbarkeit wurde im Text die männliche Form gewählt, nichtsdestoweniger beziehen sich die Angaben auf Angehörige beider Geschlechter.
