@@ -1,1 +1,1 @@
-# Login
+--8<-- "docs/_snippets/login.md"

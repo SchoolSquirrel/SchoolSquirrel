@@ -1,5 +1,1 @@
-# Login
-Testcontent
-
-!!! warning "Wichtig!"
-    Gib dein Passwort niemals an andere Personen weiter!
+--8<-- "docs/_snippets/login.md"
