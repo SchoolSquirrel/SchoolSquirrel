@@ -54,8 +54,8 @@ theme:
     font:
         text: Roboto
         code: Roboto Mono
-    favicon: assets/logo/favicon.ico
-    logo: assets/logo/favicon.ico
+    favicon: _assets/logo/favicon.ico
+    logo: _assets/logo/favicon.ico
 
 
 ### Plugin Configuration ###
