@@ -63,16 +63,4 @@ export class ChatComponent extends ChatComponentCommon implements OnInit {
                 .status = MessageStatus.Sent;
         });
     }
-
-    public getChatImageUrl(currentChat: Chat, usePNG = false): string {
-        return this.remoteService.getImageUrl(this.isGroupChat(currentChat) ? "" : `users/${this.getOtherUserInPrivateChat(currentChat).id}.${usePNG ? "png" : "svg"}`, this.authenticationService);
-    }
-
-    public getOtherUserInPrivateChat(chat: Chat): User {
-        return chat.users.filter((u) => u.id != this.authenticationService.currentUser.id)[0];
-    }
-
-    public isGroupChat(chat: Chat): boolean {
-        return chat.users.length > 2;
-    }
 }
