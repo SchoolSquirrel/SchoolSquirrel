@@ -70,6 +70,7 @@
         "electron-splashscreen": "^1.0.0",
         "nativescript-emoji-picker": "^0.2.7",
         "nativescript-feedback": "^1.4.0",
+        "nativescript-local-notifications": "^4.2.1",
         "nativescript-plugin-firebase": "^10.5.2",
         "nativescript-ui-calendar": "^5.0.0",
         "nativescript-ui-listview": "^8.2.0",
