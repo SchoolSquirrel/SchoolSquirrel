@@ -12,6 +12,7 @@ const KEY = "push-notifications-allowed";
 export class PushService {
     // undefined for not asked, false for disallowed, true for allowed
     private hasPermission: boolean;
+    private token: string;
     constructor(
         private storageService: StorageService,
         private authenticationService: AuthenticationService,
@@ -33,6 +34,7 @@ export class PushService {
     }
 
     private gotToken(token) {
+        this.token = token;
         if (this.hasPermission === true) {
             this.remoteService.post("devices", {
                 token,
@@ -47,6 +49,9 @@ export class PushService {
         if (this.hasPermission === undefined) {
             this.hasPermission = await confirm("Möchtest du Push Nachrichten erhalten?");
             this.storageService.set(KEY, this.hasPermission);
+            if (this.hasPermission && this.token) {
+                this.gotToken(this.token);
+            }
         }
     }
 }
