@@ -6,6 +6,28 @@
     }
 }
 
+.bg-gradient {
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1123 258'><path d='M1124,2c0,0 0,256 0,256l-1125,0l0,-48c0,0 16,5 55,5c116,0 197,-92 325,-92c121,0 114,46 254,46c140,0 214,-167 572,-166Z' style='fill: hsla(0, 0%, 100%, 1)' /></svg>") no-repeat bottom, linear-gradient(to bottom, hsla(207, 90%, 54%, 1), #a63fd9 99%, hsla(0, 0%, 100%, 1) 99%);
+}
+
+.height-fix {
+    min-height: 100vh;
+}
+
+footer {
+    background-color: rgba(0, 0, 0, 0.87);
+    .darker {
+        background-color: rgba(0, 0, 0, 0.32);
+    }
+    .copyright,
+    .text-grey {
+        color: rgb(168, 168, 168);
+    }
+    .copyright2 {
+        color: rgb(117, 117, 117);
+    }
+}
+
 .desktop {
     .nav {
         position: absolute;

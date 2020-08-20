@@ -1,32 +1,3 @@
-<form class="form-signin col-12 col-sm-8 col-md-6 col-lg-4 col-xl-3 mx-auto mt-5" [formGroup]="loginForm" (ngSubmit)="onSubmit()" *ngIf="!tryingToAutoLogin">
-
-    <h3 class="text-center mb-5">SchoolSquirrel</h3>
-    <div class="form-label-group" [class.d-none]="autoDetectDomain">
-        <input type="url" id="inputDomain" class="form-control" [placeholder]="'pages.login.domain' | translate" formControlName="domain" required autofocus [class.is-invalid]="submitted && loginForm.controls.domain.invalid" [class.is-valid]="loginForm.controls.domain.valid">
-        <label for="inputDomain">{{"pages.login.domain" | translate}}</label>
-        <div class="invalid-feedback">{{"errors.required" | translate}}</div>
-    </div>
-
-    <div class="form-label-group">
-        <input type="text" id="inputName" class="form-control" [placeholder]="'general.name' | translate" formControlName="name" required [class.is-invalid]="submitted && loginForm.controls.name.invalid" [class.is-valid]="loginForm.controls.name.valid">
-        <label for="inputName">{{"general.name" | translate}}</label>
-        <div class="invalid-feedback">{{"errors.required" | translate}}</div>
-    </div>
-
-    <div class="form-label-group">
-        <input type="password" id="inputPassword" class="form-control" formControlName="password" [placeholder]="'general.password' | translate" required [class.is-invalid]="submitted && loginForm.controls.password.invalid" [class.is-valid]="loginForm.controls.password.valid">
-        <label for="inputPassword">{{"general.password" | translate}}</label>
-        <div class="invalid-feedback">{{"errors.required" | translate}}</div>
-    </div>
-
-    <div class="custom-control custom-checkbox mb-4">
-        <input type="checkbox" class="custom-control-input" id="rememberMe" formControlName="rememberMe">
-        <label class="custom-control-label" for="rememberMe">{{"pages.login.rememberMe" | translate}}</label>
-    </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="loading">{{"pages.login.login" | translate}} <span *ngIf="loading"
-            class="spinner-border spinner-border-sm mb-1"></span></button>
-</form>
-
 <div class="d-flex justify-content-center autoLoginSpinner" *ngIf="tryingToAutoLogin">
     <div class="spinner-border text-primary"></div>
 </div>
@@ -54,4 +25,79 @@
             </li>
         </ul>
     </div>
+</div>
+
+<div class="d-flex flex-column h-100">
+    <section class="row bg-gradient py-5" *ngIf="!tryingToAutoLogin">
+        <div class="col-12 col-md-6 my-5">
+            <div class="row">
+                <form class="form-signin text-white p-4 col-sm-12 col-md-10 col-lg-8 col-xl-6 mx-auto mb-5" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+                    <h1 class="text-center mb-5">Anmelden</h1>
+                    <div class="form-label-group" [class.d-none]="autoDetectDomain">
+                        <input type="url" id="inputDomain" class="form-control" [placeholder]="'pages.login.domain' | translate" formControlName="domain" required autofocus [class.is-invalid]="submitted && loginForm.controls.domain.invalid" [class.is-valid]="loginForm.controls.domain.valid">
+                        <label for="inputDomain">{{"pages.login.domain" | translate}}</label>
+                        <div class="invalid-feedback">{{"errors.required" | translate}}</div>
+                    </div>
+
+                    <div class="form-label-group">
+                        <input type="text" id="inputName" class="form-control" [placeholder]="'general.name' | translate" formControlName="name" required [class.is-invalid]="submitted && loginForm.controls.name.invalid" [class.is-valid]="loginForm.controls.name.valid">
+                        <label for="inputName">{{"general.name" | translate}}</label>
+                        <div class="invalid-feedback">{{"errors.required" | translate}}</div>
+                    </div>
+
+                    <div class="form-label-group">
+                        <input type="password" id="inputPassword" class="form-control" formControlName="password" [placeholder]="'general.password' | translate" required [class.is-invalid]="submitted && loginForm.controls.password.invalid" [class.is-valid]="loginForm.controls.password.valid">
+                        <label for="inputPassword">{{"general.password" | translate}}</label>
+                        <div class="invalid-feedback">{{"errors.required" | translate}}</div>
+                    </div>
+
+                    <div class="bg-white p-2 text-dark mb-4 form-control">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="rememberMe" formControlName="rememberMe">
+                            <label class="custom-control-label" for="rememberMe">{{"pages.login.rememberMe" | translate}}</label>
+                        </div>
+                    </div>
+                    <button class="btn btn-lg btn-outline-light btn-block" type="submit" [disabled]="loading">{{"pages.login.login" | translate}} <span *ngIf="loading"
+                            class="spinner-border spinner-border-sm mb-1"></span></button>
+                </form>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="row">
+                <div class="col-md-12 col-lg-10 mx-auto">
+                    <img src="assets/teaching.svg" alt="" draggable="false" width="1659" height="1200" class="img-fluid mt-5">
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="flex-grow-1"></div>
+    <div class="row" *ngIf="!isElectron">
+        <footer class="bg-dark text-white container-fluid">
+            <div class="row p-3">
+                <div class="col">
+                    <span class="text-grey">SchoolSquirrel herunterladen: <a class="text-grey ml-4" href="https://github.com/SchoolSquirrel/releases/latest"><i class="fas fa-desktop"></i> Desktop</a> <a class="text-grey ml-4" href="https://github.com/SchoolSquirrel/releases/latest"><i class="fas fa-mobile-alt"></i> Smartphone</a></span>
+                </div>
+                <div class="col text-right">
+                    <a class="text-grey" href="https://schoolsquirrel.github.io/SchoolSquirrel/about/">Hilfe</a>
+                </div>
+            </div>
+
+            <div class="row darker p-3">
+                <div class="col">
+                    <div class="copyright">
+                        © Copyright Hannes Rüger, 2019 - 2020
+                    </div>
+                    <div class="copyright2">
+                        Made with <i class="fas fa-heart text-danger"></i>, Angular and unDraw.co
+                    </div>
+                </div>
+                <div class="col text-right text-white">
+                    <a href="https://github.com/SchoolSquirrel" target="_blank" rel="noopener" title="github.com"><i class="fab fa-github text-white fa-2x m-3"></i></a>
+                    <a href="https://hub.docker.com/r/schoolsquirrel/schoolsquirrel" target="_blank" rel="noopener" title="hub.docker.com"><i class="fab fa-docker text-white fa-2x m-3"></i></a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
 </div>
