@@ -1,5 +1,9 @@
 main {
-    height: calc(100vh - 48px);
     overflow-y: auto;
     overflow-x: hidden;
+    height: 100vh;
+}
+
+.navbar-height-fix {
+    height: calc(100vh - 48px);
 }
