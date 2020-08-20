@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import * as firebase from "nativescript-plugin-firebase";
-import { Device } from "@nativescript/core";
+import { Device, Color } from "@nativescript/core";
+import { LocalNotifications } from "nativescript-local-notifications";
 import { StorageService } from "./storage.service";
 import { AuthenticationService } from "./authentication.service";
 import { RemoteService } from "./remote.service";
@@ -23,8 +24,22 @@ export class PushService {
             onMessageReceivedCallback: (message: firebase.Message) => {
                 // eslint-disable-next-line no-console
                 console.log(message);
-                // eslint-disable-next-line no-alert
-                alert("message received!");
+                if (!message.data.silent) {
+                    const n = {
+                        title: message.title,
+                        body: message.body,
+                        subtitle: message.data.subtitle,
+                        color: message.data.color ? new Color(message.data.color) : undefined,
+                        image: message.data.image ? this.remoteService.getImageUrl(
+                            message.data.image, this.authenticationService,
+                        ) : undefined,
+                        thumbnail: message.data.thumbnail ? this.remoteService.getImageUrl(
+                            message.data.thumbnail, this.authenticationService,
+                        ) : undefined,
+                        channel: message.data.channel,
+                    };
+                    LocalNotifications.schedule([n]);
+                }
             },
             onPushTokenReceivedCallback: (token) => this.gotToken(token),
         });
@@ -52,6 +67,9 @@ export class PushService {
             if (this.hasPermission && this.token) {
                 this.gotToken(this.token);
             }
+        }
+        if (this.hasPermission && !await LocalNotifications.hasPermission()) {
+            LocalNotifications.requestPermission();
         }
     }
 }
