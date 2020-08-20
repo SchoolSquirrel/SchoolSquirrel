@@ -1,10 +1,11 @@
 import { Injectable } from "@angular/core";
 import * as firebase from "nativescript-plugin-firebase";
 import { Device, Color } from "@nativescript/core";
-import { LocalNotifications } from "nativescript-local-notifications";
+import { LocalNotifications, ScheduleOptions } from "nativescript-local-notifications";
 import { StorageService } from "./storage.service";
 import { AuthenticationService } from "./authentication.service";
 import { RemoteService } from "./remote.service";
+import { NotificationCategory } from "../_models/NotificationCategory";
 
 declare function confirm (options: any): Promise<boolean>;
 const KEY = "push-notifications-allowed";
@@ -25,7 +26,7 @@ export class PushService {
                 // eslint-disable-next-line no-console
                 console.log(message);
                 if (!message.data.silent) {
-                    const n = {
+                    const n: ScheduleOptions = {
                         title: message.title,
                         body: message.body,
                         subtitle: message.data.subtitle,
@@ -37,6 +38,23 @@ export class PushService {
                             message.data.thumbnail, this.authenticationService,
                         ) : undefined,
                         channel: message.data.channel,
+                        actions: message.data.type == NotificationCategory.ChatMessage ? [
+                            {
+                                id: "answer",
+                                launch: false,
+                                title: "Antworten",
+                                type: "input",
+                                placeholder: "Nachricht",
+                                editable: true,
+                                submitLabel: "Senden",
+                            },
+                            {
+                                id: "markAsRead",
+                                launch: false,
+                                type: "button",
+                                title: "Als gelesen markieren",
+                            },
+                        ] : undefined,
                     };
                     LocalNotifications.schedule([n]);
                 }
