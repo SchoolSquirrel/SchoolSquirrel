@@ -8,16 +8,22 @@ type Notification = {
     title: string,
     body: string,
 }
+type NotificationData = {
+    silent?: boolean,
+    subtitle?: string,
+    color?: string,
+    image?: string,
+    thumbnail?: string,
+    channel?: string,
+    type: NotificationCategory,
+    [key: string]: any,
+};
 
 const relayServerUrl = "https://push-notifications.schoolsquirrel.hannesrueger.de";
 const invalidTokenErrorCodes = ["messaging/invalid-argument", "messaging/registration-token-not-registered"];
 
 export async function sendPushNotification(
-    user: User, notification: Notification, data: {
-        silent?: boolean,
-        type: NotificationCategory,
-        [key: string]: any,
-    },
+    user: User, notification: Notification, data: NotificationData,
 ): Promise<void> {
     if (!user.devices) {
         user.devices = await getRepository(Device).find({ where: { user } });

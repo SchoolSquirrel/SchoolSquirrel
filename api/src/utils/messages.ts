@@ -44,10 +44,13 @@ export async function sendMessage(req: Request, res: Response, type: "chat" | "c
             if (!isGroupChat(message.chat)) {
                 sendPushNotification(
                     getOtherUserInPrivateChat(res.locals.jwtPayload.userId, message.chat), {
-                        title: `New message from ${message.sender.name}`,
+                        title: message.sender.name,
                         body: message.text,
                     }, {
                         type: NotificationCategory.ChatMessage,
+                        thumbnail: `users/${res.locals.jwtPayload.userId}.png`,
+                        image: `users/${res.locals.jwtPayload.userId}.png`,
+                        channel: "Chat Nachrichten",
                     },
                 );
             } else {
@@ -55,10 +58,11 @@ export async function sendMessage(req: Request, res: Response, type: "chat" | "c
                     sendPushNotification(
                         user,
                         {
-                            title: `New message in group chat ${getGroupChatName(message.chat)}`,
+                            title: getGroupChatName(message.chat),
                             body: message.text,
                         }, {
                             type: NotificationCategory.ChatMessage,
+                            channel: "Chat Nachrichten",
                         },
                     );
                 }
