@@ -33,3 +33,6 @@ For the mobile app:
 
 ### Frontend Desktop
 ToDo
+
+### Docs
+1. `pip install mkdocs-material mkdocs-exclude` and `mkdocs serve` in `docs` folder
