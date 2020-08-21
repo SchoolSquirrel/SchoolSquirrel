@@ -67,6 +67,9 @@ extra_css:
 ### Plugin Configuration ###
 plugins:
     - search
+    - exclude:
+        glob:
+          - _snippets/*
 markdown_extensions:
     - admonition
     - pymdownx.details

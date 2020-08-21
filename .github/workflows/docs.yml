@@ -15,7 +15,7 @@ jobs:
     - name: Install mkdocs
       run: |
         python -m pip install --upgrade pip
-        pip install mkdocs-material
+        pip install mkdocs-material mkdocs-exclude
     - name: Build docs
       working-directory: docs
       run: mkdocs build
