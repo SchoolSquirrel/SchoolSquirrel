@@ -40,6 +40,7 @@ class AuthController {
         const response = {
             ...user,
             jwtToken: token,
+            changePassword: password == res.app.locals.config.DEFAULT_PASSWORD,
         };
         response.password = undefined;
 
@@ -77,6 +78,34 @@ class AuthController {
                 jwtToken: newToken,
             },
         });
+    }
+
+    public static async changePassword(req: Request, res: Response): Promise<void> {
+        const { password } = req.body;
+        try {
+            if (!(password)) {
+                res.status(400).end(JSON.stringify({ error: i18n.__("errors.notAllFieldsProvided") }));
+                return;
+            }
+            const userRepository = getRepository(User);
+            const user = await userRepository.createQueryBuilder("user")
+                .addSelect("user.password")
+                .where("user.id = :id", { id: res.locals.jwtPayload.userId })
+                .getOne();
+
+            if (user.checkIfUnencryptedPasswordIsValid(
+                req.body.oldPassword || res.app.locals.config.DEFAULT_PASSWORD,
+            )) {
+                user.password = password;
+                user.hashPassword();
+                await userRepository.save(user);
+                res.send({ success: true });
+            } else {
+                res.status(400).send({ message: "Altes Passwort nicht angegeben!" });
+            }
+        } catch (e) {
+            res.status(500).send({ message: "Fehler!" });
+        }
     }
 }
 export default AuthController;
