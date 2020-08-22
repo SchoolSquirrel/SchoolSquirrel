@@ -33,7 +33,9 @@
             <div class="row">
                 <form class="form-signin text-white p-4 col-sm-12 col-md-10 col-lg-8 col-xl-6 mx-auto mb-5" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
-                    <h1 class="text-center mb-5">Anmelden</h1>
+                    <h1 class="text-center mb-5">Anmelden
+                        <app-help docs="userrole/login" white="true" large="true"></app-help>
+                    </h1>
                     <div class="form-label-group" [class.d-none]="autoDetectDomain">
                         <input type="url" id="inputDomain" class="form-control" [placeholder]="'pages.login.domain' | translate" formControlName="domain" required autofocus [class.is-invalid]="submitted && loginForm.controls.domain.invalid" [class.is-valid]="loginForm.controls.domain.valid">
                         <label for="inputDomain">{{"pages.login.domain" | translate}}</label>
