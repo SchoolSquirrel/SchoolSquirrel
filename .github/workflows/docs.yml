@@ -3,7 +3,7 @@ name: Docs
 on: [push]
 
 jobs:
-  build:
+  deploy:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
@@ -26,3 +26,14 @@ jobs:
         FOLDER: docs/site
         GIT_CONFIG_NAME: schoolsquirrel-bot
         GIT_CONFIG_EMAIL: team.schoolsquirrel@gmail.com
+  check:
+    name: Check for dead links
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: npm install
+      working-directory: scripts
+    - name: Check links
+      working-directory: scripts
+      run: npm run check-docs-links
