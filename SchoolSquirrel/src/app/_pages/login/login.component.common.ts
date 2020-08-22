@@ -11,10 +11,12 @@ import { isElectron } from "../../_helpers/isElectron";
 
 export class LoginComponentCommon {
     public loginForm: FormGroup;
+    public changePasswordForm: FormGroup;
     public submitted = false;
     public loading = false;
     public readonly autoDetectDomain = !isElectron();
     public tryingToAutoLogin = false;
+    public changePassword = false;
 
     constructor(
         private httpClient: HttpClient,
@@ -31,6 +33,10 @@ export class LoginComponentCommon {
             name: new FormControl("", [Validators.required]),
             password: new FormControl("", [Validators.required]),
             rememberMe: new FormControl(true),
+        });
+        this.changePasswordForm = new FormGroup({
+            password: new FormControl("", [Validators.required, Validators.minLength(8), Validators.maxLength(25)]),
+            password2: new FormControl("", [Validators.required, Validators.minLength(8), Validators.maxLength(25)]),
         });
         if (this.autoDetectDomain) {
             const url = typeof window !== "undefined" ? window.location.toString() : "";
@@ -59,6 +65,19 @@ export class LoginComponentCommon {
         }
     }
 
+    public onChangePasswordSubmit(): void {
+        this.toastService.removeAll();
+        this.submitted = true;
+        if (this.changePasswordForm.invalid) {
+            return;
+        }
+        this.remoteService.post("auth/password", { password: this.changePasswordForm.controls.password.value }).subscribe((d) => {
+            if (d.success) {
+                this.loggedInSuccessfully();
+            }
+        });
+    }
+
     public onSubmit(): void {
         this.toastService.removeAll();
         this.submitted = true;
@@ -77,12 +96,12 @@ export class LoginComponentCommon {
                     this.loginForm.controls.name.value,
                     this.loginForm.controls.password.value,
                     this.loginForm.controls.rememberMe.value,
-                ).subscribe(() => {
-                    this.loading = false;
-                    if (this.route.snapshot.queryParams.returnUrl) {
-                        this.router.navigate([this.route.snapshot.queryParams.returnUrl]);
+                ).subscribe((d: any) => {
+                    this.submitted = false;
+                    if (d.changePassword) {
+                        this.changePassword = true;
                     } else {
-                        this.router.navigate(["home"]);
+                        this.loggedInSuccessfully();
                     }
                 });
             } else {
@@ -93,5 +112,14 @@ export class LoginComponentCommon {
             this.loading = false;
             this.toastService.error("Falsche Domain!");
         });
+    }
+
+    private loggedInSuccessfully() {
+        this.loading = false;
+        if (this.route.snapshot.queryParams.returnUrl) {
+            this.router.navigate([this.route.snapshot.queryParams.returnUrl]);
+        } else {
+            this.router.navigate(["home"]);
+        }
     }
 }

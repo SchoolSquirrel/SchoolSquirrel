@@ -31,7 +31,7 @@
     <section class="row bg-gradient py-5" *ngIf="!tryingToAutoLogin">
         <div class="col-12 col-md-6 my-5">
             <div class="row">
-                <form class="form-signin text-white p-4 col-sm-12 col-md-10 col-lg-8 col-xl-6 mx-auto mb-5" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <form class="form-signin text-white p-4 col-sm-12 col-md-10 col-lg-8 col-xl-6 mx-auto mb-5" [formGroup]="loginForm" (ngSubmit)="onSubmit()" *ngIf="!changePassword">
 
                     <h1 class="text-center mb-5">Anmelden
                         <app-help docs="userrole/login" white="true" large="true"></app-help>
@@ -61,6 +61,29 @@
                         </div>
                     </div>
                     <button class="btn btn-lg btn-outline-light btn-block" type="submit" [disabled]="loading">{{"pages.login.login" | translate}} <span *ngIf="loading"
+                            class="spinner-border spinner-border-sm mb-1"></span></button>
+                </form>
+
+                <form class="form-signin text-white p-4 col-sm-12 col-md-10 col-lg-8 col-xl-6 mx-auto mb-5" [formGroup]="changePasswordForm" (ngSubmit)="onChangePasswordSubmit()" *ngIf="changePassword">
+
+                    <h1 class="text-center mb-5">Willkommen
+                        <app-help docs="userrole/login#changePassword" white="true" large="true"></app-help>
+                    </h1>
+                    <p>Du musst nun ein neues Passwort setzen. Wähle ein Passwort, das sicher ist, aus Buchstaben und Ziffern besteht, zwischen 8 und 25 Zeichen lang ist und keine Standartphrasen wie <i>Passwort</i>, <i>qwertz</i> o. Ä. enthält.</p>
+
+                    <div class="form-label-group">
+                        <input type="password" id="inputPassword" class="form-control" formControlName="password" [placeholder]="'general.password' | translate" required [class.is-invalid]="submitted && changePasswordForm.controls.password.invalid" [class.is-valid]="changePasswordForm.controls.password.valid">
+                        <label for="inputPassword">{{"general.password" | translate}}</label>
+                        <div class="invalid-feedback text-white">{{"errors.required" | translate}}</div>
+                    </div>
+
+                    <div class="form-label-group">
+                        <input type="password" id="inputPassword2" class="form-control" formControlName="password2" [placeholder]="'general.repeatPassword' | translate" required [class.is-invalid]="submitted && changePasswordForm.controls.password2.invalid" [class.is-valid]="changePasswordForm.controls.password2.valid">
+                        <label for="inputPassword">{{"general.repeatPassword" | translate}}</label>
+                        <div class="invalid-feedback text-white">{{"errors.required" | translate}}</div>
+                    </div>
+
+                    <button class="btn btn-lg btn-outline-light btn-block" type="submit" [disabled]="loading">{{"general.save" | translate}} <span *ngIf="loading"
                             class="spinner-border spinner-border-sm mb-1"></span></button>
                 </form>
             </div>
