@@ -6,7 +6,6 @@ import { AuthenticationService } from "../../_services/authentication.service";
 import { Message } from "../../_models/Message";
 import { MessageStatus } from "../../_models/MessageStatus";
 import { ChatComponentCommon } from "./chat.component.common";
-import { User } from "../../_models/User";
 
 @Component({
     selector: "app-chat",
