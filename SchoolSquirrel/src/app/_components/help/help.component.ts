@@ -9,6 +9,7 @@ import { AuthenticationService } from '@src/app/_services/authentication.service
 export class HelpComponent {
     @Input() docs: string = "";
     @Input() white: boolean = false;    
+    @Input() large: boolean = false;    
 
     constructor(private authenticationService: AuthenticationService) { }
 
