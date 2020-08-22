@@ -32,7 +32,10 @@ For the mobile app:
 1. `npm i` and `npm run android` in `SchoolSquirrel` folder
 
 ### Frontend Desktop
-ToDo
+1. `npm i` and `npm start` in `SchoolSquirrel` folder, then `npm run desktop` in a second terminal
 
 ### Docs
 1. `pip install mkdocs-material mkdocs-exclude` and `mkdocs serve` in `docs` folder
+
+## License
+MIT
