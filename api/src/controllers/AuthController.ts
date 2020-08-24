@@ -81,10 +81,22 @@ class AuthController {
     }
 
     public static async changePassword(req: Request, res: Response): Promise<void> {
-        const { password } = req.body;
+        const { password }: {password: string} = req.body;
         try {
             if (!(password)) {
                 res.status(400).end(JSON.stringify({ error: i18n.__("errors.notAllFieldsProvided") }));
+                return;
+            }
+            if (password.length < 8) {
+                res.status(400).send({ message: "Passwort zu kurz, es muss mindestens 8 Zeichen enthalten!" });
+                return;
+            }
+            if (password.length > 25) {
+                res.status(400).send({ message: "Passwort zu lang, es darf maximal 25 Zeichen enthalten!" });
+                return;
+            }
+            if (!password.match(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/)) {
+                res.status(400).send({ message: "Das Passwort muss Buchstaben und Zahlen enthalten!" });
                 return;
             }
             const userRepository = getRepository(User);
