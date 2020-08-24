@@ -35,8 +35,16 @@ export class LoginComponentCommon {
             rememberMe: new FormControl(true),
         });
         this.changePasswordForm = new FormGroup({
-            password: new FormControl("", [Validators.required, Validators.minLength(8), Validators.maxLength(25)]),
-            password2: new FormControl("", [Validators.required, Validators.minLength(8), Validators.maxLength(25)]),
+            password: new FormControl("", [
+                Validators.required,
+                Validators.minLength(8),
+                Validators.maxLength(25),
+                Validators.pattern(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/),
+            ]),
+            password2: new FormControl("", [
+                Validators.required,
+                () => this.passwordsMatch(),
+            ]),
         });
         if (this.autoDetectDomain) {
             const url = typeof window !== "undefined" ? window.location.toString() : "";
@@ -76,6 +84,15 @@ export class LoginComponentCommon {
                 this.loggedInSuccessfully();
             }
         });
+    }
+
+    public passwordsMatch(): null | Record<string, boolean> {
+        if (this.changePasswordForm) {
+            const pass = this.changePasswordForm.controls.password.value;
+            const confirmPass = this.changePasswordForm.controls.password2.value;
+            return pass === confirmPass ? null : { notMatching: true };
+        }
+        return null;
     }
 
     public onSubmit(): void {

@@ -41,6 +41,11 @@ $dropdown-border-width: 0rem;
     top: 3rem !important;
 }
 
+.strength-meter::after,
+.strength-meter::before {
+    border-color: #7160e3 !important;
+}
+
 html {
     height: 100vh;
     overflow: hidden;

@@ -60,6 +60,7 @@
         "@syncfusion/ej2-angular-grids": "^18.1.57",
         "@syncfusion/ej2-angular-schedule": "^18.1.56",
         "@tinymce/tinymce-angular": "^3.6.1",
+        "angular-password-strength-meter": "^2.0.0",
         "bootstrap": "^4.5.0",
         "cldr-data": "^36.0.0",
         "core-js": "^3.6.5",
@@ -86,7 +87,8 @@
         "tinymce-i18n": "^20.4.4",
         "tns-platform-declarations": "^6.5.8",
         "tslib": "2.0.0",
-        "zone.js": "~0.10.3"
+        "zone.js": "~0.10.3",
+        "zxcvbn": "^4.4.2"
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "^0.901.9",

@@ -74,13 +74,22 @@
                     <div class="form-label-group">
                         <input type="password" id="inputPassword" class="form-control" formControlName="password" [placeholder]="'general.password' | translate" required [class.is-invalid]="submitted && changePasswordForm.controls.password.invalid" [class.is-valid]="changePasswordForm.controls.password.valid">
                         <label for="inputPassword">{{"general.password" | translate}}</label>
-                        <div class="invalid-feedback text-white">{{"errors.required" | translate}}</div>
+                        <div class="invalid-feedback text-white" *ngIf="changePasswordForm.controls.password.errors">
+                            {{(changePasswordForm.controls.password.errors.required ? "errors.required" : changePasswordForm.controls.password.errors.minlength ? "errors.passwordTooShort" : changePasswordForm.controls.password.errors.maxlength ? "errors.passwordTooLong" : changePasswordForm.controls.password.errors.pattern
+                            ? "errors.passwordMustContainLettersAndNumbers" : "errors.unknown") | translate}}
+                        </div>
+                    </div>
+
+                    <div>
+                        <password-strength-meter [colors]="['#c0392b', '#e74c3c', '#e67e22', '#f1c40f', '#2ecc71']" [password]="changePasswordForm.controls.password.value"></password-strength-meter>
                     </div>
 
                     <div class="form-label-group">
                         <input type="password" id="inputPassword2" class="form-control" formControlName="password2" [placeholder]="'general.repeatPassword' | translate" required [class.is-invalid]="submitted && changePasswordForm.controls.password2.invalid" [class.is-valid]="changePasswordForm.controls.password2.valid">
                         <label for="inputPassword">{{"general.repeatPassword" | translate}}</label>
-                        <div class="invalid-feedback text-white">{{"errors.required" | translate}}</div>
+                        <div class="invalid-feedback text-white" *ngIf="changePasswordForm.controls.password2.errors">
+                            {{(changePasswordForm.controls.password2.errors.notMatching ? "errors.passwordsDontMatch" : "errors.required") | translate}}
+                        </div>
                     </div>
 
                     <button class="btn btn-lg btn-outline-light btn-block" type="submit" [disabled]="loading">{{"general.save" | translate}} <span *ngIf="loading"
