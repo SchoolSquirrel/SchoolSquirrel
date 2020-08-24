@@ -1,13 +1,13 @@
 <div *ngIf="!loading" class="h-100">
-    <mat-form-field class="w-100">
-        <mat-chip-list [disableRipple]="true" [(ngModel)]="selectedCategories" multiple>
-            <mat-chip [disableRipple]="true" *ngFor="let category of categoryColors | keyvalue" selectable="true" [selected]="isSelected(category.key)" (click)="toggleCategory(category.key)" [style.background-color]="isSelected(category.key) ? category.value : '#eee'"
-                [style.color]="isSelected(category.key) ? '#fff' : '#000'">
-                {{('pages.calendar.categories.' + category.key) | translate}}&nbsp;
-                <mat-icon>{{isSelected(category.key) ? "close" : "add"}}</mat-icon>
-            </mat-chip>
-        </mat-chip-list>
-    </mat-form-field>
+    <div class="py-3">
+        <div class="btn-group btn-group-toggle" *ngFor="let category of categoryColors | keyvalue">
+            <label class="btn mr-2" ngbButtonLabel [style.color]="isSelected(category.key) ? '#fff' : '#000'" [style.background-color]="isSelected(category.key) ? category.value : '#eee'">
+                <input type="checkbox" ngbButton (click)="toggleCategory(category.key)">
+                {{('pages.calendar.categories.' + category.key) | translate}}
+                <i [class]="'ml-2 fas fa-' + (isSelected(category.key) ? 'times' : 'plus')"></i>
+            </label>
+        </div>
+    </div>
 
 
     <div class="pb-3 calendar-holder">
