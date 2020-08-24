@@ -4,11 +4,8 @@ on: [push]
 
 jobs:
   build_api:
-    strategy:
-      matrix:
-        os: [windows-latest, ubuntu-latest, macOS-latest]
-    name: API on ${{matrix.os}}
-    runs-on: ${{matrix.os}}
+    name: API Build
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
     - name: Setup Node.js
@@ -22,11 +19,8 @@ jobs:
       working-directory: api
       run: npm run build
   build_web:
-    strategy:
-      matrix:
-        os: [windows-latest, ubuntu-latest, macOS-latest]
-    name: Web on ${{matrix.os}}
-    runs-on: ${{matrix.os}}
+    name: Web Build
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
     - name: Setup Node.js
