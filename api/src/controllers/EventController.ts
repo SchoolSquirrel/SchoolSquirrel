@@ -40,6 +40,11 @@ class EventController {
         for (const event of userEvents) {
             event.Category = EventCategory.UserEvent;
             events.push(event);
+            for (const key of Object.keys(event)) {
+                if (event[key] === null) {
+                    delete event[key];
+                }
+            }
         }
         res.send(events);
     }
