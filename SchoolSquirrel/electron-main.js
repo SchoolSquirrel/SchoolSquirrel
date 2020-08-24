@@ -67,7 +67,11 @@ function createWindow() {
         resizable: false,
         skipTaskbar: true,
         icon: path.join(__dirname, "src/favicon.ico"),
-        title: "SchoolSquirrel"
+        title: "SchoolSquirrel",
+        show: false
+    });
+    splashScreen.webContents.on("did-finish-load", function () {
+        splashScreen.show();
     });
     splashScreen.loadFile("electron-splash-screen.html");
     electron_1.ipcMain.on("ready", function () {
