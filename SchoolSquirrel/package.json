@@ -1,6 +1,11 @@
 {
     "name": "SchoolSquirrel",
     "version": "0.0.1",
+    "description": "SchoolSquirrel - Die Platform für digitalen Unterricht. Mit Chat, Aufgaben, Video-Konferenzen und mehr!",
+    "author": {
+        "name": "Hannes Rüger",
+        "url": "https://hannesrueger.de"
+    },
     "nativescript": {
         "id": "com.schoolsquirrel.SchoolSquirrel",
         "tns-android": {
