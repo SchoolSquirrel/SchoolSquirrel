@@ -21,10 +21,6 @@ import {
 } from "@syncfusion/ej2-angular-schedule";
 import { loadCldr } from "@syncfusion/ej2-base";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatChipsModule } from "@angular/material/chips";
-import { MatAutocompleteModule } from "@angular/material/autocomplete";
-import { MatIconModule } from "@angular/material/icon";
 import { SquirrelChatUiModule } from "@schoolsquirrel/squirrel-chat-ui";
 import {
     FileManagerModule, NavigationPaneService, DetailsViewService, ToolbarService as FToolbarService,
@@ -144,10 +140,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         FileManagerModule,
         SquirrelChatUiModule,
         NoopAnimationsModule,
-        MatFormFieldModule,
-        MatChipsModule,
-        MatAutocompleteModule,
-        MatIconModule,
         EditorModule,
         NgxOnlyOfficeModule,
         NgxExtendedPdfViewerModule,
