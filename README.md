@@ -29,10 +29,10 @@ For the mobile app:
 3. The domain for the login is `http://localhost:3000`
 
 ### Frontend Mobile
-`npm i` and `npm run android` in `SchoolSquirrel` folder
+`npm i` and `npm run mobile:android:run` in `SchoolSquirrel` folder
 
 ### Frontend Desktop
-`npm i` and `npm start` in `SchoolSquirrel` folder, then `npm run desktop` in a second terminal
+`npm i` and `npm run web:run` in `SchoolSquirrel` folder, then `npm run desktop:run` in a second terminal
 
 ### Docs
 `pip install mkdocs-material mkdocs-exclude` and `mkdocs serve` in `docs` folder
@@ -47,13 +47,13 @@ For the mobile app:
 `npm run build` in `api` folder
 
 ### Frontend Web
-`npm run build` in `SchoolSquirrel` folder
+`npm run web:build` in `SchoolSquirrel` folder
 
 ### Frontend Mobile
-`npm run android:prod` in `SchoolSquirrel` folder
+`npm run mobile:android:build` in `SchoolSquirrel` folder
 
 ### Frontend Desktop
-`npm run desktop:prod` in SchoolSquirrel` folder
+`npm run desktop:build` in SchoolSquirrel` folder
 
 ### Docs
 `mkdocs build` in `docs` folder

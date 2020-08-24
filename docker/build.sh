@@ -1,6 +1,6 @@
 cd ../SchoolSquirrel
 npm install
-npm run build -- --outputPath=../docker/frontend
+npm run web:build -- --outputPath=../docker/frontend
 cd ../api
 npm install
 npx @zeit/ncc build src/index.ts -o ../docker/backend
