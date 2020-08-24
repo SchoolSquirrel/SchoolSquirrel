@@ -5,7 +5,6 @@
 import {
     app, BrowserWindow, globalShortcut, ipcMain,
 } from "electron";
-import { initSplashScreen, OfficeTemplate } from "electron-splashscreen";
 import * as path from "path";
 import * as url from "url";
 import { setup as setupPushReceiver } from "electron-push-receiver";
@@ -15,6 +14,7 @@ const args = process.argv.slice(1);
 const serve = args.some((val) => val === "--serve");
 function createWindow() {
     // Create the browser window.
+
     win = new BrowserWindow({
         frame: false,
         icon: path.join(__dirname, "src/favicon.ico"),
@@ -53,7 +53,7 @@ function createWindow() {
     if (serve) {
         win.webContents.openDevTools();
     }
-    const hideSplashscreen = initSplashScreen({
+    /* const hideSplashscreen = initSplashScreen({
         color: "#55BDCA",
         height: 225,
         logo: path.join(__dirname, "src/favicon.png"),
@@ -63,10 +63,22 @@ function createWindow() {
         url: OfficeTemplate,
         website: "https://SchoolSquirrel.github.io",
         width: 375,
+    }); */
+
+    const splashScreen = new BrowserWindow({
+        frame: false,
+        center: true,
+        height: 300,
+        width: 620,
+        resizable: false,
+        skipTaskbar: true,
+        icon: path.join(__dirname, "src/favicon.ico"),
+        title: "SchoolSquirrel",
     });
+    splashScreen.loadFile("electron-splash-screen.html");
 
     ipcMain.on("ready", () => {
-        hideSplashscreen();
+        splashScreen.destroy();
         win.show();
     });
 

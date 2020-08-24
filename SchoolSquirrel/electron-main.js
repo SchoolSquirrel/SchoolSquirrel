@@ -4,7 +4,6 @@
  */
 exports.__esModule = true;
 var electron_1 = require("electron");
-var electron_splashscreen_1 = require("electron-splashscreen");
 var path = require("path");
 var url = require("url");
 var electron_push_receiver_1 = require("electron-push-receiver");
@@ -49,19 +48,30 @@ function createWindow() {
     if (serve) {
         win.webContents.openDevTools();
     }
-    var hideSplashscreen = electron_splashscreen_1.initSplashScreen({
+    /* const hideSplashscreen = initSplashScreen({
         color: "#55BDCA",
         height: 225,
         logo: path.join(__dirname, "src/favicon.png"),
         mainWindow: win,
         productName: "SchoolSquirrel",
         text: "Initializing ...",
-        url: electron_splashscreen_1.OfficeTemplate,
+        url: OfficeTemplate,
         website: "https://SchoolSquirrel.github.io",
-        width: 375
+        width: 375,
+    }); */
+    var splashScreen = new electron_1.BrowserWindow({
+        frame: false,
+        center: true,
+        height: 300,
+        width: 620,
+        resizable: false,
+        skipTaskbar: true,
+        icon: path.join(__dirname, "src/favicon.ico"),
+        title: "SchoolSquirrel"
     });
+    splashScreen.loadFile("electron-splash-screen.html");
     electron_1.ipcMain.on("ready", function () {
-        hideSplashscreen();
+        splashScreen.destroy();
         win.show();
     });
     win.on("closed", function () {
