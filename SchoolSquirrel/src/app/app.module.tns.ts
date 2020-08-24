@@ -45,6 +45,7 @@ import { CourseConfigComponent } from "./_dialogs/course-config/course-config.co
 import { UserChipComponent } from "./_components/user-chip/user-chip.component";
 import { AssignmentStatusbarComponent } from "./_components/assignment-statusbar/assignment-statusbar.component";
 import { HelpComponent } from "./_components/help/help.component";
+import { UserSettingsComponent } from "./_pages/user-settings/user-settings.component";
 
 registerLocaleData(localeDe, localeDeExtra);
 
@@ -102,6 +103,7 @@ export function nativescriptTranslateLoaderFactory(): NativeScriptLoader {
         UserChipComponent,
         AssignmentStatusbarComponent,
         HelpComponent,
+        UserSettingsComponent,
     ],
     imports: [
         ReactiveFormsModule,

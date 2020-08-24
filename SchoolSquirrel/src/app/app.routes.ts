@@ -14,6 +14,7 @@ import { CourseComponent } from "./_pages/course/course.component";
 import { ChatComponent } from "./_pages/chat/chat.component";
 import { AssignmentComponent } from "./_pages/assignment/assignment.component";
 import { EditDocumentComponent } from "./_pages/edit-document/edit-document.component";
+import { UserSettingsComponent } from "./_pages/user-settings/user-settings.component";
 
 export const routes: Routes = [
     /* *** Main routes *** */
@@ -88,6 +89,11 @@ export const routes: Routes = [
                 canActivate: [AuthenticationGuard],
             },
         ],
+    },
+    {
+        path: "settings",
+        component: UserSettingsComponent,
+        canActivate: [AuthenticationGuard],
     },
 
     /* *** Admin routes *** */

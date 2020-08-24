@@ -25,8 +25,7 @@
                 <i class="fas fa-cog"></i>
             </a>
             <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
-                <a ngbDropdownItem href="#" (click)="$event.preventDefault()">Another action</a>
-                <a ngbDropdownItem href="#" (click)="$event.preventDefault()">Something else here</a>
+                <a ngbDropdownItem routerLink="/settings" (click)="$event.preventDefault()">Einstellungen</a>
                 <div class="dropdown-divider"></div>
                 <a ngbDropdownItem routerLink="" (click)="authenticationService.logout()"><i class="fas fa-sign-out-alt"></i> {{ "general.logout" | translate}}</a>
             </div>
