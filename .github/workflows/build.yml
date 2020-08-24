@@ -81,4 +81,21 @@ jobs:
       with:
         name: schoolsquirrel-android
         path: SchoolSquirrel/platforms/android/app/build/outputs/apk/debug/app-debug.apk
-    
+  build_desktop:
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macOS-latest]
+    name: Desktop on ${{matrix.os}}
+    runs-on: ${{matrix.os}}
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12
+    - name: Install dependencies
+      working-directory: SchoolSquirrel
+      run: npm i
+    - name: Build
+      working-directory: SchoolSquirrel
+      run: npm run desktop:build

@@ -1,0 +1,48 @@
+{
+    "productName": "SchoolSquirrel",
+    "directories": {
+        "output": "release/"
+    },
+    "files": [
+        "**/*",
+        "!*.ts",
+        "!*.code-workspace",
+        "!LICENSE.md",
+        "!package.json",
+        "!package-lock.json",
+        "!App_Resources/",
+        "!platforms/",
+        "!src/",
+        "!e2e/",
+        "!hooks/",
+        "!.angular-cli.json",
+        "!_config.yml",
+        "!karma.conf.js",
+        "!tsconfig.json",
+        "!tslint.json"
+    ],
+    "extraResources": [
+        "src/assets/logo.png"
+    ],
+    "win": {
+        "icon": "dist/assets/icons",
+        "target": [
+            "nsis"
+        ],
+        "publish": ["github"]
+    },
+    "mac": {
+        "icon": "dist/assets/icons",
+        "target": [
+            "dmg"
+        ],
+        "publish": ["github"]
+    },
+    "linux": {
+        "icon": "dist/assets/icons",
+        "target": [
+            "AppImage"
+        ],
+        "publish": ["github"]
+    }
+}
