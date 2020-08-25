@@ -39,23 +39,27 @@ class AssignmentsController {
     public static async getAssignment(req: Request, res: Response): Promise<void> {
         const assignmentRepository = getRepository(Assignment);
         const teacher = await isTeacher(res.locals.jwtPayload.userId);
-        const assignment = await assignmentRepository.findOne(req.params.id,
-            teacher ? { relations: ["course", "course.students", "userSubmissions", "userSubmissions.user"] } : {});
-        await AssignmentsController.addFilesToAssignment(assignment, req, res);
-        await AssignmentsController.checkIfSubmitted(res, assignment);
-        if (teacher) {
-            assignment.submissionsMissing = [];
-            for (const user of assignment.course.students) {
-                if (!assignment.userSubmissions.find((s) => s.user.id == user.id)) {
-                    assignment.submissionsMissing.push(user);
+        try {
+            const assignment = await assignmentRepository.findOneOrFail(req.params.id,
+                teacher ? { relations: ["course", "course.students", "userSubmissions", "userSubmissions.user"] } : {});
+            await AssignmentsController.addFilesToAssignment(assignment, req, res);
+            await AssignmentsController.checkIfSubmitted(res, assignment);
+            if (teacher) {
+                assignment.submissionsMissing = [];
+                for (const user of assignment.course.students) {
+                    if (!assignment.userSubmissions.find((s) => s.user.id == user.id)) {
+                        assignment.submissionsMissing.push(user);
+                    }
+                }
+                const allSubmissions = await listObjects(req.app.locals.minio, Buckets.ASSIGNMENTS, `${assignment.id}/submissions/`, true);
+                for (const submission of assignment.userSubmissions) {
+                    submission.files = allSubmissions.filter((s) => s.name?.startsWith(`${assignment.id}/submissions/${submission.user.id}/`));
                 }
             }
-            const allSubmissions = await listObjects(req.app.locals.minio, Buckets.ASSIGNMENTS, `${assignment.id}/submissions/`, true);
-            for (const submission of assignment.userSubmissions) {
-                submission.files = allSubmissions.filter((s) => s.name?.startsWith(`${assignment.id}/submissions/${submission.user.id}/`));
-            }
+            res.send(assignment);
+        } catch {
+            res.status(404).send({ message: "Aufgabe nicht gefunden!" });
         }
-        res.send(assignment);
     }
 
     public static async checkIfSubmitted(res: Response,
