@@ -24,7 +24,8 @@
         "info": "Info",
         "download": "Herunterladen",
         "delete": "Löschen",
-        "getHelp": "Hilfe aufrufen"
+        "getHelp": "Hilfe aufrufen",
+        "admin": "Administrator"
     },
     "components": {
         "navbar": {
