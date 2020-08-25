@@ -4,22 +4,11 @@ import { debounceTime, map } from "rxjs/operators";
 import { Router } from "@angular/router";
 import { RemoteService } from "../../_services/remote.service";
 import { TinyConfigService } from "../../_services/tiny-config.service";
-import { NavbarActions } from "../../_decorators/navbar-actions.decorator";
 import { AssignmentsComponentCommon } from "./assignments.component.common";
 import { Assignment } from "../../_models/Assignment";
 import { AuthenticationService } from "../../_services/authentication.service";
+import { NavbarActionsService } from "../../_services/navbar-actions.service";
 
-@NavbarActions([
-    {
-        name: "Assignments",
-        description: "View all your assignments",
-    },
-    {
-        name: "New assignment",
-        description: "Create a new assignment",
-        navigateTo: "new",
-    },
-], "assignments")
 @Component({
     selector: "app-assignments",
     templateUrl: "./assignments.component.html",
@@ -37,8 +26,20 @@ export class AssignmentsComponent extends AssignmentsComponentCommon {
         private modalService: NgbModal,
         public authenticationService: AuthenticationService,
         private router: Router,
+        private navbarActionsService: NavbarActionsService,
     ) {
         super(remoteService);
+        navbarActionsService.addActions(this, [
+            {
+                name: "Aufgaben",
+                description: "Alle Aufgaben ansehen",
+            },
+            {
+                name: "Neue Aufgabe",
+                description: "Eine neue Aufgabe erstellen",
+                navigateTo: "new",
+            },
+        ], "assignments");
     }
 
     public ngAfterViewInit(): void {

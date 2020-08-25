@@ -1,19 +1,13 @@
 import { Component, ViewChild } from "@angular/core";
 import { L10n, setCulture } from "@syncfusion/ej2-base";
 import { ScheduleComponent } from "@syncfusion/ej2-angular-schedule";
-import { NavbarActions } from "../../_decorators/navbar-actions.decorator";
 import { FastTranslateService } from "../../_services/fast-translate.service";
 import { RemoteService } from "../../_services/remote.service";
 import { SchedulerEvent } from "../../_models/SchedulerEvent";
 import { EventCategory } from "../../_models/EventCategory";
 import { CalendarComponentCommon } from "./calendar.component.common";
+import { NavbarActionsService } from "../../_services/navbar-actions.service";
 
-@NavbarActions([
-    {
-        name: "Calendar",
-        description: "Open the calendar",
-    },
-], "calendar")
 @Component({
     selector: "app-calendar",
     templateUrl: "./calendar.component.html",
@@ -24,7 +18,11 @@ export class CalendarComponent extends CalendarComponentCommon {
     public eventSettings: any = {};
     @ViewChild("calendar") public calendar: ScheduleComponent;
     private allEvents: SchedulerEvent[] = [];
-    constructor(fts: FastTranslateService, remoteService: RemoteService) {
+    constructor(
+        fts: FastTranslateService,
+        remoteService: RemoteService,
+        private navbarActionsService: NavbarActionsService,
+    ) {
         super(fts, remoteService);
         setCulture("de");
         (async () => {
@@ -32,6 +30,12 @@ export class CalendarComponent extends CalendarComponentCommon {
                 de: await this.fts.t("libraries"),
             });
         })();
+        navbarActionsService.addActions(this, [
+            {
+                name: "Kalender",
+                description: "Öffnet den Kalender",
+            },
+        ], "calendar");
     }
 
     public ngOnInit(): void {

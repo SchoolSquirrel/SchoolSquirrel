@@ -6,15 +6,8 @@ import { User } from "../_models/User";
 import { RemoteService } from "./remote.service";
 import { StorageService } from "./storage.service";
 import { NoErrorToastHttpParams } from "../_helpers/noErrorToastHttpParams";
-import { NavbarActions } from "../_decorators/navbar-actions.decorator";
+import { NavbarActionsService } from "./navbar-actions.service";
 
-@NavbarActions([
-    {
-        name: "Logout",
-        description: "Logout of SchoolSquirrel",
-        onClick: "logout",
-    },
-])
 @Injectable({
     providedIn: "root",
 })
@@ -26,7 +19,16 @@ export class AuthenticationService {
         private remoteService: RemoteService,
         private storageService: StorageService,
         private router: Router,
-    ) { }
+        private navbarActionsService: NavbarActionsService,
+    ) {
+        navbarActionsService.addActions(this, [
+            {
+                name: "Abmelden",
+                description: "Von SchoolSquirrel abmelden",
+                onClick: "logout",
+            },
+        ]);
+    }
 
     public login(name: string, password: string, rememberMe: boolean): Observable<User> {
         return this.remoteService.post("auth/login", { password, name }).pipe(
