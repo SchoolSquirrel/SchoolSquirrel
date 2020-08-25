@@ -23,7 +23,8 @@
         "pleaseSelect": "Bitte wählen",
         "info": "Info",
         "download": "Herunterladen",
-        "delete": "Löschen"
+        "delete": "Löschen",
+        "getHelp": "Hilfe aufrufen"
     },
     "components": {
         "navbar": {
