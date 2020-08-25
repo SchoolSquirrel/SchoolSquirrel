@@ -30,7 +30,10 @@
         "description": "Beschreibung",
         "saveChanges": "Änderungen speichern",
         "ok": "OK",
-        "select": "Auswählen"
+        "select": "Auswählen",
+        "grades": "Klassen",
+        "student": "Schüler",
+        "teacher": "Lehrer"
     },
     "components": {
         "navbar": {

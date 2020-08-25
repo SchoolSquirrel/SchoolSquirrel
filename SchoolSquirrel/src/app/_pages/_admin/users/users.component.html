@@ -1,12 +1,13 @@
 <nav ngbNav #nav="ngbNav" class="nav-tabs pt-3">
     <ng-container ngbNavItem>
-        <a ngbNavLink>Personen</a>
+        <a ngbNavLink>{{"general.users" | translate}}</a>
         <ng-template ngbNavContent>
             <ejs-grid height="100%" *ngIf="allDataLoaded" class="h-100" locale="de-DE" [filterOptions]="filterOptions" #usersGrid [dataSource]="users" [allowSorting]="true" [allowFiltering]="true" [toolbar]="toolbar" [editSettings]="editSettings" (actionComplete)="usersActionComplete($event)">
                 <e-columns>
                     <e-column field="role" headerText="Typ" editType="dropdownedit" [filterBarTemplate]='roleFilter' [edit]="roleParams">
                         <ng-template #template let-data>
-                            <i [class]="'mr-2 fas fa-' + (data.role == 'student' ? 'user-graduate' : data.role == 'teacher' ? 'chalkboard-teacher' : 'user-shield')"></i> {{data.role == "student" ? "Schüler" : data.role == "teacher" ? "Lehrer" : "Admin"}}
+                            <i [class]="'mr-2 fas fa-' + (data.role == 'student' ? 'user-graduate' : data.role == 'teacher' ? 'chalkboard-teacher' : 'user-shield')"></i> {{(data.role == "student" ? "general.student" : data.role == "teacher" ? "general.teacher"
+                            : "general.admin") | translate}}
                         </ng-template>
                     </e-column>
                     <e-column field="name" headerText="Name"></e-column>
@@ -17,7 +18,7 @@
         </ng-template>
     </ng-container>
     <ng-container ngbNavItem>
-        <a ngbNavLink>Klassen</a>
+        <a ngbNavLink>{{"general.grades" | translate}}</a>
         <ng-template ngbNavContent>
             <ejs-grid height="100%" *ngIf="allDataLoaded" class="h-100" locale="de-DE" #gradesGrid [dataSource]="grades" [allowSorting]="true" [allowFiltering]="true" [toolbar]="toolbar" [editSettings]="editSettings" (actionComplete)="gradesActionComplete($event)">
                 <e-columns>
@@ -28,7 +29,7 @@
         </ng-template>
     </ng-container>
     <ng-container ngbNavItem>
-        <a ngbNavLink>Fächer / Kurse</a>
+        <a ngbNavLink>{{"general.courses" | translate}}</a>
         <ng-template ngbNavContent>
 
 
