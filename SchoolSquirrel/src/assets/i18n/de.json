@@ -9,10 +9,12 @@
         "passwordsDontMatch": "Die Passwörter stimmen nicht überein!"
     },
     "general": {
+        "general": "Allgemein",
         "logout": "Abmelden",
         "dashboard": "Dashboard",
         "assignments": "Aufgaben",
         "calendar": "Kalender",
+        "options": "Optionen",
         "courses": "Fächer / Kurse",
         "course": "Fach / Kurs",
         "welcome": "Willkommen",
@@ -42,7 +44,11 @@
         "teacher": "Lehrer",
         "message": "Nachricht",
         "feedback": "Feedback",
-        "pleaseWait": "Bitte warten..."
+        "pleaseWait": "Bitte warten...",
+        "notifications": "Benachrichtigungen",
+        "devices": "Geräte",
+        "about": "Über",
+        "privacy": "Datenschutz"
     },
     "components": {
         "navbar": {
@@ -86,6 +92,22 @@
         },
         "chat": {
             "noChats": "Du hast noch mit niemandem gechattet. Gib oben in der Suchleiste einen Namen ein, um loszulegen!"
+        },
+        "user-settings": {
+            "design": "Design",
+            "dark": "Dunkel",
+            "light": "Hell",
+            "system": "Systemeinstellung",
+            "autostart": "Automatisch starten",
+            "autostartDescription": "SchoolSquirrel startet automatisch, wenn Du deinen PC hochfährst.",
+            "startMinimized": "Minimiert starten",
+            "startMinimizedDescription": "SchoolSquirrel startet minimiert in die Taskleiste.",
+            "deliveryStatus": "Lesebestätigungen",
+            "deliveryStatusDescription": "Anderen Personen im Chat anzeigen, ob Nachrichten gelesen wurden. Wenn Du diese Einstellung deaktivierst, kannst Du auch die Lesebestätigungen von anderen Personen nicht sehen.",
+            "onlineStatus": "Online-Status",
+            "onlineStatusDescription": "Anderen Personen anzeigen, ob Du gerade online bist. Wenn Du diese Einstellung deaktivierst, kannst Du auch den Online-Status anderer Personen nicht sehen.",
+            "lastOnline": "Zuletzt Online",
+            "lastOnlineDescription": "Anderen Personen anzeigen, wann Du zuletzt online warst. Wenn Du diese Einstellung deaktivierst, kannst Du auch den Zuletzt Online Zeitpunkt anderer Personen nicht sehen."
         },
         "assignments": {
             "noFileSelected": "Keine Datei ausgewählt",

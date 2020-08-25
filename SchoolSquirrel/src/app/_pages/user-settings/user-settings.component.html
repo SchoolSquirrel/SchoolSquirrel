@@ -1,34 +1,34 @@
 <div class="d-flex pt-2 h-100">
     <ul ngbNav #nav="ngbNav" class="nav-pills  h-100" orientation="vertical">
         <li ngbNavItem>
-            <a ngbNavLink>Allgemeines</a>
+            <a ngbNavLink>{{"general.general" | translate}}</a>
             <ng-template ngbNavContent>
                 <div class="row h-100">
                     <div class="col-md-8 border-right border-left border-light">
-                        <h2>Allgemeines</h2>
+                        <h2>{{"general.general" | translate}}</h2>
                         <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Design</label>
+                            <label for="staticEmail" class="col-sm-2 col-form-label">{{"pages.user-settings.design" | translate}}</label>
                             <div class="col-sm-10">
                                 <select class="custom-select">
-                                    <option>Hell</option>
-                                    <option>Dunkel</option>
-                                    <option>Systemeinstellung</option>
+                                    <option>{{"pages.user-settings.light" | translate}}</option>
+                                    <option>{{"pages.user-settings.dark" | translate}}</option>
+                                    <option>{{"pages.user-settings.system" | translate}}</option>
                                 </select>
                             </div>
                         </div>
                         <ng-container *ngIf="isElectron">
                             <div class="form-group row">
-                                <label for="inputPassword" class="col-sm-2 col-form-label">Optionen</label>
+                                <label for="inputPassword" class="col-sm-2 col-form-label">{{"general.options" | translate}}</label>
                                 <div class="col-sm-10">
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="autostart" [(ngModel)]="settings.autostart">
-                                        <label class="custom-control-label" for="autostart">Autostart</label>
-                                        <small class="form-text text-muted">SchoolSquirrel startet automatisch, wenn Du deinen PC hochfährst.</small>
+                                        <label class="custom-control-label" for="autostart">{{"pages.user-settings.autostart" | translate}}</label>
+                                        <small class="form-text text-muted">{{"pages.user-settings.autostartDescription" | translate}}</small>
                                     </div>
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" [(ngModel)]="settings.startMinimized" [disabled]="settings.autostart ? null : 'disabled'" id="startMinimized">
-                                        <label class="custom-control-label" for="startMinimized">Minimiert starten</label>
-                                        <small class="form-text text-muted">SchoolSquirrel startet minimiert in die Taskleiste.</small>
+                                        <label class="custom-control-label" for="startMinimized">{{"pages.user-settings.startMinimized" | translate}}</label>
+                                        <small class="form-text text-muted">{{"pages.user-settings.startMinimizedDescription" | translate}}</small>
                                     </div>
                                 </div>
                             </div>
@@ -46,7 +46,7 @@
             </ng-template>
         </li>
         <li ngbNavItem>
-            <a ngbNavLink>Benachrichtigungen</a>
+            <a ngbNavLink>{{"general.notifications" | translate}}</a>
             <ng-template ngbNavContent>
                 <div class="row h-100 border-left border-light">
                     <div class="col">
@@ -56,7 +56,7 @@
             </ng-template>
         </li>
         <li ngbNavItem>
-            <a ngbNavLink>Datenschutz</a>
+            <a ngbNavLink>{{"general.privacy" | translate}}</a>
             <ng-template ngbNavContent>
                 <div class="row h-100 border-left border-light">
                     <div class="col">
@@ -70,7 +70,7 @@
             </ng-template>
         </li>
         <li ngbNavItem *ngIf="isElectron">
-            <a ngbNavLink>Geräte</a>
+            <a ngbNavLink>{{"general.devices" | translate}}</a>
             <ng-template ngbNavContent>
                 <div class="row h-100 border-left border-light">
                     <div class="col">
@@ -80,7 +80,7 @@
             </ng-template>
         </li>
         <li ngbNavItem>
-            <a ngbNavLink>Lizenzen</a>
+            <a ngbNavLink>{{"general.about" | translate}}</a>
             <ng-template ngbNavContent>
                 <div class="row h-100 border-left border-light">
                     <div class="col">

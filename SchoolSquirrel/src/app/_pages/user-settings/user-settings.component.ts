@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { isElectron } from "../../_helpers/isElectron";
 import { RemoteService } from "../../_services/remote.service";
 import { AuthenticationService } from "../../_services/authentication.service";
+import { FastTranslateService } from "../../_services/fast-translate.service";
 
 @Component({
     selector: "app-user-settings",
@@ -14,25 +15,20 @@ export class UserSettingsComponent {
         autostart: true,
         startMinimized: false,
     };
-    public privacySettings = [
-        {
-            title: "Lesebestätigungen",
-            description: "Anderen Personen im Chat anzeigen, ob Nachrichten gelesen wurden. Wenn Du diese Einstellung deaktivierst, kannst Du auch die Lesebestätigungen von anderen Personen nicht sehen.",
-            key: "deliveryStatus",
-        },
-        {
-            title: "Online-Status",
-            description: "Anderen Personen anzeigen, ob Du gerade online bist. Wenn Du diese Einstellung deaktivierst, kannst Du auch den Online-Status anderer Personen nicht sehen.",
-            key: "onlineStatus",
-        },
-        {
-            title: "Zuletzt Online",
-            description: "Anderen Personen anzeigen, wann Du zuletzt online warst. Wenn Du diese Einstellung deaktivierst, kannst Du auch den Zuletzt Online Zeitpunkt anderer Personen nicht sehen.",
-            key: "lastOnline",
-        },
-    ]
+    public privacySettings = []
     constructor(
         public remoteService: RemoteService,
         public authenticationService: AuthenticationService,
+        private fts: FastTranslateService,
     ) { }
+
+    public async ngOnInit(): Promise<void> {
+        for (const key of ["deliveryStatus", "onlineStatus", "lastOnline"]) {
+            this.privacySettings.push({
+                title: await this.fts.t(`pages.user-settings.${key}`),
+                description: await this.fts.t(`pages.user-settings.${key}Description`),
+                key,
+            });
+        }
+    }
 }
