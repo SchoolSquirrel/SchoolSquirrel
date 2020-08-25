@@ -5,7 +5,7 @@
                 <!--<img src="" class="card-img-top" alt="...">-->
                 <div class="card-body">
                     <h5 class="card-title">{{course.name}}</h5>
-                    <p class="card-text">{{course.description}}<span class="text-muted" *ngIf="!course.description">Keine Kursbeschreibung vorhanden</span></p>
+                    <p class="card-text">{{course.description}}<span class="text-muted" *ngIf="!course.description">{{"pages.courses.noDescriptionAvailable"| translate}}</span></p>
                     <div>
                         <span class="badge badge-warning m-1">5 assignments</span>
                         <span class="badge badge-success m-1">3 new messages</span>

@@ -30,7 +30,7 @@
                             <div class="card p-2 my-1">
                                 <button class="btn card-top-fab" (click)="configureCourse()"><i class="fas fa-cog"></i></button>
                                 <b>{{course.name}}</b>
-                                <span>{{course.description}}<span class="text-muted" *ngIf="!course.description">Keine Kursbeschreibung vorhanden</span></span>
+                                <span>{{course.description}}<span class="text-muted" *ngIf="!course.description">{{"pages.courses.noDescriptionAvailable" | translate}}</span></span>
                             </div>
                         </ng-template>
                     </ngb-panel>

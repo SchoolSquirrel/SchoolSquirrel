@@ -105,7 +105,8 @@
             "reallyReturnWithoutFeedback": "Bist du sicher, dass Du die Aufgabe ohne Feedback zurückgeben willst?"
         },
         "courses": {
-            "title": "Kurstitel"
+            "title": "Kurstitel",
+            "noDescriptionAvailable": "Keine Beschreibung vorhanden."
         },
         "calendar": {
             "categories": {
