@@ -21,7 +21,7 @@
     <div class="modal-body">
         <div *ngIf="!newAssignmentId" class="text-center py-5">
             <div class="spinner-border"></div>
-            <div>Bitte warten...</div>
+            <div>{{"general.pleaseWait" | translate}}</div>
         </div>
         <form [formGroup]="newAssignmentForm" *ngIf="newAssignmentId">
 
@@ -78,10 +78,10 @@
     <div class="modal-footer" *ngIf="newAssignmentId">
         <div class="mr-auto">
             <div *ngIf="saving">
-                <div class="spinner-border spinner-border-sm"></div> Entwurf wird gespeichert...
+                <div class="spinner-border spinner-border-sm"></div> {{"pages.assignments.savingDraft" | translate}}
             </div>
             <div *ngIf="saved">
-                <i class="fas fa-check text-success"></i> Entwurf gespeichert!
+                <i class="fas fa-check text-success"></i> {{"pages.assignments.draftSaved" | translate}}
             </div>
         </div>
         <button type="button" class="btn btn-outline-secondary" (click)="submitted = true; modal.close()">{{'general.saveAsDraft' | translate}}</button>

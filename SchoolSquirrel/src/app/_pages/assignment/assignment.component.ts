@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { RemoteService } from "../../_services/remote.service";
 import { Assignment } from "../../_models/Assignment";
 import { AuthenticationService } from "../../_services/authentication.service";
+import { FastTranslateService } from "../../_services/fast-translate.service";
 
 type Tab = "student" | "teacher" | "submissions";
 
@@ -27,6 +28,7 @@ export class AssignmentComponent {
         private modalService: NgbModal,
         private router: Router,
         private route: ActivatedRoute,
+        private fts: FastTranslateService,
     ) { }
 
     public ngOnInit(): void {
@@ -54,16 +56,16 @@ export class AssignmentComponent {
         this.router.navigate(["/assignments", this.assignment.id, tab]);
     }
 
-    public submitAssignment(): void {
+    public async submitAssignment(): Promise<void> {
         if (this.assignment.worksheets.filter((w) => !w.worksheetHasAlreadyBeenEdited).length) {
             // eslint-disable-next-line
-            if (!confirm("Du hast nicht alle Arbeitsblätter bearbeitet. Willst du die Aufgabe wirklich abgeben?")) {
+            if (!confirm(await this.fts.t("pages.assignments.notAllWorksheetsEdited") as string)) {
                 return;
             }
         }
         if (!this.assignment.submissions?.length && !this.submissionMessage.trim()) {
             // eslint-disable-next-line
-            if (!confirm("Du hast keine Dateien angehängt und keine Nachricht geschrieben. Möchtest du diese Aufgabe also ohne weitere Infos abgeben? Wenn nicht, klicke jetzt auf 'Abbrechen'.")) {
+            if (!confirm(await this.fts.t("pages.assignments.noFilesAttachedAndNoMessageWritten") as string)) {
                 return;
             }
         }
@@ -74,9 +76,9 @@ export class AssignmentComponent {
         });
     }
 
-    public unsubmitAssignment(): void {
+    public async unsubmitAssignment(): Promise<void> {
         // eslint-disable-next-line
-        if (!confirm("Bist du sicher, dass Du die Abgabe rückgänig machen willst? Wenn du eine Nachricht geschrieben hast, wird diese dadurch verloren gehen.")) {
+        if (!confirm(await this.fts.t("pages.assignments.doYouReallyWantToUnsubmit") as string)) {
             return;
         }
         this.remoteService.post(`assignments/${this.assignment.id}/unsubmit`, {}).subscribe((d) => {
@@ -86,9 +88,9 @@ export class AssignmentComponent {
         });
     }
 
-    public returnAssignment(): void {
+    public async returnAssignment(): Promise<void> {
         // eslint-disable-next-line
-        if (!this.feedback.trim() && !confirm("Bist du sicher, dass Du die Aufgabe ohne Feedback zurückgeben willst?")) {
+        if (!this.feedback.trim() && !confirm(await this.fts.t("pages.assignments.reallyReturnWithoutFeedback") as string)) {
             return;
         }
         this.remoteService.post(`assignments/${this.assignment.id}/return/${this.assignment.userSubmissions[this.currentSubmissionIdx].user.id}`, { feedback: this.feedback }).subscribe((d) => {

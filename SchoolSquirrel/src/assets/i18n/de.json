@@ -33,7 +33,10 @@
         "select": "Auswählen",
         "grades": "Klassen",
         "student": "Schüler",
-        "teacher": "Lehrer"
+        "teacher": "Lehrer",
+        "message": "Nachricht",
+        "feedback": "Feedback",
+        "pleaseWait": "Bitte warten..."
     },
     "components": {
         "navbar": {
@@ -73,12 +76,17 @@
             "noChats": "Du hast noch mit niemandem gechattet. Gib oben in der Suchleiste einen Namen ein, um loszulegen!"
         },
         "assignments": {
+            "noFileSelected": "Keine Datei ausgewählt",
+            "noFeedbackGiven": "Kein Feedback geschrieben.",
+            "noMessageWritten": "Keine Nachricht geschrieben.",
             "newAssignment": "Neue Aufgabe",
             "noAssignments": "Keine Aufgaben!",
             "title": "Titel",
             "content": "Inhalt",
             "due": "Abgabe am {{date}} Uhr",
             "view": "Ansehen",
+            "savingDraft": "Entwurf wird gespeichert...",
+            "draftSaved": "Entwurf gespeichert!",
             "filesToView": "Materialien",
             "filesToEdit": "Arbeitsblätter",
             "studentView": "Schüleransicht",
@@ -86,10 +94,15 @@
             "submissions": "Abgaben",
             "myFiles": "Meine Dateien",
             "submitted": "Abgegeben am {{date}} Uhr",
+            "returned": "Zurückgegeben am {{date}} Uhr",
             "notSubmitted": "Nicht abgegeben",
             "hasSubmitted": "Abgegeben",
-            "returned": "Zurückgegeben",
-            "thisManyStudents": "{{some}} von {{all}} Schülern"
+            "hasReturned": "Zurückgegeben",
+            "thisManyStudents": "{{some}} von {{all}} Schülern",
+            "notAllWorksheetsEdited": "Du hast nicht alle Arbeitsblätter bearbeitet. Willst du die Aufgabe wirklich abgeben?",
+            "noFilesAttachedAndNoMessageWritten": "Du hast keine Dateien angehängt und keine Nachricht geschrieben. Möchtest du diese Aufgabe also ohne weitere Infos abgeben? Wenn nicht, klicke jetzt auf 'Abbrechen'.",
+            "doYouReallyWantToUnsubmit": "Bist du sicher, dass Du die Abgabe rückgänig machen willst? Wenn du eine Nachricht geschrieben hast, wird diese dadurch verloren gehen.",
+            "reallyReturnWithoutFeedback": "Bist du sicher, dass Du die Aufgabe ohne Feedback zurückgeben willst?"
         },
         "courses": {
             "title": "Kurstitel"

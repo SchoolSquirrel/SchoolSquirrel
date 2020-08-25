@@ -11,7 +11,7 @@
             ({{"pages.assignments.thisManyStudents" | translate:{some: assignment.userSubmissions.length - filterReturned(assignment.userSubmissions).length, all: assignment.course.students.length} }})</span>
     </div>
     <div class="progress-bar bg-success" role="progressbar" [style.width]="filterReturned(assignment.userSubmissions).length / assignment.course.students.length * 100 + '%'">
-        {{"pages.assignments.returned" | translate}}
+        {{"pages.assignments.hasReturned" | translate}}
         <span class="appear"><br>
             ({{"pages.assignments.thisManyStudents" | translate:{some: filterReturned(assignment.userSubmissions).length, all: assignment.course.students.length} }})
         </span>

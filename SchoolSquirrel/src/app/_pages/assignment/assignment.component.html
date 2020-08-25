@@ -24,7 +24,7 @@
                     <div *ngIf="currentSubmissionIdx !== undefined" class="h-100 container-fluid">
                         <div class="row h-100">
                             <div class="h-100 col col-12 col-md-8">
-                                <span class="text-muted mt-3" *ngIf="!selectedFileUrl">Keine Datei ausgewählt</span>
+                                <span class="text-muted mt-3" *ngIf="!selectedFileUrl">{{"pages.assignments.noFileSelected" | translate}}</span>
                                 <app-edit-document *ngIf="selectedFileUrl" [config]="{action: 'edit', type: 'assignments', id: assignment.id, path: removePrefix(selectedFileUrl)}"></app-edit-document>
                             </div>
                             <div class="h-100 col col-12 col-md-4 overflow-auto p-0">
@@ -41,11 +41,11 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <span class="text-muted">Abgegeben am {{assignment.userSubmissions[currentSubmissionIdx].date | date:"short"}} Uhr</span>
+                                        <span class="text-muted">{{ "pages.assignments.submitted" | translate:{ 'date': (assignment.userSubmissions[currentSubmissionIdx].date | date:"short") } }}</span>
                                     </div>
                                 </div>
                                 <ngb-accordion ngbAccordion class="tree-view-accordion" [activeIds]="['panel-feedback', 'panel-message', 'panel-files']">
-                                    <ngb-panel title="Feedback" id="panel-feedback">
+                                    <ngb-panel [title]="'general.feedback' | translate" id="panel-feedback">
                                         <ng-template ngbPanelContent>
                                             <div class="fix-accordeon-content-width" *ngIf="!assignment.userSubmissions[currentSubmissionIdx].returned">
                                                 <textarea class="form-control" placeholder="Feedback eingeben" [(ngModel)]="feedback"></textarea>
@@ -54,25 +54,25 @@
                                             <div class="fix-accordeon-content-width" *ngIf="assignment.userSubmissions[currentSubmissionIdx].returned">
                                                 <span class="d-block">{{assignment.userSubmissions[currentSubmissionIdx].feedback}}</span>
                                                 <span class="d-block text-muted" *ngIf="!assignment.userSubmissions[currentSubmissionIdx].feedback.trim()">
-                                                    Kein Feedback geschrieben.
+                                                    {{"pages.assignments.noFeedbackGiven" | translate}}
                                                 </span>
-                                                <span class="d-block mt-2 text-muted">Zurückgegeben am {{assignment.userSubmissions[currentSubmissionIdx].returned | date:"short"}}</span>
+                                                <span class="d-block mt-2 text-muted">{{ "pages.assignments.returned" | translate:{ 'date': (assignment.userSubmissions[currentSubmissionIdx].returned | date:"short") } }}</span>
                                             </div>
                                         </ng-template>
                                     </ngb-panel>
-                                    <ngb-panel title="Nachricht" id="panel-message">
+                                    <ngb-panel [title]="'general.message' | translate" id="panel-message">
                                         <ng-template ngbPanelContent>
                                             <div class="card">
                                                 <div class="card-body p-1">
                                                     {{assignment.userSubmissions[currentSubmissionIdx].message}}
                                                     <span class="text-muted" *ngIf="!assignment.userSubmissions[currentSubmissionIdx].message.trim()">
-                                                        Keine Nachricht geschrieben.
+                                                        {{"pages.assignments.noMessageWritten" | translate}}
                                                     </span>
                                                 </div>
                                             </div>
                                         </ng-template>
                                     </ngb-panel>
-                                    <ngb-panel title="Dateien" id="panel-files">
+                                    <ngb-panel [title]="'general.files' | translate" id="panel-files">
                                         <ng-template ngbPanelContent>
                                             <app-file-list (fileSelected)="selectedFileUrl = $event.name" [files]="assignment.userSubmissions[currentSubmissionIdx].files" [selectMode]="true" context="assignments" type="submissions" [id]="assignment.id" [edit]="false"></app-file-list>
                                         </ng-template>
