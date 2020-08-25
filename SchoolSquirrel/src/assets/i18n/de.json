@@ -1,7 +1,12 @@
 {
     "errors": {
         "required": "Dieses Feld muss ausgefüllt werden!",
-        "error": "Fehler"
+        "error": "Fehler",
+        "passwordTooShort": "Das Passwort ist zu kurz!",
+        "passwordTooLong": "Das Passwort ist zu lang!",
+        "passwordMustContainLettersAndNumbers": "Das Passwort muss Buchstaben und Zahlen enthalten!",
+        "unknown": "Unbekannter Fehler!",
+        "passwordsDontMatch": "Die Passwörter stimmen nicht überein!"
     },
     "general": {
         "logout": "Abmelden",
@@ -10,6 +15,7 @@
         "calendar": "Kalender",
         "courses": "Fächer / Kurse",
         "course": "Fach / Kurs",
+        "welcome": "Willkommen",
         "name": "Name",
         "password": "Passwort",
         "success": "Erfolg",
@@ -53,6 +59,11 @@
             "add": "Hinzufügen",
             "upload": "Datei hochladen...",
             "worksheetAlreadyEdited": "Du hast dieses Arbeitsblatt bereits geöffnet und verändert. Um diese <b>bereits bearbeitete Version</b> zu öffnen, wähle die Datei unter <i>Meine Dateien</i>. Wenn du das <b>Original-Arbeitsblatt</b> öffnen willst, wähle diese Datei."
+        },
+        "footer": {
+            "downloadSchoolSquirrel": "SchoolSquirrel herunterladen",
+            "desktop": "Desktop",
+            "mobile": "Smartphone"
         }
     },
     "dialogs": {
@@ -70,7 +81,8 @@
         "login": {
             "domain": "Domain",
             "rememberMe": "Eingeloggt bleiben",
-            "login": "Login"
+            "login": "Anmelden",
+            "setNewPassword": "Du musst nun ein neues Passwort setzen. Wähle ein Passwort, das sicher ist, aus Buchstaben und Ziffern besteht, zwischen 8 und 25 Zeichen lang ist und keine Standartphrasen wie <i>Passwort</i>, <i>qwertz</i> o. Ä. enthält."
         },
         "chat": {
             "noChats": "Du hast noch mit niemandem gechattet. Gib oben in der Suchleiste einen Namen ein, um loszulegen!"

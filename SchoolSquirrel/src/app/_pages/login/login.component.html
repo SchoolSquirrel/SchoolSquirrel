@@ -33,7 +33,7 @@
             <div class="row">
                 <form class="form-signin text-white p-4 col-sm-12 col-md-10 col-lg-8 col-xl-6 mx-auto mb-5" [formGroup]="loginForm" (ngSubmit)="onSubmit()" *ngIf="!changePassword">
 
-                    <h1 class="text-center mb-5">Anmelden
+                    <h1 class="text-center mb-5">{{"pages.login.login" | translate}}
                         <app-help docs="userrole/login" white="true" large="true"></app-help>
                     </h1>
                     <div class="form-label-group" [class.d-none]="autoDetectDomain">
@@ -66,10 +66,10 @@
 
                 <form class="form-signin text-white p-4 col-sm-12 col-md-10 col-lg-8 col-xl-6 mx-auto mb-5" [formGroup]="changePasswordForm" (ngSubmit)="onChangePasswordSubmit()" *ngIf="changePassword">
 
-                    <h1 class="text-center mb-5">Willkommen
+                    <h1 class="text-center mb-5">{{"general.welcome" | translate}}
                         <app-help docs="userrole/login#changePassword" white="true" large="true"></app-help>
                     </h1>
-                    <p>Du musst nun ein neues Passwort setzen. Wähle ein Passwort, das sicher ist, aus Buchstaben und Ziffern besteht, zwischen 8 und 25 Zeichen lang ist und keine Standartphrasen wie <i>Passwort</i>, <i>qwertz</i> o. Ä. enthält.</p>
+                    <p [innerHtml]="'pages.login.setNewPassword' | translate | safeUserHtml"></p>
 
                     <div class="form-label-group">
                         <input type="password" id="inputPassword" class="form-control" formControlName="password" [placeholder]="'general.password' | translate" required [class.is-invalid]="submitted && changePasswordForm.controls.password.invalid" [class.is-valid]="changePasswordForm.controls.password.valid">
@@ -110,7 +110,7 @@
         <footer class="bg-dark text-white container-fluid">
             <div class="row p-3">
                 <div class="col">
-                    <span class="text-grey">SchoolSquirrel herunterladen: <a class="text-grey ml-4" href="https://github.com/SchoolSquirrel/releases/latest"><i class="fas fa-desktop"></i> Desktop</a> <a class="text-grey ml-4" href="https://github.com/SchoolSquirrel/releases/latest"><i class="fas fa-mobile-alt"></i> Smartphone</a></span>
+                    <span class="text-grey">{{"components.footer.downloadSchoolSquirrel" | translate}}: <a class="text-grey ml-4" href="https://github.com/SchoolSquirrel/releases/latest"><i class="fas fa-desktop"></i> {{"components.footer.desktop" | translate}}</a> <a class="text-grey ml-4" href="https://github.com/SchoolSquirrel/releases/latest"><i class="fas fa-mobile-alt"></i> {{"components.footer.mobile" | translate}}</a></span>
                 </div>
                 <div class="col text-right">
                     <a class="text-grey" href="https://schoolsquirrel.github.io/SchoolSquirrel/about/">Hilfe</a>
