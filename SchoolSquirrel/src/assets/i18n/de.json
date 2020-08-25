@@ -25,7 +25,10 @@
         "download": "Herunterladen",
         "delete": "Löschen",
         "getHelp": "Hilfe aufrufen",
-        "admin": "Administrator"
+        "admin": "Administrator",
+        "students": "Schüler",
+        "description": "Beschreibung",
+        "saveChanges": "Änderungen speichern"
     },
     "components": {
         "navbar": {
@@ -47,6 +50,10 @@
     "dialogs": {
         "selectUsers": {
             "selectUsers": "Benutzer auswählen"
+        },
+        "course-config": {
+            "error": "Bitte geben Sie einen Titel ein und wählen Sie mindestens einen Benutzer aus!",
+            "createCourse": "Kurs erstellen"
         }
     },
     "pages": {
@@ -76,6 +83,9 @@
             "hasSubmitted": "Abgegeben",
             "returned": "Zurückgegeben",
             "thisManyStudents": "{{some}} von {{all}} Schülern"
+        },
+        "courses": {
+            "title": "Kurstitel"
         },
         "calendar": {
             "categories": {
