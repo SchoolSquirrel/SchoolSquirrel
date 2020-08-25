@@ -21,7 +21,9 @@
         "create": "Erstellen",
         "saveAsDraft": "Als Entwurf speichern",
         "pleaseSelect": "Bitte wählen",
-        "info": "Info"
+        "info": "Info",
+        "download": "Herunterladen",
+        "delete": "Löschen"
     },
     "components": {
         "navbar": {
@@ -36,7 +38,8 @@
             "newXlsx": "Neue Tabellenkalkulation",
             "newPptx": "Neue Präsentation",
             "add": "Hinzufügen",
-            "upload": "Datei hochladen..."
+            "upload": "Datei hochladen...",
+            "worksheetAlreadyEdited": "Du hast dieses Arbeitsblatt bereits geöffnet und verändert. Um diese <b>bereits bearbeitete Version</b> zu öffnen, wähle die Datei unter <i>Meine Dateien</i>. Wenn du das <b>Original-Arbeitsblatt</b> öffnen willst, wähle diese Datei."
         }
     },
     "dialogs": {
