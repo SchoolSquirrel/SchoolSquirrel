@@ -28,7 +28,9 @@
         "admin": "Administrator",
         "students": "Schüler",
         "description": "Beschreibung",
-        "saveChanges": "Änderungen speichern"
+        "saveChanges": "Änderungen speichern",
+        "ok": "OK",
+        "select": "Auswählen"
     },
     "components": {
         "navbar": {
@@ -48,8 +50,10 @@
         }
     },
     "dialogs": {
-        "selectUsers": {
-            "selectUsers": "Benutzer auswählen"
+        "select-users": {
+            "selectUsers": "Benutzer auswählen",
+            "noUsersFound": "Keine Benutzer gefunden!",
+            "thisManyUsersSelected": "Aktuell {{some}} Benutzer ausgewählt"
         },
         "course-config": {
             "error": "Bitte geben Sie einen Titel ein und wählen Sie mindestens einen Benutzer aus!",

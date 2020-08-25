@@ -1,6 +1,6 @@
 <ng-template #content let-modal>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">{{"dialogs.selectUsers.selectUsers" | translate }}</h4>
+        <h4 class="modal-title" id="modal-basic-title">{{"dialogs.select-users.selectUsers" | translate }}</h4>
         <button type="button" class="close" (click)="modal.dismiss('Cross click')">
       <span>&times;</span>
     </button>
@@ -21,14 +21,14 @@
                         {{user.name}}
                     </button>
                 </div>
-                <span class="text-muted" *ngIf="getFilteredUsers().length == 0">Keine Benutzer gefunden!</span>
+                <span class="text-muted" *ngIf="getFilteredUsers().length == 0">{{"dialogs.select-users.noUsersFound" | translate}}</span>
             </div>
         </div>
 
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-success" (click)="modal.close()">OK</button>
+        <button type="button" class="btn btn-outline-success" (click)="modal.close()">{{"general.ok" | translate}}</button>
     </div>
 </ng-template>
-<button class="btn btn-outline-primary mr-3" (click)="openModal(content)">Auswählen</button>
-<span>Aktuell {{users.length}} Benutzer ausgewählt</span>
+<button class="btn btn-outline-primary mr-3" (click)="openModal(content)">{{"general.select" | translate}}</button>
+<span>{{"dialogs.select-users.thisManyUsersSelected" | translate:{some: users.length} }}</span>
