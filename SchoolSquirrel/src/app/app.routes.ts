@@ -29,6 +29,11 @@ export const routes: Routes = [
         canActivate: [AuthenticationGuard],
     },
     {
+        path: "assignments/new",
+        component: AssignmentsComponent,
+        canActivate: [AuthenticationGuard],
+    },
+    {
         path: "assignments/:id",
         component: AssignmentComponent,
         canActivate: [AuthenticationGuard],

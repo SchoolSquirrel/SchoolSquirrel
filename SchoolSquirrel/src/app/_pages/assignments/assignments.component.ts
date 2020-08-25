@@ -1,6 +1,7 @@
-import { Component, ElementRef } from "@angular/core";
+import { Component, ElementRef, ViewChild } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { debounceTime, map } from "rxjs/operators";
+import { Router } from "@angular/router";
 import { RemoteService } from "../../_services/remote.service";
 import { TinyConfigService } from "../../_services/tiny-config.service";
 import { NavbarActions } from "../../_decorators/navbar-actions.decorator";
@@ -29,13 +30,22 @@ export class AssignmentsComponent extends AssignmentsComponentCommon {
     public saved: boolean;
     public assignmentWorksheets: any[] = [];
     public assignmentMaterials: any[] = [];
+    @ViewChild("assignmentModal") private assignmentModal: ElementRef;
     constructor(
         remoteService: RemoteService,
         public tinyConfigService: TinyConfigService,
         private modalService: NgbModal,
         public authenticationService: AuthenticationService,
+        private router: Router,
     ) {
         super(remoteService);
+    }
+
+    public ngAfterViewInit(): void {
+        if (this.router.url.endsWith("/new")) {
+            this.router.navigate(["/assignments"]);
+            this.newAssignment(this.assignmentModal);
+        }
     }
 
     public newAssignment(content: ElementRef): void {
