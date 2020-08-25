@@ -13,11 +13,6 @@ import { CalendarComponentCommon } from "./calendar.component.common";
         name: "Calendar",
         description: "Open the calendar",
     },
-    {
-        name: "New event",
-        description: "Create a new event",
-        navigateTo: "new",
-    },
 ], "calendar")
 @Component({
     selector: "app-calendar",
