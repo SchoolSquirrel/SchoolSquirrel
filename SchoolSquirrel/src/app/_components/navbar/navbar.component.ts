@@ -1,4 +1,4 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component, ViewChild, Injector } from "@angular/core";
 import { debounceTime, map } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { NgbTypeaheadSelectItemEvent, NgbDropdown } from "@ng-bootstrap/ng-bootstrap";
@@ -27,6 +27,7 @@ export class NavbarComponent {
         private navbarActionsService: NavbarActionsService,
         private router: Router,
         private electronService: ElectronService,
+        private injector: Injector,
     ) {
         this.action = this.action.bind(this);
     }
@@ -59,7 +60,7 @@ export class NavbarComponent {
             this.router.navigate(["/", action._baseRoute, ...action.navigateTo.split("/")]);
         }
         if (action.onClick) {
-            action._component[action.onClick]();
+            this.injector.get(action._component)[action.onClick]();
         }
         if (!action.onClick && !action.navigateTo) {
             this.router.navigate(["/", action._baseRoute]);
