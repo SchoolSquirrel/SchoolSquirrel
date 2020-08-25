@@ -1,1 +1,95 @@
-ToDo
+<div class="d-flex pt-2 h-100">
+    <ul ngbNav #nav="ngbNav" class="nav-pills  h-100" orientation="vertical">
+        <li ngbNavItem>
+            <a ngbNavLink>Allgemeines</a>
+            <ng-template ngbNavContent>
+                <div class="row h-100">
+                    <div class="col-md-8 border-right border-left border-light">
+                        <h2>Allgemeines</h2>
+                        <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label">Design</label>
+                            <div class="col-sm-10">
+                                <select class="custom-select">
+                                    <option>Hell</option>
+                                    <option>Dunkel</option>
+                                    <option>Systemeinstellung</option>
+                                </select>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="isElectron">
+                            <div class="form-group row">
+                                <label for="inputPassword" class="col-sm-2 col-form-label">Optionen</label>
+                                <div class="col-sm-10">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="autostart" [(ngModel)]="settings.autostart">
+                                        <label class="custom-control-label" for="autostart">Autostart</label>
+                                        <small class="form-text text-muted">SchoolSquirrel startet automatisch, wenn Du deinen PC hochfährst.</small>
+                                    </div>
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" [(ngModel)]="settings.startMinimized" [disabled]="settings.autostart ? null : 'disabled'" id="startMinimized">
+                                        <label class="custom-control-label" for="startMinimized">Minimiert starten</label>
+                                        <small class="form-text text-muted">SchoolSquirrel startet minimiert in die Taskleiste.</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div class="col-md-4  h-100">
+                        <div class="p-5">
+                            <img class="avatar" [src]="remoteService.getImageUrl('users/' + authenticationService.currentUser.id + '.svg', authenticationService)">
+                        </div>
+                        <h2>{{authenticationService.currentUser.name}}</h2>
+                        <small>{{authenticationService.currentUser.role}}</small>
+                        <small>{{authenticationService.currentUser.grade}}</small>
+                    </div>
+                </div>
+            </ng-template>
+        </li>
+        <li ngbNavItem>
+            <a ngbNavLink>Benachrichtigungen</a>
+            <ng-template ngbNavContent>
+                <div class="row h-100 border-left border-light">
+                    <div class="col">
+                        ToDo
+                    </div>
+                </div>
+            </ng-template>
+        </li>
+        <li ngbNavItem>
+            <a ngbNavLink>Datenschutz</a>
+            <ng-template ngbNavContent>
+                <div class="row h-100 border-left border-light">
+                    <div class="col">
+                        <div class="custom-control custom-switch" *ngFor="let setting of privacySettings">
+                            <input type="checkbox" class="custom-control-input" [id]="setting.key" [(ngModel)]="settings[setting.key]">
+                            <label class="custom-control-label" [for]="setting.key">{{setting.title}}</label>
+                            <small class="form-text text-muted">{{setting.description}}</small>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </li>
+        <li ngbNavItem *ngIf="isElectron">
+            <a ngbNavLink>Geräte</a>
+            <ng-template ngbNavContent>
+                <div class="row h-100 border-left border-light">
+                    <div class="col">
+                        ToDo
+                    </div>
+                </div>
+            </ng-template>
+        </li>
+        <li ngbNavItem>
+            <a ngbNavLink>Lizenzen</a>
+            <ng-template ngbNavContent>
+                <div class="row h-100 border-left border-light">
+                    <div class="col">
+                        ToDo
+                    </div>
+                </div>
+            </ng-template>
+        </li>
+    </ul>
+
+    <div [ngbNavOutlet]="nav" class="ml-4"></div>
+</div>
