@@ -58,14 +58,19 @@
             "noAssignments": "Keine Aufgaben!",
             "title": "Titel",
             "content": "Inhalt",
-            "due": "Abgabe am",
+            "due": "Abgabe am {{date}} Uhr",
             "view": "Ansehen",
             "filesToView": "Materialien",
             "filesToEdit": "Arbeitsblätter",
             "studentView": "Schüleransicht",
             "teacherView": "Lehreransicht",
             "submissions": "Abgaben",
-            "myFiles": "Meine Dateien"
+            "myFiles": "Meine Dateien",
+            "submitted": "Abgegeben am {{date}} Uhr",
+            "notSubmitted": "Nicht abgegeben",
+            "hasSubmitted": "Abgegeben",
+            "returned": "Zurückgegeben",
+            "thisManyStudents": "{{some}} von {{all}} Schülern"
         },
         "calendar": {
             "categories": {

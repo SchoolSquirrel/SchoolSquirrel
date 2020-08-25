@@ -1,14 +1,19 @@
 <div class="progress my-3">
     <div class="progress-bar bg-danger" role="progressbar" [style.width]="assignment.submissionsMissing.length / assignment.course.students.length * 100 + '%'">
-        Nicht abgegeben
-        <span class="appear"><br>({{assignment.submissionsMissing.length}} von {{assignment.course.students.length}} Schülern)</span>
+        {{"pages.assignments.notSubmitted" | translate}}
+        <span class="appear"><br>
+            ({{"pages.assignments.thisManyStudents" | translate:{some: assignment.submissionsMissing.length, all: assignment.course.students.length} }})
+        </span>
     </div>
     <div class="progress-bar bg-warning" role="progressbar" [style.width]="(assignment.userSubmissions.length - filterReturned(assignment.userSubmissions).length) / assignment.course.students.length * 100 + '%'">
-        Abgegeben
-        <span class="appear"><br>({{assignment.userSubmissions.length - filterReturned(assignment.userSubmissions).length}} von {{assignment.course.students.length}} Schülern)</span>
+        {{"pages.assignments.hasSubmitted" | translate}}
+        <span class="appear"><br>
+            ({{"pages.assignments.thisManyStudents" | translate:{some: assignment.userSubmissions.length - filterReturned(assignment.userSubmissions).length, all: assignment.course.students.length} }})</span>
     </div>
     <div class="progress-bar bg-success" role="progressbar" [style.width]="filterReturned(assignment.userSubmissions).length / assignment.course.students.length * 100 + '%'">
-        Korrigiert
-        <span class="appear"><br>({{filterReturned(assignment.userSubmissions).length}} von {{assignment.course.students.length}} Schülern)</span>
+        {{"pages.assignments.returned" | translate}}
+        <span class="appear"><br>
+            ({{"pages.assignments.thisManyStudents" | translate:{some: filterReturned(assignment.userSubmissions).length, all: assignment.course.students.length} }})
+        </span>
     </div>
 </div>
