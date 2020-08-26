@@ -50,10 +50,16 @@ export class RecordVideoComponent {
     public setMode(mode: "webcam" | "screen"): void {
         this.mode = mode;
         this.permissionError = false;
-        navigator.mediaDevices.getUserMedia({
+        (mode == "webcam" ? navigator.mediaDevices.getUserMedia({
             video: true,
             audio: true,
-        }).then(async (stream) => {
+        }) : (navigator.mediaDevices as any)?.getDisplayMedia({
+            video: true,
+            audio: true,
+        }) || (navigator as any).getDisplayMedia({
+            video: true,
+            audio: true,
+        })).then(async (stream) => {
             this.stream = stream;
             this.recorder = new RecordRTC(stream, {
                 type: "video",

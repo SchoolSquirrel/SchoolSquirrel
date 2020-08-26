@@ -21,13 +21,13 @@
     </div>
     <div class="row" *ngIf="mode && !setupDone">
         <div class="col-6 p-5" *ngIf="!permissionError">
-            <h3>{{"dialogs.record-video.chooseCamera" | translate}}</h3>
-            <p>{{"dialogs.record-video.chooseCameraDescription" | translate}}</p>
+            <h3>{{( mode == "webcam" ? "dialogs.record-video.chooseCamera" : "dialogs.record-video.chooseWindowOrScreen") | translate}}</h3>
+            <p>{{( mode == "webcam" ? "dialogs.record-video.chooseCameraDescription" : "dialogs.record-video.chooseWindowOrScreenDescription") | translate}}</p>
         </div>
         <div class="col-6 p-5" *ngIf="permissionError">
-            <h3>{{"general.error" | translate}}</h3>
-            <p>{{"dialogs.record-video.cameraPermissionError" | translate}}</p>
-            <button class="btn btn-outline-primary" (click)="setMode(mode)">{{"general.tryAgain" | translate}}</button>
+            <h3>{{"errors.error" | translate}}</h3>
+            <p>{{(mode == "webcam" ? "dialogs.record-video.cameraPermissionError" : "dialogs.record-video.windowOrScreenPermissionError") | translate}}</p>
+            <button class="btn btn-outline-primary" (click)="mode = undefined">{{"general.tryAgain" | translate}}</button>
         </div>
         <div class="col-6 p-5">
             <img [src]="'assets/illustrations/' + (permissionError ? 'access_denied.svg' : 'sign.svg')" class="img-fluid">
