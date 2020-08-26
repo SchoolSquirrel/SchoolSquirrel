@@ -48,7 +48,9 @@
         "notifications": "Benachrichtigungen",
         "devices": "Geräte",
         "about": "Über",
-        "privacy": "Datenschutz"
+        "privacy": "Datenschutz",
+        "save": "Speichern",
+        "tryAgain": "Erneut versuchen!"
     },
     "components": {
         "navbar": {
@@ -64,6 +66,7 @@
             "newPptx": "Neue Präsentation",
             "add": "Hinzufügen",
             "upload": "Datei hochladen...",
+            "createVideo": "Video erstellen",
             "worksheetAlreadyEdited": "Du hast dieses Arbeitsblatt bereits geöffnet und verändert. Um diese <b>bereits bearbeitete Version</b> zu öffnen, wähle die Datei unter <i>Meine Dateien</i>. Wenn du das <b>Original-Arbeitsblatt</b> öffnen willst, wähle diese Datei."
         },
         "footer": {
@@ -81,6 +84,24 @@
         "course-config": {
             "error": "Bitte geben Sie einen Titel ein und wählen Sie mindestens einen Benutzer aus!",
             "createCourse": "Kurs erstellen"
+        },
+        "record-video": {
+            "record-video": "Video aufnehmen",
+            "camera": "Kamera / Webcam",
+            "screen": "Bildschirm / Programm",
+            "useVideo": "Video verwenden",
+            "processing": "Dein Video wird verarbeitet...",
+            "done": "abgeschlossen",
+            "uploading": "Dein Video wird hochgeladen...",
+            "videoFinishedDescription": "Das Video wurde fertig aufgenommen. Du kannst es nun ansehen, herunterladen oder hochladen.",
+            "videoFinished": "Video fertig!",
+            "chooseCamera": "Kamera auswählen",
+            "chooseCameraDescription": "Bitte wähle nun oben nun die richtige Kamera aus und bestätige, dass SchoolSquirrel auf Deine Kamera zugreifen darf.",
+            "cameraPermissionError": "SchoolSquirrel konnte nicht auf Deine Kamera zugreifen. Es fehlen wahrscheinlich die erforderlichen Berechtigungen. Möchtest Du es erneut versuchen?",
+            "startRecording": "Aufnahme starten",
+            "stopRecording": "Aufnahme stoppen",
+            "pauseRecording": "Aufnahme pausieren",
+            "resumeRecording": "Aufnahme fortsetzen"
         }
     },
     "pages": {

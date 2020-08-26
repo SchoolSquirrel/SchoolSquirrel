@@ -1,0 +1,81 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{"dialogs.record-video.record-video" | translate}}</h4>
+    <button type="button" class="close" (click)="modal.dismiss()">
+    <span>&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+    <div class="row" *ngIf="!mode">
+        <div class="col-6">
+            <div class="card card-selectable text-center p-5" (click)="setMode('webcam')">
+                <img src="assets/illustrations/camera.svg" class="img-fluid">
+                <h3 class="mt-4">{{"dialogs.record-video.camera" | translate}}</h3>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card card-selectable text-center p-5" (click)="setMode('screen')">
+                <img src="assets/illustrations/video.svg" class="img-fluid">
+                <h3 class="mt-4">{{"dialogs.record-video.screen" | translate}}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="mode && !setupDone">
+        <div class="col-6 p-5" *ngIf="!permissionError">
+            <h3>{{"dialogs.record-video.chooseCamera" | translate}}</h3>
+            <p>{{"dialogs.record-video.chooseCameraDescription" | translate}}</p>
+        </div>
+        <div class="col-6 p-5" *ngIf="permissionError">
+            <h3>{{"general.error" | translate}}</h3>
+            <p>{{"dialogs.record-video.cameraPermissionError" | translate}}</p>
+            <button class="btn btn-outline-primary" (click)="setMode(mode)">{{"general.tryAgain" | translate}}</button>
+        </div>
+        <div class="col-6 p-5">
+            <img [src]="'assets/illustrations/' + (permissionError ? 'access_denied.svg' : 'sign.svg')" class="img-fluid">
+        </div>
+    </div>
+    <div class="row" *ngIf="mode && setupDone  && !loading && !blob">
+        <div class="col-6 p-5">
+            <button class="btn btn-outline-success" (click)="startRecording()" *ngIf="recordingStatus == 'stopped'"><i class="fas fa-circle"></i> {{"dialogs.record-video.startRecording" | translate}}</button>
+            <button class="btn btn-outline-success" (click)="resumeRecording()" *ngIf="recordingStatus == 'paused'"><i class="fas fa-circle"></i> {{"dialogs.record-video.resumeRecording" | translate}}</button>
+            <button class="btn btn-outline-primary" (click)="pauseRecording()" *ngIf="recordingStatus == 'recording'"><i class="fas fa-pause"></i> {{"dialogs.record-video.pauseRecording" | translate}}</button>
+            <button class="btn btn-outline-danger" (click)="stopRecording()" *ngIf="recordingStatus == 'recording'"><i class="fas fa-stop"></i> {{"dialogs.record-video.stopRecording" | translate}}</button>
+        </div>
+        <div class="col-6 p-5">
+            <video id="preview" class="img-fluid" muted volume="0" autoplay playsinline></video>
+        </div>
+    </div>
+    <div class="row" *ngIf="loading">
+        <div class="spinner-border" *ngIf="loading"></div>
+    </div>
+    <div class="row" *ngIf="!loading && blob && !uploading">
+        <div class="col-6 p-5">
+            <h3>{{"dialogs.record-video.videoFinished" | translate}}</h3>
+            <p>{{"dialogs.record-video.videoFinishedDescription" | translate}}</p>
+            <button class="btn btn-outline-primary" (click)="downloadVideo()">Herunterladen</button>
+            <button class="btn btn-outline-success" (click)="upload()">{{"dialogs.record-video.useVideo" | translate}}</button>
+        </div>
+        <div class="col-6 p-5">
+            <video class="img-fluid" [src]="blobUrl" controls></video>
+        </div>
+    </div>
+    <div class="row" *ngIf="uploading">
+        <div class="col-6 p-5">
+            <div *ngIf="uploading < 100">
+                <h3>{{"dialogs.record-video.uploading" | translate}}</h3>
+                <p class="text-center">{{uploading}}% {{"dialogs.record-video.done" | translate}}</p>
+                <div class="progress">
+                    <div class="progress-bar" [style.width]="uploading + '%'" role="progressbar"></div>
+                </div>
+            </div>
+            <div *ngIf="uploading == 100">
+                <h3>{{"dialogs.record-video.processing" | translate}}</h3>
+                <div class="text-center">
+                    <div class="spinner-border text-primary"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 p-5">
+            <img src="assets/illustrations/done.svg" class="img-fluid">
+        </div>
+    </div>
+</div>

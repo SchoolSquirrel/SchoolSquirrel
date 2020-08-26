@@ -68,6 +68,7 @@ import { UserChipComponent } from "./_components/user-chip/user-chip.component";
 import { AssignmentStatusbarComponent } from "./_components/assignment-statusbar/assignment-statusbar.component";
 import { HelpComponent } from "./_components/help/help.component";
 import { UserSettingsComponent } from "./_pages/user-settings/user-settings.component";
+import { RecordVideoComponent } from "./_dialogs/record-video/record-video.component";
 
 registerLocaleData(localeDe, localeDeExtra);
 declare const require: any;
@@ -122,6 +123,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         AssignmentStatusbarComponent,
         HelpComponent,
         UserSettingsComponent,
+        RecordVideoComponent,
     ],
     imports: [
         BrowserModule,
@@ -186,6 +188,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     ],
     bootstrap: [AppComponent],
     schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
-    entryComponents: [CourseConfigComponent],
+    entryComponents: [CourseConfigComponent, RecordVideoComponent],
 })
 export class AppModule {}

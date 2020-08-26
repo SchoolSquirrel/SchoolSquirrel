@@ -51,6 +51,15 @@ html {
     overflow: hidden;
 }
 
+.card-selectable {
+    cursor: pointer;
+    border-radius: 1rem;
+    padding: 2rem;
+    &:hover {
+        background-color: rgb(235, 235, 235);
+    }
+}
+
 .form-control-dark::placeholder {
     color: rgb(196, 196, 196);
 }
