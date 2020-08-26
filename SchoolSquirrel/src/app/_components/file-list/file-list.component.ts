@@ -2,10 +2,12 @@ import {
     Component, Input, ViewChild, ElementRef, Output, EventEmitter,
 } from "@angular/core";
 import { Router } from "@angular/router";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { RemoteService } from "../../_services/remote.service";
 import { AuthenticationService } from "../../_services/authentication.service";
 import { FileextPipe } from "../../_pipes/fileext.pipe";
 import { editableFileTypes } from "../../_resources/file-types";
+import { RecordVideoComponent } from "../../_dialogs/record-video/record-video.component";
 
 @Component({
     selector: "app-file-list",
@@ -28,6 +30,7 @@ export class FileListComponent {
         private remoteService: RemoteService,
         private authenticationService: AuthenticationService,
         private router: Router,
+        private modalService: NgbModal,
     ) { }
 
     public uploadFile(): void {
@@ -55,6 +58,17 @@ export class FileListComponent {
                 this.files = this.files.filter((f) => f.name !== file.name);
             }
         });
+    }
+
+    public createVideo(): void {
+        const modal = this.modalService.open(RecordVideoComponent, { size: "xl" });
+        (modal.componentInstance as RecordVideoComponent).uploadSettings = {
+            url: `files/${this.context}/${this.id}/upload`,
+            path: `/${this.type}/`,
+        };
+        modal.result.then((files) => {
+            this.files = files;
+        }, () => undefined);
     }
 
     public download(file: { name: string }): void {

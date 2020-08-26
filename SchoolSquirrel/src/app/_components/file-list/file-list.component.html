@@ -21,13 +21,15 @@
 
 
 <div ngbDropdown class="d-inline-block" *ngIf="edit">
-    <button class="btn btn-outline-primary" ngbDropdownToggle>{{"components.file-list.add" | translate}}</button>
+    <button class="btn btn-outline-primary" ngbDropdownToggle> {{"components.file-list.add" | translate}}</button>
     <div ngbDropdownMenu>
-        <button ngbDropdownItem (click)="uploadFile()">{{"components.file-list.upload" | translate}}</button>
+        <button ngbDropdownItem (click)="uploadFile()"><i class="fas fa-upload text-muted"></i> {{"components.file-list.upload" | translate}}</button>
         <div class="dropdown-divider"></div>
         <button ngbDropdownItem (click)="newFile('docx')"><app-file-icon ext="docx"></app-file-icon> {{"components.file-list.newDocx" | translate}}</button>
         <button ngbDropdownItem (click)="newFile('xlsx')"><app-file-icon ext="xlsx"></app-file-icon> {{"components.file-list.newXlsx" | translate}}</button>
         <button ngbDropdownItem (click)="newFile('pptx')"><app-file-icon ext="pptx"></app-file-icon> {{"components.file-list.newPptx" | translate}}</button>
+        <div class="dropdown-divider"></div>
+        <button ngbDropdownItem (click)="createVideo()"><i class="fas fa-video text-muted"></i> {{"components.file-list.createVideo" | translate}}</button>
     </div>
 </div>
 <input type="file" #fileInput (change)="onFileSelected($event)" class="d-none">
