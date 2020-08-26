@@ -39,13 +39,14 @@ export class RemoteService {
 
     public postFile(
         url: string, data: { [key: string]: any }, fileKey: string, file: File,
+        observeEvents = false,
     ): Observable<any> {
         const formData = new FormData();
         formData.append(fileKey, file, file.name);
         for (const key of Object.keys(data)) {
             formData.append(key, data[key]);
         }
-        return this.httpClient.post(`${this.pApiUrl}/${url}`, formData, { reportProgress: true });
+        return this.httpClient.post(`${this.pApiUrl}/${url}`, formData, { reportProgress: true, observe: observeEvents ? "events" : undefined });
     }
 
     public delete(url: string): Observable<any> {
