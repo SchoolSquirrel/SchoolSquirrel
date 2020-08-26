@@ -104,7 +104,9 @@
             "startRecording": "Aufnahme starten",
             "stopRecording": "Aufnahme stoppen",
             "pauseRecording": "Aufnahme pausieren",
-            "resumeRecording": "Aufnahme fortsetzen"
+            "resumeRecording": "Aufnahme fortsetzen",
+            "recording": "Aufnahme läuft",
+            "paused": "Aufnahme pausiert"
         }
     },
     "pages": {

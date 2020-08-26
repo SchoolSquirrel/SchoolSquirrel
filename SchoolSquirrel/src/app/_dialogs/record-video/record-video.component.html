@@ -35,6 +35,16 @@
     </div>
     <div class="row" *ngIf="mode && setupDone  && !loading && !blob">
         <div class="col-6 p-5">
+            <div class="alert alert-danger" *ngIf="recordingStatus == 'recording'">
+                <i class="fas fa-circle pulse fa-4x float-left mr-3"></i>
+                <b>{{"dialogs.record-video.recording" | translate}}</b>
+                <h3>{{ duration }}</h3>
+            </div>
+            <div class="alert alert-primary" *ngIf="recordingStatus == 'paused'">
+                <i class="fas fa-pause pulse fa-4x float-left mr-3"></i>
+                <b>{{"dialogs.record-video.paused" | translate}}</b>
+                <h3>{{ duration }}</h3>
+            </div>
             <button class="btn btn-outline-success" (click)="startRecording()" *ngIf="recordingStatus == 'stopped'"><i class="fas fa-circle"></i> {{"dialogs.record-video.startRecording" | translate}}</button>
             <button class="btn btn-outline-success" (click)="resumeRecording()" *ngIf="recordingStatus == 'paused'"><i class="fas fa-circle"></i> {{"dialogs.record-video.resumeRecording" | translate}}</button>
             <button class="btn btn-outline-primary" (click)="pauseRecording()" *ngIf="recordingStatus == 'recording'"><i class="fas fa-pause"></i> {{"dialogs.record-video.pauseRecording" | translate}}</button>

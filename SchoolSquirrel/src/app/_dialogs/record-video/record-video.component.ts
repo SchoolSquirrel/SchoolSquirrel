@@ -24,6 +24,7 @@ export class RecordVideoComponent {
     private stream: MediaStream;
     public uploading: number;
     public uploadSettings: {url: string, path: string};
+    public duration: string;
     constructor(
         public modal: NgbActiveModal,
         private zone: NgZone,
@@ -33,7 +34,7 @@ export class RecordVideoComponent {
 
     public upload(): void {
         this.uploading = 0;
-        const file = new File([this.blob], "myVideo.mp4");
+        const file = new File([this.blob], "myVideo.webm");
         this.remoteService.postFile(this.uploadSettings.url, {
             path: this.uploadSettings.path,
         }, "file", file, true).subscribe((data: HttpEvent<any>) => {
@@ -64,6 +65,17 @@ export class RecordVideoComponent {
             this.recorder = new RecordRTC(stream, {
                 type: "video",
                 mimeType: "video/mp4",
+                timeSlice: 1000,
+                onTimeStamp: ((timestamp, timestamps) => {
+                    const pad = (n) => (n < 10 ? `0${n}` : n);
+                    this.zone.run(() => {
+                        const seconds = (new Date().getTime() - timestamps[0]) / 1000;
+                        const h = Math.floor(seconds / 3600);
+                        const m = Math.floor(seconds / 60) - (h * 60);
+                        const s = Math.floor(seconds - h * 3600 - m * 60);
+                        this.duration = `${pad(h)}:${pad(m)}:${pad(s)}`;
+                    });
+                }) as any,
             });
             this.setupDone = true;
             setTimeout(() => {
@@ -107,65 +119,57 @@ export class RecordVideoComponent {
     public downloadVideo(): void {
         if (this.blob) {
             // eslint-disable-next-line no-use-before-define
-            invokeSaveAsDialog(this.blob);
+            this.invokeSaveAsDialog(this.blob);
         }
     }
-}
 
-/*
+    private invokeSaveAsDialog(file: Blob, fileName?: string): boolean {
+        if (!file) {
+            throw new Error("Blob object is required.");
+        }
 
-recorder.stopRecording(() => {
-    // eslint-disable-next-line no-use-before-define
-    invokeSaveAsDialog(blob);
-});
-*/
-
-function invokeSaveAsDialog(file: Blob, fileName?: string): boolean {
-    if (!file) {
-        throw new Error("Blob object is required.");
-    }
-
-    if (!file.type) {
-        try {
-            (file as any).type = "video/webm";
-        } catch (e) {
+        if (!file.type) {
+            try {
+                (file as any).type = "video/webm";
+            } catch (e) {
             //
+            }
         }
+
+        let fileExtension = (file.type || "video/webm").split("/")[1];
+
+        if (fileName && fileName.indexOf(".") !== -1) {
+            const splitted = fileName.split(".");
+            [fileName, fileExtension] = splitted;
+        }
+
+        const fileFullName = `${fileName || (Math.round(Math.random() * 9999999999) + 888888888)}.${fileExtension}`;
+
+        if (typeof navigator.msSaveOrOpenBlob !== "undefined") {
+            return navigator.msSaveOrOpenBlob(file, fileFullName);
+        } if (typeof navigator.msSaveBlob !== "undefined") {
+            return navigator.msSaveBlob(file, fileFullName);
+        }
+
+        const hyperlink = document.createElement("a");
+        hyperlink.href = URL.createObjectURL(file);
+        hyperlink.download = fileFullName;
+
+        (hyperlink as any).style = "display:none;opacity:0;color:transparent;";
+        (document.body || document.documentElement).appendChild(hyperlink);
+
+        if (typeof hyperlink.click === "function") {
+            hyperlink.click();
+        } else {
+            hyperlink.target = "_blank";
+            hyperlink.dispatchEvent(new MouseEvent("click", {
+                view: window,
+                bubbles: true,
+                cancelable: true,
+            }));
+        }
+
+        URL.revokeObjectURL(hyperlink.href);
+        return true;
     }
-
-    let fileExtension = (file.type || "video/webm").split("/")[1];
-
-    if (fileName && fileName.indexOf(".") !== -1) {
-        const splitted = fileName.split(".");
-        [fileName, fileExtension] = splitted;
-    }
-
-    const fileFullName = `${fileName || (Math.round(Math.random() * 9999999999) + 888888888)}.${fileExtension}`;
-
-    if (typeof navigator.msSaveOrOpenBlob !== "undefined") {
-        return navigator.msSaveOrOpenBlob(file, fileFullName);
-    } if (typeof navigator.msSaveBlob !== "undefined") {
-        return navigator.msSaveBlob(file, fileFullName);
-    }
-
-    const hyperlink = document.createElement("a");
-    hyperlink.href = URL.createObjectURL(file);
-    hyperlink.download = fileFullName;
-
-    (hyperlink as any).style = "display:none;opacity:0;color:transparent;";
-    (document.body || document.documentElement).appendChild(hyperlink);
-
-    if (typeof hyperlink.click === "function") {
-        hyperlink.click();
-    } else {
-        hyperlink.target = "_blank";
-        hyperlink.dispatchEvent(new MouseEvent("click", {
-            view: window,
-            bubbles: true,
-            cancelable: true,
-        }));
-    }
-
-    URL.revokeObjectURL(hyperlink.href);
-    return true;
 }
