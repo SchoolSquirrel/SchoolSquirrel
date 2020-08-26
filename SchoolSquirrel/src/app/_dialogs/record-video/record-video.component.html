@@ -41,7 +41,7 @@
             <button class="btn btn-outline-danger" (click)="stopRecording()" *ngIf="recordingStatus == 'recording'"><i class="fas fa-stop"></i> {{"dialogs.record-video.stopRecording" | translate}}</button>
         </div>
         <div class="col-6 p-5">
-            <video id="preview" class="img-fluid" muted volume="0" autoplay playsinline></video>
+            <video id="preview" class="img-fluid" [muted]="true" autoplay playsinline></video>
         </div>
     </div>
     <div class="row" *ngIf="loading">
@@ -55,7 +55,7 @@
             <button class="btn btn-outline-success" (click)="upload()">{{"dialogs.record-video.useVideo" | translate}}</button>
         </div>
         <div class="col-6 p-5">
-            <video class="img-fluid" [src]="blobUrl" controls></video>
+            <video class="img-fluid" [src]="blobUrl" controls playsinline></video>
         </div>
     </div>
     <div class="row" *ngIf="uploading">
@@ -67,9 +67,9 @@
                     <div class="progress-bar" [style.width]="uploading + '%'" role="progressbar"></div>
                 </div>
             </div>
-            <div *ngIf="uploading == 100">
+            <div *ngIf="uploading == 100" class="text-center">
                 <h3>{{"dialogs.record-video.processing" | translate}}</h3>
-                <div class="text-center">
+                <div>
                     <div class="spinner-border text-primary"></div>
                 </div>
             </div>
