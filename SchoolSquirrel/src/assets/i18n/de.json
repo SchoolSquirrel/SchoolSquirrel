@@ -144,6 +144,7 @@
             "title": "Titel",
             "content": "Inhalt",
             "due": "Abgabe am {{date}} Uhr",
+            "toBeDoneBy": "Abgabe",
             "view": "Ansehen",
             "savingDraft": "Entwurf wird gespeichert...",
             "draftSaved": "Entwurf gespeichert!",

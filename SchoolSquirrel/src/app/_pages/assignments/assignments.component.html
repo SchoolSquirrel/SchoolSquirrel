@@ -41,7 +41,7 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="content" class="col-sm-2 col-form-label">{{'pages.assignments.due' | translate}}</label>
+                <label for="content" class="col-sm-2 col-form-label">{{'pages.assignments.toBeDoneBy' | translate}}</label>
                 <div class="input-group col-sm-5">
                     <input class="form-control" formControlName="date" [class.is-invalid]="submitted && newAssignmentForm.controls.date.invalid" [class.is-valid]="newAssignmentForm.controls.date.valid" required placeholder="dd.mm.yyyy" name="d2" ngbDatepicker #d2="ngbDatepicker">
                     <div class="input-group-append">
