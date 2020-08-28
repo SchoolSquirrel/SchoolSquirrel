@@ -60,11 +60,40 @@ export class RecordVideoComponent {
             return;
         }
         // eslint-disable-next-line
-        (mode == "webcam" ? navigator.mediaDevices.enumerateDevices() : window.require("electron").desktopCapturer.getSources({types: ["screen", "window"]})).then((devices) => {
+        (mode == "webcam" ? navigator.mediaDevices.enumerateDevices() : window.require("electron").desktopCapturer.getSources({types: ["screen", "window"]})).then(async (devices) => {
             if (mode == "webcam") {
                 this.devices = devices.filter((d) => d.kind == "videoinput");
+                for (const device of this.devices) {
+                    try {
+                        let video = document.createElement("video");
+                        const stream = await navigator.mediaDevices.getUserMedia({
+                            video: { deviceId: { exact: device.deviceId } },
+                        });
+                        video.srcObject = stream;
+                        video.play();
+                        video.onloadeddata = () => {
+                            let canvas = document.createElement("canvas");
+                            canvas.setAttribute("width", "480");
+                            canvas.setAttribute("height", "270");
+                            const context = canvas.getContext("2d");
+                            context.drawImage(video, 0, 0, 480, 270);
+                            (device as any).thumbnail = this.sanitizer
+                                .bypassSecurityTrustResourceUrl(canvas.toDataURL());
+                            video = undefined;
+                            canvas = undefined;
+                        };
+                        // video.play();
+                    } catch {
+                        (device as any).thumbnail = "assets/illustrations/question.svg";
+                    }
+                }
             } else {
-                this.devices = devices;
+                this.devices = devices.map((d) => {
+                    d.thumbnail = this.sanitizer.bypassSecurityTrustResourceUrl(
+                        d.thumbnail.toDataURL(),
+                    );
+                    return d;
+                });
             }
         }, () => {
             this.permissionError = true;
@@ -124,8 +153,7 @@ export class RecordVideoComponent {
             setTimeout(() => {
                 (document.querySelector("video#preview") as HTMLVideoElement).srcObject = stream;
             });
-        }, (c) => {
-            console.log(c);
+        }, () => {
             this.permissionError = true;
         });
     }

@@ -35,7 +35,7 @@
                 <div class="row row-cols-3">
                     <div class="col" *ngFor="let device of devices">
                         <div class="card card-selectable text-center p-5" (click)="useDevice(device)">
-                            <img class="img-fluid" *ngIf="device.thumbnail" [src]="device.thumbnail.toDataURL()">
+                            <img class="img-fluid" [src]="device.thumbnail || 'assets/illustrations/wip.svg'">
                             <h5 class="mt-4">{{device.label || device.name || ("dialogs.record-video.unknownSource" | translate)}}</h5>
                         </div>
                     </div>
