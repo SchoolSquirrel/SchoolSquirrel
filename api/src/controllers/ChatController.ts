@@ -15,12 +15,17 @@ class ChatController {
     public static async getChatFromUserId(req: Request, res: Response): Promise<void> {
         const chatRepository = getRepository(Chat);
         const userRepository = getRepository(User);
+        const id = parseInt(req.params.id, 10);
+        if (id === Number.NaN) {
+            res.status(404).send({ message: "Chat nicht gefunden!" });
+            return;
+        }
         let chat = await chatRepository.query(`
         SELECT chat.* FROM chat
         WHERE chat.id = (
             SELECT c0.chatId FROM chat_users_user AS c0
             JOIN chat_users_user AS c1 ON c1.chatId = c0.chatId
-            WHERE c0.userId = '${req.params.id}' AND c1.userId = '${res.locals.jwtPayload.userId}')`) as Chat; // HAVING COUNT(DISTINCT m3.name) = 2;
+            WHERE c0.userId = '${id}' AND c1.userId = '${res.locals.jwtPayload.userId}')`) as Chat; // HAVING COUNT(DISTINCT m3.name) = 2;
         chat = chat && chat[0] ? chat[0] : undefined;
         if (!chat) {
             chat = new Chat();
@@ -39,7 +44,12 @@ class ChatController {
     public static async getChat(req: Request, res: Response): Promise<void> {
         const chatRepository = getRepository(Chat);
         try {
-            const chat = await chatRepository.findOneOrFail(req.params.id, { relations: ["users", "messages", "messages.sender"] });
+            const id = parseInt(req.params.id, 10);
+            if (id === Number.NaN) {
+                res.status(404).send({ message: "Chat nicht gefunden!" });
+                return;
+            }
+            const chat = await chatRepository.findOneOrFail(id, { relations: ["users", "messages", "messages.sender"] });
             if (chat.users.length > 2) {
                 // is a group chat
                 chat.info = chat.users.map((u) => u.name).join(", ");

@@ -25,7 +25,12 @@ class CourseController {
 
     public static async getCourse(req: Request, res: Response): Promise<void> {
         const courseRepository = getRepository(Course);
-        const course = await courseRepository.findOne(req.params.id, { relations: ["students", "teachers", "messages", "messages.sender", "assignments"] });
+        const id = parseInt(req.params.id, 10);
+        if (id === Number.NaN) {
+            res.status(404).send({ message: "Kurs nicht gefunden!" });
+            return;
+        }
+        const course = await courseRepository.findOne(id, { relations: ["students", "teachers", "messages", "messages.sender", "assignments"] });
         const user = await getRepository(User).findOne(res.locals.jwtPayload.userId);
         for (const assignment of course.assignments) {
             await AssignmentsController.checkIfSubmitted(res, assignment, user);

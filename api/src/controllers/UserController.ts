@@ -17,7 +17,12 @@ class UserController {
 
     public static async avatar(req: Request, res: Response): Promise<void> {
         const userRepository = getRepository(User);
-        const user = await userRepository.findOne(req.params.id);
+        const id = parseInt(req.params.id, 10);
+        if (id === Number.NaN) {
+            res.status(404).send({ message: "Benutzer nicht gefunden!" });
+            return;
+        }
+        const user = await userRepository.findOne(id);
         if (req.params.ext == "svg") {
             res.contentType("svg");
             res.send(avatars.create(user.name));
@@ -66,7 +71,6 @@ class UserController {
             user = await userRepository.findOne(id);
         } catch (error) {
             res.status(404).send({ message: i18n.__("errors.userNotFound") });
-            return;
             return;
         }
 

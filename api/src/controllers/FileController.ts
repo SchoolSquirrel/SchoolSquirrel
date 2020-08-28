@@ -1,4 +1,5 @@
 /* eslint-disable no-use-before-define */
+// file deepcode ignore NoRateLimitingForExpensiveWebOperation: see index.ts
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import * as archiver from "archiver";
@@ -86,8 +87,16 @@ class FileController {
         return undefined;
     }
     public static async handle(req: Request, res: Response): Promise<void> {
-        if (req.body.action == "read") {
-            const items = await listObjects(req.app.locals.minio as minio.Client, FileController.getBucketName(req), `/${req.params.itemId}${req.body.path}`);
+        const {
+            action, data, names, path,
+        } = req.body;
+        const { itemId } = req.params;
+        if (typeof itemId !== "string") {
+            res.status(400);
+            return;
+        }
+        if (typeof action == "string" && action == "read") {
+            const items = await listObjects(req.app.locals.minio as minio.Client, FileController.getBucketName(req), `/${itemId}${req.body.path}`);
             FileController.minioObjectsToFiles(items);
             res.send({
                 cwd: {
@@ -101,24 +110,29 @@ class FileController {
         } else if (req.body.action == "details") {
             res.send({
                 details: {
-                    name: req.body.names.length == 0 ? req.body.path.slice(0, -1).split("/").pop() : req.body.names.join(),
-                    isFile: req.body.data.length == 1 ? req.body.data[0].isFile : undefined,
-                    type: req.body.data.length == 1 && req.body.data[0].isFile ? req.body.names[0].split(".").pop() : "",
-                    multipleFiles: req.body.data.length > 1,
+                    name: names.length == 0 ? path.slice(0, -1).split("/").pop() : names.join(),
+                    isFile: data.length == 1 ? data[0].isFile : undefined,
+                    type: data.length == 1 && data[0].isFile ? names[0].split(".").pop() : "",
+                    multipleFiles: data.length > 1,
                     size: "Unknown",
                     location: `Kurse/${await FileController.getCourseName(req)}${req.body.path}${req.body.data.length == 1 ? req.body.names[0] || "" : ""}`.replace(/\//g, " / "),
                     modified: new Date(),
                 },
             });
         } else if (req.body.action == "search") {
-            const path = `/${req.params.itemId}${req.body.path}`;
+            const { searchString } = req.body;
+            if (typeof searchString !== "string") {
+                res.send({ files: [] });
+                return;
+            }
+            const completePath = `/${req.params.itemId}${req.body.path}`;
             let items = await listObjects(req.app.locals.minio as minio.Client,
-                FileController.getBucketName(req), path, true);
-            items = items.filter((i) => checkForSearchResult(req.body.caseSensitive, req.body.searchString.replace(/\*/g, ""), i.name.split("/").pop(), req.body.searchString));
+                FileController.getBucketName(req), completePath, true);
+            items = items.filter((i) => checkForSearchResult(req.body.caseSensitive, req.body.searchString.replace(/\*/g, ""), i.name.split("/").pop(), searchString));
             for (const item of items as any[]) {
                 item.filterPath = item.name.split("/");
                 item.filterPath.pop();
-                item.filterPath = `/${item.filterPath.join("/")}/`.replace(path, "");
+                item.filterPath = `/${item.filterPath.join("/")}/`.replace(completePath, "");
             }
             FileController.minioObjectsToFiles(items);
             res.send({ files: items });
@@ -129,12 +143,24 @@ class FileController {
 
     public static async handleUpload(req: Request, res: Response): Promise<void> {
         // if (req.body.action === "save") {
+        const itemId = parseInt(req.params.itemId, 10);
+        if (typeof itemId !== "number") {
+            res.status(404).send({ message: "Item nicht gefunden!" });
+            return;
+        }
+        const { path } = req.body;
+        if (typeof path !== "string") {
+            res.status(404).send({ message: "Pfad nicht gefunden!" });
+            return;
+        }
         for (const file of req.files as Express.Multer.File[]) {
-            let path = `${req.params.itemId}${req.body.path}${file.originalname}`;
-            path = await FileController.fixPathForAssignmentSubmissions(req, res, path);
+            let completePath = `${itemId}${path}${file.originalname}`;
+            completePath = await FileController
+                .fixPathForAssignmentSubmissions(req, res, completePath);
             await (req.app.locals.minio as minio.Client)
-                .putObject(FileController.getBucketName(req), path, file.buffer);
-            await FileController.setFileMetadata(req, FileController.getBucketName(req), path, {
+                .putObject(FileController.getBucketName(req), completePath, file.buffer);
+            await FileController.setFileMetadata(req, FileController
+                .getBucketName(req), completePath, {
                 modified: new Date(),
                 authorId: res.locals.jwtPayload.userId,
             });
@@ -142,7 +168,7 @@ class FileController {
         if (req.body.action) {
             res.send("Success");
         } else {
-            let folder = `${req.params.itemId}${req.body.path}`;
+            let folder = `${itemId}${req.body.path}`;
             folder = await FileController.fixPathForAssignmentSubmissions(req, res, folder);
             res.send(await listObjects(req.app.locals.minio,
                 FileController.getBucketName(req), folder));
@@ -162,7 +188,13 @@ class FileController {
     }
 
     public static async newFile(req: Request, res: Response): Promise<void> {
-        let filePath = `${req.params.itemId}/${req.params.path}${req.params["0"]}`;
+        const { itemId, path } = req.params;
+        const rest = req.params[0];
+        if (!(typeof itemId === "string" && typeof path === "string" && typeof rest === "string")) {
+            res.status(400);
+            return;
+        }
+        let filePath = `${itemId}/${path}${rest}`;
         filePath = await FileController.fixPathForAssignmentSubmissions(req, res, filePath);
         const fileExtension = filePath.split(".").pop();
         let fileData = Buffer.from("");
@@ -219,10 +251,19 @@ class FileController {
     }
 
     public static async handleSave(req: Request, res: Response): Promise<void> {
-        if (req.body.status == DocumentStatus.BEING_EDITED) {
-            res.send({ error: 0 });
-        } else if (req.body.status == DocumentStatus.READY_TO_SAVE) {
-            http.get(req.body.url, async (response) => {
+        const { status, url } = req.body;
+        if (typeof status !== "number") {
+            res.status(400);
+            return;
+        }
+        if (typeof url !== "string" || !url.startsWith(res.app.locals.config.ONLYOFFICE_URL)) {
+            res.status(400);
+            return;
+        }
+        if (status == DocumentStatus.BEING_EDITED) {
+            res.json({ error: 0 });
+        } else if (status == DocumentStatus.READY_TO_SAVE) {
+            http.get(url, async (response) => {
                 let path = `${req.params.itemId}${req.query.path}`;
                 path = await FileController.fixPathForAssignmentWorksheets(req, res, path);
                 path = await FileController.fixPathForAssignmentSubmissions(req, res, path);
@@ -230,10 +271,10 @@ class FileController {
                     .putObject(FileController.getBucketName(req), path, response);
                 await FileController.generateNewEditKey(req,
                     FileController.getBucketName(req), path);
-                res.send({ error: 0 });
+                res.json({ error: 0 });
             });
         } else {
-            res.send({ error: `Unknown status:${req.body.status}` });
+            res.json({ error: `Unknown status:${status}` });
             // eslint-disable-next-line no-console
             console.log("Unknown status:", req.body);
         }
@@ -424,7 +465,7 @@ class FileController {
         path: string, key: string, value: any) {
         const metadata = await FileController.getFileMetadata(req, bucket, path);
         metadata[key] = value;
-        await this.setFileMetadata(req, bucket, path, metadata);
+        await FileController.setFileMetadata(req, bucket, path, metadata);
     }
 
     private static async getFileMetadata(req: Request, bucket: Buckets,
@@ -435,7 +476,7 @@ class FileController {
 
 export default FileController;
 
-function checkForSearchResult(casesensitive, filter, fileName, searchString) {
+function checkForSearchResult(casesensitive, filter, fileName, searchString: string) {
     if (searchString.substr(0, 1) == "*" && searchString.substr(searchString.length - 1, 1) == "*") {
         if (casesensitive ? fileName.indexOf(filter) >= 0
             : (fileName.indexOf(filter.toLowerCase()) >= 0

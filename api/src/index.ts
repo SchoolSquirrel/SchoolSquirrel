@@ -1,7 +1,10 @@
+// file deepcode ignore DisablePoweredBy
+// file deepcode ignore UseCsurfForExpress
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
 import * as express from "express";
 import * as helmet from "helmet";
+import * as rateLimit from "express-rate-limit";
 import * as i18n from "i18n";
 import * as path from "path";
 import "reflect-metadata";
@@ -105,6 +108,12 @@ createConnection({
             extended: true,
         }));
         app.use(bodyParser.json());
+
+        // Limit requests to 2 per second (1200 per 10 min)
+        app.use(rateLimit({
+            max: 1200,
+            windowMs: 1000 * 10 * 60,
+        }));
 
         // Set all routes from routes folder
         app.use("/api", routes);

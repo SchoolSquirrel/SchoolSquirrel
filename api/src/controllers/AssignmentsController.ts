@@ -40,7 +40,12 @@ class AssignmentsController {
         const assignmentRepository = getRepository(Assignment);
         const teacher = await isTeacher(res.locals.jwtPayload.userId);
         try {
-            const assignment = await assignmentRepository.findOneOrFail(req.params.id,
+            const id = parseInt(req.params.id, 10);
+            if (id === Number.NaN) {
+                res.status(404).send({ message: "Aufgabe nicht gefunden!" });
+                return;
+            }
+            const assignment = await assignmentRepository.findOneOrFail(id,
                 teacher ? { relations: ["course", "course.students", "userSubmissions", "userSubmissions.user"] } : {});
             await AssignmentsController.addFilesToAssignment(assignment, req, res);
             await AssignmentsController.checkIfSubmitted(res, assignment);
