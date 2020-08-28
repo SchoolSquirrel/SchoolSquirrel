@@ -2,7 +2,7 @@ import { NgbDateParserFormatter, NgbDateStruct } from "@ng-bootstrap/ng-bootstra
 import { Injectable } from "@angular/core";
 
 // eslint-disable-next-line no-restricted-globals
-function isNumber(n) { return !isNaN(parseFloat(n)) && !isNaN(n - 0); }
+function isNumber(n) { return !isNaN(parseFloat(n)) && !Number.isNaN(n - 0); }
 
 @Injectable()
 export class NgbDateCustomParserFormatter extends NgbDateParserFormatter {

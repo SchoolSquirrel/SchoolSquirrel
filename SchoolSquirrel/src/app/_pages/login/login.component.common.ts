@@ -49,7 +49,8 @@ export class LoginComponentCommon {
         if (this.autoDetectDomain) {
             const url = typeof window !== "undefined" ? window.location.toString() : "";
             if (url.indexOf("localhost:4200") !== -1) { // is dev
-                this.loginForm.controls.domain.setValue("http://localhost:3000");
+                const apiPortDev = 3000;
+                this.loginForm.controls.domain.setValue(`http://localhost:${apiPortDev}`);
             } else {
                 this.loginForm.controls.domain.setValue(url.substring(0, url.indexOf("/login")));
             }
