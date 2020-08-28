@@ -87,6 +87,12 @@
         },
         "record-video": {
             "record-video": "Video aufnehmen",
+            "loadingDevices": "Laden der Geräte",
+            "loadingVideoStream": "Videostream laden...",
+            "loadingVideoStreamDescription": "Dein Videostream wird geladen. Bitte habe etwas Geduld!",
+            "selectCamera": "Kamera auswählen",
+            "selectWindowOrScreen": "Fenster oder Bildschirm auswählen",
+            "loadingWindowsOrScreens": "Laden der Fenster",
             "camera": "Kamera / Webcam",
             "screen": "Bildschirm / Programm",
             "useVideo": "Video verwenden",

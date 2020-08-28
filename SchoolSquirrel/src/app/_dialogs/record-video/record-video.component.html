@@ -19,15 +19,46 @@
             </div>
         </div>
     </div>
-    <div class="row" *ngIf="mode && !setupDone">
+    <div class="row" *ngIf="mode && !device && !setupDone">
+        <ng-container *ngIf="devices.length == 0">
+            <div class="col-6 p-5 text-center">
+                <h3>{{(mode == "webcam" ? "dialogs.record-video.loadingDevices" : "dialogs.record-video.loadingWindowsOrScreens") | translate}}</h3>
+                <div class="spinner-border text-primary"></div>
+            </div>
+            <div class="col-6 p-5">
+                <img src="assets/illustrations/cleaning_up.svg" class="img-fluid">
+            </div>
+        </ng-container>
+        <ng-container *ngIf="devices.length > 0">
+            <div class="col">
+                <h3>{{(mode == "webcam" ? "dialogs.record-video.selectCamera" : "dialogs.record-video.selectWindowOrScreen") | translate}}</h3>
+                <div class="row row-cols-3">
+                    <div class="col" *ngFor="let device of devices">
+                        <div class="card card-selectable text-center p-5" (click)="useDevice(device)">
+                            <img class="img-fluid" *ngIf="device.thumbnail" [src]="device.thumbnail.toDataURL()">
+                            <h5 class="mt-4">{{device.label || device.name || ("dialogs.record-video.unknownSource" | translate)}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <div class="row" *ngIf="(mode && device && !setupDone) || permissionError">
         <div class="col-6 p-5" *ngIf="!permissionError">
-            <h3>{{( mode == "webcam" ? "dialogs.record-video.chooseCamera" : "dialogs.record-video.chooseWindowOrScreen") | translate}}</h3>
-            <p>{{( mode == "webcam" ? "dialogs.record-video.chooseCameraDescription" : "dialogs.record-video.chooseWindowOrScreenDescription") | translate}}</p>
+            <ng-container *ngIf="!isElectron">
+                <h3>{{( mode == "webcam" ? "dialogs.record-video.chooseCamera" : "dialogs.record-video.chooseWindowOrScreen") | translate}}</h3>
+                <p>{{( mode == "webcam" ? "dialogs.record-video.chooseCameraDescription" : "dialogs.record-video.chooseWindowOrScreenDescription") | translate}}</p>
+            </ng-container>
+            <div *ngIf="isElectron" class="text-center">
+                <h3>{{"dialogs.record-video.loadingVideoStream" | translate}}</h3>
+                <p>{{"dialogs.record-video.loadingVideoStreamDescription" | translate}}</p>
+                <div class="spinner-border"></div>
+            </div>
         </div>
         <div class="col-6 p-5" *ngIf="permissionError">
             <h3>{{"errors.error" | translate}}</h3>
             <p>{{(mode == "webcam" ? "dialogs.record-video.cameraPermissionError" : "dialogs.record-video.windowOrScreenPermissionError") | translate}}</p>
-            <button class="btn btn-outline-primary" (click)="mode = undefined">{{"general.tryAgain" | translate}}</button>
+            <button class="btn btn-outline-primary" (click)="mode = undefined; device = undefined; permissionError = false">{{"general.tryAgain" | translate}}</button>
         </div>
         <div class="col-6 p-5">
             <img [src]="'assets/illustrations/' + (permissionError ? 'access_denied.svg' : 'sign.svg')" class="img-fluid">

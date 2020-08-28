@@ -4,6 +4,7 @@ import * as RecordRTC from "recordrtc";
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { HttpEvent, HttpEventType } from "@angular/common/http";
 import { RemoteService } from "../../_services/remote.service";
+import { isElectron } from "../../_helpers/isElectron";
 
 @Component({
     selector: "app-record-video",
@@ -25,6 +26,9 @@ export class RecordVideoComponent {
     public uploading: number;
     public uploadSettings: {url: string, path: string};
     public duration: string;
+    public device: MediaDeviceInfo | true;
+    public devices: MediaDeviceInfo[] = [];
+    public isElectron: boolean = isElectron();
     constructor(
         public modal: NgbActiveModal,
         private zone: NgZone,
@@ -51,16 +55,55 @@ export class RecordVideoComponent {
     public setMode(mode: "webcam" | "screen"): void {
         this.mode = mode;
         this.permissionError = false;
-        (mode == "webcam" ? navigator.mediaDevices.getUserMedia({
-            video: true,
-            audio: true,
-        }) : (navigator.mediaDevices as any)?.getDisplayMedia({
-            video: true,
-            audio: true,
-        }) || (navigator as any).getDisplayMedia({
-            video: true,
-            audio: true,
-        })).then(async (stream) => {
+        if (!this.isElectron) {
+            this.useDevice(true);
+            return;
+        }
+        // eslint-disable-next-line
+        (mode == "webcam" ? navigator.mediaDevices.enumerateDevices() : window.require("electron").desktopCapturer.getSources({types: ["screen", "window"]})).then((devices) => {
+            if (mode == "webcam") {
+                this.devices = devices.filter((d) => d.kind == "videoinput");
+            } else {
+                this.devices = devices;
+            }
+        }, () => {
+            this.permissionError = true;
+        });
+    }
+
+    public useDevice(device: MediaDeviceInfo | true): void {
+        this.device = device;
+        let promise;
+        if (this.isElectron && device !== true) {
+            if (this.mode == "webcam") {
+                promise = navigator.mediaDevices.getUserMedia({
+                    video: { deviceId: { exact: device.deviceId } },
+                });
+            } else {
+                promise = navigator.mediaDevices.getUserMedia({
+                    audio: false,
+                    video: {
+                        mandatory: {
+                            chromeMediaSource: "desktop",
+                            chromeMediaSourceId: (device as any).id,
+                            minWidth: 1920 / 4,
+                            maxWidth: 1920 * 2,
+                            minHeight: 1080 / 4,
+                            maxHeight: 1080 * 2,
+                        },
+                    } as any,
+                });
+            }
+        } else {
+            // eslint-disable-next-line no-lonely-if
+            if (this.mode == "webcam") {
+                promise = navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+            } else {
+                promise = (navigator.mediaDevices as any)?.getDisplayMedia({})
+                    || (navigator as any).getDisplayMedia({});
+            }
+        }
+        promise.then(async (stream) => {
             this.stream = stream;
             this.recorder = new RecordRTC(stream, {
                 type: "video",
@@ -81,7 +124,8 @@ export class RecordVideoComponent {
             setTimeout(() => {
                 (document.querySelector("video#preview") as HTMLVideoElement).srcObject = stream;
             });
-        }, () => {
+        }, (c) => {
+            console.log(c);
             this.permissionError = true;
         });
     }
