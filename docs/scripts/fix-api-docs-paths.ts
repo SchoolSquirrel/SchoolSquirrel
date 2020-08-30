@@ -9,6 +9,11 @@ const ROUTES_NO_MIDDLEWARES_REGEX = /router\.((get)|(post)|(delete))\("(.*?)", (
 const ROUTES_MIDDLEWARES_REGEX = /router\.((get)|(post)|(delete))\("(.*?)", \[(.*?)\], (\w*?)Controller.(.*?)\);/g;
 const ROUTES_REGEX = /\nrouter\.((get)|(post)|(delete))\("(.*?)", (.*?)Controller.(.*?)\);/g;
 const MIDDLEWARES_REGEX = /\[(.*?)\], /g;
+const PATH_PARAM_REGEX_SLASH = /:(.*?)(\/)/g;
+const PATH_PARAM_REGEX_DOT = /:(.*?)(\.)/g;
+const PATH_PARAM_REGEX_END = /:(.*?)($)/g;
+const PATH_PARAM_TYPE_REGEX = /\((.*?)\)/g;
+const PATH_PARAM_STAR_REGEX = /{([^{]*)\*}/g;
 
 const routeFiles = indexContent.match(ROUTER_REGEX);
 const prefixes = {};
@@ -48,7 +53,7 @@ for (const filename of Object.keys(prefixes)) {
         controllerFunctionProperties[controller].push({
             functionName,
             method,
-            path,
+            path: `${prefixes[filename]}${path}`,
             middlewares,
         });
     }
@@ -58,13 +63,20 @@ for (const controller of Object.keys(controllerFunctionProperties)) {
     const controllerFilename = path.join(apiDir, "controllers", `${controller}.ts`);
     let content = fs.readFileSync(controllerFilename).toString();
     for (const f of controllerFunctionProperties[controller]) {
+        resetRegexes();
         const found = new RegExp(`public static (async )?${f.functionName}\\(`, "g").exec(content);
         if (found) {
-            const prefix = controller.replace("Controller", "").toLowerCase();
+            console.log(f.path);
+            let path = f.path;
+            path = path.replace(PATH_PARAM_REGEX_SLASH, "{$1}/");
+            path = path.replace(PATH_PARAM_REGEX_DOT, "{$1}.");
+            path = path.replace(PATH_PARAM_REGEX_END, "{$1}");
+            path = path.replace(PATH_PARAM_TYPE_REGEX, "");
+            path = path.replace(PATH_PARAM_STAR_REGEX, "{$1}");
             content = content.slice(0, found.index) + `/**
     * @swagger
     *
-    * ${prefixes[prefix]}${f.path}
+    * ${path}
     *   ${f.method}:
     *     description: ToDo
     *   consumes:
@@ -92,4 +104,9 @@ function resetRegexes() {
     ROUTES_REGEX.lastIndex = 0;
     MIDDLEWARES_REGEX.lastIndex = 0;
     ROUTES_MIDDLEWARES_REGEX.lastIndex = 0;
+    PATH_PARAM_REGEX_SLASH.lastIndex = 0;
+    PATH_PARAM_REGEX_DOT.lastIndex = 0;
+    PATH_PARAM_REGEX_END.lastIndex = 0;
+    PATH_PARAM_TYPE_REGEX.lastIndex = 0;
+    PATH_PARAM_STAR_REGEX.lastIndex = 0;
 }
