@@ -7,7 +7,7 @@ const indexContent = fs.readFileSync(path.join(apiDir, "routes/index.ts")).toStr
 const ROUTER_REGEX = /routes.use\("(.*?)", (.*?)\);/g;
 const ROUTES_NO_MIDDLEWARES_REGEX = /router\.((get)|(post)|(delete))\("(.*?)", (\w*?)Controller.(.*?)\);/g;
 const ROUTES_MIDDLEWARES_REGEX = /router\.((get)|(post)|(delete))\("(.*?)", \[(.*?)\], (\w*?)Controller.(.*?)\);/g;
-const ROUTES_REGEX = /router\.((get)|(post)|(delete))\("(.*?)", (.*?)Controller.(.*?)\);/g;
+const ROUTES_REGEX = /\nrouter\.((get)|(post)|(delete))\("(.*?)", (.*?)Controller.(.*?)\);/g;
 const MIDDLEWARES_REGEX = /\[(.*?)\], /g;
 
 const routeFiles = indexContent.match(ROUTER_REGEX);
