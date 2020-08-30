@@ -76,18 +76,16 @@ for (const controller of Object.keys(controllerFunctionProperties)) {
             content = content.slice(0, found.index) + `/**
     * @swagger
     *
-    * ${path}
+    * ${path}:
     *   ${f.method}:
     *     description: ToDo
-    *   consumes:
-    *     - application/json
-    *   produces:
-    *     - application/json
-    *   parameters:
-    *     - ToDo
-    *    responses:
-    *      200:
-    *        description: login
+    *     consumes: application/json
+    *     produces: application/json
+    *     parameters:
+    *       - ToDo
+    *     responses:
+    *       200:
+    *         description: login
     */
     ` + content.slice(found.index);
         } else {
