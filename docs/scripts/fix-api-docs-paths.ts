@@ -54,7 +54,37 @@ for (const filename of Object.keys(prefixes)) {
     }
 }
 
-console.log(controllerFunctionProperties);
+for (const controller of Object.keys(controllerFunctionProperties)) {
+    const controllerFilename = path.join(apiDir, "controllers", `${controller}.ts`);
+    let content = fs.readFileSync(controllerFilename).toString();
+    for (const f of controllerFunctionProperties[controller]) {
+        const found = new RegExp(`public static (async )?${f.functionName}\\(`, "g").exec(content);
+        if (found) {
+            const prefix = controller.replace("Controller", "").toLowerCase();
+            content = content.slice(0, found.index) + `/**
+    * @swagger
+    *
+    * ${prefixes[prefix]}${f.path}
+    *   ${f.method}:
+    *     description: ToDo
+    *   consumes:
+    *     - application/json
+    *   produces:
+    *     - application/json
+    *   parameters:
+    *     - ToDo
+    *    responses:
+    *      200:
+    *        description: login
+    */
+    ` + content.slice(found.index);
+        } else {
+            console.log(f.functionName, "of", controller, "not found");
+            process.exit(1);
+        }
+        fs.writeFileSync(controllerFilename, content);
+    }
+}
 
 function resetRegexes() {
     ROUTER_REGEX.lastIndex = 0;
