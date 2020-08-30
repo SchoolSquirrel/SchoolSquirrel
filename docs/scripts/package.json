@@ -1,0 +1,19 @@
+{
+    "name": "schoolsquirrel-docs-scripts",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+        "generate-api-docs": "tsc generate-api-docs.ts && node generate-api-docs.js"
+    },
+    "author": "Hannes Rüger",
+    "license": "MIT",
+    "dependencies": {
+        "express": "^4.17.1",
+        "swagger-jsdoc": "^4.0.0",
+        "swagger-ui-express": "^4.1.4"
+    },
+    "devDependencies": {
+        "@types/swagger-jsdoc": "^3.0.2",
+        "@types/swagger-ui-express": "^4.1.2"
+    }
+}
