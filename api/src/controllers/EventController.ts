@@ -6,6 +6,7 @@ import { Event } from "../entity/Event";
 import { SchedulerEvent } from "../entity/SchedulerEvent";
 import { User } from "../entity/User";
 import { EventCategory } from "../entity/EventCategory";
+import { HolidayData } from "../entity/Holiday";
 
 class EventController {
     public static async listAll(req: Request, res: Response): Promise<void> {
@@ -45,6 +46,17 @@ class EventController {
                     delete event[key];
                 }
             }
+        }
+        for (const year of Object.values(res.app.locals.holidays as HolidayData)) {
+            events.push(...year.map((e) => ({
+                Id: undefined,
+                StartTime: e.startDate,
+                EndTime: e.endDate,
+                IsAllDay: true,
+                IsReadonly: true,
+                Subject: e.name,
+                Category: e.isVacation ? EventCategory.Vacation : EventCategory.Holiday,
+            })));
         }
         res.send(events);
     }

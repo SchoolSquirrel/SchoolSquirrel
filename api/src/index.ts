@@ -26,6 +26,7 @@ import { Event } from "./entity/Event";
 import { Buckets } from "./entity/Buckets";
 import { AssignmentSubmission } from "./entity/AssignmentSubmission";
 import { Device } from "./entity/Device";
+import { getHolidays } from "./utils/holidays";
 
 const config = getConfig(JSON.parse(fs.readFileSync(path.join(__dirname, "../../container-env.json")).toString()));
 
@@ -97,6 +98,9 @@ createConnection({
         // make config and minioClient available in the controllers using req.app.locals
         app.locals.config = config;
         app.locals.minio = minioClient;
+
+        // load holiday data for the calendar
+        app.locals.holidays = await getHolidays(config.COUNTRY_CODE, config.STATE_CODE);
 
         // Call midlewares
         // This sets up secure rules for CORS, see https://developer.mozilla.org/de/docs/Web/HTTP/CORS
