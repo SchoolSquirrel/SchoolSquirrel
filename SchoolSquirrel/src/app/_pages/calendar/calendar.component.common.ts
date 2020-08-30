@@ -7,7 +7,8 @@ export class CalendarComponentCommon {
     public categoryColors = {
         [EventCategory.Assignment]: "#27ae60",
         [EventCategory.UserEvent]: "#3498db",
-        [EventCategory.TeacherEvent]: "#f39c12",
+        [EventCategory.Holiday]: "#f39c12",
+        [EventCategory.Vacation]: "#f39c12",
         [EventCategory.Conference]: "#8e44ad",
         default: "#2c3e50",
     };

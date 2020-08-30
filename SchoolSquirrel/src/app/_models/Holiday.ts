@@ -6,11 +6,14 @@
 /*    |    Then, run "npx redundancyjs" in the terminal.                      |    */
 /*    +-----------------------------------------------------------------------+    */
 
-/* do not edit */ export enum EventCategory {
-/* do not edit */     Assignment = "Assignment",
-/* do not edit */     UserEvent = "UserEvent",
-/* do not edit */     Conference = "Conference",
-/* do not edit */     Holiday = "Holiday",
-/* do not edit */     Vacation = "Vacation",
+/* do not edit */ export type Holiday = {
+/* do not edit */     name: string;
+/* do not edit */     startDate: Date;
+/* do not edit */     endDate: Date;
+/* do not edit */     isVacation: boolean;
+/* do not edit */ }
+/* do not edit */ 
+/* do not edit */ export type HolidayData = {
+/* do not edit */     [year: number]: Holiday[];
 /* do not edit */ }
 /* do not edit */

@@ -179,7 +179,8 @@
             "categories": {
                 "Assignment": "Aufgaben",
                 "Conference": "Konferenzen",
-                "TeacherEvent": "Lehrerevents",
+                "Holiday": "Ferien",
+                "Vacation": "Feiertage",
                 "UserEvent": "Eigene Events",
                 "default": "Unbekannt"
             }
