@@ -62,18 +62,23 @@ for (const filename of Object.keys(prefixes)) {
 for (const controller of Object.keys(controllerFunctionProperties)) {
     const controllerFilename = path.join(apiDir, "controllers", `${controller}.ts`);
     let content = fs.readFileSync(controllerFilename).toString();
+    // let a = 0;
     for (const f of controllerFunctionProperties[controller]) {
         resetRegexes();
-        const found = new RegExp(`public static (async )?${f.functionName}\\(`, "g").exec(content);
-        if (found) {
-            console.log(f.path);
-            let path = f.path;
-            path = path.replace(PATH_PARAM_REGEX_SLASH, "{$1}/");
-            path = path.replace(PATH_PARAM_REGEX_DOT, "{$1}.");
-            path = path.replace(PATH_PARAM_REGEX_END, "{$1}");
-            path = path.replace(PATH_PARAM_TYPE_REGEX, "");
-            path = path.replace(PATH_PARAM_STAR_REGEX, "{$1}");
-            content = content.slice(0, found.index) + `/**
+        const functionRegex = `public static (async )?${f.functionName}\\(`;
+        const withComment = new RegExp(`/\\*\\*[^*]*\\*+(?:[^/*][^*]*\\*+)*/\n(.*?)${functionRegex}`, "gm").exec(content);
+        if (withComment) {
+            // console.log("Found");
+        } else {
+            const withoutComment = new RegExp(functionRegex, "g").exec(content);
+            if (withoutComment) {
+                let path = f.path;
+                path = path.replace(PATH_PARAM_REGEX_SLASH, "{$1}/");
+                path = path.replace(PATH_PARAM_REGEX_DOT, "{$1}.");
+                path = path.replace(PATH_PARAM_REGEX_END, "{$1}");
+                path = path.replace(PATH_PARAM_TYPE_REGEX, "");
+                path = path.replace(PATH_PARAM_STAR_REGEX, "{$1}");
+                content = content.slice(0, withoutComment.index) + `/**
     * @swagger
     *
     * ${path}:
@@ -87,13 +92,14 @@ for (const controller of Object.keys(controllerFunctionProperties)) {
     *       200:
     *         description: login
     */
-    ` + content.slice(found.index);
-        } else {
-            console.log(f.functionName, "of", controller, "not found");
-            process.exit(1);
+    ` + content.slice(withoutComment.index);
+            } else {
+                console.log(f.functionName, "of", controller, "not found");
+                process.exit(1);
+            }
         }
-        fs.writeFileSync(controllerFilename, content);
     }
+    fs.writeFileSync(controllerFilename, content);
 }
 
 function resetRegexes() {
