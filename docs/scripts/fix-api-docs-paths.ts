@@ -78,6 +78,18 @@ for (const controller of Object.keys(controllerFunctionProperties)) {
                 path = path.replace(PATH_PARAM_REGEX_END, "{$1}");
                 path = path.replace(PATH_PARAM_TYPE_REGEX, "");
                 path = path.replace(PATH_PARAM_STAR_REGEX, "{$1}");
+                let params = [];
+                let param;
+                const r = /{(.*?)}/g;
+                while (param = r.exec(path)) {
+                    params.push(param[1]);
+                }
+                params = params.map((p) => `    *       - in: path
+    *         name: ${p}
+    *         type: ToDo # integer or string
+    *         required: true
+    *         description: ToDo`);
+                const paramsYaml = params.join("\n");
                 content = content.slice(0, withoutComment.index) + `/**
     * @swagger
     *
@@ -86,9 +98,7 @@ for (const controller of Object.keys(controllerFunctionProperties)) {
     *     description: ToDo
     *     consumes: application/json
     *     produces: application/json
-    *     parameters:
-    *       - ToDo
-    *     responses:
+${params.length > 0 ? `    *     parameters:\n${paramsYaml}\n` : ""}    *     responses:
     *       200:
     *         description: login
     */
