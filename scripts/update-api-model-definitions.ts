@@ -59,7 +59,9 @@ ${Object.entries(properties).filter((p) => p[1].required).map((p) => `*       - 
 *     properties:
 ${Object.entries(properties).map((p) => {
     let type = p[1].type;
-    if (type.endsWith("[]")) {
+    } else if (type.startsWith("Record")) {
+        type = "object";
+    } else if (type.endsWith("[]")) {
         const item = type.startsWith("any") ? "type: object" : `$ref: '#/definitions/${type.replace("[]", "")}'`;
         type = `array\n*         items:\n*           ${item}`;
     } else if (type == "Date") {
