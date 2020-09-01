@@ -47,5 +47,9 @@
      <loc>https://schoolsquirrel.github.io/admins/assignments/</loc>
      <lastmod>2020-09-01</lastmod>
      <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://schoolsquirrel.github.io/developers/apiDocs/</loc>
+     <lastmod>2020-09-01</lastmod>
+     <changefreq>daily</changefreq>
     </url>
 </urlset>
