@@ -54,7 +54,9 @@ ${Object.entries(properties).map((p) => {
         if (oldDefinition && oldDefinition[0] == definition) {
             console.log(`${className} has not been changed!`);
         } else {
-            console.log(`${className} has been changed, the new comment is now ABOVE the old one. Please merge them.`)
+            if (oldDefinition) {
+                console.log(`${className} has been changed, the new comment is now ABOVE the old one. Please merge them.`)
+            }
             fs.writeFileSync(entityPath, definition + content);
         }
     }
