@@ -11,6 +11,7 @@
         "swagger-jsdoc": "^4.0.0"
     },
     "devDependencies": {
+        "@types/node": "^14.6.2",
         "@types/swagger-jsdoc": "^3.0.2"
     }
 }
