@@ -33,6 +33,8 @@ nav:
     - Administratoren:
         - Login: admins/login.md
         - Aufgaben: admins/assignments.md
+    - Entwickler:
+        - API Dokumentation: developers/apiDocs.md
 
 
 ### Extra Configuration ###
