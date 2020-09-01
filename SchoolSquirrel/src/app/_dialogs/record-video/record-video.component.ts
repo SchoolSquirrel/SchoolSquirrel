@@ -147,7 +147,7 @@ export class RecordVideoComponent {
                         const s = Math.floor(seconds - h * 3600 - m * 60);
                         this.duration = `${pad(h)}:${pad(m)}:${pad(s)}`;
                     });
-                }) as any,
+                }),
             });
             this.setupDone = true;
             setTimeout(() => {
