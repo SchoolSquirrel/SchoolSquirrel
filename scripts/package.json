@@ -7,8 +7,7 @@
     },
     "scripts": {
         "check-docs-links": "ts-node check-docs-links.ts",
-        "update-api-endpoint-definitions": "ts-node update-api-endpoint-definitions.ts",
-        "update-api-model-definitions": "ts-node update-api-model-definitions.ts",
+        "update-api-definitions": "ts-node update-api-definitions.ts",
         "generate-swagger-definition": "ts-node generate-swagger-definition.ts"
     },
     "license": "MIT",
