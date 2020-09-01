@@ -36,7 +36,19 @@ for (const entityFile of entityFiles) {
 *     required:
 ${Object.entries(properties).filter((p) => p[1].required).map((p) => `*       - ${p[0]}`).join("\n")}
 *     properties:
-${Object.entries(properties).map((p) => `*       - ${p[0]}:\n*         type: ${p[1].type}`).join("\n")}
+${Object.entries(properties).map((p) => {
+    let type = p[1].type;
+    console.log(type);
+    if (type.endsWith("[]")) {
+        const item = type.startsWith("any") ? "type: object" : `$ref: '#/definitions/${type.replace("[]", "")}'`;
+        type = `array\n*         items:\n*           ${item}`;
+    } else if (type == "Date") {
+        type = "string\n*         format: date";
+    } else if (type.indexOf(" | ") !== -1) {
+        type = `string\n*         enum: [${type.replace(/ \| /g, ", ").replace(/\"/g, "")}]`;
+    }
+    return `*       ${p[0]}:\n*         type: ${type}`;
+}).join("\n")}
 */
 
 ` + content;
