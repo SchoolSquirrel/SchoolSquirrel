@@ -43,10 +43,10 @@ ${Object.entries(properties).map((p) => {
         type = `array\n*         items:\n*           ${item}`;
     } else if (type == "Date") {
         type = "string\n*         format: date";
-    } else if (type[0] == type[0].toUpperCase()) {
-        type = `\n*           $ref: '#/definitions/${type}'`;
     } else if (type.indexOf(" | ") !== -1) {
         type = `string\n*         enum: [${type.replace(/ \| /g, ", ").replace(/\"/g, "")}]`;
+    } else if (type[0] == type[0].toUpperCase()) {
+        type = `\n*           $ref: '#/definitions/${type}'`;
     }
     return `*       ${p[0]}:\n*         type:${type.startsWith("\n") ? "" : " "}${type}`;
 }).join("\n")}
