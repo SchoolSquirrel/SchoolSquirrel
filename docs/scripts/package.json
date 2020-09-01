@@ -8,12 +8,9 @@
     "author": "Hannes Rüger",
     "license": "MIT",
     "dependencies": {
-        "express": "^4.17.1",
-        "swagger-jsdoc": "^4.0.0",
-        "swagger-ui-express": "^4.1.4"
+        "swagger-jsdoc": "^4.0.0"
     },
     "devDependencies": {
-        "@types/swagger-jsdoc": "^3.0.2",
-        "@types/swagger-ui-express": "^4.1.2"
+        "@types/swagger-jsdoc": "^3.0.2"
     }
 }
