@@ -1,0 +1,872 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "SchoolSquirrel API Documentation",
+        "version": "1.0.0",
+        "description": "This is the documentation for the SchoolSquirrel API.",
+        "license": {
+            "name": "MIT",
+            "url": "https://github.com/SchoolSquirrel/SchoolSquirrel/blob/master/LICENSE"
+        },
+        "contact": {
+            "name": "Hannes Rüger",
+            "url": "https://github.com/hrueger"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/api/v1"
+        }
+    ],
+    "paths": {
+        "/assignments/": {
+            "get": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            },
+            "post": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/assignments/{id}": {
+            "get": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            },
+            "delete": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/assignments/draft": {
+            "get": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            },
+            "post": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/assignments/{id}/submit": {
+            "post": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/assignments/{id}/unsubmit": {
+            "post": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/assignments/{id}/return/{userId}": {
+            "post": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    },
+                    {
+                        "in": "path",
+                        "name": "userId",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/auth/renewToken": {
+            "post": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/auth/password": {
+            "post": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/chats/": {
+            "get": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            },
+            "post": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/chats/user/{id}": {
+            "get": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/chats/{id}": {
+            "post": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            },
+            "get": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/courses/": {
+            "get": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            },
+            "post": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/courses/{id}": {
+            "get": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            },
+            "post": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            },
+            "delete": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/courses/{id}/chat": {
+            "post": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/devices/": {
+            "get": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            },
+            "post": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/devices/{token}": {
+            "delete": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "token",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/events/": {
+            "get": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            },
+            "post": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/events/{id}": {
+            "post": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            },
+            "delete": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/files/{bucket}/{itemId}/": {
+            "post": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "bucket",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    },
+                    {
+                        "in": "path",
+                        "name": "itemId",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/files/{bucket}/{itemId}/upload": {
+            "post": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "bucket",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    },
+                    {
+                        "in": "path",
+                        "name": "itemId",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/files/{bucket}/{itemId}/{path}": {
+            "delete": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "bucket",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    },
+                    {
+                        "in": "path",
+                        "name": "itemId",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    },
+                    {
+                        "in": "path",
+                        "name": "path",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            },
+            "get": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "bucket",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    },
+                    {
+                        "in": "path",
+                        "name": "itemId",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    },
+                    {
+                        "in": "path",
+                        "name": "path",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/files/{bucket}/{itemId}/new/{path}": {
+            "post": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "bucket",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    },
+                    {
+                        "in": "path",
+                        "name": "itemId",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    },
+                    {
+                        "in": "path",
+                        "name": "path",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/files/{bucket}/{itemId}/serve": {
+            "get": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "bucket",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    },
+                    {
+                        "in": "path",
+                        "name": "itemId",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/files/{bucket}/{itemId}/save": {
+            "post": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "bucket",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    },
+                    {
+                        "in": "path",
+                        "name": "itemId",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/files/{bucket}/{itemId}/editKey": {
+            "get": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "bucket",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    },
+                    {
+                        "in": "path",
+                        "name": "itemId",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/files/{bucket}/{itemId}/download": {
+            "post": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "bucket",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    },
+                    {
+                        "in": "path",
+                        "name": "itemId",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/admin/grades": {
+            "get": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            },
+            "post": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/admin/users": {
+            "get": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            },
+            "post": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/users/{id}.{ext}": {
+            "get": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    },
+                    {
+                        "in": "path",
+                        "name": "ext",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        },
+        "/admin/users/{id}": {
+            "post": {
+                "description": "ToDo",
+                "consumes": "application/json",
+                "produces": "application/json",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "ToDo",
+                        "required": true,
+                        "description": "ToDo"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "login"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {},
+    "responses": {},
+    "parameters": {},
+    "securityDefinitions": {},
+    "tags": []
+}
