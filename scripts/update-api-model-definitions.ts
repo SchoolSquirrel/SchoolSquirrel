@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 
-const entityDirectory = path.join(__dirname, "../../api/src/entity");
+const entityDirectory = path.join(__dirname, "../api/src/entity");
 const entityFiles = fs.readdirSync(entityDirectory);
 
 for (const entityFile of entityFiles) {

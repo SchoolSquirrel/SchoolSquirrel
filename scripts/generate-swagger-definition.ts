@@ -32,4 +32,4 @@ const options = {
     ]
 };
 const specs = swaggerJsdoc(options);
-fs.writeFileSync(path.join(__dirname, "../docs/developers/swagger.json"), JSON.stringify(specs, undefined, 4));
+fs.writeFileSync(path.join(__dirname, "../docs/docs/developers/swagger.json"), JSON.stringify(specs, undefined, 4));

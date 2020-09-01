@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 
-const apiDir = path.join(__dirname, "../../api/src/");
+const apiDir = path.join(__dirname, "../api/src/");
 const indexContent = fs.readFileSync(path.join(apiDir, "routes/index.ts")).toString();
 
 const ROUTER_REGEX = /routes.use\("(.*?)", (.*?)\);/g;
