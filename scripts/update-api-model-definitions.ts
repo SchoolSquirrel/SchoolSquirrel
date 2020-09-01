@@ -59,6 +59,10 @@ ${Object.entries(properties).filter((p) => p[1].required).map((p) => `*       - 
 *     properties:
 ${Object.entries(properties).map((p) => {
     let type = p[1].type;
+    let extra;
+    if (enums[type]) {
+        extra = `enum: [${enums[type].join(", ")}]`;
+        type = "string";
     } else if (type.startsWith("Record")) {
         type = "object";
     } else if (type.endsWith("[]")) {
@@ -71,7 +75,7 @@ ${Object.entries(properties).map((p) => {
     } else if (type[0] == type[0].toUpperCase()) {
         type = `\n*           $ref: '#/definitions/${type}'`;
     }
-    return `*       ${p[0]}:\n*         type:${type.startsWith("\n") ? "" : " "}${type}`;
+    return `*       ${p[0]}:\n*         type:${type.startsWith("\n") ? "" : " "}${type}${extra ? `\n*         ${extra}`: ""}`;
 }).join("\n")}
 */
 
