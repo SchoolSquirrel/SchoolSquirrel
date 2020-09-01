@@ -26,8 +26,8 @@ for (const entityFile of entityFiles) {
                 };
             }
         }
-        content = content.replace(/\/\*[^*]*\*+(?:[^/*][^*]*\*+)*\/\n\n/g, "");
-        content = `/**
+        const oldDefinition = content.match(/\/\*[^*]*\*+(?:[^/*][^*]*\*+)*\/\n\n/);
+        const definition = `/**
 * @swagger
 *
 * definitions:
@@ -38,7 +38,6 @@ ${Object.entries(properties).filter((p) => p[1].required).map((p) => `*       - 
 *     properties:
 ${Object.entries(properties).map((p) => {
     let type = p[1].type;
-    console.log(type);
     if (type.endsWith("[]")) {
         const item = type.startsWith("any") ? "type: object" : `$ref: '#/definitions/${type.replace("[]", "")}'`;
         type = `array\n*         items:\n*           ${item}`;
@@ -51,7 +50,12 @@ ${Object.entries(properties).map((p) => {
 }).join("\n")}
 */
 
-` + content;
-        fs.writeFileSync(entityPath, content);
+`;
+        if (oldDefinition && oldDefinition[0] == definition) {
+            console.log(`${className} has not been changed!`);
+        } else {
+            console.log(`${className} has been changed, the new comment is now ABOVE the old one. Please merge them.`)
+            fs.writeFileSync(entityPath, definition + content);
+        }
     }
 }
