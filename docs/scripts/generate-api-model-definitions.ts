@@ -26,7 +26,7 @@ for (const entityFile of entityFiles) {
                 };
             }
         }
-        content = content.replace(/\/\*[^*]*\*+(?:[^/*][^*]*\*+)*\//g, "");
+        content = content.replace(/\/\*[^*]*\*+(?:[^/*][^*]*\*+)*\/\n\n/g, "");
         content = `/**
 * @swagger
 *
