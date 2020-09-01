@@ -4,13 +4,34 @@ import * as path from "path";
 const entityDirectory = path.join(__dirname, "../api/src/entity");
 const entityFiles = fs.readdirSync(entityDirectory);
 
+const enums: {
+    [name: string]: string[];
+} = {};
+
+for (const entityFile of entityFiles) {
+    let content = getContent(entityFile);
+    const result = new RegExp(`export enum (.*?) {`).exec(content);
+        if (result && result[1]) {
+        const className = getClassName(result);
+        const r = /(\w*?) ?= ?"(\w*?)"/g;
+        let property;
+        while (property = r.exec(content)) {
+            if (property && property[2]) {
+                if (!enums[className]) {
+                    enums[className] = [];
+                }
+                enums[className].push(property[2]);
+            }
+        }
+    }
+}
 for (const entityFile of entityFiles) {
     const entityPath = path.join(entityDirectory, entityFile);
-    let content = fs.readFileSync(entityPath).toString();
+    let content = getContent(entityFile);
     const result = new RegExp(`export class (.*?) {`).exec(content);
     if (result && result[1]) {
-        const className = result[1].indexOf(" ") ? result[1].split(" ").shift() : result[1];
-        const properties: {
+        const className = getClassName(result);
+            const properties: {
             [propertyName: string]: {
                 type: string;
                 required: boolean;
@@ -63,3 +84,13 @@ ${Object.entries(properties).map((p) => {
         }
     }
 }
+function getContent(entityFile: string) {
+    const entityPath = path.join(entityDirectory, entityFile);
+    let content = fs.readFileSync(entityPath).toString();
+    return content;
+}
+
+function getClassName(result: RegExpExecArray) {
+    return result[1].indexOf(" ") ? result[1].split(" ").shift() : result[1];
+}
+
