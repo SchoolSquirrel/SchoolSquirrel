@@ -100,7 +100,11 @@ for (const controller of Object.keys(controllerFunctionProperties)) {
     *     produces: application/json
 ${params.length > 0 ? `    *     parameters:\n${paramsYaml}\n` : ""}    *     responses:
     *       200:
-    *         description: login
+    *         description: OK
+    *       400:
+    *         description: Missing parameters or fields
+    *       401:
+    *         description: Unauthorized (either no JWT Token or the action is not allowed)
     */
     ` + content.slice(withoutComment.index);
             } else {
