@@ -1,6 +1,6 @@
 export enum MessageStatus {
-  Waiting,
-  Sent,
-  Delivered,
-  Seen,
+  Waiting = "Waiting",
+  Sent = "Sent",
+  Delivered = "Delivered",
+  Seen = "Seen",
 }

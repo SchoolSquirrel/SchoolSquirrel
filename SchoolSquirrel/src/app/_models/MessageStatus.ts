@@ -7,9 +7,9 @@
 /*    +-----------------------------------------------------------------------+    */
 
 /* do not edit */ export enum MessageStatus {
-/* do not edit */   Waiting,
-/* do not edit */   Sent,
-/* do not edit */   Delivered,
-/* do not edit */   Seen,
+/* do not edit */   Waiting = "Waiting",
+/* do not edit */   Sent = "Sent",
+/* do not edit */   Delivered = "Delivered",
+/* do not edit */   Seen = "Seen",
 /* do not edit */ }
 /* do not edit */
