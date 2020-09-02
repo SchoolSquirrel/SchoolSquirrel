@@ -227,7 +227,6 @@ function generateEndpointDefinitions() {
 
                 while (result = r.exec(withComment[0])) {
                     if (result && result[1] && result[2]) {
-                        // console.log(result[1], result[2]);
                         if (result[1] == "Description") {
                             additionalData.description = result[2];
                         } else if (result[1] == "Response") {
@@ -248,7 +247,6 @@ function generateEndpointDefinitions() {
                             }
                         } else if (result[1] == "BodyParameter") {
                             const r = /(.*?) \| (.*?) \| (true|false) \| (.*)/.exec(result[2]);
-                            console.log(r);
                             // [name, type, required, description]
                             if (r) {
                                 additionalData.parameters.push({
@@ -258,7 +256,6 @@ function generateEndpointDefinitions() {
                                     required: r[3] == "true",
                                     description: r[4],
                                 });
-                                console.log(additionalData);
                             }
                         }
                     }
