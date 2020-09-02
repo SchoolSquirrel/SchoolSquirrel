@@ -1,6 +1,5 @@
 import * as fs from "fs";
 import * as path from "path";
-import { triggerAsyncId } from "async_hooks";
 
 const apiDir = path.join(__dirname, "../api/src/");
 
@@ -24,10 +23,10 @@ const swaggerDefinition: {
         [path: string]: {
             [method: string]: {
                 description: string;
-                consumes: "application/json";
+                consumes: "multipart/form-data";
                 produces: "application/json";
                 parameters?: {
-                    in: "path" | "body";
+                    in: "path" | "formData";
                     name: string;
                     type: string;
                     required: boolean;
@@ -48,7 +47,7 @@ const swaggerDefinition: {
             required: string[];
             properties: {
                 [name: string]: {
-                    type: "number" | "string" | "object" | {
+                    type: "number" | "string" | "boolean" | "object" | {
                         $ref: string;
                     };
                     format?: string;
@@ -56,7 +55,7 @@ const swaggerDefinition: {
                 } | {
                     type: "array";
                     items: {
-                        type: "number" | "string" | "object";
+                        type: "number" | "string" | "boolean" | "object";
                     } | {
                         $ref: string;
                     };
@@ -99,6 +98,15 @@ const swaggerDefinition: {
             properties: {
                 message: {
                     type: "string"
+                }
+            }
+        },
+        Success: {
+            required: ["success"],
+            type: "object",
+            properties: {
+                success: {
+                    type: "boolean"
                 }
             }
         }
@@ -193,6 +201,7 @@ function generateEndpointDefinitions() {
             
             const additionalData = {
                 description: "ToDo",
+                parameters: [],
                 responses: {
                     200: {
                         description: "OK"
@@ -237,6 +246,20 @@ function generateEndpointDefinitions() {
                                     },
                                 };
                             }
+                        } else if (result[1] == "BodyParameter") {
+                            const r = /(.*?) \| (.*?) \| (true|false) \| (.*)/.exec(result[2]);
+                            console.log(r);
+                            // [name, type, required, description]
+                            if (r) {
+                                additionalData.parameters.push({
+                                    in: "formData",
+                                    name: r[1],
+                                    type: r[2],
+                                    required: r[3] == "true",
+                                    description: r[4],
+                                });
+                                console.log(additionalData);
+                            }
                         }
                     }
                 }
@@ -267,13 +290,11 @@ function generateEndpointDefinitions() {
                 }
                 swaggerDefinition.paths[path][f.method] = {
                     ...additionalData,
-                    consumes: "application/json",
+                    consumes: "multipart/form-data",
                     produces: "application/json",
                     tags: [controllerName],
                 };
-                if (params.length > 0) {
-                    swaggerDefinition.paths[path][f.method].parameters = params;
-                }
+                swaggerDefinition.paths[path][f.method].parameters.push(...params);
             } else {
                 console.log(f.functionName, "of", controller, "not found");
                 process.exit(1);
