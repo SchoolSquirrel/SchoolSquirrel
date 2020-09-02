@@ -7,18 +7,15 @@
     },
     "scripts": {
         "check-docs-links": "ts-node check-docs-links.ts",
-        "update-api-definitions": "ts-node update-api-definitions.ts",
-        "generate-swagger-definition": "ts-node generate-swagger-definition.ts"
+        "update-api-definitions": "ts-node update-api-definitions.ts"
     },
     "license": "MIT",
     "dependencies": {
-        "glob": "^7.1.6",
-        "swagger-jsdoc": "^4.0.0"
+        "glob": "^7.1.6"
     },
     "devDependencies": {
         "@types/glob": "^7.1.3",
         "@types/node": "^14.6.2",
-        "@types/swagger-jsdoc": "^3.0.2",
         "ts-node": "^9.0.0",
         "typescript": "^4.0.2"
     }
