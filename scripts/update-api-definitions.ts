@@ -88,7 +88,17 @@ const swaggerDefinition: {
         }
     ],
     paths: {},
-    definitions: {},
+    definitions: {
+        Error: {
+            required: ["message"],
+            type: "object",
+            properties: {
+                message: {
+                    type: "string"
+                }
+            }
+        }
+    },
     responses: {},
     parameters: {},
     securityDefinitions: {},
