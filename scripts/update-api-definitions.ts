@@ -1,9 +1,99 @@
 import * as fs from "fs";
 import * as path from "path";
+import { triggerAsyncId } from "async_hooks";
 
 const apiDir = path.join(__dirname, "../api/src/");
 
-let allDefinitions = "/**\n* @swagger";
+const swaggerDefinition: {
+    swagger: "2.0",
+    info: {
+        title: string;
+        version: string;
+        description: string;
+        license: {
+            name: string;
+            url: string;
+        },
+        contact: {
+            name: string;
+            url: string;
+        }
+    },
+    servers: { url: string; }[],
+    paths: {
+        [path: string]: {
+            [method: string]: {
+                description: "ToDo";
+                consumes: "application/json";
+                produces: "application/json";
+                parameters?: {
+                    in: "path" | "body";
+                    name: string;
+                    type: string;
+                    required: boolean;
+                    description: string;
+                }[],
+                responses: {
+                    [code: number]: {
+                        description: string;
+                    }
+                }
+            }
+        }
+    };
+    definitions: {
+        [name: string]: {
+            type: "object",
+            required: string[];
+            properties: {
+                [name: string]: {
+                    type: "number" | "string" | "object" | {
+                        $ref: string;
+                    };
+                    format?: string;
+                    enum?: string[];
+                } | {
+                    type: "array";
+                    items: {
+                        type: "number" | "string" | "object";
+                    } | {
+                        $ref: string;
+                    };
+                };
+            }
+        }
+    },
+    responses: {},
+    parameters: {},
+    securityDefinitions: {},
+    tags: any[],
+} = {
+    swagger: "2.0",
+    info: {
+        title: "SchoolSquirrel API Documentation",
+        version: "1.0.0",
+        description: "This is the documentation for the SchoolSquirrel API.",
+        license: {
+            name: "MIT",
+            url: "https://github.com/SchoolSquirrel/SchoolSquirrel/blob/master/LICENSE"
+        },
+        contact: {
+            name: "Hannes Rüger",
+            url: "https://github.com/hrueger"
+        }
+    },
+    servers: [
+        {
+            url: "http://localhost:3000/api/"
+        }
+    ],
+    paths: {},
+    definitions: {},
+    responses: {},
+    parameters: {},
+    securityDefinitions: {},
+    tags: [],
+};
 
 function generateEndpointDefinitions() {
     function resetRegexes() {
@@ -18,9 +108,6 @@ function generateEndpointDefinitions() {
         PATH_PARAM_TYPE_REGEX.lastIndex = 0;
         PATH_PARAM_STAR_REGEX.lastIndex = 0;
     }
-    const paths: {
-        [key: string]: string[];
-    } = {};
     const indexContent = fs.readFileSync(path.join(apiDir, "routes/index.ts")).toString();
     const ROUTER_REGEX = /routes.use\("(.*?)", (.*?)\);/g;
     const ROUTES_NO_MIDDLEWARES_REGEX = /router\.((get)|(post)|(delete))\("(.*?)", (\w*?)Controller.(.*?)\);/g;
@@ -88,10 +175,9 @@ function generateEndpointDefinitions() {
                 const r = /\* @api(\w*?) (.*?)(\r\n|\r|\n)/g;
                 let result;
 
-                console.log(withComment[0]);
                 while (result = r.exec(withComment[0])) {
                     if (result && result[1] && result[2]) {
-                        console.log(result[1], result[2]);
+                        // console.log(result[1], result[2]);
                     }
                 }
             }
@@ -109,40 +195,40 @@ function generateEndpointDefinitions() {
                 while (param = r.exec(path)) {
                     params.push(param[1]);
                 }
-                params = params.map((p) => `*       - in: path
-*         name: ${p}
-*         type: ToDo # integer or string
-*         required: true
-*         description: ToDo`);
-                const paramsYaml = params.join("\n");
-                if (!paths[path]) {
-                    paths[path] = [];
+                params = params.map((p) => ({
+                    in: "path",
+                    name: p,
+                    type: "ToDo",
+                    required: true,
+                    description: "ToDo",
+                }));
+                if (!swaggerDefinition.paths[path]) {
+                    swaggerDefinition.paths[path] = {};
                 }
-                paths[path].push(`
-*   ${f.method}:
-*     description: ToDo
-*     consumes: application/json
-*     produces: application/json
-${params.length > 0 ? `*     parameters:\n${paramsYaml}\n` : ""}*     responses:
-*       200:
-*         description: OK
-*       400:
-*         description: Missing parameters or fields
-*       401:
-*         description: Unauthorized (either no JWT Token or the action is not allowed)`);
+                swaggerDefinition.paths[path][f.method] = {
+                    description: "ToDo",
+                    consumes: "application/json",
+                    produces: "application/json",
+                    responses: {
+                        200: {
+                            description: "OK"
+                        },
+                        400: {
+                            description: "Missing parameters or fields"
+                        },
+                        401: {
+                            description: "Unauthorized (either no JWT Token or the action is not allowed)"
+                        }
+                    }
+                };
+                if (params.length > 0) {
+                    swaggerDefinition.paths[path][f.method].parameters = params;
+                }
             } else {
                 console.log(f.functionName, "of", controller, "not found");
                 process.exit(1);
             }
             
-        }
-    }
-    for (const [path, methods] of Object.entries(paths)) {
-        allDefinitions += `
-*
-* ${path}:`;
-        for (const method of methods) {
-            allDefinitions += method;
         }
     }
 }
@@ -180,7 +266,7 @@ function generateModelDefinitions() {
             const className = getClassName(result);
                 const properties: {
                 [propertyName: string]: {
-                    type: string;
+                    type: any;
                     required: boolean;
                 };
             } = {};
@@ -194,34 +280,60 @@ function generateModelDefinitions() {
                     };
                 }
             }
-            allDefinitions += `
-*
-*   ${className}:
-*     type: object
-*     required:
-${Object.entries(properties).filter((p) => p[1].required).map((p) => `*       - ${p[0]}`).join("\n")}
-*     properties:
-${Object.entries(properties).map((p) => {
-    let type = p[1].type;
-    let extra;
-    if (enums[type]) {
-        extra = `enum: [${enums[type].join(", ")}]`;
-        type = "string";
-    } else if (type.startsWith("Record")) {
-        type = "object";
-    } else if (type.endsWith("[]")) {
-        const item = type.startsWith("any") ? "type: object" : `$ref: '#/definitions/${type.replace("[]", "")}'`;
-        type = `array\n*         items:\n*           ${item}`;
-    } else if (type == "Date") {
-        type = "string\n*         format: date";
-    } else if (type.indexOf(" | ") !== -1) {
-        type = `string\n*         enum: [${type.replace(/ \| /g, ", ").replace(/\"/g, "")}]`;
-    } else if (type[0] == type[0].toUpperCase()) {
-        type = `\n*           $ref: '#/definitions/${type}'`;
-    }
-    return `*       ${p[0]}:\n*         type:${type.startsWith("\n") ? "" : " "}${type}${extra ? `\n*         ${extra}`: ""}`;
-}).join("\n")}
-*`;
+            swaggerDefinition.definitions[className] = {
+                type: "object",
+                required: Object.entries(properties).filter((p) => p[1].required).map((p) => p[0]),
+                properties: {},
+            };
+            for (const p of Object.entries(properties)) {
+                let type = p[1].type;
+                if (enums[type]) {
+                    swaggerDefinition.definitions[className].properties[p[0]] = {
+                        type: "string",
+                        enum: enums[type],
+                    };
+                } else if (type.startsWith("Record")) {
+                    swaggerDefinition.definitions[className].properties[p[0]] = {
+                        type: "object",
+                    }
+                } else if (type.endsWith("[]")) {
+                    if (type.startsWith("any")) {
+                        swaggerDefinition.definitions[className].properties[p[0]] = {
+                            type: "array",
+                            items: {
+                                type: "object",
+                            },
+                        };
+                    } else {
+                        swaggerDefinition.definitions[className].properties[p[0]] = {
+                            type: "array",
+                            items: {
+                                $ref: `#/definitions/${type.replace("[]", "")}`,
+                            }
+                        }
+                    }
+                } else if (type == "Date") {
+                    swaggerDefinition.definitions[className].properties[p[0]] = {
+                        type: "string",
+                        format: "date"
+                    };
+                } else if (type.indexOf(" | ") !== -1) {
+                    swaggerDefinition.definitions[className].properties[p[0]] = {
+                        type: "string",
+                        enum: type.replace(/ \| /g, ",").replace(/\"/g, "").split(","),
+                    };
+                } else if (type[0] == type[0].toUpperCase()) {
+                    swaggerDefinition.definitions[className].properties[p[0]] = {
+                        type: {
+                            $ref: `#/definitions/${type}`,
+                        },
+                    };
+                } else {
+                    swaggerDefinition.definitions[className].properties[p[0]] = {
+                        type,
+                    };
+                }
+            }
         }
     }
     function getContent(entityFile: string) {
@@ -236,10 +348,5 @@ ${Object.entries(properties).map((p) => {
 }
 
 generateEndpointDefinitions();
-allDefinitions += `
-* definitions:`;
 generateModelDefinitions();
-
-allDefinitions += "/";
-
-fs.writeFileSync("allDefinitions.ts", allDefinitions);
+fs.writeFileSync(path.join(__dirname, "../docs/docs/developers/swagger.json"), JSON.stringify(swaggerDefinition, undefined, 4));
