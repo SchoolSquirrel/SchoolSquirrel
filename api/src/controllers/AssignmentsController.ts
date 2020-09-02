@@ -11,6 +11,10 @@ import { isAdmin, isTeacher } from "../utils/roles";
 import { AssignmentSubmission } from "../entity/AssignmentSubmission";
 
 class AssignmentsController {
+    /**
+     * @apiDescription List all assingments
+     * @apiResponse 200 | OK | Course[]
+     */
     public static async listCoursesWithAssignments(req: Request, res: Response): Promise<void> {
         const courseRepository = getRepository(Course);
         let courses: Course[];
@@ -36,6 +40,11 @@ class AssignmentsController {
         res.send(courses);
     }
 
+    /**
+     * @apiDescription Get an assingment
+     * @apiResponse 200 | OK | Assignment
+     * @apiResponse 404 | Not Found | Error
+     */
     public static async getAssignment(req: Request, res: Response): Promise<void> {
         const assignmentRepository = getRepository(Assignment);
         const teacher = await isTeacher(res.locals.jwtPayload.userId);
@@ -80,6 +89,10 @@ class AssignmentsController {
         assignment.feedback = assignmentSubmission?.feedback || "";
     }
 
+    /**
+     * @apiDescription Get the current assingment draft or create one
+     * @apiResponse 200 | OK | Assignment
+     */
     public static async getAssignmentDraft(req: Request, res: Response): Promise<void> {
         const me = await getRepository(User).findOne(res.locals.jwtPayload.userId);
         const assignment = await AssignmentsController.createDraftIfNotExisting(res, me);
@@ -87,6 +100,15 @@ class AssignmentsController {
         res.status(200).send(assignment);
     }
 
+    /**
+     * @apiDescription Save assingment draft
+     * @apiBodyParameter title | string | false | The assignment title
+     * @apiBodyParameter content | string | false | The assignment content
+     * @apiBodyParameter due | date | false | The assignment due date
+     * @apiResponse 200 | OK | Success
+     * @apiResponse 404 | Not Found | Error
+     * @apiResponse 500 | Server Error | Error
+     */
     public static async saveAssignmentDraft(req: Request, res: Response): Promise<void> {
         const assignment = await AssignmentsController
             .findAssignmentDraft(res.locals.jwtPayload.userId);
@@ -111,6 +133,13 @@ class AssignmentsController {
         res.status(200).send({ success: true });
     }
 
+    /**
+     * @apiDescription Submit an assignment
+     * @apiBodyParameter message | string | false | An optional message for the teacher
+     * @apiResponse 200 | OK | Success
+     * @apiResponse 404 | Not Found | Error
+     * @apiResponse 500 | Server Error | Error
+     */
     public static async submitAssignment(req: Request, res: Response): Promise<void> {
         const user = await getRepository(User).findOne(res.locals.jwtPayload.userId);
         const assignment = await getRepository(Assignment).findOne(req.params.id);
@@ -132,6 +161,12 @@ class AssignmentsController {
         }
     }
 
+    /**
+     * @apiDescription Unsubmit an assignment
+     * @apiResponse 200 | OK | Success
+     * @apiResponse 404 | Not Found | Error
+     * @apiResponse 500 | Server Error | Error
+     */
     public static async unsubmitAssignment(req: Request, res: Response): Promise<void> {
         const user = await getRepository(User).findOne(res.locals.jwtPayload.userId);
         const assignment = await getRepository(Assignment).findOne(req.params.id);
@@ -148,6 +183,12 @@ class AssignmentsController {
         }
     }
 
+    /**
+     * @apiDescription Return an assignment
+     * @apiBodyParameter feddback | string | false | An optional feedback for the student
+     * @apiResponse 200 | OK | Success
+     * @apiResponse 404 | Not Found | Error
+     */
     public static async returnAssignment(req: Request, res: Response): Promise<void> {
         const user = await getRepository(User).findOne(req.params.userId);
         const assignment = await getRepository(Assignment).findOne(req.params.id);
@@ -165,6 +206,15 @@ class AssignmentsController {
         }
     }
 
+    /**
+     * @apiDescription Create a new assingment
+     * @apiBodyParameter title | string | true | The assignment title
+     * @apiBodyParameter content | string | true | The assignment content
+     * @apiBodyParameter due | date | true | The assignment due date
+     * @apiBodyParameter course | number | true | The id of the course for the assignment
+     * @apiResponse 200 | OK | Success
+     * @apiResponse 500 | Server Error | Error
+     */
     public static async newAssignment(req: Request, res: Response): Promise<void> {
         const {
             title, content, course, due,
@@ -229,6 +279,11 @@ class AssignmentsController {
         res.status(200).send({ success: true });
     }
 */
+    /**
+     * @apiDescription Delete an assignment
+     * @apiResponse 200 | OK | Success
+     * @apiResponse 500 | Server Error | Error
+     */
     public static async deleteAssignment(req: Request, res: Response): Promise<void> {
         const { id } = req.params;
 
