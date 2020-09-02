@@ -9,6 +9,6 @@
 }
 </style>
 <div>
-<redoc spec-url='https://raw.githubusercontent.com/SchoolSquirrel/SchoolSquirrel/master/docs/docs/developers/swagger.json'></redoc>
+<redoc spec-url="https://raw.githubusercontent.com/SchoolSquirrel/SchoolSquirrel/gh-pages/developers/swagger.json"></redoc>
 <script src="https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js"> </script>
 </div>
