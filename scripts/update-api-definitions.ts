@@ -23,7 +23,7 @@ const swaggerDefinition: {
     paths: {
         [path: string]: {
             [method: string]: {
-                description: "ToDo";
+                description: string;
                 consumes: "application/json";
                 produces: "application/json";
                 parameters?: {
@@ -171,6 +171,28 @@ function generateEndpointDefinitions() {
             resetRegexes();
             const functionRegex = `public static (async )?${f.functionName}\\(`;
             const withComment = new RegExp("\\/\\*\\*\\s*\\n([^\\*]|(\\*(?!\\/)))*\\*\\/(\\r\\n|\\r|\\n)(\\s*?)" + functionRegex, "m").exec(content);
+            
+            const additionalData = {
+                description: "ToDo",
+                responses: {
+                    200: {
+                        description: "OK"
+                    },
+                    400: {
+                        description: "Missing parameters or fields",
+                        schema: {
+                            $ref: "#/definitions/Error"
+                        },
+                    },
+                    401: {
+                        description: "Unauthorized (either no JWT Token or the action is not allowed)",
+                        schema: {
+                            $ref: "#/definitions/Error"
+                        },
+                    }
+                }
+            };
+
             if (withComment) {
                 const r = /\* @api(\w*?) (.*?)(\r\n|\r|\n)/g;
                 let result;
@@ -178,6 +200,25 @@ function generateEndpointDefinitions() {
                 while (result = r.exec(withComment[0])) {
                     if (result && result[1] && result[2]) {
                         // console.log(result[1], result[2]);
+                        if (result[1] == "Description") {
+                            additionalData.description = result[2];
+                        } else if (result[1] == "Response") {
+                            const r = /(\d{3}) \| (.*?) \| (\w*)(\[\])?/.exec(result[2]);
+                            // [code, description, response, isArray];
+                            if (r) {
+                                additionalData.responses[r[1]] = {
+                                    description: r[2],
+                                    schema: r[4] == "[]" ? {
+                                        type: "array",
+                                        items: {
+                                            $ref: `#/definitions/${r[3]}`,
+                                        }
+                                    } : {
+                                        $ref: `#/definitions/${r[3]}`,
+                                    },
+                                };
+                            }
+                        }
                     }
                 }
             }
@@ -206,20 +247,9 @@ function generateEndpointDefinitions() {
                     swaggerDefinition.paths[path] = {};
                 }
                 swaggerDefinition.paths[path][f.method] = {
-                    description: "ToDo",
+                    ...additionalData,
                     consumes: "application/json",
                     produces: "application/json",
-                    responses: {
-                        200: {
-                            description: "OK"
-                        },
-                        400: {
-                            description: "Missing parameters or fields"
-                        },
-                        401: {
-                            description: "Unauthorized (either no JWT Token or the action is not allowed)"
-                        }
-                    }
                 };
                 if (params.length > 0) {
                     swaggerDefinition.paths[path][f.method].parameters = params;
