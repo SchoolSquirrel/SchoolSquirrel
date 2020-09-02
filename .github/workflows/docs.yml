@@ -16,6 +16,9 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install mkdocs-material mkdocs-exclude
+    - name: Build API Docs
+      working-directory: scripts
+      run: npm install && npm run update-api-definitions
     - name: Build docs
       working-directory: docs
       run: mkdocs build
