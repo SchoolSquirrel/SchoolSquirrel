@@ -83,34 +83,42 @@ function generateEndpointDefinitions() {
         for (const f of controllerFunctionProperties[controller]) {
             resetRegexes();
             const functionRegex = `public static (async )?${f.functionName}\\(`;
-            const withComment = new RegExp(`/\\*\\*[^*]*\\*+(?:[^/*][^*]*\\*+)*/\n(.*?)${functionRegex}`, "gm").exec(content);
+            const withComment = new RegExp("\\/\\*\\*\\s*\\n([^\\*]|(\\*(?!\\/)))*\\*\\/(\\r\\n|\\r|\\n)(\\s*?)" + functionRegex, "m").exec(content);
             if (withComment) {
-                // console.log("Found");
-            } else {
-                const withoutComment = new RegExp(functionRegex, "g").exec(content);
-                if (withoutComment) {
-                    let path = f.path;
-                    path = path.replace(PATH_PARAM_REGEX_SLASH, "{$1}/");
-                    path = path.replace(PATH_PARAM_REGEX_DOT, "{$1}.");
-                    path = path.replace(PATH_PARAM_REGEX_END, "{$1}");
-                    path = path.replace(PATH_PARAM_TYPE_REGEX, "");
-                    path = path.replace(PATH_PARAM_STAR_REGEX, "{$1}");
-                    let params = [];
-                    let param;
-                    const r = /{(.*?)}/g;
-                    while (param = r.exec(path)) {
-                        params.push(param[1]);
+                const r = /\* @api(\w*?) (.*?)(\r\n|\r|\n)/g;
+                let result;
+
+                console.log(withComment[0]);
+                while (result = r.exec(withComment[0])) {
+                    if (result && result[1] && result[2]) {
+                        console.log(result[1], result[2]);
                     }
-                    params = params.map((p) => `*       - in: path
+                }
+            }
+            const withoutComment = new RegExp(functionRegex, "g").exec(content);
+            if (withoutComment) {
+                let path = f.path;
+                path = path.replace(PATH_PARAM_REGEX_SLASH, "{$1}/");
+                path = path.replace(PATH_PARAM_REGEX_DOT, "{$1}.");
+                path = path.replace(PATH_PARAM_REGEX_END, "{$1}");
+                path = path.replace(PATH_PARAM_TYPE_REGEX, "");
+                path = path.replace(PATH_PARAM_STAR_REGEX, "{$1}");
+                let params = [];
+                let param;
+                const r = /{(.*?)}/g;
+                while (param = r.exec(path)) {
+                    params.push(param[1]);
+                }
+                params = params.map((p) => `*       - in: path
 *         name: ${p}
 *         type: ToDo # integer or string
 *         required: true
 *         description: ToDo`);
-                    const paramsYaml = params.join("\n");
-                    if (!paths[path]) {
-                        paths[path] = [];
-                    }
-                    paths[path].push(`
+                const paramsYaml = params.join("\n");
+                if (!paths[path]) {
+                    paths[path] = [];
+                }
+                paths[path].push(`
 *   ${f.method}:
 *     description: ToDo
 *     consumes: application/json
@@ -122,11 +130,11 @@ ${params.length > 0 ? `*     parameters:\n${paramsYaml}\n` : ""}*     responses:
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)`);
-                } else {
-                    console.log(f.functionName, "of", controller, "not found");
-                    process.exit(1);
-                }
+            } else {
+                console.log(f.functionName, "of", controller, "not found");
+                process.exit(1);
             }
+            
         }
     }
     for (const [path, methods] of Object.entries(paths)) {
