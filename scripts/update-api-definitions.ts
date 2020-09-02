@@ -37,7 +37,8 @@ const swaggerDefinition: {
                     [code: number]: {
                         description: string;
                     }
-                }
+                },
+                tags?: string[];
             }
         }
     };
@@ -66,7 +67,10 @@ const swaggerDefinition: {
     responses: {},
     parameters: {},
     securityDefinitions: {},
-    tags: any[],
+    tags: {
+        name: string,
+        description: string,
+    }[],
 } = {
     swagger: "2.0",
     info: {
@@ -176,6 +180,11 @@ function generateEndpointDefinitions() {
     for (const controller of Object.keys(controllerFunctionProperties)) {
         const controllerFilename = path.join(apiDir, "controllers", `${controller}.ts`);
         let content = fs.readFileSync(controllerFilename).toString();
+        const controllerName = controller.replace("Controller", "");
+        swaggerDefinition.tags.push({
+            name: controllerName,
+            description: controllerName,
+        });
         // let a = 0;
         for (const f of controllerFunctionProperties[controller]) {
             resetRegexes();
@@ -260,6 +269,7 @@ function generateEndpointDefinitions() {
                     ...additionalData,
                     consumes: "application/json",
                     produces: "application/json",
+                    tags: [controllerName],
                 };
                 if (params.length > 0) {
                     swaggerDefinition.paths[path][f.method].parameters = params;
