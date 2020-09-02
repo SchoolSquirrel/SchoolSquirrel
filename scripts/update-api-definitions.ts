@@ -18,6 +18,9 @@ function generateEndpointDefinitions() {
         PATH_PARAM_TYPE_REGEX.lastIndex = 0;
         PATH_PARAM_STAR_REGEX.lastIndex = 0;
     }
+    const paths: {
+        [key: string]: string[];
+    } = {};
     const indexContent = fs.readFileSync(path.join(apiDir, "routes/index.ts")).toString();
     const ROUTER_REGEX = /routes.use\("(.*?)", (.*?)\);/g;
     const ROUTES_NO_MIDDLEWARES_REGEX = /router\.((get)|(post)|(delete))\("(.*?)", (\w*?)Controller.(.*?)\);/g;
@@ -104,9 +107,10 @@ function generateEndpointDefinitions() {
 *         required: true
 *         description: ToDo`);
                     const paramsYaml = params.join("\n");
-                    allDefinitions += `
-*
-* ${path}:
+                    if (!paths[path]) {
+                        paths[path] = [];
+                    }
+                    paths[path].push(`
 *   ${f.method}:
 *     description: ToDo
 *     consumes: application/json
@@ -117,13 +121,20 @@ ${params.length > 0 ? `*     parameters:\n${paramsYaml}\n` : ""}*     responses:
 *       400:
 *         description: Missing parameters or fields
 *       401:
-*         description: Unauthorized (either no JWT Token or the action is not allowed)
-*`;
+*         description: Unauthorized (either no JWT Token or the action is not allowed)`);
                 } else {
                     console.log(f.functionName, "of", controller, "not found");
                     process.exit(1);
                 }
             }
+        }
+    }
+    for (const [path, methods] of Object.entries(paths)) {
+        allDefinitions += `
+*
+* ${path}:`;
+        for (const method of methods) {
+            allDefinitions += method;
         }
     }
 }

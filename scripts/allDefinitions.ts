@@ -13,9 +13,6 @@
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
-*
-* /admin/users:
 *   post:
 *     description: ToDo
 *     consumes: application/json
@@ -27,7 +24,6 @@
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
 *
 * /admin/users/{id}:
 *   post:
@@ -48,7 +44,6 @@
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
 *
-*
 * /users/:
 *   get:
 *     description: ToDo
@@ -61,7 +56,6 @@
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
 *
 * /users/{id}.{ext}:
 *   get:
@@ -87,7 +81,6 @@
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
 *
-*
 * /admin/grades:
 *   get:
 *     description: ToDo
@@ -100,9 +93,6 @@
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
-*
-* /admin/grades:
 *   post:
 *     description: ToDo
 *     consumes: application/json
@@ -114,7 +104,6 @@
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
 *
 * /assignments/:
 *   get:
@@ -128,7 +117,17 @@
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
+*   post:
+*     description: ToDo
+*     consumes: application/json
+*     produces: application/json
+*     responses:
+*       200:
+*         description: OK
+*       400:
+*         description: Missing parameters or fields
+*       401:
+*         description: Unauthorized (either no JWT Token or the action is not allowed)
 *
 * /assignments/draft:
 *   get:
@@ -142,9 +141,6 @@
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
-*
-* /assignments/draft:
 *   post:
 *     description: ToDo
 *     consumes: application/json
@@ -156,7 +152,6 @@
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
 *
 * /assignments/{id}:
 *   get:
@@ -176,7 +171,23 @@
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
+*   delete:
+*     description: ToDo
+*     consumes: application/json
+*     produces: application/json
+*     parameters:
+*       - in: path
+*         name: id
+*         type: ToDo # integer or string
+*         required: true
+*         description: ToDo
+*     responses:
+*       200:
+*         description: OK
+*       400:
+*         description: Missing parameters or fields
+*       401:
+*         description: Unauthorized (either no JWT Token or the action is not allowed)
 *
 * /assignments/{id}/submit:
 *   post:
@@ -197,7 +208,6 @@
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
 *
-*
 * /assignments/{id}/unsubmit:
 *   post:
 *     description: ToDo
@@ -216,7 +226,6 @@
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
 *
 * /assignments/{id}/return/{userId}:
 *   post:
@@ -242,8 +251,7 @@
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
 *
-*
-* /assignments/:
+* /auth/login:
 *   post:
 *     description: ToDo
 *     consumes: application/json
@@ -256,8 +264,91 @@
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
 *
+* /auth/password:
+*   post:
+*     description: ToDo
+*     consumes: application/json
+*     produces: application/json
+*     responses:
+*       200:
+*         description: OK
+*       400:
+*         description: Missing parameters or fields
+*       401:
+*         description: Unauthorized (either no JWT Token or the action is not allowed)
 *
-* /assignments/{id}:
+* /auth/renewToken:
+*   post:
+*     description: ToDo
+*     consumes: application/json
+*     produces: application/json
+*     responses:
+*       200:
+*         description: OK
+*       400:
+*         description: Missing parameters or fields
+*       401:
+*         description: Unauthorized (either no JWT Token or the action is not allowed)
+*
+* /courses/:
+*   get:
+*     description: ToDo
+*     consumes: application/json
+*     produces: application/json
+*     responses:
+*       200:
+*         description: OK
+*       400:
+*         description: Missing parameters or fields
+*       401:
+*         description: Unauthorized (either no JWT Token or the action is not allowed)
+*   post:
+*     description: ToDo
+*     consumes: application/json
+*     produces: application/json
+*     responses:
+*       200:
+*         description: OK
+*       400:
+*         description: Missing parameters or fields
+*       401:
+*         description: Unauthorized (either no JWT Token or the action is not allowed)
+*
+* /courses/{id}:
+*   get:
+*     description: ToDo
+*     consumes: application/json
+*     produces: application/json
+*     parameters:
+*       - in: path
+*         name: id
+*         type: ToDo # integer or string
+*         required: true
+*         description: ToDo
+*     responses:
+*       200:
+*         description: OK
+*       400:
+*         description: Missing parameters or fields
+*       401:
+*         description: Unauthorized (either no JWT Token or the action is not allowed)
+*   post:
+*     description: ToDo
+*     consumes: application/json
+*     produces: application/json
+*     parameters:
+*       - in: path
+*         name: id
+*         type: ToDo # integer or string
+*         required: true
+*         description: ToDo
+*     responses:
+*       200:
+*         description: OK
+*       400:
+*         description: Missing parameters or fields
+*       401:
+*         description: Unauthorized (either no JWT Token or the action is not allowed)
 *   delete:
 *     description: ToDo
 *     consumes: application/json
@@ -275,103 +366,6 @@
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
-*
-* /auth/login:
-*   post:
-*     description: ToDo
-*     consumes: application/json
-*     produces: application/json
-*     responses:
-*       200:
-*         description: OK
-*       400:
-*         description: Missing parameters or fields
-*       401:
-*         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
-*
-* /auth/password:
-*   post:
-*     description: ToDo
-*     consumes: application/json
-*     produces: application/json
-*     responses:
-*       200:
-*         description: OK
-*       400:
-*         description: Missing parameters or fields
-*       401:
-*         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
-*
-* /auth/renewToken:
-*   post:
-*     description: ToDo
-*     consumes: application/json
-*     produces: application/json
-*     responses:
-*       200:
-*         description: OK
-*       400:
-*         description: Missing parameters or fields
-*       401:
-*         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
-*
-* /courses/:
-*   get:
-*     description: ToDo
-*     consumes: application/json
-*     produces: application/json
-*     responses:
-*       200:
-*         description: OK
-*       400:
-*         description: Missing parameters or fields
-*       401:
-*         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
-*
-* /courses/{id}:
-*   get:
-*     description: ToDo
-*     consumes: application/json
-*     produces: application/json
-*     parameters:
-*       - in: path
-*         name: id
-*         type: ToDo # integer or string
-*         required: true
-*         description: ToDo
-*     responses:
-*       200:
-*         description: OK
-*       400:
-*         description: Missing parameters or fields
-*       401:
-*         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
-*
-* /courses/{id}:
-*   post:
-*     description: ToDo
-*     consumes: application/json
-*     produces: application/json
-*     parameters:
-*       - in: path
-*         name: id
-*         type: ToDo # integer or string
-*         required: true
-*         description: ToDo
-*     responses:
-*       200:
-*         description: OK
-*       400:
-*         description: Missing parameters or fields
-*       401:
-*         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
 *
 * /courses/{id}/chat:
 *   post:
@@ -392,41 +386,6 @@
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
 *
-*
-* /courses/:
-*   post:
-*     description: ToDo
-*     consumes: application/json
-*     produces: application/json
-*     responses:
-*       200:
-*         description: OK
-*       400:
-*         description: Missing parameters or fields
-*       401:
-*         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
-*
-* /courses/{id}:
-*   delete:
-*     description: ToDo
-*     consumes: application/json
-*     produces: application/json
-*     parameters:
-*       - in: path
-*         name: id
-*         type: ToDo # integer or string
-*         required: true
-*         description: ToDo
-*     responses:
-*       200:
-*         description: OK
-*       400:
-*         description: Missing parameters or fields
-*       401:
-*         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
-*
 * /events/:
 *   get:
 *     description: ToDo
@@ -439,9 +398,6 @@
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
-*
-* /events/:
 *   post:
 *     description: ToDo
 *     consumes: application/json
@@ -453,7 +409,6 @@
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
 *
 * /events/{id}:
 *   post:
@@ -473,9 +428,6 @@
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
-*
-* /events/{id}:
 *   delete:
 *     description: ToDo
 *     consumes: application/json
@@ -493,7 +445,6 @@
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
 *
 * /chats/:
 *   get:
@@ -507,7 +458,17 @@
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
+*   post:
+*     description: ToDo
+*     consumes: application/json
+*     produces: application/json
+*     responses:
+*       200:
+*         description: OK
+*       400:
+*         description: Missing parameters or fields
+*       401:
+*         description: Unauthorized (either no JWT Token or the action is not allowed)
 *
 * /chats/{id}:
 *   get:
@@ -527,9 +488,6 @@
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
-*
-* /chats/{id}:
 *   post:
 *     description: ToDo
 *     consumes: application/json
@@ -547,7 +505,6 @@
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
 *
 * /chats/user/{id}:
 *   get:
@@ -568,21 +525,6 @@
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
 *
-*
-* /chats/:
-*   post:
-*     description: ToDo
-*     consumes: application/json
-*     produces: application/json
-*     responses:
-*       200:
-*         description: OK
-*       400:
-*         description: Missing parameters or fields
-*       401:
-*         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
-*
 * /devices/:
 *   get:
 *     description: ToDo
@@ -595,9 +537,6 @@
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
-*
-* /devices/:
 *   post:
 *     description: ToDo
 *     consumes: application/json
@@ -609,7 +548,6 @@
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
 *
 * /devices/{token}:
 *   delete:
@@ -629,7 +567,6 @@
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
 *
 * /files/{bucket}/{itemId}/:
 *   post:
@@ -655,7 +592,6 @@
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
 *
-*
 * /files/{bucket}/{itemId}/upload:
 *   post:
 *     description: ToDo
@@ -679,7 +615,6 @@
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
 *
 * /files/{bucket}/{itemId}/download:
 *   post:
@@ -705,7 +640,6 @@
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
 *
-*
 * /files/{bucket}/{itemId}/serve:
 *   get:
 *     description: ToDo
@@ -729,7 +663,6 @@
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
 *
 * /files/{bucket}/{itemId}/save:
 *   post:
@@ -755,7 +688,6 @@
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
 *
-*
 * /files/{bucket}/{itemId}/editKey:
 *   get:
 *     description: ToDo
@@ -779,7 +711,6 @@
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
 *
 * /files/{bucket}/{itemId}/{path}:
 *   get:
@@ -809,7 +740,33 @@
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
+*   delete:
+*     description: ToDo
+*     consumes: application/json
+*     produces: application/json
+*     parameters:
+*       - in: path
+*         name: bucket
+*         type: ToDo # integer or string
+*         required: true
+*         description: ToDo
+*       - in: path
+*         name: itemId
+*         type: ToDo # integer or string
+*         required: true
+*         description: ToDo
+*       - in: path
+*         name: path
+*         type: ToDo # integer or string
+*         required: true
+*         description: ToDo
+*     responses:
+*       200:
+*         description: OK
+*       400:
+*         description: Missing parameters or fields
+*       401:
+*         description: Unauthorized (either no JWT Token or the action is not allowed)
 *
 * /files/{bucket}/{itemId}/new/{path}:
 *   post:
@@ -839,37 +796,6 @@
 *         description: Missing parameters or fields
 *       401:
 *         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
-*
-* /files/{bucket}/{itemId}/{path}:
-*   delete:
-*     description: ToDo
-*     consumes: application/json
-*     produces: application/json
-*     parameters:
-*       - in: path
-*         name: bucket
-*         type: ToDo # integer or string
-*         required: true
-*         description: ToDo
-*       - in: path
-*         name: itemId
-*         type: ToDo # integer or string
-*         required: true
-*         description: ToDo
-*       - in: path
-*         name: path
-*         type: ToDo # integer or string
-*         required: true
-*         description: ToDo
-*     responses:
-*       200:
-*         description: OK
-*       400:
-*         description: Missing parameters or fields
-*       401:
-*         description: Unauthorized (either no JWT Token or the action is not allowed)
-*
 * definitions:
 *
 *   Assignment:
