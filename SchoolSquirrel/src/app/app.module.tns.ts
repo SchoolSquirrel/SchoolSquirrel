@@ -1,5 +1,5 @@
 import {
-    NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, Directive,
+    NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID,
 } from "@angular/core";
 import {
     NativeScriptModule, NativeScriptFormsModule, NativeScriptHttpClientModule, registerElement,
@@ -13,9 +13,6 @@ import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 import localeDe from "@angular/common/locales/de";
 import localeDeExtra from "@angular/common/locales/extra/de";
 import { registerLocaleData } from "@angular/common";
-import { knownFolders } from "@nativescript/core";
-import { from, Observable } from "rxjs";
-import { map } from "rxjs/operators";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./_pages/home/home.component";
@@ -71,7 +68,6 @@ registerElement(
     // eslint-disable-next-line
     () => require("@nstudio/nativescript-floatingactionbutton").Fab,
 );
-
 
 @NgModule({
     declarations: [
