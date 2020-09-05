@@ -6,7 +6,6 @@ import {
 } from "@nativescript/angular";
 import { ReactiveFormsModule } from "@angular/forms";
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
-import { NativeScriptLoader } from "@danvick/ngx-translate-nativescript-loader";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angular";
 import { NativeScriptUICalendarModule } from "nativescript-ui-calendar/angular";
@@ -14,6 +13,9 @@ import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 import localeDe from "@angular/common/locales/de";
 import localeDeExtra from "@angular/common/locales/extra/de";
 import { registerLocaleData } from "@angular/common";
+import { knownFolders } from "@nativescript/core";
+import { from, Observable } from "rxjs";
+import { map } from "rxjs/operators";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./_pages/home/home.component";
@@ -47,16 +49,8 @@ import { AssignmentStatusbarComponent } from "./_components/assignment-statusbar
 import { HelpComponent } from "./_components/help/help.component";
 import { UserSettingsComponent } from "./_pages/user-settings/user-settings.component";
 import { RecordVideoComponent } from "./_dialogs/record-video/record-video.component";
-
-registerLocaleData(localeDe, localeDeExtra);
-
-registerElement(
-    "Fab",
-    // eslint-disable-next-line
-    () => require("@nstudio/nativescript-floatingactionbutton").Fab,
-);
-
-@Directive({
+import { nativescriptTranslateLoaderFactory } from "./_helpers/nativescript-translate-loader";
+/* @Directive({
     selector: "EmojiPicker",
 })
 export class EmojiPickerDirective { }
@@ -68,11 +62,16 @@ export class EmojiLabelDirective { }
 // eslint-disable-next-line
 registerElement("EmojiPicker", () => require("nativescript-emoji-picker").EmojiPicker);
 // eslint-disable-next-line
-registerElement("EmojiLabel", () => require("nativescript-emoji-picker").EmojiLabel);
+registerElement("EmojiLabel", () => require("nativescript-emoji-picker").EmojiLabel); */
 
-export function nativescriptTranslateLoaderFactory(): NativeScriptLoader {
-    return new NativeScriptLoader("./assets/i18n/", ".json");
-}
+registerLocaleData(localeDe, localeDeExtra);
+
+registerElement(
+    "Fab",
+    // eslint-disable-next-line
+    () => require("@nstudio/nativescript-floatingactionbutton").Fab,
+);
+
 
 @NgModule({
     declarations: [

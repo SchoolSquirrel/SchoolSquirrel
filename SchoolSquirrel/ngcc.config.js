@@ -53,54 +53,6 @@ module.exports = {
                 /@nativescript\/angular\//,
             ],
         },
-        "nativescript-ui-sidedrawer": {
-            entryPoints: {
-                angular: {
-                    override: {
-                        main: "./side-drawer-directives.js",
-                        typings: "./side-drawer-directives.d.ts",
-                    },
-                    ignoreMissingDependencies: true,
-                },
-            },
-            ignorableDeepImportMatchers: [
-                /tns-core-modules\//,
-                /@nativescript\/core\//,
-                /@nativescript\/angular\//,
-            ],
-        },
-        "nativescript-ui-listview": {
-            entryPoints: {
-                angular: {
-                    override: {
-                        main: "./listview-directives.js",
-                        typings: "./listview-directives.d.ts",
-                    },
-                    ignoreMissingDependencies: true,
-                },
-            },
-            ignorableDeepImportMatchers: [
-                /tns-core-modules\//,
-                /@nativescript\/core\//,
-                /@nativescript\/angular\//,
-            ],
-        },
-        "nativescript-ui-calendar": {
-            entryPoints: {
-                angular: {
-                    override: {
-                        main: "./calendar-directives.js",
-                        typings: "./calendar-directives.d.ts",
-                    },
-                    ignoreMissingDependencies: true,
-                },
-            },
-            ignorableDeepImportMatchers: [
-                /tns-core-modules\//,
-                /@nativescript\/core\//,
-                /@nativescript\/angular\//,
-            ],
-        },
         "nativescript-emoji-picker": {
             entryPoints: {
                 angular: {
