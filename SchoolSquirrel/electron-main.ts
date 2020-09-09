@@ -19,7 +19,10 @@ function createWindow() {
         frame: false,
         icon: path.join(__dirname, "src/favicon.ico"),
         show: false,
-        webPreferences: { nodeIntegration: true },
+        webPreferences: {
+            nodeIntegration: true,
+            enableRemoteModule: true,
+        },
         x: 0,
         y: 0,
         title: "SchoolSquirrel",
