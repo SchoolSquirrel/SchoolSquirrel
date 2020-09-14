@@ -1,5 +1,12 @@
-<GridLayout height="50" rows="*" columns="50, *, auto, 50" class="nt-action-bar">
+<!--<GridLayout height="50" rows="*" columns="50, *, auto, 50" class="nt-action-bar">
     <Button row="0" col="0" class="btn-invisible fas icon" [text]="isModal ? 'arrow-left' : 'bars'" (tap)="isModal ? goBack() : openSideDrawer()"></Button>
     <Label row="0" col="1" class="headline" [text]="title ? title : 'SchoolSquirrel'"></Label>
     <Button row="0" col="3" class="btn-invisible fas icon" text="ellipsis-v"></Button>
-</GridLayout>
+</GridLayout>-->
+
+<ActionBar [title]="title ? title : 'SchoolSquirrel'">
+    <NavigationButton ios:visibility="collapsed" [android.systemIcon]="isModal ? 'ic_menu_back' : 'ic_menu'" (tap)="isModal ? goBack() : openSideDrawer()"></NavigationButton>
+
+    <ActionItem *ngFor="let actionItem of actionItems" (tap)="actionItemTap.emit(actionItem.id)" [ios.systemIcon]="actionItem.ios.icon" [ios.position]="actionItem.ios.position" [android.systemIcon]="actionItem.android.icon" [android.position]="actionItem.android.position"
+        [text]="actionItem.text"></ActionItem>
+</ActionBar>
