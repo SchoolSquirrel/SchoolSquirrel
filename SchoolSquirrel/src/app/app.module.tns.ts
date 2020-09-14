@@ -13,6 +13,7 @@ import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 import localeDe from "@angular/common/locales/de";
 import localeDeExtra from "@angular/common/locales/extra/de";
 import { registerLocaleData } from "@angular/common";
+import { FloatingActionButton } from "@nativescript-community/ui-material-floatingactionbutton";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./_pages/home/home.component";
@@ -63,11 +64,7 @@ registerElement("EmojiLabel", () => require("nativescript-emoji-picker").EmojiLa
 
 registerLocaleData(localeDe, localeDeExtra);
 
-registerElement(
-    "Fab",
-    // eslint-disable-next-line
-    () => require("@nstudio/nativescript-floatingactionbutton").Fab,
-);
+registerElement("FAB", () => FloatingActionButton);
 
 @NgModule({
     declarations: [

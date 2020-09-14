@@ -2,5 +2,5 @@
     <app-navbar row="0" col="0" [title]="'general.calendar' | translate"></app-navbar>
     <RadCalendar #calendar rowspan="2" row="1" col="0" [eventSource]="events" *ngIf="!loading" [eventsViewMode]="eventsViewMode"></RadCalendar>
     <app-full-screen-loading rowspan="2" row="1" col="0" *ngIf="loading"></app-full-screen-loading>
-    <FAB row="2" col="0" text="plus" class="fab-button fas"></FAB>
+    <FAB row="2" col="0" text="plus" class="fab-button fas" src="res://plus"></FAB>
 </GridLayout>
