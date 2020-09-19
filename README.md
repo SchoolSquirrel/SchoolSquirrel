@@ -53,7 +53,7 @@ For the mobile app:
 `npm run mobile:android:build` in `SchoolSquirrel` folder
 
 ### Frontend Desktop
-`npm run desktop:build` in SchoolSquirrel` folder
+`npm run desktop:build` in `SchoolSquirrel` folder
 
 ### Docs
 `mkdocs build` in `docs` folder
