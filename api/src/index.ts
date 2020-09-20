@@ -7,6 +7,7 @@ import * as helmet from "helmet";
 import * as rateLimit from "express-rate-limit";
 import * as i18n from "i18n";
 import * as path from "path";
+import * as hpp from "hpp";
 import "reflect-metadata";
 import { createConnection } from "typeorm";
 import * as fs from "fs";
@@ -112,6 +113,8 @@ createConnection({
             extended: true,
         }));
         app.use(bodyParser.json());
+        // Prevent HTTP Parameter Pollution attacks
+        app.use(hpp());
 
         // Limit requests to 2 per second (1200 per 10 min)
         app.use(rateLimit({
