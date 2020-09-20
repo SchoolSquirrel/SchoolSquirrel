@@ -6,12 +6,21 @@ import { User } from "../entity/User";
 import { sendMessage } from "../utils/messages";
 
 class ChatController {
+    /**
+     * @apiDescription List all chats
+     * @apiResponse 200 | OK | Chat[]
+     */
     public static async listAll(req: Request, res: Response): Promise<void> {
         const chatRepository = getRepository(Chat);
         const chats = await chatRepository.find({ relations: ["users"] });
         res.send(chats);
     }
 
+    /**
+     * @apiDescription Get chat from user id
+     * @apiResponse 200 | OK | Chat
+     * @apiResponse 404 | Chat not found | Error
+     */
     public static async getChatFromUserId(req: Request, res: Response): Promise<void> {
         const chatRepository = getRepository(Chat);
         const userRepository = getRepository(User);
@@ -37,10 +46,22 @@ class ChatController {
         res.send(chat);
     }
 
+    /**
+     * @apiDescription Send a chat message
+     * @apiBodyParameter text | string | true | The message content
+     * @apiBodyParameter citation | number | false | An optional id of a message to cite
+     * @apiResponse 200 | OK | Message
+     * @apiResponse 500 | Missing fields | Error
+     */
     public static async sendMessage(req: Request, res: Response): Promise<void> {
         sendMessage(req, res, "chat");
     }
 
+    /**
+     * @apiDescription Get chat
+     * @apiResponse 200 | OK | Chat
+     * @apiResponse 404 | Chat not found | Error
+     */
     public static async getChat(req: Request, res: Response): Promise<void> {
         const chatRepository = getRepository(Chat);
         try {
@@ -62,6 +83,13 @@ class ChatController {
         }
     }
 
+    /**
+     * @apiDescription Create a new group chat
+     * @apiBodyParameter name | string | true | The name for the new chat
+     * @apiBodyParameter user | string | true | The id of another user
+     * @apiResponse 200 | OK | Success
+     * @apiResponse 400 | Missing fields | Error
+     */
     public static async newGroupChat(req: Request, res: Response): Promise<void> {
         const { name, user } = req.body;
         if (!(name && user)) {
@@ -85,6 +113,11 @@ class ChatController {
         res.status(200).send({ success: true });
     }
 
+    /**
+     * @apiDescription Delete chat
+     * @apiResponse 200 | OK | Success
+     * @apiResponse 500 | Server Error | Error
+     */
     public static async deleteChat(req: Request, res: Response): Promise<void> {
         const { id } = req.params;
         const chatRepository = getRepository(Chat);
