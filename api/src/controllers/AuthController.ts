@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { Request, Response } from "express";
 import * as i18n from "i18n";
 import * as jwt from "jsonwebtoken";
@@ -5,6 +6,13 @@ import { getRepository } from "typeorm";
 import { User } from "../entity/User";
 
 class AuthController {
+    /**
+     * @apiDescription Login
+     * @apiBodyParameter name | string | true | The username
+     * @apiBodyParameter password | string | true | The password
+     * @apiResponse 200 | OK | User
+     * @apiResponse 401 | Wrong username or password | Error
+     */
     public static async login(req: Request, res: Response): Promise<void> {
         const { name, password } = req.body;
         if (!(name && password)) {
@@ -48,6 +56,12 @@ class AuthController {
         res.send(response);
     }
 
+    /**
+     * @apiDescription Renew JWT token
+     * @apiBodyParameter jwtToken | string | true | The JWT token to renew
+     * @apiResponse 200 | OK | User
+     * @apiResponse 401 | Invalid token | Error
+     */
     public static async renewToken(req: Request, res: Response): Promise<void> {
         const { jwtToken } = req.body;
         if (!(jwtToken)) {
@@ -80,6 +94,14 @@ class AuthController {
         });
     }
 
+    /**
+     * @apiDescription Change password
+     * @apiBodyParameter password | string | true | The new password
+     * @apiBodyParameter oldPassword | string | false | The old password<br>If not specified, the operation will only be successfull when the default password has not been changed.
+     * @apiResponse 200 | OK | Success
+     * @apiResponse 400 | Password does not match criteria | Error
+     * @apiResponse 500 | Server error | Error
+     */
     public static async changePassword(req: Request, res: Response): Promise<void> {
         const { password }: {password: string} = req.body;
         try {
