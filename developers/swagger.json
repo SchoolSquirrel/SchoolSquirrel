@@ -684,11 +684,29 @@
         },
         "/auth/login": {
             "post": {
-                "description": "ToDo",
-                "parameters": [],
+                "description": "Login",
+                "parameters": [
+                    {
+                        "in": "formData",
+                        "name": "name",
+                        "type": "string",
+                        "required": true,
+                        "description": "The username"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "password",
+                        "type": "string",
+                        "required": true,
+                        "description": "The password"
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
                     },
                     "400": {
                         "description": "Missing parameters or fields",
@@ -697,7 +715,7 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized (either no JWT Token or the action is not allowed)",
+                        "description": "Wrong username or password",
                         "schema": {
                             "$ref": "#/definitions/Error"
                         }
@@ -712,20 +730,44 @@
         },
         "/auth/password": {
             "post": {
-                "description": "ToDo",
-                "parameters": [],
+                "description": "Change password",
+                "parameters": [
+                    {
+                        "in": "formData",
+                        "name": "password",
+                        "type": "string",
+                        "required": true,
+                        "description": "The new password"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "oldPassword",
+                        "type": "string",
+                        "required": false,
+                        "description": "The old password<br>If not specified, the operation will only be successfull when the default password has not been changed."
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Success"
+                        }
                     },
                     "400": {
-                        "description": "Missing parameters or fields",
+                        "description": "Password does not match criteria",
                         "schema": {
                             "$ref": "#/definitions/Error"
                         }
                     },
                     "401": {
                         "description": "Unauthorized (either no JWT Token or the action is not allowed)",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
                         "schema": {
                             "$ref": "#/definitions/Error"
                         }
@@ -740,11 +782,22 @@
         },
         "/auth/renewToken": {
             "post": {
-                "description": "ToDo",
-                "parameters": [],
+                "description": "Renew JWT token",
+                "parameters": [
+                    {
+                        "in": "formData",
+                        "name": "jwtToken",
+                        "type": "string",
+                        "required": true,
+                        "description": "The JWT token to renew"
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
                     },
                     "400": {
                         "description": "Missing parameters or fields",
@@ -753,7 +806,7 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized (either no JWT Token or the action is not allowed)",
+                        "description": "Invalid token",
                         "schema": {
                             "$ref": "#/definitions/Error"
                         }
@@ -1086,11 +1139,17 @@
         },
         "/chats/": {
             "get": {
-                "description": "ToDo",
+                "description": "List all chats",
                 "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Chat"
+                            }
+                        }
                     },
                     "400": {
                         "description": "Missing parameters or fields",
@@ -1112,14 +1171,32 @@
                 ]
             },
             "post": {
-                "description": "ToDo",
-                "parameters": [],
+                "description": "Create a new group chat",
+                "parameters": [
+                    {
+                        "in": "formData",
+                        "name": "name",
+                        "type": "string",
+                        "required": true,
+                        "description": "The name for the new chat"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "user",
+                        "type": "string",
+                        "required": true,
+                        "description": "The id of another user"
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Success"
+                        }
                     },
                     "400": {
-                        "description": "Missing parameters or fields",
+                        "description": "Missing fields",
                         "schema": {
                             "$ref": "#/definitions/Error"
                         }
@@ -1140,7 +1217,7 @@
         },
         "/chats/{id}": {
             "get": {
-                "description": "ToDo",
+                "description": "Get chat",
                 "parameters": [
                     {
                         "in": "path",
@@ -1152,7 +1229,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Chat"
+                        }
                     },
                     "400": {
                         "description": "Missing parameters or fields",
@@ -1162,6 +1242,12 @@
                     },
                     "401": {
                         "description": "Unauthorized (either no JWT Token or the action is not allowed)",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "Chat not found",
                         "schema": {
                             "$ref": "#/definitions/Error"
                         }
@@ -1174,8 +1260,22 @@
                 ]
             },
             "post": {
-                "description": "ToDo",
+                "description": "Send a chat message",
                 "parameters": [
+                    {
+                        "in": "formData",
+                        "name": "text",
+                        "type": "string",
+                        "required": true,
+                        "description": "The message content"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "citation",
+                        "type": "number",
+                        "required": false,
+                        "description": "An optional id of a message to cite"
+                    },
                     {
                         "in": "path",
                         "name": "id",
@@ -1186,7 +1286,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Message"
+                        }
                     },
                     "400": {
                         "description": "Missing parameters or fields",
@@ -1196,6 +1299,12 @@
                     },
                     "401": {
                         "description": "Unauthorized (either no JWT Token or the action is not allowed)",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Missing fields",
                         "schema": {
                             "$ref": "#/definitions/Error"
                         }
@@ -1210,7 +1319,7 @@
         },
         "/chats/user/{id}": {
             "get": {
-                "description": "ToDo",
+                "description": "Get chat from user id",
                 "parameters": [
                     {
                         "in": "path",
@@ -1222,7 +1331,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Chat"
+                        }
                     },
                     "400": {
                         "description": "Missing parameters or fields",
@@ -1232,6 +1344,12 @@
                     },
                     "401": {
                         "description": "Unauthorized (either no JWT Token or the action is not allowed)",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "Chat not found",
                         "schema": {
                             "$ref": "#/definitions/Error"
                         }
