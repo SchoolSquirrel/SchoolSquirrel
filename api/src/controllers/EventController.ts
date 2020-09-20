@@ -19,7 +19,7 @@ class EventController {
             .where("user.id = :id", { id: res.locals.jwtPayload.userId })
             .getMany();
         const events: {
-            Id: number,
+            Id: string,
             Subject: string,
             StartTime: Date,
             EndTime: Date,
@@ -35,7 +35,7 @@ class EventController {
         } as SchedulerEvent)));
         const userEvents = await eventRepository.find({
             where: {
-                user: await getRepository(User).findOne(res.locals.jwtPayload.userId),
+                user: res.locals.jwtPayload.user,
             },
         });
         for (const event of userEvents) {
@@ -81,8 +81,7 @@ class EventController {
         event.EndTime = EndTime;
         event.Location = Location;
         event.StartTime = StartTime;
-        const userRepository = getRepository(User);
-        event.user = await userRepository.findOne(res.locals.jwtPayload.userId);
+        event.user = res.locals.jwtPayload.user;
         const eventRepository = getRepository(Event);
         try {
             await eventRepository.save(event);

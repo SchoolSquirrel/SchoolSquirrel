@@ -1,4 +1,4 @@
-<GridLayout rows="auto, *, auto" columns="*" class="" hideActionBar>
+<GridLayout rows="auto, *, auto" columns="*" class="">
     <app-navbar row="0" col="0" [title]="'general.assignments' | translate"></app-navbar>
     <StackLayout row="1">
         <GridLayout rows="auto, auto" columns="20, *" class="p-x-10 p-y-15 bottom-divider" *ngFor="let course of courses">
@@ -14,5 +14,5 @@
             </StackLayout>
         </GridLayout>
     </StackLayout>
-    <FAB row="2" col="0" text="plus" class="fab-button fas"></FAB>
+    <FAB row="2" col="0" text="plus" class="fab-button fas" src="res://plus"></FAB>
 </GridLayout>

@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import * as i18n from "i18n";
 import * as jwt from "jsonwebtoken";
+import { getRepository } from "typeorm";
+import { User } from "../entity/User";
 
 export async function checkJwt(req: Request, res: Response, next: NextFunction): Promise<void> {
     // Get the jwt token from the head
@@ -19,7 +21,12 @@ export async function checkJwt(req: Request, res: Response, next: NextFunction):
     try {
         jwtPayload = (jwt.verify(token, req.app.locals.config.JWT_SECRET) as any);
         res.locals.jwtPayload = jwtPayload;
-        res.locals.jwtPayload.userId = parseInt(res.locals.jwtPayload.userId, undefined);
+        try {
+            res.locals.jwtPayload.user = await getRepository(User)
+                .findOneOrFail(res.locals.jwtPayload.userId);
+        } catch {
+            res.status(401).send({ message: i18n.__("errors.userNotFound"), logout: true });
+        }
         i18n.setLocale(req.app.locals.config.DEFAULT_LANGUAGE);
     } catch (error) {
     // If token is not valid, respond with 401 (unauthorized)

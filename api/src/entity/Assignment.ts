@@ -12,8 +12,8 @@ import { AssignmentSubmission } from "./AssignmentSubmission";
 
 @Entity()
 export class Assignment {
-  @PrimaryGeneratedColumn()
-  public id: number;
+  @PrimaryGeneratedColumn("uuid")
+  public id: string;
 
   @Column()
   public title: string;

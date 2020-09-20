@@ -9,7 +9,7 @@ class DeviceController {
         const deviceRepository = getRepository(Device);
         const devices = await deviceRepository.find({
             where: {
-                user: await getRepository(User).findOne(res.locals.jwtPayload.userId),
+                user: res.locals.jwtPayload.user,
             },
         });
         res.send(devices);
@@ -34,8 +34,7 @@ class DeviceController {
         d.software = software;
         d.token = token;
         d.os = os;
-        const userRepository = getRepository(User);
-        d.user = await userRepository.findOne(res.locals.jwtPayload.userId);
+        d.user = res.locals.jwtPayload.user;
         try {
             await deviceRepository.save(d);
         } catch {

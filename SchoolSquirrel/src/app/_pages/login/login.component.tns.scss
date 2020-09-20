@@ -11,5 +11,19 @@ ActivityIndicator {
 
 .login-form {
     padding: 50;
-    background-image: url(~assets/login-bg-mobile.png);
+    background-image: url("~/assets/login-bg-mobile.png");
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: cover;
+    TextField {
+        border-color: white;
+        color: white;
+        placeholder-color: rgb(202, 202, 202);
+    }
+    .text-danger {
+        color: white;
+    }
+    .space-below {
+        margin-bottom: 80;
+    }
 }

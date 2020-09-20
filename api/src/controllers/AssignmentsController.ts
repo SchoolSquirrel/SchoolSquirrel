@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import * as i18n from "i18n";
 import { getRepository } from "typeorm";
+import * as v from "validator";
 import { Assignment } from "../entity/Assignment";
 import { Course } from "../entity/Course";
 import { sanitizeHtml } from "../utils/html";
@@ -31,10 +32,11 @@ class AssignmentsController {
                 .where("user.id = :id", { id: res.locals.jwtPayload.userId })
                 .getMany();
         }
-        const user = await getRepository(User).findOne(res.locals.jwtPayload.userId);
         for (const course of courses) {
             for (const assignment of course.assignments) {
-                await AssignmentsController.checkIfSubmitted(res, assignment, user);
+                await AssignmentsController.checkIfSubmitted(
+                    res, assignment, res.locals.jwtPayload.user,
+                );
             }
         }
         res.send(courses);
@@ -49,8 +51,8 @@ class AssignmentsController {
         const assignmentRepository = getRepository(Assignment);
         const teacher = await isTeacher(res.locals.jwtPayload.userId);
         try {
-            const id = parseInt(req.params.id, 10);
-            if (id === Number.NaN) {
+            const { id } = req.params;
+            if (!v.isUUID(id)) {
                 res.status(404).send({ message: "Aufgabe nicht gefunden!" });
                 return;
             }
@@ -80,7 +82,7 @@ class AssignmentsController {
         assignment: Assignment, user?: User): Promise<void> {
         const assignmentSubmission = await getRepository(AssignmentSubmission).findOne({
             where: {
-                user: user || await getRepository(User).findOne(res.locals.jwtPayload.userId),
+                user: user || res.locals.jwtPayload.user,
                 assignment,
             },
         });
@@ -94,8 +96,9 @@ class AssignmentsController {
      * @apiResponse 200 | OK | Assignment
      */
     public static async getAssignmentDraft(req: Request, res: Response): Promise<void> {
-        const me = await getRepository(User).findOne(res.locals.jwtPayload.userId);
-        const assignment = await AssignmentsController.createDraftIfNotExisting(res, me);
+        const assignment = await AssignmentsController.createDraftIfNotExisting(
+            res, res.locals.jwtPayload.user,
+        );
         await AssignmentsController.addFilesToAssignment(assignment, req, res);
         res.status(200).send(assignment);
     }
@@ -113,8 +116,7 @@ class AssignmentsController {
         const assignment = await AssignmentsController
             .findAssignmentDraft(res.locals.jwtPayload.userId);
         if (!assignment) {
-            const me = await getRepository(User).findOne(res.locals.jwtPayload.userId);
-            await AssignmentsController.createDraftIfNotExisting(res, me);
+            await AssignmentsController.createDraftIfNotExisting(res, res.locals.jwtPayload.user);
             res.status(200).send({ success: true });
             return;
         }
@@ -141,16 +143,21 @@ class AssignmentsController {
      * @apiResponse 500 | Server Error | Error
      */
     public static async submitAssignment(req: Request, res: Response): Promise<void> {
-        const user = await getRepository(User).findOne(res.locals.jwtPayload.userId);
-        const assignment = await getRepository(Assignment).findOne(req.params.id);
-        await AssignmentsController.checkIfSubmitted(res, assignment, user);
+        let assignment: Assignment;
+        try {
+            assignment = await getRepository(Assignment).findOneOrFail(req.params.id);
+        } catch {
+            res.status(404).send({ message: "Assignment not found!" });
+            return;
+        }
+        await AssignmentsController.checkIfSubmitted(res, assignment, res.locals.jwtPayload.user);
         if (assignment.submitted) {
             res.send({ success: true });
             return;
         }
         const assignmentSubmission = new AssignmentSubmission();
         assignmentSubmission.message = req.body.message || "";
-        assignmentSubmission.user = user;
+        assignmentSubmission.user = res.locals.jwtPayload.user;
         assignmentSubmission.assignment = assignment;
         assignmentSubmission.date = new Date();
         try {
@@ -168,15 +175,23 @@ class AssignmentsController {
      * @apiResponse 500 | Server Error | Error
      */
     public static async unsubmitAssignment(req: Request, res: Response): Promise<void> {
-        const user = await getRepository(User).findOne(res.locals.jwtPayload.userId);
-        const assignment = await getRepository(Assignment).findOne(req.params.id);
-        await AssignmentsController.checkIfSubmitted(res, assignment, user);
+        let assignment: Assignment;
+        try {
+            assignment = await getRepository(Assignment).findOneOrFail(req.params.id);
+        } catch {
+            res.status(404).send({ message: "Assignment not found!" });
+            return;
+        }
+        await AssignmentsController.checkIfSubmitted(res, assignment, res.locals.jwtPayload.user);
         if (!assignment.submitted) {
             res.send({ success: true });
             return;
         }
         try {
-            await getRepository(AssignmentSubmission).delete({ assignment, user });
+            await getRepository(AssignmentSubmission).delete({
+                assignment,
+                user: res.locals.jwtPayload.user,
+            });
             res.send({ success: true });
         } catch {
             res.status(500).send({ message: "Error" });
@@ -190,11 +205,23 @@ class AssignmentsController {
      * @apiResponse 404 | Not Found | Error
      */
     public static async returnAssignment(req: Request, res: Response): Promise<void> {
-        const user = await getRepository(User).findOne(req.params.userId);
-        const assignment = await getRepository(Assignment).findOne(req.params.id);
+        let user: User;
+        try {
+            user = await getRepository(User).findOneOrFail(req.params.userId);
+        } catch {
+            res.status(404).send({ message: "User not found!" });
+            return;
+        }
+        let assignment: Assignment;
+        try {
+            assignment = await getRepository(Assignment).findOneOrFail(req.params.id);
+        } catch {
+            res.status(404).send({ message: "Assignment not found!" });
+            return;
+        }
         const assignmentSubmissionRepository = getRepository(AssignmentSubmission);
         try {
-            const assignmentSubmission = await assignmentSubmissionRepository.findOne({
+            const assignmentSubmission = await assignmentSubmissionRepository.findOneOrFail({
                 assignment, user,
             });
             assignmentSubmission.feedback = req.body.feedback || "";
@@ -202,7 +229,7 @@ class AssignmentsController {
             await assignmentSubmissionRepository.save(assignmentSubmission);
             res.send({ success: true });
         } catch {
-            res.status(404).send({ message: "Not found" });
+            res.status(404).send({ message: "Submission not found" });
         }
     }
 
@@ -229,7 +256,12 @@ class AssignmentsController {
         assignment.title = title;
         assignment.content = sanitizeHtml(content);
         assignment.due = due;
-        assignment.course = await getRepository(Course).findOne(course);
+        try {
+            assignment.course = await getRepository(Course).findOneOrFail(course);
+        } catch {
+            res.status(404).send({ message: "Course not found" });
+            return;
+        }
         assignment.draftUser = null;
 
         const assignmentRepository = getRepository(Assignment);

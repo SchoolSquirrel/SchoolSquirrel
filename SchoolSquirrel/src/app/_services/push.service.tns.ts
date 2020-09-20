@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import * as firebase from "nativescript-plugin-firebase";
+import { firebase } from "@nativescript/firebase";
 import { Device, Color } from "@nativescript/core";
-import { LocalNotifications, ScheduleOptions } from "nativescript-local-notifications";
+import { LocalNotifications, ScheduleOptions } from "@nativescript/local-notifications";
 import { StorageService } from "./storage.service";
 import { AuthenticationService } from "./authentication.service";
 import { RemoteService } from "./remote.service";

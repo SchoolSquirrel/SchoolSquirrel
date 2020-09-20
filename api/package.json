@@ -60,7 +60,8 @@
         "reflect-metadata": "^0.1.13",
         "sanitize-html": "^1.27.0",
         "ts-node-dev": "^1.0.0-pre.44",
-        "typeorm": "0.2.24"
+        "typeorm": "0.2.24",
+        "validator": "^13.1.17"
     },
     "scripts": {
         "tsc": "tsc",

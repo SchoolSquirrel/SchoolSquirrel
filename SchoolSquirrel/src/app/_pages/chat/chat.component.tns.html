@@ -1,4 +1,4 @@
-<GridLayout rows="auto, *" class="" hideActionBar>
+<GridLayout rows="auto, *" class="">
     <app-navbar row="0" [title]="'general.chat' | translate" *ngIf="!currentChat"></app-navbar>
     <ListView row="1" *ngIf="!loading && chats.length > 0 && !currentChat" [items]="chats" (itemTap)="goToChat($event)">
         <ng-template let-item="item">

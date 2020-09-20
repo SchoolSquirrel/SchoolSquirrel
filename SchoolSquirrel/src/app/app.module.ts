@@ -28,8 +28,7 @@ import {
 import { EditorModule } from "@tinymce/tinymce-angular";
 import { NgxOnlyOfficeModule } from "ngx-onlyoffice";
 import { NgxExtendedPdfViewerModule } from "ngx-extended-pdf-viewer";
-import { DeviceDetectorModule } from "ngx-device-detector";
-import { PasswordStrengthMeterModule } from "angular-password-strength-meter";
+import { PasswordStrengthMeterModule } from "./_components/password-strength-meter/password-strength-meter.module";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./_pages/home/home.component";
 import { LoginComponent } from "./_pages/login/login.component";
@@ -148,7 +147,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         EditorModule,
         NgxOnlyOfficeModule,
         NgxExtendedPdfViewerModule,
-        DeviceDetectorModule,
         PasswordStrengthMeterModule,
     ],
     providers: [

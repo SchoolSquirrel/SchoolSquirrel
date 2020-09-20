@@ -60,6 +60,23 @@ html {
     }
 }
 
+.password-feedback {
+    background-color: white;
+    padding: 1rem;
+    font-size: unset;
+    line-height: 1.2rem;
+    font-size: 90% !important;
+    * {
+        display: block;
+    }
+    .password-suggestions {
+        color: #08bb53;
+    }
+    .password-warning {
+        color: #bb0808;
+    }
+}
+
 .form-control-dark::placeholder {
     color: rgb(196, 196, 196);
 }

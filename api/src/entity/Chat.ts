@@ -11,8 +11,8 @@ import { Message } from "./Message";
 
 @Entity()
 export class Chat {
-  @PrimaryGeneratedColumn()
-  public id: number;
+  @PrimaryGeneratedColumn("uuid")
+  public id: string;
 
   @Column({ nullable: true })
   public name: string;

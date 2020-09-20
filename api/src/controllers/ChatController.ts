@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import * as i18n from "i18n";
 import { getRepository } from "typeorm";
+import * as v from "validator";
 import { Chat } from "../entity/Chat";
 import { User } from "../entity/User";
 import { sendMessage } from "../utils/messages";
@@ -24,8 +25,8 @@ class ChatController {
     public static async getChatFromUserId(req: Request, res: Response): Promise<void> {
         const chatRepository = getRepository(Chat);
         const userRepository = getRepository(User);
-        const id = parseInt(req.params.id, 10);
-        if (id === Number.NaN) {
+        const { id } = req.params;
+        if (!v.isUUID(id)) {
             res.status(404).send({ message: "Chat nicht gefunden!" });
             return;
         }
@@ -39,8 +40,13 @@ class ChatController {
         if (!chat) {
             chat = new Chat();
             chat.users = [];
-            chat.users.push(await userRepository.findOne(req.params.id));
-            chat.users.push(await userRepository.findOne(res.locals.jwtPayload.userId));
+            try {
+                chat.users.push(await userRepository.findOneOrFail(req.params.id));
+            } catch {
+                res.status(404).send({ message: "User not found!" });
+                return;
+            }
+            chat.users.push(res.locals.jwtPayload.user);
             chat = await chatRepository.save(chat);
         }
         res.send(chat);
@@ -65,8 +71,8 @@ class ChatController {
     public static async getChat(req: Request, res: Response): Promise<void> {
         const chatRepository = getRepository(Chat);
         try {
-            const id = parseInt(req.params.id, 10);
-            if (id === Number.NaN) {
+            const { id } = req.params;
+            if (!v.isUUID(id)) {
                 res.status(404).send({ message: "Chat nicht gefunden!" });
                 return;
             }
@@ -101,8 +107,13 @@ class ChatController {
         chat.name = name;
         chat.users = [];
         const userRepository = getRepository(User);
-        chat.users.push(await userRepository.findOne(res.locals.jwtPayload.userId));
-        chat.users.push(await userRepository.findOne(req.params.user));
+        chat.users.push(res.locals.jwtPayload.user);
+        try {
+            chat.users.push(await userRepository.findOneOrFail(req.params.user));
+        } catch {
+            res.status(404).send({ message: "User not found!" });
+            return;
+        }
         const chatRepository = getRepository(Chat);
         try {
             await chatRepository.save(chat);

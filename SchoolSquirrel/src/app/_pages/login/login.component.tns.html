@@ -1,9 +1,9 @@
 <ScrollView>
-    <StackLayout class="" hideActionBar>
+    <StackLayout class="login-form" hideActionBar>
         <app-full-page-loading *ngIf="tryingToAutoLogin || loading"></app-full-page-loading>
-        <StackLayout [formGroup]="loginForm" class="nt-form login-form" *ngIf="!tryingToAutoLogin" [visibility]="loading ? 'collapse' : 'visible'">
-            <Label class="h1 text-center" text="SchoolSquirrel"></Label>
-            <Image class="top-img" src="~/assets/logo.png"></Image>
+        <StackLayout [formGroup]="loginForm" class="nt-form " *ngIf="!tryingToAutoLogin" [visibility]="loading ? 'collapse' : 'visible'">
+            <Label class="h1 text-center text-white space-below" text="SchoolSquirrel"></Label>
+            <!--<Image class="top-img" src="~/assets/logo.png"></Image>-->
             <StackLayout class="nt-input" [class.d-none]="autoDetectDomain">
                 <TextField keyboardType="url" class="-border -rounded" [hint]="'pages.login.domain' | translate" formControlName="domain" autofocus [class.text-danger]="submitted && loginForm.controls.domain.invalid"></TextField>
                 <Label class="text-danger" *ngIf="submitted && loginForm.controls.domain.invalid" [text]="'errors.required' | translate"></Label>
@@ -19,10 +19,10 @@
                 <Label class="text-danger" *ngIf="submitted && loginForm.controls.password.invalid" [text]="'errors.required' | translate"></Label>
             </StackLayout>
 
-            <GridLayout class="nt-input" rows="auto" columns="auto, *, auto">
+            <!--<GridLayout class="nt-input" rows="auto" columns="auto, *, auto">
                 <Label row="0" col="0" class="h1 p-t-10" [text]="'pages.login.rememberMe' | translate"></Label>
                 <Switch row="0" col="1" formControlName="rememberMe"></Switch>
-            </GridLayout>
+            </GridLayout>-->
             <Button class="-primary" [disabled]="loading" (tap)="onSubmit()" [text]="'pages.login.login' | translate"></Button>
         </StackLayout>
     </StackLayout>

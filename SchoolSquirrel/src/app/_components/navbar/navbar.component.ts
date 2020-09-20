@@ -36,7 +36,7 @@ export class NavbarComponent {
         if (isOpen) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            this.dropdownElement._menuElement.nativeElement.parentElement.classList.add("settings-dropdown");
+            this.dropdownElement._menu.nativeElement.parentElement.classList.add("settings-dropdown");
         }
     }
 

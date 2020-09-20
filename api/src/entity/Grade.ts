@@ -10,8 +10,8 @@ import { User } from "./User";
 @Entity()
 @Unique(["name"])
 export class Grade {
-  @PrimaryGeneratedColumn()
-  public id: number;
+  @PrimaryGeneratedColumn("uuid")
+  public id: string;
 
   @Column()
   public name: string;

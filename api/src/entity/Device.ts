@@ -5,8 +5,8 @@ import { User } from "./User";
 
 @Entity()
 export class Device {
-    @PrimaryGeneratedColumn()
-    public id: number;
+    @PrimaryGeneratedColumn("uuid")
+    public id: string;
 
     @Column()
     public os: string;
