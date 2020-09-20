@@ -25,7 +25,6 @@ export async function sendMessage(req: Request, res: Response, type: "chat" | "c
         res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });
         return;
     }
-    const userRepository = getRepository(User);
     const messageRepository = getRepository(Message);
     let message = new Message();
     message.text = text;
@@ -34,7 +33,7 @@ export async function sendMessage(req: Request, res: Response, type: "chat" | "c
     } else if (type == "course") {
         message.course = await getRepository(Course).findOne(req.params.id);
     }
-    message.sender = await userRepository.findOne(res.locals.jwtPayload.userId);
+    message.sender = res.locals.jwtPayload.user;
     message.date = new Date();
     message.citation = citation;
     message = await messageRepository.save(message);

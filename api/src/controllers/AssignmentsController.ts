@@ -32,10 +32,11 @@ class AssignmentsController {
                 .where("user.id = :id", { id: res.locals.jwtPayload.userId })
                 .getMany();
         }
-        const user = await getRepository(User).findOne(res.locals.jwtPayload.userId);
         for (const course of courses) {
             for (const assignment of course.assignments) {
-                await AssignmentsController.checkIfSubmitted(res, assignment, user);
+                await AssignmentsController.checkIfSubmitted(
+                    res, assignment, res.locals.jwtPayload.user,
+                );
             }
         }
         res.send(courses);
@@ -81,7 +82,7 @@ class AssignmentsController {
         assignment: Assignment, user?: User): Promise<void> {
         const assignmentSubmission = await getRepository(AssignmentSubmission).findOne({
             where: {
-                user: user || await getRepository(User).findOne(res.locals.jwtPayload.userId),
+                user: user || res.locals.jwtPayload.user,
                 assignment,
             },
         });
@@ -95,8 +96,9 @@ class AssignmentsController {
      * @apiResponse 200 | OK | Assignment
      */
     public static async getAssignmentDraft(req: Request, res: Response): Promise<void> {
-        const me = await getRepository(User).findOne(res.locals.jwtPayload.userId);
-        const assignment = await AssignmentsController.createDraftIfNotExisting(res, me);
+        const assignment = await AssignmentsController.createDraftIfNotExisting(
+            res, res.locals.jwtPayload.user,
+        );
         await AssignmentsController.addFilesToAssignment(assignment, req, res);
         res.status(200).send(assignment);
     }
@@ -114,8 +116,7 @@ class AssignmentsController {
         const assignment = await AssignmentsController
             .findAssignmentDraft(res.locals.jwtPayload.userId);
         if (!assignment) {
-            const me = await getRepository(User).findOne(res.locals.jwtPayload.userId);
-            await AssignmentsController.createDraftIfNotExisting(res, me);
+            await AssignmentsController.createDraftIfNotExisting(res, res.locals.jwtPayload.user);
             res.status(200).send({ success: true });
             return;
         }
@@ -142,16 +143,15 @@ class AssignmentsController {
      * @apiResponse 500 | Server Error | Error
      */
     public static async submitAssignment(req: Request, res: Response): Promise<void> {
-        const user = await getRepository(User).findOne(res.locals.jwtPayload.userId);
         const assignment = await getRepository(Assignment).findOne(req.params.id);
-        await AssignmentsController.checkIfSubmitted(res, assignment, user);
+        await AssignmentsController.checkIfSubmitted(res, assignment, res.locals.jwtPayload.user);
         if (assignment.submitted) {
             res.send({ success: true });
             return;
         }
         const assignmentSubmission = new AssignmentSubmission();
         assignmentSubmission.message = req.body.message || "";
-        assignmentSubmission.user = user;
+        assignmentSubmission.user = res.locals.jwtPayload.user;
         assignmentSubmission.assignment = assignment;
         assignmentSubmission.date = new Date();
         try {
@@ -169,15 +169,17 @@ class AssignmentsController {
      * @apiResponse 500 | Server Error | Error
      */
     public static async unsubmitAssignment(req: Request, res: Response): Promise<void> {
-        const user = await getRepository(User).findOne(res.locals.jwtPayload.userId);
         const assignment = await getRepository(Assignment).findOne(req.params.id);
-        await AssignmentsController.checkIfSubmitted(res, assignment, user);
+        await AssignmentsController.checkIfSubmitted(res, assignment, res.locals.jwtPayload.user);
         if (!assignment.submitted) {
             res.send({ success: true });
             return;
         }
         try {
-            await getRepository(AssignmentSubmission).delete({ assignment, user });
+            await getRepository(AssignmentSubmission).delete({
+                assignment,
+                user: res.locals.jwtPayload.user,
+            });
             res.send({ success: true });
         } catch {
             res.status(500).send({ message: "Error" });

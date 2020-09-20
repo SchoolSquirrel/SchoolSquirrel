@@ -32,9 +32,10 @@ class CourseController {
             return;
         }
         const course = await courseRepository.findOne(id, { relations: ["students", "teachers", "messages", "messages.sender", "assignments"] });
-        const user = await getRepository(User).findOne(res.locals.jwtPayload.userId);
         for (const assignment of course.assignments) {
-            await AssignmentsController.checkIfSubmitted(res, assignment, user);
+            await AssignmentsController.checkIfSubmitted(
+                res, assignment, res.locals.jwtPayload.user,
+            );
         }
         res.send(course);
     }
@@ -61,7 +62,7 @@ class CourseController {
         for (const user of users) {
             course.students.push(await userRepository.findOne(user));
         }
-        course.teachers.push(await userRepository.findOne(res.locals.jwtPayload.userId));
+        course.teachers.push(res.locals.jwtPayload.user);
         try {
             await courseRepository.save(course);
         } catch (e) {
@@ -89,7 +90,7 @@ class CourseController {
         for (const userId of users) {
             course.students.push(await userRepository.findOne(userId));
         }
-        course.teachers.push(await userRepository.findOne(res.locals.jwtPayload.userId));
+        course.teachers.push(res.locals.jwtPayload.user);
         try {
             await courseRepository.save(course);
         } catch (e) {

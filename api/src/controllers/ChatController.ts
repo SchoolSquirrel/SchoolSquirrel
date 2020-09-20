@@ -32,7 +32,7 @@ class ChatController {
             chat = new Chat();
             chat.users = [];
             chat.users.push(await userRepository.findOne(req.params.id));
-            chat.users.push(await userRepository.findOne(res.locals.jwtPayload.userId));
+            chat.users.push(res.locals.jwtPayload.user);
             chat = await chatRepository.save(chat);
         }
         res.send(chat);
@@ -74,7 +74,7 @@ class ChatController {
         chat.name = name;
         chat.users = [];
         const userRepository = getRepository(User);
-        chat.users.push(await userRepository.findOne(res.locals.jwtPayload.userId));
+        chat.users.push(res.locals.jwtPayload.user);
         chat.users.push(await userRepository.findOne(req.params.user));
         const chatRepository = getRepository(Chat);
         try {
