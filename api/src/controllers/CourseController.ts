@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import * as i18n from "i18n";
 import { getRepository } from "typeorm";
+import * as v from "validator";
 import { Course } from "../entity/Course";
 import { User } from "../entity/User";
 import { sendMessage } from "../utils/messages";
@@ -25,8 +26,8 @@ class CourseController {
 
     public static async getCourse(req: Request, res: Response): Promise<void> {
         const courseRepository = getRepository(Course);
-        const id = parseInt(req.params.id, 10);
-        if (id === Number.NaN) {
+        const { id } = req.params;
+        if (!v.isUUID(id)) {
             res.status(404).send({ message: "Kurs nicht gefunden!" });
             return;
         }

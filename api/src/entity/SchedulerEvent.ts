@@ -1,7 +1,7 @@
 import { EventCategory } from "./EventCategory";
 
 export interface SchedulerEvent {
-    Id: number;
+    Id: string;
     Subject: string;
     Description: string;
     Location: string;

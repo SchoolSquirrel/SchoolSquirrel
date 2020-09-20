@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import * as i18n from "i18n";
 import { getRepository } from "typeorm";
+import * as v from "validator";
 import { Chat } from "../entity/Chat";
 import { User } from "../entity/User";
 import { sendMessage } from "../utils/messages";
@@ -15,8 +16,8 @@ class ChatController {
     public static async getChatFromUserId(req: Request, res: Response): Promise<void> {
         const chatRepository = getRepository(Chat);
         const userRepository = getRepository(User);
-        const id = parseInt(req.params.id, 10);
-        if (id === Number.NaN) {
+        const { id } = req.params;
+        if (!v.isUUID(id)) {
             res.status(404).send({ message: "Chat nicht gefunden!" });
             return;
         }
@@ -44,8 +45,8 @@ class ChatController {
     public static async getChat(req: Request, res: Response): Promise<void> {
         const chatRepository = getRepository(Chat);
         try {
-            const id = parseInt(req.params.id, 10);
-            if (id === Number.NaN) {
+            const { id } = req.params;
+            if (!v.isUUID(id)) {
                 res.status(404).send({ message: "Chat nicht gefunden!" });
                 return;
             }

@@ -19,7 +19,6 @@ export async function checkJwt(req: Request, res: Response, next: NextFunction):
     try {
         jwtPayload = (jwt.verify(token, req.app.locals.config.JWT_SECRET) as any);
         res.locals.jwtPayload = jwtPayload;
-        res.locals.jwtPayload.userId = parseInt(res.locals.jwtPayload.userId, undefined);
         i18n.setLocale(req.app.locals.config.DEFAULT_LANGUAGE);
     } catch (error) {
     // If token is not valid, respond with 401 (unauthorized)

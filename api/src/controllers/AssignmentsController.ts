@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import * as i18n from "i18n";
 import { getRepository } from "typeorm";
+import * as v from "validator";
 import { Assignment } from "../entity/Assignment";
 import { Course } from "../entity/Course";
 import { sanitizeHtml } from "../utils/html";
@@ -49,8 +50,8 @@ class AssignmentsController {
         const assignmentRepository = getRepository(Assignment);
         const teacher = await isTeacher(res.locals.jwtPayload.userId);
         try {
-            const id = parseInt(req.params.id, 10);
-            if (id === Number.NaN) {
+            const { id } = req.params;
+            if (!v.isUUID(id)) {
                 res.status(404).send({ message: "Aufgabe nicht gefunden!" });
                 return;
             }

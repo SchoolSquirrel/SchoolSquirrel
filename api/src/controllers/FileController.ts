@@ -8,6 +8,7 @@ import * as http from "http";
 import * as stream from "stream";
 import * as fs from "fs";
 import { join } from "path";
+import * as v from "validator";
 import { Buckets } from "../entity/Buckets";
 import { listObjects, METADATA_SUFFIX } from "../utils/storage";
 import { Course } from "../entity/Course";
@@ -143,8 +144,8 @@ class FileController {
 
     public static async handleUpload(req: Request, res: Response): Promise<void> {
         // if (req.body.action === "save") {
-        const itemId = parseInt(req.params.itemId, 10);
-        if (typeof itemId !== "number") {
+        const { itemId } = req.params;
+        if (!v.isUUID(itemId)) {
             res.status(404).send({ message: "Item nicht gefunden!" });
             return;
         }
@@ -300,7 +301,7 @@ class FileController {
             && path.indexOf("/submissions/") !== -1) {
             const parts = path.split("/");
             // check that no user id comes after /submissions/
-            if (!parseInt(parts[parts.indexOf("submissions") + 1])) {
+            if (!v.isUUID(parts[parts.indexOf("submissions") + 1])) {
                 path = path.replace("/submissions/", `/submissions/${res.locals.jwtPayload.userId}/`);
             }
         }
@@ -369,7 +370,7 @@ class FileController {
     }
 
     private static async isDraftAssignmentFile(assignmentId: string, userId: string | number) {
-        return parseInt(assignmentId, 10) == (await getRepository(User).findOne(userId, { relations: ["assignmentDraft"] })).assignmentDraft?.id;
+        return assignmentId == (await getRepository(User).findOne(userId, { relations: ["assignmentDraft"] })).assignmentDraft?.id;
     }
 
     private static isAssignmentFile(req) {

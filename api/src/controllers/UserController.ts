@@ -3,6 +3,7 @@ import * as i18n from "i18n";
 import { getRepository } from "typeorm";
 import Avatars from "@dicebear/avatars";
 import initialsSprites from "@dicebear/avatars-initials-sprites";
+import * as v from "validator";
 import { User } from "../entity/User";
 import { Grade } from "../entity/Grade";
 
@@ -17,18 +18,22 @@ class UserController {
 
     public static async avatar(req: Request, res: Response): Promise<void> {
         const userRepository = getRepository(User);
-        const id = parseInt(req.params.id, 10);
-        if (id === Number.NaN) {
+        const { id } = req.params;
+        if (!v.isUUID(id)) {
             res.status(404).send({ message: "Benutzer nicht gefunden!" });
             return;
         }
-        const user = await userRepository.findOne(id);
-        if (req.params.ext == "svg") {
-            res.contentType("svg");
-            res.send(avatars.create(user.name));
-        } else {
-            const parts = user.name.split(" ");
-            res.redirect(`https://eu.ui-avatars.com/api/?name=${parts[0][0]}+${parts[parts.length - 1][0]}&size=512`);
+        try {
+            const user = await userRepository.findOneOrFail(id);
+            if (req.params.ext == "svg") {
+                res.contentType("svg");
+                res.send(avatars.create(user.name));
+            } else {
+                const parts = user.name.split(" ");
+                res.redirect(`https://eu.ui-avatars.com/api/?name=${parts[0][0]}+${parts[parts.length - 1][0]}&size=512`);
+            }
+        } catch {
+            res.status(404).send({ message: "Benutzer nicht gefunden!" });
         }
     }
 

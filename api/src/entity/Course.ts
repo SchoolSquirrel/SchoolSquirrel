@@ -12,8 +12,8 @@ import { Message } from "./Message";
 
 @Entity()
 export class Course {
-    @PrimaryGeneratedColumn()
-    public id: number;
+    @PrimaryGeneratedColumn("uuid")
+    public id: string;
 
     @Column()
     public name: string;

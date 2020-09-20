@@ -9,8 +9,8 @@ import { Assignment } from "./Assignment";
 
 @Entity()
 export class AssignmentSubmission {
-  @PrimaryGeneratedColumn()
-  public id: number;
+  @PrimaryGeneratedColumn("uuid")
+  public id: string;
 
   @Column({ type: "text" })
   public message: string;

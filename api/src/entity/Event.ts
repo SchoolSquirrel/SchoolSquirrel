@@ -7,8 +7,8 @@ import { EventCategory } from "./EventCategory";
 
 @Entity()
 export class Event implements SchedulerEvent {
-    @PrimaryGeneratedColumn()
-    public Id: number;
+    @PrimaryGeneratedColumn("uuid")
+    public Id: string;
 
     @Column()
     public Subject: string;

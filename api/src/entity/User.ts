@@ -24,8 +24,8 @@ import { Device } from "./Device";
 @Entity()
 @Unique(["name"])
 export class User {
-    @PrimaryGeneratedColumn()
-    public id: number;
+    @PrimaryGeneratedColumn("uuid")
+    public id: string;
 
     @Column()
     public name: string;
