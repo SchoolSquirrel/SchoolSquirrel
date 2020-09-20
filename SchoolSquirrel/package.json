@@ -41,7 +41,7 @@
         "@nativescript-community/ui-material-floatingactionbutton": "^4.0.11",
         "@nativescript/angular": "^10.1.0",
         "@nativescript/core": "^7.0.0",
-        "@nativescript/firebase": "^11.0.0-rc.5",
+        "@nativescript/firebase": "^11.0.0-rc.6",
         "@nativescript/local-notifications": "^5.0.0",
         "@nativescript/theme": "^2.3.3",
         "@nativescript/webpack": "^3.0.1",

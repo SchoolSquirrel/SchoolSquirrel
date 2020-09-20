@@ -15,6 +15,7 @@
         </TabStrip>
         <TabContentItem>
             <GridLayout>
+                <app-navbar row="0" [title]="title" *ngIf="!hideHeader" isModal="true" (back)="goBack()"></app-navbar>
                 <nativescript-squirrel-chat-ui hideHeader="true" [messages]="course.messages" [me]="authenticationService.currentUser" (messageSent)="onMessageSent($event)"></nativescript-squirrel-chat-ui>
             </GridLayout>
         </TabContentItem>

@@ -14,5 +14,6 @@
     <GridLayout row="1" rows="*, auto, *">
         <Label row="1" textWrap="true" class="text-center" *ngIf="!loading && chats.length == 0 && !currentChat" [text]="'pages.chat.noChats' | translate"></Label>
     </GridLayout>
+    <app-navbar row="0" [title]="title" *ngIf="!hideHeader" isModal="true" (back)="goBack()"></app-navbar>
     <nativescript-squirrel-chat-ui #chat row="1" *ngIf="currentChat" (messageSent)="onMessageSent($event)" (back)="currentChat = undefined" [messages]="currentChat.messages" [title]="getOtherUserInPrivateChat(currentChat).name" [profileImageSource]="getChatImageUrl(currentChat)"></nativescript-squirrel-chat-ui>
 </GridLayout>
