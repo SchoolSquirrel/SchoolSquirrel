@@ -31,7 +31,12 @@ class ChatController {
         if (!chat) {
             chat = new Chat();
             chat.users = [];
-            chat.users.push(await userRepository.findOne(req.params.id));
+            try {
+                chat.users.push(await userRepository.findOneOrFail(req.params.id));
+            } catch {
+                res.status(404).send({ message: "User not found!" });
+                return;
+            }
             chat.users.push(res.locals.jwtPayload.user);
             chat = await chatRepository.save(chat);
         }
@@ -75,7 +80,12 @@ class ChatController {
         chat.users = [];
         const userRepository = getRepository(User);
         chat.users.push(res.locals.jwtPayload.user);
-        chat.users.push(await userRepository.findOne(req.params.user));
+        try {
+            chat.users.push(await userRepository.findOneOrFail(req.params.user));
+        } catch {
+            res.status(404).send({ message: "User not found!" });
+            return;
+        }
         const chatRepository = getRepository(Chat);
         try {
             await chatRepository.save(chat);

@@ -143,7 +143,13 @@ class AssignmentsController {
      * @apiResponse 500 | Server Error | Error
      */
     public static async submitAssignment(req: Request, res: Response): Promise<void> {
-        const assignment = await getRepository(Assignment).findOne(req.params.id);
+        let assignment: Assignment;
+        try {
+            assignment = await getRepository(Assignment).findOneOrFail(req.params.id);
+        } catch {
+            res.status(404).send({ message: "Assignment not found!" });
+            return;
+        }
         await AssignmentsController.checkIfSubmitted(res, assignment, res.locals.jwtPayload.user);
         if (assignment.submitted) {
             res.send({ success: true });
@@ -169,7 +175,13 @@ class AssignmentsController {
      * @apiResponse 500 | Server Error | Error
      */
     public static async unsubmitAssignment(req: Request, res: Response): Promise<void> {
-        const assignment = await getRepository(Assignment).findOne(req.params.id);
+        let assignment: Assignment;
+        try {
+            assignment = await getRepository(Assignment).findOneOrFail(req.params.id);
+        } catch {
+            res.status(404).send({ message: "Assignment not found!" });
+            return;
+        }
         await AssignmentsController.checkIfSubmitted(res, assignment, res.locals.jwtPayload.user);
         if (!assignment.submitted) {
             res.send({ success: true });
@@ -193,11 +205,23 @@ class AssignmentsController {
      * @apiResponse 404 | Not Found | Error
      */
     public static async returnAssignment(req: Request, res: Response): Promise<void> {
-        const user = await getRepository(User).findOne(req.params.userId);
-        const assignment = await getRepository(Assignment).findOne(req.params.id);
+        let user: User;
+        try {
+            user = await getRepository(User).findOneOrFail(req.params.userId);
+        } catch {
+            res.status(404).send({ message: "User not found!" });
+            return;
+        }
+        let assignment: Assignment;
+        try {
+            assignment = await getRepository(Assignment).findOneOrFail(req.params.id);
+        } catch {
+            res.status(404).send({ message: "Assignment not found!" });
+            return;
+        }
         const assignmentSubmissionRepository = getRepository(AssignmentSubmission);
         try {
-            const assignmentSubmission = await assignmentSubmissionRepository.findOne({
+            const assignmentSubmission = await assignmentSubmissionRepository.findOneOrFail({
                 assignment, user,
             });
             assignmentSubmission.feedback = req.body.feedback || "";
@@ -205,7 +229,7 @@ class AssignmentsController {
             await assignmentSubmissionRepository.save(assignmentSubmission);
             res.send({ success: true });
         } catch {
-            res.status(404).send({ message: "Not found" });
+            res.status(404).send({ message: "Submission not found" });
         }
     }
 
@@ -232,7 +256,12 @@ class AssignmentsController {
         assignment.title = title;
         assignment.content = sanitizeHtml(content);
         assignment.due = due;
-        assignment.course = await getRepository(Course).findOne(course);
+        try {
+            assignment.course = await getRepository(Course).findOneOrFail(course);
+        } catch {
+            res.status(404).send({ message: "Course not found" });
+            return;
+        }
         assignment.draftUser = null;
 
         const assignmentRepository = getRepository(Assignment);

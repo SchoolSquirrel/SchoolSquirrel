@@ -31,13 +31,17 @@ class CourseController {
             res.status(404).send({ message: "Kurs nicht gefunden!" });
             return;
         }
-        const course = await courseRepository.findOne(id, { relations: ["students", "teachers", "messages", "messages.sender", "assignments"] });
-        for (const assignment of course.assignments) {
-            await AssignmentsController.checkIfSubmitted(
-                res, assignment, res.locals.jwtPayload.user,
-            );
+        try {
+            const course = await courseRepository.findOneOrFail(id, { relations: ["students", "teachers", "messages", "messages.sender", "assignments"] });
+            for (const assignment of course.assignments) {
+                await AssignmentsController.checkIfSubmitted(
+                    res, assignment, res.locals.jwtPayload.user,
+                );
+            }
+            res.send(course);
+        } catch {
+            res.status(404).send({ message: "Course not found!" });
         }
-        res.send(course);
     }
 
     public static async sendMessage(req: Request, res: Response): Promise<void> {
@@ -59,8 +63,13 @@ class CourseController {
         course.description = description;
         course.students = [];
         course.teachers = [];
-        for (const user of users) {
-            course.students.push(await userRepository.findOne(user));
+        try {
+            for (const user of users) {
+                course.students.push(await userRepository.findOneOrFail(user));
+            }
+        } catch {
+            res.status(404).send({ message: "User not found!" });
+            return;
         }
         course.teachers.push(res.locals.jwtPayload.user);
         try {
@@ -82,13 +91,24 @@ class CourseController {
 
         const courseRepository = getRepository(Course);
         const userRepository = getRepository(User);
-        const course = await courseRepository.findOne(req.params.id, { relations: ["students", "teachers"] });
+        let course: Course;
+        try {
+            course = await courseRepository.findOneOrFail(req.params.id, { relations: ["students", "teachers"] });
+        } catch {
+            res.status(404).send({ message: "Course not found!" });
+            return;
+        }
         course.name = name;
         course.description = description;
         course.students = [];
         course.teachers = [];
-        for (const userId of users) {
-            course.students.push(await userRepository.findOne(userId));
+        try {
+            for (const user of users) {
+                course.students.push(await userRepository.findOneOrFail(user));
+            }
+        } catch {
+            res.status(404).send({ message: "User not found!" });
+            return;
         }
         course.teachers.push(res.locals.jwtPayload.user);
         try {

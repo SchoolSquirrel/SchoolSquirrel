@@ -51,8 +51,12 @@ class UserController {
 
         const userRepository = getRepository(User);
         const gradeRepository = getRepository(Grade);
-        user.grade = await gradeRepository.findOne(grade);
-
+        try {
+            user.grade = await gradeRepository.findOneOrFail(grade);
+        } catch {
+            res.status(404).send({ message: "Grade not found!" });
+            return;
+        }
         user.hashPassword();
 
         try {
@@ -73,7 +77,7 @@ class UserController {
         const gradeRepository = getRepository(Grade);
         let user;
         try {
-            user = await userRepository.findOne(id);
+            user = await userRepository.findOneOrFail(id);
         } catch (error) {
             res.status(404).send({ message: i18n.__("errors.userNotFound") });
             return;
@@ -86,7 +90,12 @@ class UserController {
 
         user.name = name;
         user.role = role;
-        user.grade = await gradeRepository.findOne(grade);
+        try {
+            user.grade = await gradeRepository.findOneOrFail(grade);
+        } catch (error) {
+            res.status(404).send({ message: i18n.__("errors.gradeNotFound") });
+            return;
+        }
 
         try {
             await userRepository.save(user);
