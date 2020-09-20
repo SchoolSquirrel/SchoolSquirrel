@@ -7,7 +7,7 @@ import { Course } from "../entity/Course";
 import { sendPushNotification } from "./notifications";
 import { NotificationCategory } from "../entity/NotificationCategory";
 
-function getOtherUserInPrivateChat(userId: number, chat: Chat): User {
+function getOtherUserInPrivateChat(userId: string, chat: Chat): User {
     return chat.users.filter((u) => u.id != userId)[0];
 }
 
