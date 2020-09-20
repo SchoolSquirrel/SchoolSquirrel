@@ -21,8 +21,9 @@ nav:
     - Über:
         - about/index.md
         - about/about.md
-        - about/features.md
         - about/vs.md
+        - about/features.md
+        - about/security.md
         - about/help.md
     - Schüler:
         - Login: students/login.md
@@ -74,6 +75,7 @@ plugins:
           - _snippets/*
 markdown_extensions:
     - admonition
+    - footnotes
     - pymdownx.details
     - pymdownx.superfences
     - pymdownx.snippets:
