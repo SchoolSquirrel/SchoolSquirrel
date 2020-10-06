@@ -40,6 +40,7 @@
         "@angular/platform-browser-dynamic": "^9.1.9",
         "@angular/router": "^9.1.9",
         "@fortawesome/fontawesome-free": "^5.13.0",
+        "@lyno/lib-jitsi-meet": "^1.5076.0",
         "@nativescript/angular": "^9.0.0",
         "@nativescript/core": "^6.5.2",
         "@nativescript/theme": "^2.3.3",

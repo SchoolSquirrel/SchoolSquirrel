@@ -55,14 +55,15 @@ export class LoginComponent {
                 this.tryingToAutoLogin = false;
             });
         }
-        this.loginForm.controls.domain.setValue("http://192.168.178:3000");
+        this.loginForm.controls.domain.setValue("http://localhost:3000");
     }
 
     public onSubmit(): void {
         this.toastService.removeAll();
         this.submitted = true;
+        console.log("hi");
         if (this.loginForm.invalid) {
-            return;
+            // return;
         }
         this.loading = true;
         this.httpClient.get(`${this.loginForm.controls.domain.value}/config.json`, { params: new NoErrorToastHttpParams(true) }).subscribe((data: any) => {

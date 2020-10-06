@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { AuthenticationService } from "../../_services/authentication.service";
-import * as JitsiMeetJS from "../../_libs/lib-jitsi-meet.min.js";
+
+const JitsiMeetJS = (require as any)("@lyno/lib-jitsi-meet");
 
 @Component({
     selector: "app-home",
@@ -10,6 +11,7 @@ import * as JitsiMeetJS from "../../_libs/lib-jitsi-meet.min.js";
 export class HomeComponent {
     constructor(public authenticationService: AuthenticationService) {
         this.jitsi = JitsiMeetJS;
+        console.log(JitsiMeetJS);
     }
     title = "jitsi-meet-angular";
   private jitsi: any;
@@ -31,7 +33,7 @@ export class HomeComponent {
           muc: "conference.beta.meet.jit.si", // FIXME: use XEP-0030
           focus: "focus.beta.meet.jit.si",
       },
-      disableSimulcast: false,
+      /*disableSimulcast: false,
       enableRemb: false,
       enableTcc: true,
       resolution: 720,
@@ -82,7 +84,7 @@ export class HomeComponent {
       stereo: false,
       forceJVB121Ratio: -1,
       enableTalkWhileMuted: true,
-      enableClosePage: true,
+      enableClosePage: true,*/
 
   };
 
@@ -99,7 +101,7 @@ export class HomeComponent {
   }
 
   private createRoom(connection: any, options: any) : void {
-      this.room = connection.initJitsiConference("asjldkasjda", options);
+      this.room = connection.initJitsiConference("hgjfjgzjrtreseedfsadas", options);
   }
 
   private setRoomListeners(room: any): void {
