@@ -48,6 +48,7 @@ import { HelpComponent } from "./_components/help/help.component";
 import { UserSettingsComponent } from "./_pages/user-settings/user-settings.component";
 import { RecordVideoComponent } from "./_dialogs/record-video/record-video.component";
 import { nativescriptTranslateLoaderFactory } from "./_helpers/nativescript-translate-loader";
+import { ConferenceComponent } from "./_pages/conference/conference.component";
 /* @Directive({
     selector: "EmojiPicker",
 })
@@ -98,6 +99,7 @@ registerElement("FAB", () => FloatingActionButton);
         HelpComponent,
         UserSettingsComponent,
         RecordVideoComponent,
+        ConferenceComponent,
     ],
     imports: [
         ReactiveFormsModule,

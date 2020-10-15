@@ -68,6 +68,7 @@ import { AssignmentStatusbarComponent } from "./_components/assignment-statusbar
 import { HelpComponent } from "./_components/help/help.component";
 import { UserSettingsComponent } from "./_pages/user-settings/user-settings.component";
 import { RecordVideoComponent } from "./_dialogs/record-video/record-video.component";
+import { ConferenceComponent } from "./_pages/conference/conference.component";
 
 registerLocaleData(localeDe, localeDeExtra);
 declare const require: any;
@@ -123,6 +124,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         HelpComponent,
         UserSettingsComponent,
         RecordVideoComponent,
+        ConferenceComponent,
     ],
     imports: [
         BrowserModule,

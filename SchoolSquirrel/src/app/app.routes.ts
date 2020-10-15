@@ -15,6 +15,7 @@ import { ChatComponent } from "./_pages/chat/chat.component";
 import { AssignmentComponent } from "./_pages/assignment/assignment.component";
 import { EditDocumentComponent } from "./_pages/edit-document/edit-document.component";
 import { UserSettingsComponent } from "./_pages/user-settings/user-settings.component";
+import { ConferenceComponent } from "./_pages/conference/conference.component";
 
 export const routes: Routes = [
     /* *** Main routes *** */
@@ -81,6 +82,11 @@ export const routes: Routes = [
     {
         path: "chat/:id",
         component: ChatComponent,
+        canActivate: [AuthenticationGuard],
+    },
+    {
+        path: "conference",
+        component: ConferenceComponent,
         canActivate: [AuthenticationGuard],
     },
     {
