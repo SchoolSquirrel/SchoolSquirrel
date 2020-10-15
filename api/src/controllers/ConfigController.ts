@@ -7,6 +7,7 @@ class ConfigController {
             version: require("../../package.json").version,
             apiUrl: "/api",
             onlyofficeUrl: res.app.locals.config.ONLYOFFICE_URL,
+            jitsiMeetUrl: res.app.locals.config.JITSI_MEET_URL,
         }));
     }
 }
