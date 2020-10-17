@@ -22,9 +22,6 @@ import {
 import { loadCldr } from "@syncfusion/ej2-base";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { SquirrelChatUiModule } from "@schoolsquirrel/squirrel-chat-ui";
-import {
-    FileManagerModule, NavigationPaneService, DetailsViewService, ToolbarService as FToolbarService,
-} from "@syncfusion/ej2-angular-filemanager";
 import { EditorModule } from "@tinymce/tinymce-angular";
 import { NgxOnlyOfficeModule } from "ngx-onlyoffice";
 import { NgxExtendedPdfViewerModule } from "ngx-extended-pdf-viewer";
@@ -143,7 +140,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         }),
         GridModule,
         ScheduleModule,
-        FileManagerModule,
         SquirrelChatUiModule,
         NoopAnimationsModule,
         EditorModule,
@@ -177,9 +173,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         MonthAgendaService,
         TimelineViewsService,
         TimelineMonthService,
-        NavigationPaneService,
-        FToolbarService,
-        DetailsViewService,
         FileextPipe,
         FilenamePipe,
         FilesizePipe,

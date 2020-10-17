@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { L10n, setCulture } from "@syncfusion/ej2-base";
-import { FileOpenEventArgs, FileManagerComponent } from "@syncfusion/ej2-angular-filemanager";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Course } from "../../_models/Course";
 import { RemoteService } from "../../_services/remote.service";
@@ -23,7 +22,7 @@ export class CourseComponent implements OnInit {
     public ajaxSettings = {};
     public activeTab: Tab = "chat";
     public loading = false;
-    @ViewChild("filemanager") private filemanager: FileManagerComponent;
+    // @ViewChild("filemanager") private filemanager: FileManagerComponent;
 
     constructor(
         public authenticationService: AuthenticationService,
@@ -41,14 +40,15 @@ export class CourseComponent implements OnInit {
         })();
     }
 
-    public fileOpen(event: FileOpenEventArgs): void {
+    /* public fileOpen(event: FileOpenEventArgs): void {
         if ((event.fileDetails as any).isFile) {
             const pathnames = this.filemanager.pathNames;
             pathnames.shift();
             pathnames.push((event.fileDetails as any).name);
-            this.router.navigate(["/document/edit", "course", this.course.id, ...pathnames]); // ToDo
+            this.router.navigate(["/document/edit", "course", this.course.id, ...pathnames]);
+            // ToDo
         }
-    }
+    } */
 
     public tabChanged(tab: Tab): void {
         this.router.navigate(["/courses", this.course.id, tab]);
