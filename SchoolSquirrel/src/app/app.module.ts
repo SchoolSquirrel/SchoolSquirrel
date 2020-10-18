@@ -25,6 +25,7 @@ import { SquirrelChatUiModule } from "@schoolsquirrel/squirrel-chat-ui";
 import { EditorModule } from "@tinymce/tinymce-angular";
 import { NgxOnlyOfficeModule } from "ngx-onlyoffice";
 import { NgxExtendedPdfViewerModule } from "ngx-extended-pdf-viewer";
+import { FileManagerModule } from "@schoolsquirrel/filemanager";
 import { PasswordStrengthMeterModule } from "./_components/password-strength-meter/password-strength-meter.module";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./_pages/home/home.component";
@@ -146,6 +147,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         NgxOnlyOfficeModule,
         NgxExtendedPdfViewerModule,
         PasswordStrengthMeterModule,
+        FileManagerModule,
     ],
     providers: [
         {

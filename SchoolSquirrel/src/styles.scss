@@ -312,6 +312,13 @@ editor {
     right: 0px;
 }
 
+table * {
+    outline: none !important;
+}
+
+td {
+    -moz-user-select: none;
+}
 
 /* Material Icons */
 
@@ -335,5 +342,6 @@ editor {
     word-wrap: normal;
     direction: ltr;
     -moz-font-feature-settings: "liga";
+    font-feature-settings: "liga";
     -moz-osx-font-smoothing: grayscale;
 }

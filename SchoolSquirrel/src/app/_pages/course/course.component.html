@@ -10,7 +10,7 @@
         <ng-container ngbNavItem="files">
             <a ngbNavLink><i class="far fa-file"></i> {{'general.files' | translate}}</a>
             <ng-template ngbNavContent>
-                <ejs-filemanager #filemanager id="filemanager" [ajaxSettings]="ajaxSettings" class="h-100" (fileOpen)="fileOpen($event)"></ejs-filemanager>
+                <filemanager class="h-100" (fileOpen)="fileOpen($event)" [files]="files"></filemanager>
             </ng-template>
         </ng-container>
         <ng-container ngbNavItem="assignments">

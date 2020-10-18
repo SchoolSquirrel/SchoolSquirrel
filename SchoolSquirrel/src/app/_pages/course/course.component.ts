@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { L10n, setCulture } from "@syncfusion/ej2-base";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { File } from "@schoolsquirrel/filemanager/lib/File";
 import { Course } from "../../_models/Course";
 import { RemoteService } from "../../_services/remote.service";
 import { AuthenticationService } from "../../_services/authentication.service";
@@ -19,9 +20,9 @@ type Tab = "chat" | "files" | "assignments" | "settings";
 })
 export class CourseComponent implements OnInit {
     public course: Course;
-    public ajaxSettings = {};
     public activeTab: Tab = "chat";
     public loading = false;
+    public files: File[] = [];
     // @ViewChild("filemanager") private filemanager: FileManagerComponent;
 
     constructor(
@@ -57,10 +58,20 @@ export class CourseComponent implements OnInit {
     public ngOnInit(): void {
         this.route.params.subscribe((params) => {
             this.activeTab = params.tab || "chat";
-            if (parseInt(params.id, 10) != this.course?.id) {
+            if (params.id != this.course?.id) {
                 this.course = undefined;
                 this.loadCourse(params.id);
+            } else if (this.activeTab == "files") {
+                this.loadFiles();
             }
+        });
+    }
+
+    private loadFiles() {
+        this.loading = true;
+        this.remoteService.get(`files/course/${this.course.id}`).subscribe((files: File[]) => {
+            this.loading = false;
+            this.files = files;
         });
     }
 
@@ -72,14 +83,9 @@ export class CourseComponent implements OnInit {
                 message.fromMe = message.sender.id
                     == this.authenticationService.currentUser.id;
             }
-            const prefix = `${this.remoteService.apiUrl}/files/course/${this.course.id}`;
-            const suffix = `?authorization=${this.authenticationService.currentUser.jwtToken}`;
-            this.ajaxSettings = {
-                url: `${prefix}${suffix}`,
-                downloadUrl: `${prefix}/download`,
-                uploadUrl: `${prefix}/upload${suffix}`,
-                getImageUrl: `${prefix}/serve`,
-            };
+            if (this.activeTab == "files") {
+                this.loadFiles();
+            }
         });
     }
 
