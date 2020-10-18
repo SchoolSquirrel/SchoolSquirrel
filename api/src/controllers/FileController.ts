@@ -87,59 +87,15 @@ class FileController {
         }
         return undefined;
     }
-    public static async handle(req: Request, res: Response): Promise<void> {
-        const {
-            action, data, names, path,
-        } = req.body;
+    public static async listFiles(req: Request, res: Response): Promise<void> {
         const { itemId } = req.params;
         if (typeof itemId !== "string") {
             res.status(400);
             return;
         }
-        if (typeof action == "string" && action == "read") {
-            const items = await listObjects(req.app.locals.minio as minio.Client, FileController.getBucketName(req), `/${itemId}${req.body.path}`);
-            FileController.minioObjectsToFiles(items);
-            res.send({
-                cwd: {
-                    dateCreated: new Date(),
-                    dateModified: new Date(),
-                    name: req.body.path == "/" ? await FileController.getCourseName(req) : "",
-                    hasChild: items.length > 0,
-                },
-                files: items as any,
-            } as FileList);
-        } else if (req.body.action == "details") {
-            res.send({
-                details: {
-                    name: names.length == 0 ? path.slice(0, -1).split("/").pop() : names.join(),
-                    isFile: data.length == 1 ? data[0].isFile : undefined,
-                    type: data.length == 1 && data[0].isFile ? names[0].split(".").pop() : "",
-                    multipleFiles: data.length > 1,
-                    size: "Unknown",
-                    location: `Kurse/${await FileController.getCourseName(req)}${req.body.path}${req.body.data.length == 1 ? req.body.names[0] || "" : ""}`.replace(/\//g, " / "),
-                    modified: new Date(),
-                },
-            });
-        } else if (req.body.action == "search") {
-            const { searchString } = req.body;
-            if (typeof searchString !== "string") {
-                res.send({ files: [] });
-                return;
-            }
-            const completePath = `/${req.params.itemId}${req.body.path}`;
-            let items = await listObjects(req.app.locals.minio as minio.Client,
-                FileController.getBucketName(req), completePath, true);
-            items = items.filter((i) => checkForSearchResult(req.body.caseSensitive, req.body.searchString.replace(/\*/g, ""), i.name.split("/").pop(), searchString));
-            for (const item of items as any[]) {
-                item.filterPath = item.name.split("/");
-                item.filterPath.pop();
-                item.filterPath = `/${item.filterPath.join("/")}/`.replace(completePath, "");
-            }
-            FileController.minioObjectsToFiles(items);
-            res.send({ files: items });
-        } else {
-            res.status(500).send("Unknown action");
-        }
+        const items = await listObjects(req.app.locals.minio as minio.Client, FileController.getBucketName(req), `/${itemId}`, true);
+        FileController.minioObjectsToFiles(items, itemId);
+        res.send(items);
     }
 
     public static async handleUpload(req: Request, res: Response): Promise<void> {
@@ -433,23 +389,13 @@ class FileController {
         return editKey;
     }
 
-    private static minioObjectsToFiles(items: minio.BucketItem[]) {
-        for (const item of items as any[]) {
-            if (item.etag) {
-                // file
-                item.isFile = true;
-                item.hasChild = false;
-                item.name = item.name.split("/").pop();
-                item.type = item.name.split(".").pop();
-            } else {
-                // folder
-                item.isFile = false;
-                item.hasChild = true;
-                const path = item.prefix.split("/");
-                path.pop();
-                item.name = path.pop();
-                item.type = "";
-            }
+    private static minioObjectsToFiles(files: minio.BucketItem[], itemId: string) {
+        for (const file of files as any[]) {
+            file.path = (file.name as string).replace(`/${itemId}/`, "");
+            file.modified = file.lastModified;
+            delete file.name;
+            delete file.modified;
+            delete file.etag;
         }
     }
 
@@ -476,27 +422,6 @@ class FileController {
 }
 
 export default FileController;
-
-function checkForSearchResult(casesensitive, filter, fileName, searchString: string) {
-    if (searchString.substr(0, 1) == "*" && searchString.substr(searchString.length - 1, 1) == "*") {
-        if (casesensitive ? fileName.indexOf(filter) >= 0
-            : (fileName.indexOf(filter.toLowerCase()) >= 0
-                || fileName.indexOf(filter.toUpperCase()) >= 0)) {
-            return true;
-        }
-    } else if (searchString.substr(searchString.length - 1, 1) == "*") {
-        if (casesensitive ? fileName.startsWith(filter)
-            : (fileName.startsWith(filter.toLowerCase())
-                || fileName.startsWith(filter.toUpperCase()))) {
-            return true;
-        }
-    } else if (casesensitive ? fileName.endsWith(filter)
-        : (fileName.endsWith(filter.toLowerCase())
-            || fileName.endsWith(filter.toUpperCase()))) {
-        return true;
-    }
-    return false;
-}
 
 function streamToString(s: stream.Readable): Promise<string> {
     const chunks = [];
