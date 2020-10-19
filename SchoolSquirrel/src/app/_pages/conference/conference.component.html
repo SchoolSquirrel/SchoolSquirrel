@@ -1,3 +1,11 @@
 <div class="row">
-    <div id="meet"></div>
+    <a href="#" (click)="unload()">Unload</a>
+    <a href="#" (click)="switchVideo()">switchVideo</a>
+    <div id="audioOutputSelectWrapper" style="display: none;">
+        Change audio output device
+        <select id="audioOutputSelect" (ngModelChange)="changeAudioOutput($event)"></select>
+    </div>
+    <div id="videos"></div>
+    <video id="localVideo" autoplay="true"></video> -->
+    <audio id="localAudio" autoplay="true" muted="true"></audio>
 </div>
