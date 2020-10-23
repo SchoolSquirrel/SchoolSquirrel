@@ -297,7 +297,7 @@ export class ConferenceComponent {
     /**
      *
      */
-    private unload() {
+    public unload(): void {
         for (let i = 0; i < this.localTracks?.length; i++) {
             this.localTracks[i].dispose();
         }
@@ -308,7 +308,7 @@ export class ConferenceComponent {
     /**
      *
      */
-    private switchVideo() { // eslint-disable-line no-unused-vars
+    public switchVideo(): void { // eslint-disable-line no-unused-vars
         this.isVideo = !this.isVideo;
         if (this.localTracks[1]) {
             this.localTracks[1].dispose();
@@ -337,7 +337,7 @@ export class ConferenceComponent {
      *
      * @param selected
      */
-    private changeAudioOutput(selected) { // eslint-disable-line no-unused-vars
+    public changeAudioOutput(selected): void { // eslint-disable-line no-unused-vars
         JitsiMeetJS.mediaDevices.setAudioOutputDevice(selected.value);
     }
 }
