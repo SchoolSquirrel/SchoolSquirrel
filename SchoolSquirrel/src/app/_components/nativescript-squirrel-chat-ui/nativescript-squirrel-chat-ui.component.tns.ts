@@ -60,7 +60,7 @@ export class NativescriptSquirrelChatUiComponent {
         this.messageInput.nativeElement.text = "";
     }
 
-    public lastMessageSentSuccessfully(id: number): void {
+    public lastMessageSentSuccessfully(id: string): void {
         const m = this._messages.pop();
         m.status = MessageStatus.Sent;
         m.id = id;

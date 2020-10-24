@@ -7,5 +7,5 @@ import { Component } from "@angular/core";
 })
 export class NativescriptSquirrelChatUiComponent {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public lastMessageSentSuccessfully(id: number): void { /* */ }
+    public lastMessageSentSuccessfully(id: string): void { /* */ }
 }

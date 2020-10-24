@@ -35,7 +35,7 @@ export class CourseComponent implements OnInit {
     public ngOnInit(): void {
         this.route.params.subscribe((params) => {
             this.activeTab = params.tab || "chat";
-            if (parseInt(params.id, 10) != this.course?.id) {
+            if (params.id != this.course?.id) {
                 this.course = undefined;
                 this.loadCourse(params.id);
             }
