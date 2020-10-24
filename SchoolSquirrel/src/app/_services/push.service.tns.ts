@@ -5,22 +5,17 @@ import { LocalNotifications, ScheduleOptions } from "@nativescript/local-notific
 import { StorageService } from "./storage.service";
 import { AuthenticationService } from "./authentication.service";
 import { RemoteService } from "./remote.service";
-import { NotificationCategory } from "../_models/NotificationCategory";
-
-declare function confirm (options: any): Promise<boolean>;
-const KEY = "push-notifications-allowed";
+import { ActivityType } from "../_models/Activity";
+import { PushServiceCommon } from "./push.service.common";
 
 @Injectable({ providedIn: "root" })
-export class PushService {
-    // undefined for not asked, false for disallowed, true for allowed
-    private hasPermission: boolean;
-    private token: string;
+export class PushService extends PushServiceCommon {
     constructor(
-        private storageService: StorageService,
-        private authenticationService: AuthenticationService,
-        private remoteService: RemoteService,
+        public storageService: StorageService,
+        public remoteService: RemoteService,
+        public authenticationService: AuthenticationService,
     ) {
-        this.hasPermission = this.storageService.get(KEY);
+        super(storageService, remoteService, authenticationService);
         firebase.init({
             onMessageReceivedCallback: (message: firebase.Message) => {
                 // eslint-disable-next-line no-console
@@ -38,7 +33,7 @@ export class PushService {
                             message.data.thumbnail, this.authenticationService,
                         ) : undefined,
                         channel: message.data.channel,
-                        actions: message.data.type == NotificationCategory.ChatMessage ? [
+                        actions: message.data.type == ActivityType.CHAT_MESSAGE ? [
                             {
                                 id: "answer",
                                 launch: false,
@@ -59,33 +54,12 @@ export class PushService {
                     LocalNotifications.schedule([n]);
                 }
             },
-            onPushTokenReceivedCallback: (token) => this.gotToken(token),
+            onPushTokenReceivedCallback: (token) => this.gotToken(token, `${Device.os} ${Device.osVersion}`, Device.manufacturer),
         });
-        this.authenticationService.onLogin.subscribe(() => {
-            this.init();
-        });
-    }
-
-    private gotToken(token) {
-        this.token = token;
-        if (this.hasPermission === true) {
-            this.remoteService.post("devices", {
-                token,
-                os: `${Device.os} ${Device.osVersion}`,
-                device: Device.manufacturer,
-                software: "SchoolSquirrel App",
-            }).subscribe(() => undefined, () => undefined);
-        }
     }
 
     public async init(): Promise<void> {
-        if (this.hasPermission === undefined) {
-            this.hasPermission = await confirm("Möchtest du Push Nachrichten erhalten?");
-            this.storageService.set(KEY, this.hasPermission);
-            if (this.hasPermission && this.token) {
-                this.gotToken(this.token);
-            }
-        }
+        await this.askUserForPermission(`${Device.os} ${Device.osVersion}`, Device.manufacturer);
         if (this.hasPermission && !await LocalNotifications.hasPermission()) {
             LocalNotifications.requestPermission();
         }
