@@ -28,6 +28,7 @@ import { Buckets } from "./entity/Buckets";
 import { AssignmentSubmission } from "./entity/AssignmentSubmission";
 import { Device } from "./entity/Device";
 import { getHolidays } from "./utils/holidays";
+import { Conference } from "./entity/Conference";
 
 const config = getConfig(JSON.parse(fs.readFileSync(path.join(__dirname, "../../container-env.json")).toString()));
 
@@ -58,6 +59,7 @@ createConnection({
         Message,
         Event,
         Device,
+        Conference,
     ],
     host: config.DB_HOST,
     logging: false,
