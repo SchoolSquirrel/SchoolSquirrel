@@ -28,7 +28,7 @@ export class ConferenceComponent {
                     TOOLBAR_BUTTONS: ["microphone", "camera", "desktop", "fullscreen",
                         "fodeviceselection", "hangup", "raisehand",
                         "videoquality", "filmstrip", "shortcuts",
-                        "tileview", "videobackgroundblur", "download", "help",
+                        "tileview", "download", "help",
                     ],
                 },
             });
