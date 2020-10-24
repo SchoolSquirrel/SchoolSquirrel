@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ItemEventData } from "@nativescript/core";
+import { Router } from "@angular/router";
 import { RemoteService } from "../../_services/remote.service";
 import { Chat } from "../../_models/Chat";
 import { AuthenticationService } from "../../_services/authentication.service";
@@ -18,8 +19,9 @@ export class ChatComponent extends ChatComponentCommon implements OnInit {
     constructor(
         public authenticationService: AuthenticationService,
         public remoteService: RemoteService,
+        public router: Router,
     ) {
-        super(authenticationService, remoteService);
+        super(authenticationService, remoteService, router);
     }
     @ViewChild("chat") public chat: NativescriptSquirrelChatUiComponent;
 

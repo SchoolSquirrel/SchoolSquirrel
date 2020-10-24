@@ -18,10 +18,10 @@ export class ChatComponent extends ChatComponentCommon implements OnInit {
     constructor(
         public authenticationService: AuthenticationService,
         public remoteService: RemoteService,
+        public router: Router,
         private route: ActivatedRoute,
-        private router: Router,
     ) {
-        super(authenticationService, remoteService);
+        super(authenticationService, remoteService, router);
     }
 
     public ngOnInit(): void {

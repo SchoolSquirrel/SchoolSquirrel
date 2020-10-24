@@ -1,6 +1,8 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable max-len */
 import { Component } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { AuthenticationService } from "@src/app/_services/authentication.service";
 import { ConfigService } from "../../_services/config.service";
 
 @Component({
@@ -9,14 +11,16 @@ import { ConfigService } from "../../_services/config.service";
     styleUrls: ["./conference.component.scss"],
 })
 export class ConferenceComponent {
-    constructor(private configService: ConfigService) {}
+    constructor(private configService: ConfigService, private route: ActivatedRoute, private authenticationService: AuthenticationService) {}
     public ngOnInit(): void {
         this.loadScript(`https://${this.configService.config.jitsiMeetUrl}/external_api.js`).then(() => {
             // eslint-disable-next-line no-new
             new JitsiMeetExternalAPI(this.configService.config.jitsiMeetUrl as string, {
-                roomName: "testroom",
+                roomName: this.route.snapshot.params.id,
                 userInfo: {
-                    username: "admin",
+                    username: this.authenticationService.currentUser.name,
+                    name: `${this.authenticationService.currentUser.name}Test`,
+                    id: this.authenticationService.currentUser.id,
                 },
                 parentNode: document.querySelector("#meet"),
                 interfaceConfigOverwrite: {

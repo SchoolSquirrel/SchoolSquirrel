@@ -85,7 +85,7 @@ export const routes: Routes = [
         canActivate: [AuthenticationGuard],
     },
     {
-        path: "conference",
+        path: "conference/:id",
         component: ConferenceComponent,
         canActivate: [AuthenticationGuard],
     },
