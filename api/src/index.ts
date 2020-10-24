@@ -29,6 +29,7 @@ import { AssignmentSubmission } from "./entity/AssignmentSubmission";
 import { Device } from "./entity/Device";
 import { getHolidays } from "./utils/holidays";
 import { Conference } from "./entity/Conference";
+import { Activity } from "./entity/Activity";
 
 const config = getConfig(JSON.parse(fs.readFileSync(path.join(__dirname, "../../container-env.json")).toString()));
 
@@ -60,6 +61,7 @@ createConnection({
         Event,
         Device,
         Conference,
+        Activity,
     ],
     host: config.DB_HOST,
     logging: false,

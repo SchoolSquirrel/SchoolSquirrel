@@ -17,6 +17,7 @@
 /* do not edit */ import { AssignmentSubmission } from "./AssignmentSubmission";
 /* do not edit */ import { Device } from "./Device";
 /* do not edit */ import { Conference } from "./Conference";
+/* do not edit */ import { Activity } from "./Activity";
 /* do not edit */ 
 /* do not edit */ 
 /* do not edit */ 
@@ -55,6 +56,9 @@
 /* do not edit */ 
 /* do not edit */     
 /* do not edit */     public chats: Chat[];
+/* do not edit */ 
+/* do not edit */     
+/* do not edit */     public activities: Activity[];
 /* do not edit */ 
 /* do not edit */     
 /* do not edit */     public conferences: Conference[];

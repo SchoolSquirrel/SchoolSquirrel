@@ -4,8 +4,8 @@ import { Chat } from "../entity/Chat";
 import { User } from "../entity/User";
 import { Message } from "../entity/Message";
 import { Course } from "../entity/Course";
-import { sendPushNotification } from "./notifications";
-import { NotificationCategory } from "../entity/NotificationCategory";
+import { ActivityType } from "../entity/Activity";
+import { createActivity } from "./activities";
 
 function getOtherUserInPrivateChat(userId: string, chat: Chat): User {
     return chat.users.filter((u) => u.id != userId)[0];
@@ -46,30 +46,26 @@ export async function sendMessage(req: Request, res: Response, type: "chat" | "c
     (async () => {
         if (type == "chat") {
             if (!isGroupChat(message.chat)) {
-                sendPushNotification(
-                    getOtherUserInPrivateChat(res.locals.jwtPayload.userId, message.chat), {
+                createActivity(
+                    [getOtherUserInPrivateChat(res.locals.jwtPayload.userId, message.chat)],
+                    ActivityType.CHAT_MESSAGE, message.id, {
                         title: message.sender.name,
                         body: message.text,
                     }, {
-                        type: NotificationCategory.ChatMessage,
+                        type: ActivityType.CHAT_MESSAGE,
                         thumbnail: `users/${res.locals.jwtPayload.userId}.png`,
                         image: `users/${res.locals.jwtPayload.userId}.png`,
                         channel: "Chat Nachrichten",
                     },
                 );
             } else {
-                for (const user of message.chat.users) {
-                    sendPushNotification(
-                        user,
-                        {
-                            title: getGroupChatName(message.chat),
-                            body: message.text,
-                        }, {
-                            type: NotificationCategory.ChatMessage,
-                            channel: "Chat Nachrichten",
-                        },
-                    );
-                }
+                createActivity(message.chat.users, ActivityType.CHAT_MESSAGE, message.id, {
+                    title: getGroupChatName(message.chat),
+                    body: message.text,
+                }, {
+                    type: ActivityType.CHAT_MESSAGE,
+                    channel: "Chat Nachrichten",
+                });
             }
         }
     })();

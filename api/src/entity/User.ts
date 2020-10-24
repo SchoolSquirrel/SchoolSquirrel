@@ -21,6 +21,7 @@ import { Assignment } from "./Assignment";
 import { AssignmentSubmission } from "./AssignmentSubmission";
 import { Device } from "./Device";
 import { Conference } from "./Conference";
+import { Activity } from "./Activity";
 
 @Entity()
 @Unique(["name"])
@@ -59,6 +60,9 @@ export class User {
 
     @ManyToMany(() => Chat, (chat) => chat.users)
     public chats: Chat[];
+
+    @ManyToMany(() => Activity, (activity) => activity.users)
+    public activities: Activity[];
 
     @ManyToMany(() => Conference, (conference) => conference.users)
     public conferences: Conference[];
