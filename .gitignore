@@ -1,6 +1,9 @@
 # Electron main.js
 SchoolSquirrel/main.js
 
+# Deepcode Cache File
+.dccache
+
 # Logs
 logs
 *.log
