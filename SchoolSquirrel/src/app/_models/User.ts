@@ -16,12 +16,13 @@
 /* do not edit */ import { Assignment } from "./Assignment";
 /* do not edit */ import { AssignmentSubmission } from "./AssignmentSubmission";
 /* do not edit */ import { Device } from "./Device";
+/* do not edit */ import { Conference } from "./Conference";
 /* do not edit */ 
 /* do not edit */ 
 /* do not edit */ 
 /* do not edit */ export class User {
 /* do not edit */     
-/* do not edit */     public id: number;
+/* do not edit */     public id: string;
 /* do not edit */ 
 /* do not edit */     
 /* do not edit */     public name: string;
@@ -54,6 +55,9 @@
 /* do not edit */ 
 /* do not edit */     
 /* do not edit */     public chats: Chat[];
+/* do not edit */ 
+/* do not edit */     
+/* do not edit */     public conferences: Conference[];
 /* do not edit */ 
 /* do not edit */     
 /* do not edit */     public messages: Message[];

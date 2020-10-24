@@ -9,7 +9,7 @@
 /* do not edit */ import { EventCategory } from "./EventCategory";
 /* do not edit */
 /* do not edit */ export interface SchedulerEvent {
-/* do not edit */     Id: number;
+/* do not edit */     Id: string;
 /* do not edit */     Subject: string;
 /* do not edit */     Description: string;
 /* do not edit */     Location: string;

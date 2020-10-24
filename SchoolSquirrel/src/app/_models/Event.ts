@@ -14,7 +14,7 @@
 /* do not edit */ 
 /* do not edit */ export class Event implements SchedulerEvent {
 /* do not edit */     
-/* do not edit */     public Id: number;
+/* do not edit */     public Id: string;
 /* do not edit */ 
 /* do not edit */     
 /* do not edit */     public Subject: string;

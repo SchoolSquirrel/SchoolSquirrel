@@ -34,7 +34,7 @@ export class AssignmentComponent {
     public ngOnInit(): void {
         this.route.params.subscribe((params) => {
             this.activeTab = params.tab || "student";
-            if (parseInt(params.id, 10) != this.assignment?.id) {
+            if (params.id != this.assignment?.id) {
                 this.assignment = undefined;
                 this.remoteService.get(`assignments/${params.id}`).subscribe((data: Assignment) => {
                     this.assignment = data;

@@ -6,7 +6,7 @@ import { Assignment } from "../../_models/Assignment";
 
 @Component({ template: "" })
 export class AssignmentsComponentCommon {
-    public newAssignmentId: number;
+    public newAssignmentId: string;
     public courses: Course[] = [];
     public newAssignmentForm = new FormGroup({
         title: new FormControl("", [Validators.required]),

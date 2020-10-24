@@ -75,7 +75,7 @@ export class CourseComponent implements OnInit {
         });
     }
 
-    private loadCourse(id: number) {
+    private loadCourse(id: string) {
         this.remoteService.get(`courses/${id}`).subscribe((data) => {
             this.loading = false;
             this.course = data;

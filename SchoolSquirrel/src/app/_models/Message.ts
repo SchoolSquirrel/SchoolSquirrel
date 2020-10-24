@@ -15,7 +15,7 @@
 /* do not edit */ 
 /* do not edit */ export class Message {
 /* do not edit */   
-/* do not edit */   public id: number;
+/* do not edit */   public id: string;
 /* do not edit */ 
 /* do not edit */   
 /* do not edit */   public text: string;

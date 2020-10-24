@@ -13,7 +13,7 @@
 /* do not edit */ 
 /* do not edit */ export class Grade {
 /* do not edit */   
-/* do not edit */   public id: number;
+/* do not edit */   public id: string;
 /* do not edit */
 /* do not edit */   
 /* do not edit */   public name: string;

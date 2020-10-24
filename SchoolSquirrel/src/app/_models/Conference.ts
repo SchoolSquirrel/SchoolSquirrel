@@ -10,23 +10,22 @@
 /* do not edit */ import { User } from "./User";
 /* do not edit */ 
 /* do not edit */ 
-/* do not edit */ export class Device {
+/* do not edit */ export class Conference {
 /* do not edit */     
 /* do not edit */     public id: string;
 /* do not edit */ 
 /* do not edit */     
-/* do not edit */     public os: string;
+/* do not edit */     
+/* do not edit */     public created: Date;
 /* do not edit */ 
 /* do not edit */     
-/* do not edit */     public software: string;
+/* do not edit */     public started: Date;
 /* do not edit */ 
 /* do not edit */     
-/* do not edit */     public device: string;
+/* do not edit */     public type: "private" | "group" | "course";
 /* do not edit */ 
 /* do not edit */     
-/* do not edit */     public token: string;
-/* do not edit */ 
 /* do not edit */     
-/* do not edit */     public user: User;
+/* do not edit */     public users: User[];
 /* do not edit */ }
 /* do not edit */
