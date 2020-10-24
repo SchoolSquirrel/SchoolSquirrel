@@ -1781,6 +1781,11 @@
                 }
             }
         },
+        "Activity": {
+            "type": "object",
+            "required": [],
+            "properties": {}
+        },
         "Assignment": {
             "type": "object",
             "required": [
@@ -2217,6 +2222,7 @@
                 "courses",
                 "coursesTeaching",
                 "chats",
+                "activities",
                 "conferences",
                 "messages",
                 "events",
@@ -2274,6 +2280,12 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/Chat"
+                    }
+                },
+                "activities": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Activity"
                     }
                 },
                 "conferences": {
