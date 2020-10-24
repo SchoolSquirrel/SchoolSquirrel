@@ -1013,6 +1013,34 @@
                 ]
             }
         },
+        "/conferences/": {
+            "post": {
+                "description": "ToDo",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Missing parameters or fields",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized (either no JWT Token or the action is not allowed)",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                },
+                "consumes": "multipart/form-data",
+                "produces": "application/json",
+                "tags": [
+                    "Conference"
+                ]
+            }
+        },
         "/events/": {
             "get": {
                 "description": "ToDo",
@@ -1911,6 +1939,43 @@
                 }
             }
         },
+        "Conference": {
+            "type": "object",
+            "required": [
+                "id",
+                "created",
+                "started",
+                "type",
+                "users"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "created": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "started": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "private",
+                        "group",
+                        "course"
+                    ]
+                },
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/User"
+                    }
+                }
+            }
+        },
         "Course": {
             "type": "object",
             "required": [
@@ -2152,6 +2217,7 @@
                 "courses",
                 "coursesTeaching",
                 "chats",
+                "conferences",
                 "messages",
                 "events",
                 "submittedAssignments",
@@ -2208,6 +2274,12 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/Chat"
+                    }
+                },
+                "conferences": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Conference"
                     }
                 },
                 "messages": {
@@ -2268,6 +2340,10 @@
         {
             "name": "Course",
             "description": "Course"
+        },
+        {
+            "name": "Conference",
+            "description": "Conference"
         },
         {
             "name": "Event",
