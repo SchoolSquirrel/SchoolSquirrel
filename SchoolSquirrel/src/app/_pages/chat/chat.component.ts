@@ -1,5 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Subscription } from "rxjs";
+import { Activity, ActivityType } from "../../_models/Activity";
+import { PushService } from "../../_services/push.service";
 import { RemoteService } from "../../_services/remote.service";
 import { Chat } from "../../_models/Chat";
 import { AuthenticationService } from "../../_services/authentication.service";
@@ -15,17 +18,25 @@ import { ChatComponentCommon } from "./chat.component.common";
 export class ChatComponent extends ChatComponentCommon implements OnInit {
     public chats: Chat[] = [];
     public currentChat: Chat;
+    public subscription: Subscription;
     constructor(
         public authenticationService: AuthenticationService,
         public remoteService: RemoteService,
         public router: Router,
+        private pushService: PushService,
+        private cdr: ChangeDetectorRef,
         private route: ActivatedRoute,
     ) {
         super(authenticationService, remoteService, router);
     }
 
+    public ngOnDestroy(): void {
+        this.subscription?.unsubscribe();
+    }
+
     public ngOnInit(): void {
         this.route.params.subscribe((params) => {
+            this.subscription?.unsubscribe();
             if (params.id && this.route.snapshot.url.map((u) => u.toString()).includes("user")) {
                 this.remoteService.get(`chats/user/${params.id}`).subscribe((chat) => {
                     this.navigateToChat(chat);
@@ -39,6 +50,12 @@ export class ChatComponent extends ChatComponentCommon implements OnInit {
                         message.fromMe = message.sender.id
                             == this.authenticationService.currentUser.id;
                     }
+                    this.subscription = this.pushService
+                        .filter(ActivityType.CHAT_MESSAGE)
+                        .subscribe((d: Activity) => {
+                            this.currentChat.messages.push(d.payload);
+                            this.cdr.detectChanges();
+                        });
                 });
             }
         });
