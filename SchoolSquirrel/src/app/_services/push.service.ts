@@ -37,6 +37,10 @@ export class PushService extends PushServiceCommon {
                 this.activities.next(JSON.parse(notification.data.payload));
                 const n = new Notification(notification.notification.title, {
                     body: notification.notification.body,
+                    icon: this.remoteService.getImageUrl(
+                        notification.data.thumbnail,
+                        this.authenticationService,
+                    ),
                 });
                 n.onclick = () => {
                     // console.log("Clicked");
