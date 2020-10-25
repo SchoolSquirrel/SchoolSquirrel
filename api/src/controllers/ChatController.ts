@@ -83,6 +83,7 @@ class ChatController {
             } else {
                 chat.info = `Last seen: ${"unknown"}`;
             }
+            chat.messages = chat.messages.sort((a, b) => a.date.getTime() - b.date.getTime());
             res.send(chat);
         } catch {
             res.status(404).send(i18n.__("errors.chatNotFound"));
