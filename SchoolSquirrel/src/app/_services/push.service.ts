@@ -11,6 +11,7 @@ import { AuthenticationService } from "./authentication.service";
 import { PushServiceCommon } from "./push.service.common";
 import { RemoteService } from "./remote.service";
 import { StorageService } from "./storage.service";
+import { PushNotification } from "../_models/PushNotification";
 
 @Injectable({ providedIn: "root" })
 export class PushService extends PushServiceCommon {
@@ -32,7 +33,15 @@ export class PushService extends PushServiceCommon {
             ipcRenderer.on(TOKEN_UPDATED, (_, token) => this.gotToken(token, "SchoolSquirrel", "Desktop"));
             // Display notification
             // eslint-disable-next-line
-            ipcRenderer.on(NOTIFICATION_RECEIVED, (_, notification) => console.log(_, notification));
+            ipcRenderer.on(NOTIFICATION_RECEIVED, (_, notification: PushNotification) => {
+                this.activities.next(JSON.parse(notification.data.payload));
+                const n = new Notification(notification.notification.title, {
+                    body: notification.notification.body,
+                });
+                n.onclick = () => {
+                    // console.log("Clicked");
+                };
+            });
             // Start service
             ipcRenderer.send(START_NOTIFICATION_SERVICE, "815465626860");
         }

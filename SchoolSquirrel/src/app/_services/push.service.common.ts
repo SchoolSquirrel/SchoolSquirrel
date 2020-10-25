@@ -1,3 +1,6 @@
+import { Observable, Subject } from "rxjs";
+import { filter } from "rxjs/operators";
+import { Activity, ActivityType } from "../_models/Activity";
 import { AuthenticationService } from "./authentication.service";
 import { RemoteService } from "./remote.service";
 import { StorageService } from "./storage.service";
@@ -9,6 +12,7 @@ export class PushServiceCommon {
     public hasPermission: boolean;
     public token: string;
     public readonly KEY = "push-notifications-allowed";
+    public activities: Subject<Activity> = new Subject<Activity>();
 
     constructor(
         public storageService: StorageService,
@@ -23,6 +27,10 @@ export class PushServiceCommon {
 
     public init(): void {
         //
+    }
+
+    public filter(type: ActivityType): Observable<Activity> {
+        return this.activities.pipe(filter((a) => a.type == type));
     }
 
     public async askUserForPermission(os: string, device: string): Promise<void> {
