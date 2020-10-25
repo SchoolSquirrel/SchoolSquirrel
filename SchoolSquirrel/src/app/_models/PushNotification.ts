@@ -20,7 +20,7 @@
 /* do not edit */     thumbnail?: string,
 /* do not edit */     channel?: string,
 /* do not edit */     type: ActivityType,
-/* do not edit */     payload: string;
+/* do not edit */     payload?: string;
 /* do not edit */     [key: string]: any,
 /* do not edit */ };
 /* do not edit */ 

@@ -12,7 +12,7 @@ export type PushNotificationData = {
     thumbnail?: string,
     channel?: string,
     type: ActivityType,
-    payload: string;
+    payload?: string;
     [key: string]: any,
 };
 

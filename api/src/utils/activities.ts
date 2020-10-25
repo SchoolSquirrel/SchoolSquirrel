@@ -5,12 +5,14 @@ import { User } from "../entity/User";
 import { sendPushNotification } from "./notifications";
 
 export async function createActivity(
-    users: User[], type: ActivityType, id: string, notification: PushNotificationInfo,
+    users: User[], type: ActivityType,
+    item: { id: string, [key: string]: any }, notification: PushNotificationInfo,
     data: PushNotificationData,
 ): Promise<void> {
     const activity = new Activity();
     activity.type = type;
-    activity.itemId = id;
+    activity.itemId = item.id;
+    activity.payload = item;
     activity.users = users;
     if (ActivitySettings[type].persistent) {
         await getRepository(Activity).save(activity);

@@ -48,7 +48,7 @@ export async function sendMessage(req: Request, res: Response, type: "chat" | "c
             if (!isGroupChat(message.chat)) {
                 createActivity(
                     [getOtherUserInPrivateChat(res.locals.jwtPayload.userId, message.chat)],
-                    ActivityType.CHAT_MESSAGE, message.id, {
+                    ActivityType.CHAT_MESSAGE, message, {
                         title: message.sender.name,
                         body: message.text,
                     }, {
@@ -59,7 +59,7 @@ export async function sendMessage(req: Request, res: Response, type: "chat" | "c
                     },
                 );
             } else {
-                createActivity(message.chat.users, ActivityType.CHAT_MESSAGE, message.id, {
+                createActivity(message.chat.users, ActivityType.CHAT_MESSAGE, message, {
                     title: getGroupChatName(message.chat),
                     body: message.text,
                 }, {
