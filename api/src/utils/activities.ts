@@ -1,10 +1,11 @@
 import { getRepository } from "typeorm";
 import { Activity, ActivitySettings, ActivityType } from "../entity/Activity";
+import { PushNotificationInfo, PushNotificationData } from "../entity/PushNotification";
 import { User } from "../entity/User";
-import { PushNotification, PushNotificationData, sendPushNotification } from "./notifications";
+import { sendPushNotification } from "./notifications";
 
 export async function createActivity(
-    users: User[], type: ActivityType, id: string, notification: PushNotification,
+    users: User[], type: ActivityType, id: string, notification: PushNotificationInfo,
     data: PushNotificationData,
 ): Promise<void> {
     const activity = new Activity();
@@ -16,7 +17,7 @@ export async function createActivity(
     }
     if (ActivitySettings[type].pushNotification) {
         for (const user of users) {
-            await sendPushNotification(user, notification, { type, ...data });
+            await sendPushNotification(user, activity, notification, { type, ...data });
         }
     }
 }
