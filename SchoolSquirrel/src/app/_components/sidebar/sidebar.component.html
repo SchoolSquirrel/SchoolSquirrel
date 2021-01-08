@@ -23,7 +23,7 @@
             </li>
         </ul>
         <ng-container *ngIf="authenticationService.isAdmin()">
-            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            <h6 class="sidebar-heading px-3 mt-4 mb-1">
                 <span>{{"general.admin" | translate}}</span>
             </h6>
             <ul class="nav flex-column" routerLinkActive="active">
@@ -39,13 +39,19 @@
                 </li>
             </ul>
         </ng-container>
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-            <a routerLink="/courses" class="text-decoration-none text-secondary">{{"general.courses" | translate}}</a>
-            <a class="btn d-flex align-items-center text-muted" routerLink="/courses/new" *ngIf="authenticationService.isTeacher()">
+        <!--<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1">
+            
+            <a class="btn d-flex align-items-center" >
                 <i class="fas fa-plus-circle"></i>
             </a>
-        </h6>
-        <ul class="nav flex-column mb-2">
+        </h6>-->
+        <ul class="nav flex-column mb-2 mt-4">
+            <li class="sidebar-heading nav-item d-flex justify-content-between align-items-center">
+                <a routerLink="/courses" class="nav-link">{{"general.courses" | translate}}</a>
+                <a class="nav-link" routerLink="/courses/new" *ngIf="authenticationService.isTeacher()" routerLinkActive="active">
+                    <i class="fas fa-plus-circle"></i>
+                </a>
+            </li>
             <li class="nav-item" *ngFor="let course of courses">
                 <a class="nav-link" [routerLink]="'/courses/' + course.id" routerLinkActive="active">
                     {{course.name}}
