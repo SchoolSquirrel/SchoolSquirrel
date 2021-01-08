@@ -64,7 +64,7 @@ jobs:
       with:
         node-version: 12
     - name: Setup Nativescript
-      uses: hrueger/setup-nativescript@v1.0.0
+      uses: hrueger/setup-nativescript@v1.1.0
     - name: Install frontend dependencies
       working-directory: SchoolSquirrel
       run: npm i
