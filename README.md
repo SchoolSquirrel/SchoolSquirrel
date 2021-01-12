@@ -4,7 +4,7 @@
 [![Lint](https://github.com/SchoolSquirrel/SchoolSquirrel/workflows/Lint/badge.svg)](https://github.com/SchoolSquirrel/SchoolSquirrel/actions)
 [![License](https://img.shields.io/badge/License-MIT-blue)](./LICENSE.md)
 [![GitHub last commit](https://img.shields.io/github/last-commit/SchoolSquirrel/SchoolSquirrel?color=brightgreen)](https://github.com/SchoolSquirrel/SchoolSquirrel/commits)
-[![Maintenance](https://img.shields.io/maintenance/yes/2020)](https://github.com/SchoolSquirrel/SchoolSquirrel/commits)
+[![Maintenance](https://img.shields.io/maintenance/yes/2021)](https://github.com/SchoolSquirrel/SchoolSquirrel/commits)
 
 The main repo for SchoolSquirrel
 
