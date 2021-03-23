@@ -43,6 +43,7 @@
         "@types/cors": "^2.8.6",
         "@types/helmet": "0.0.45",
         "@types/jsonwebtoken": "^8.3.8",
+        "@types/socket.io": "^2.1.12",
         "archiver": "^5.0.0",
         "axios": "^0.21.1",
         "bcryptjs": "^2.4.3",
@@ -61,13 +62,14 @@
         "mysql": "^2.18.1",
         "reflect-metadata": "^0.1.13",
         "sanitize-html": "^1.27.0",
+        "socket.io": "^3.0.5",
         "ts-node-dev": "^1.0.0-pre.44",
         "typeorm": "0.2.24",
         "validator": "^13.1.17"
     },
     "scripts": {
         "tsc": "tsc",
-        "start": "set debug=* && ts-node-dev --respawn --transpileOnly ./src/index.ts",
+        "start": "ts-node-dev --respawn --transpileOnly ./src/index.ts",
         "prod": "tsc && node ./build/index.js",
         "build": "tsc",
         "lint": "eslint .",

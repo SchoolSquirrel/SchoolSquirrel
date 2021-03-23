@@ -1,4 +1,4 @@
-import { Request, Response, Express } from "express";
+import { Request } from "express";
 import * as i18n from "i18n";
 import { getRepository } from "typeorm";
 import Avatars from "@dicebear/avatars";
@@ -8,13 +8,54 @@ import * as jwt from "jsonwebtoken";
 import * as socketIO from "socket.io";
 import { User } from "../entity/User";
 import { Grade } from "../entity/Grade";
-import { ACTIVE_CHAT_PAYLOAD, SocketEvent, USER_ONLINE_STATUS_PAYLOAD, USER_TYPING_STATUS_PAYLOAD } from "../entity/SocketEvent";
+import {
+    ACTIVE_CHAT_PAYLOAD, SocketEvent, USER_ONLINE_STATUS_PAYLOAD, USER_TYPING_STATUS_PAYLOAD,
+} from "../entity/SocketEvent";
 import { IExpress, IResponse } from "../interfaces/IExpress";
 
 const avatars = new Avatars(initialsSprites, {});
 
 class UserController {
-    public static async listAll(req: Request, res: Response): Promise<void> {
+    static async socketLogin(app: IExpress, socket: socketIO.Socket,
+        d: { token: string }): Promise<void> {
+        if (d.token) {
+            const token = d.token.replace("Bearer ", "");
+            let jwtPayload;
+            try {
+                jwtPayload = (jwt.verify(token, app.locals.config.JWT_SECRET) as any);
+                const { userId } = jwtPayload;
+                app.locals.sockets[userId] = { socket };
+                const user = await getRepository(User).findOne(userId);
+                socket.broadcast.emit(SocketEvent.USER_ONLINE_STATUS, {
+                    userId,
+                    online: true,
+                } as USER_ONLINE_STATUS_PAYLOAD);
+                socket.on(SocketEvent.USER_TYPING_STATUS, (typing: boolean) => {
+                    // need to check
+                    socket.broadcast.emit(SocketEvent.USER_TYPING_STATUS, {
+                        username: user.name,
+                        typing,
+                    } as USER_TYPING_STATUS_PAYLOAD);
+                });
+                socket.on(SocketEvent.ACTIVE_CHAT, (payload: ACTIVE_CHAT_PAYLOAD) => {
+                    app.locals.sockets[userId].activeChat = payload.chatId;
+                });
+                socket.on("disconnect", () => {
+                    if (app.locals.sockets[userId]) {
+                        delete app.locals.sockets[userId];
+                        socket.broadcast.emit(SocketEvent.USER_ONLINE_STATUS, {
+                            userId,
+                            online: false,
+                        } as USER_ONLINE_STATUS_PAYLOAD);
+                    }
+                });
+            } catch (error) {
+                // we can't use error here because it seems to be a reserved event...
+                socket.emit("failure", i18n.__("errors.sessionExpired"));
+            }
+        }
+    }
+    public static async listAll(req: Request, res: IResponse): Promise<void> {
         const userRepository = getRepository(User);
         const users = await userRepository.find({ relations: ["grade"] });
         res.send(users);
