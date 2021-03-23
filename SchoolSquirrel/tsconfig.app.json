@@ -3,6 +3,7 @@
     "compilerOptions": {
         "outDir": "./out-tsc/app",
         "target": "es5",
+        "experimentalDecorators": true,
         "types": [],
         "paths": {
             "@src/*": [
