@@ -63,19 +63,19 @@ export class CalendarComponent extends CalendarComponentCommon {
                 });
                 break;
             case "eventChanged":
-                if (ev.data.Category !== EventCategory.UserEvent) {
+                if (ev.data[0].Category !== EventCategory.UserEvent) {
                     return;
                 }
-                this.remoteService.post(`events/${ev.data.Id}`, {
-                    Description: ev.data.Description ? ev.data.Description : "",
-                    EndTime: ev.data.EndTime.toISOString(),
-                    Subject: ev.data.Subject ? ev.data.Subject : "Unnamed",
-                    Location: ev.data.Location ? ev.data.Location : "",
-                    StartTime: ev.data.StartTime.toISOString(),
-                    IsAllDay: ev.data.IsAllDay,
-                    RecurrenceRule: ev.data.RecurrenceRule,
-                    EndTimezone: ev.data.EndTimezone,
-                    StartTimezone: ev.data.StartTimezone,
+                this.remoteService.post(`events/${ev.data[0].Id}`, {
+                    Description: ev.data[0].Description ? ev.data[0].Description : "",
+                    EndTime: ev.data[0].EndTime.toISOString(),
+                    Subject: ev.data[0].Subject ? ev.data[0].Subject : "Unnamed",
+                    Location: ev.data[0].Location ? ev.data[0].Location : "",
+                    StartTime: ev.data[0].StartTime.toISOString(),
+                    IsAllDay: ev.data[0].IsAllDay,
+                    RecurrenceRule: ev.data[0].RecurrenceRule,
+                    EndTimezone: ev.data[0].EndTimezone,
+                    StartTimezone: ev.data[0].StartTimezone,
                 } as SchedulerEvent).subscribe();
                 break;
             case "eventRemoved":
