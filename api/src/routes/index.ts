@@ -13,6 +13,7 @@ import conferences from "./conferences";
 const routes = Router();
 
 routes.use("/admin", admin);
+routes.use("/files", files);
 routes.use("/assignments", assignments);
 routes.use("/auth", auth);
 routes.use("/users", users);
@@ -21,6 +22,5 @@ routes.use("/conferences", conferences);
 routes.use("/events", events);
 routes.use("/chats", chats);
 routes.use("/devices", devices);
-routes.use("/files", files);
 
 export default routes;
