@@ -111,6 +111,8 @@ export class CalendarComponent extends CalendarComponentCommon {
         (document.querySelector("ejs-schedule") as any).ej2_instances[0].eventSettings.dataSource = this.eventSettings.dataSource;
     }
 
+    public keepOrder = <T>(a: T, b: T): T => a;
+
     public filterEvents(): void {
         this.eventSettings.dataSource = this.allEvents.filter(
             (e) => this.selectedCategories.includes(e.Category),

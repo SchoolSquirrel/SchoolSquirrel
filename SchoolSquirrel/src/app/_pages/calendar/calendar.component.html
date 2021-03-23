@@ -1,6 +1,6 @@
 <div *ngIf="!loading" class="h-100">
     <div class="py-3">
-        <div class="btn-group btn-group-toggle" *ngFor="let category of categoryColors | keyvalue">
+        <div class="btn-group btn-group-toggle" *ngFor="let category of categoryColors | keyvalue:keepOrder">
             <label class="btn mr-2" ngbButtonLabel [style.color]="isSelected(category.key) ? '#fff' : '#000'" [style.background-color]="isSelected(category.key) ? category.value : '#eee'">
                 <input type="checkbox" ngbButton (click)="toggleCategory(category.key)">
                 {{('pages.calendar.categories.' + category.key) | translate}}
