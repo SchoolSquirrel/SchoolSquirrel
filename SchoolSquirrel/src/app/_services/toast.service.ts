@@ -22,10 +22,10 @@ export class ToastService {
         this.toasts = [];
     }
 
-    public success(msg: string) : void{
+    public success(msg: string) : void {
         this.custom(msg, { classname: "bg-success text-white", headerText: "Erfolg!" });
     }
-    public error(msg: string) : void{
+    public error(msg: string) : void {
         this.custom(msg, { classname: "bg-danger text-white", headerText: "Fehler!" });
     }
 }

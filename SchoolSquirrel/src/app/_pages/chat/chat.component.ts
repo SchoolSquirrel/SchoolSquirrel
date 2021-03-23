@@ -40,7 +40,8 @@ export class ChatComponent extends ChatComponentCommon implements OnInit {
             this.onUserOnlineStatusChange());
         this.socketService.socket.off(SocketEvent.USER_TYPING_STATUS,
             this.onUserTypingStatusChange());
-        this.socketService.socket.emit(SocketEvent.ACTIVE_CHAT, { chatId: null } as ACTIVE_CHAT_PAYLOAD);
+        this.socketService.socket.emit(SocketEvent.ACTIVE_CHAT,
+            { chatId: null } as ACTIVE_CHAT_PAYLOAD);
     }
 
     public ngOnInit(): void {
@@ -57,7 +58,8 @@ export class ChatComponent extends ChatComponentCommon implements OnInit {
                 return;
             }
             if (params.id) {
-                this.socketService.socket.emit(SocketEvent.ACTIVE_CHAT, { chatId: params.id } as ACTIVE_CHAT_PAYLOAD);
+                this.socketService.socket.emit(SocketEvent.ACTIVE_CHAT,
+                    { chatId: params.id } as ACTIVE_CHAT_PAYLOAD);
                 this.remoteService.get(`chats/${params.id}`).subscribe((chat) => {
                     this.currentChat = chat;
                     for (const message of this.currentChat.messages) {

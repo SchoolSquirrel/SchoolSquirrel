@@ -25,13 +25,13 @@ export class ToastService {
         //
     }
 
-    public success(msg: string) : void{
+    public success(msg: string) : void {
         this.feedback.success({
             title: "Erfolg!",
             message: msg,
         });
     }
-    public error(msg: string) : void{
+    public error(msg: string) : void {
         this.feedback.error({
             title: "Fehler!",
             message: msg,
