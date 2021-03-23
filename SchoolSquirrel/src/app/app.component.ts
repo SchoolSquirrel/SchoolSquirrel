@@ -19,8 +19,8 @@ export class AppComponent {
         private pushService: PushService,
         private navbarUsersService: NavbarUsersService,
         private authenticationService: AuthenticationService,
-        modalConfig: NgbModalConfig,
-        dropdownConfig: NgbDropdownConfig,
+        public modalConfig: NgbModalConfig,
+        public dropdownConfig: NgbDropdownConfig,
     ) {
         modalConfig.scrollable = true;
         dropdownConfig.container = "body";

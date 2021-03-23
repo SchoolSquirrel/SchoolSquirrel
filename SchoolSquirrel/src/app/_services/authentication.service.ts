@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { User } from "../_models/User";
 import { RemoteService } from "./remote.service";
 import { StorageService } from "./storage.service";
+import { SocketService } from "./socket.service";
 import { NoErrorToastHttpParams } from "../_helpers/noErrorToastHttpParams";
 import { NavbarActions } from "../_decorators/navbar-actions.decorator";
 
@@ -26,6 +27,7 @@ export class AuthenticationService {
         private remoteService: RemoteService,
         private storageService: StorageService,
         private router: Router,
+        private socketService: SocketService,
     ) { }
 
     public login(name: string, password: string, rememberMe: boolean): Observable<User> {
@@ -54,6 +56,7 @@ export class AuthenticationService {
             if (rememberMe) {
                 this.storageService.set("jwtToken", user.jwtToken);
             }
+            this.socketService.init(user.jwtToken);
             this.onLogin.next(true);
         }
     }

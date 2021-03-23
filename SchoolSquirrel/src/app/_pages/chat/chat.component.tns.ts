@@ -7,6 +7,7 @@ import { AuthenticationService } from "../../_services/authentication.service";
 import { ChatComponentCommon } from "./chat.component.common";
 import { Message } from "../../_models/Message";
 import { NativescriptSquirrelChatUiComponent } from "../../_components/nativescript-squirrel-chat-ui/nativescript-squirrel-chat-ui.component";
+import { SocketService } from "../../_services/socket.service";
 
 @Component({
     selector: "app-chat",
@@ -20,6 +21,7 @@ export class ChatComponent extends ChatComponentCommon implements OnInit {
         public authenticationService: AuthenticationService,
         public remoteService: RemoteService,
         public router: Router,
+        public socketService: SocketService,
     ) {
         super(authenticationService, remoteService, router);
     }

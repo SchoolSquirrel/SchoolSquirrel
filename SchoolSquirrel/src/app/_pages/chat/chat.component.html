@@ -14,7 +14,19 @@
         </div>
     </div>
     <div class="col-9 px-0 h-100">
-        <squirrel-chat-ui *ngIf="currentChat" [subtitle]="currentChat.info" (audioCallClicked)="startConference(currentChat, true)" (videoCallClicked)="startConference(currentChat)"  [messages]="currentChat.messages" [me]="authenticationService.currentUser" [title]="getOtherUserInPrivateChat(currentChat).name" (messageSent)="onMessageSent($event)" [profileImageSource]="getChatImageUrl(currentChat)"></squirrel-chat-ui>
+        <chat-ui
+            *ngIf="currentChat"
+            [subtitle]="currentChat.info"
+            (audioCallClicked)="startConference(currentChat, true)"
+            (videoCallClicked)="startConference(currentChat)"  
+            [messages]="currentChat.messages"
+            [me]="authenticationService.currentUser"
+            [title]="getOtherUserInPrivateChat(currentChat).name"
+            (messageSent)="onMessageSent($event)"
+            [profileImageSource]="getChatImageUrl(currentChat)"
+            [typingUsername]="typingUsername"
+            (userTyping)="onUserTyping($event)"
+        ></chat-ui>
     </div>
     <!-- (attachmentClicked)="onAttachmentClicked($event)" (audioCallClicked)="onAudioCallClicked()" (menuItemClicked)="onMenuItemClicked($event)" (messageEdited)="onMessageEdited($event)" (messageSent)="onMessageSent($event)" (reaction)="onReaction($event)"
             (videoCallClicked)="onVideoCallClicked()" [attachmentButtons]="attachmentButtons" [emojiMartOptions]="emojiMartOptions" [menuItems]="menuItems" [messages]="messages" -->

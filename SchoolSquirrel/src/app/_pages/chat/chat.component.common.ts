@@ -11,7 +11,7 @@ export class ChatComponentCommon {
         public authenticationService: AuthenticationService,
         public remoteService: RemoteService,
         public router: Router,
-    ) { }
+    ) {}
 
     public getChatName(chat: Chat): string {
         return chat.name ? chat.name : this.isGroupChat(chat) ? chat.users.map((u) => u.name.split(" ")[0]).join(", ") : this.getOtherUserInPrivateChat(chat).name;

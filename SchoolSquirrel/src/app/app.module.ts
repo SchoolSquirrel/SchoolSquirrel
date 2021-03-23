@@ -21,7 +21,7 @@ import {
 } from "@syncfusion/ej2-angular-schedule";
 import { loadCldr } from "@syncfusion/ej2-base";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
-import { SquirrelChatUiModule } from "@schoolsquirrel/squirrel-chat-ui";
+import { ChatUiModule } from "@schoolsquirrel/chat-ui";
 import { EditorModule } from "@tinymce/tinymce-angular";
 import { NgxOnlyOfficeModule } from "ngx-onlyoffice";
 import { NgxExtendedPdfViewerModule } from "ngx-extended-pdf-viewer";
@@ -67,6 +67,7 @@ import { HelpComponent } from "./_components/help/help.component";
 import { UserSettingsComponent } from "./_pages/user-settings/user-settings.component";
 import { RecordVideoComponent } from "./_dialogs/record-video/record-video.component";
 import { ConferenceComponent } from "./_pages/conference/conference.component";
+import { SocketService } from "./_services/socket.service";
 
 registerLocaleData(localeDe, localeDeExtra);
 declare const require: any;
@@ -141,7 +142,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         }),
         GridModule,
         ScheduleModule,
-        SquirrelChatUiModule,
+        ChatUiModule,
         NoopAnimationsModule,
         EditorModule,
         NgxOnlyOfficeModule,
@@ -180,6 +181,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         FilesizePipe,
         { provide: "navbarActionsService", useExisting: NavbarActionsService },
         { provide: NgbDateParserFormatter, useClass: NgbDateCustomParserFormatter },
+        SocketService,
     ],
     bootstrap: [AppComponent],
     schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
