@@ -20,6 +20,7 @@
         "welcome": "Willkommen",
         "name": "Name",
         "password": "Passwort",
+        "repeatPassword": "Passwort wiederholen",
         "success": "Erfolg",
         "administration": "Administration",
         "users": "Benutzer",
