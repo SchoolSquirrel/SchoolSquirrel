@@ -49,7 +49,7 @@ export class LoginComponentCommon {
         if (this.autoDetectDomain) {
             const url = typeof window !== "undefined" ? window.location.toString() : "";
             if (url.indexOf(":4200") !== -1) { // is dev
-                const apiPortDev = 3000;
+                const apiPortDev = 3003;
                 const match = (url as string).match(/(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/g);
                 this.loginForm.controls.domain.setValue(`http://${match ? match[0] : "localhost"}:${apiPortDev}`);
             } else {
