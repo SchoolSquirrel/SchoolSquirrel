@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request } from "express";
 import * as i18n from "i18n";
 import { getRepository } from "typeorm";
 import * as v from "validator";
@@ -10,13 +10,14 @@ import { listObjects } from "../utils/storage";
 import { Buckets } from "../entity/Buckets";
 import { isAdmin, isTeacher } from "../utils/roles";
 import { AssignmentSubmission } from "../entity/AssignmentSubmission";
+import { IResponse } from "../interfaces/IExpress";
 
 class AssignmentsController {
     /**
      * @apiDescription List all assingments
      * @apiResponse 200 | OK | Course[]
      */
-    public static async listCoursesWithAssignments(req: Request, res: Response): Promise<void> {
+    public static async listCoursesWithAssignments(req: Request, res: IResponse): Promise<void> {
         const courseRepository = getRepository(Course);
         let courses: Course[];
         if (await isAdmin(res.locals.jwtPayload.userId)) {
@@ -47,7 +48,7 @@ class AssignmentsController {
      * @apiResponse 200 | OK | Assignment
      * @apiResponse 404 | Not Found | Error
      */
-    public static async getAssignment(req: Request, res: Response): Promise<void> {
+    public static async getAssignment(req: Request, res: IResponse): Promise<void> {
         const assignmentRepository = getRepository(Assignment);
         const teacher = await isTeacher(res.locals.jwtPayload.userId);
         try {
@@ -78,7 +79,7 @@ class AssignmentsController {
         }
     }
 
-    public static async checkIfSubmitted(res: Response,
+    public static async checkIfSubmitted(res: IResponse,
         assignment: Assignment, user?: User): Promise<void> {
         const assignmentSubmission = await getRepository(AssignmentSubmission).findOne({
             where: {
@@ -95,7 +96,7 @@ class AssignmentsController {
      * @apiDescription Get the current assingment draft or create one
      * @apiResponse 200 | OK | Assignment
      */
-    public static async getAssignmentDraft(req: Request, res: Response): Promise<void> {
+    public static async getAssignmentDraft(req: Request, res: IResponse): Promise<void> {
         const assignment = await AssignmentsController.createDraftIfNotExisting(
             res, res.locals.jwtPayload.user,
         );
@@ -112,7 +113,7 @@ class AssignmentsController {
      * @apiResponse 404 | Not Found | Error
      * @apiResponse 500 | Server Error | Error
      */
-    public static async saveAssignmentDraft(req: Request, res: Response): Promise<void> {
+    public static async saveAssignmentDraft(req: Request, res: IResponse): Promise<void> {
         const assignment = await AssignmentsController
             .findAssignmentDraft(res.locals.jwtPayload.userId);
         if (!assignment) {
@@ -142,7 +143,7 @@ class AssignmentsController {
      * @apiResponse 404 | Not Found | Error
      * @apiResponse 500 | Server Error | Error
      */
-    public static async submitAssignment(req: Request, res: Response): Promise<void> {
+    public static async submitAssignment(req: Request, res: IResponse): Promise<void> {
         let assignment: Assignment;
         try {
             assignment = await getRepository(Assignment).findOneOrFail(req.params.id);
@@ -174,7 +175,7 @@ class AssignmentsController {
      * @apiResponse 404 | Not Found | Error
      * @apiResponse 500 | Server Error | Error
      */
-    public static async unsubmitAssignment(req: Request, res: Response): Promise<void> {
+    public static async unsubmitAssignment(req: Request, res: IResponse): Promise<void> {
         let assignment: Assignment;
         try {
             assignment = await getRepository(Assignment).findOneOrFail(req.params.id);
@@ -204,7 +205,7 @@ class AssignmentsController {
      * @apiResponse 200 | OK | Success
      * @apiResponse 404 | Not Found | Error
      */
-    public static async returnAssignment(req: Request, res: Response): Promise<void> {
+    public static async returnAssignment(req: Request, res: IResponse): Promise<void> {
         let user: User;
         try {
             user = await getRepository(User).findOneOrFail(req.params.userId);
@@ -242,7 +243,7 @@ class AssignmentsController {
      * @apiResponse 200 | OK | Success
      * @apiResponse 500 | Server Error | Error
      */
-    public static async newAssignment(req: Request, res: Response): Promise<void> {
+    public static async newAssignment(req: Request, res: IResponse): Promise<void> {
         const {
             title, content, course, due,
         } = req.body;
@@ -276,7 +277,7 @@ class AssignmentsController {
     }
 
     /*
-    public static editAssignment = async (req: Request, res: Response) => {
+    public static editAssignment = async (req: Request, res: IResponse) => {
         const id = req.params.id;
 
         const { name, role, grade } = req.body;
@@ -316,7 +317,7 @@ class AssignmentsController {
      * @apiResponse 200 | OK | Success
      * @apiResponse 500 | Server Error | Error
      */
-    public static async deleteAssignment(req: Request, res: Response): Promise<void> {
+    public static async deleteAssignment(req: Request, res: IResponse): Promise<void> {
         const { id } = req.params;
 
         const assignmentRepository = getRepository(Assignment);
@@ -331,7 +332,7 @@ class AssignmentsController {
     }
 
     private static async addFilesToAssignment(assignment: Assignment,
-        req: Request, res: Response): Promise<void> {
+        req: Request, res: IResponse): Promise<void> {
         assignment.worksheets = await listObjects(req.app.locals.minio, Buckets.ASSIGNMENTS, `${assignment.id}/worksheets/`);
         assignment.materials = await listObjects(req.app.locals.minio, Buckets.ASSIGNMENTS, `${assignment.id}/materials/`);
         if (!await isTeacher(res.locals.jwtPayload.userId)) {
@@ -344,7 +345,7 @@ class AssignmentsController {
         }
     }
 
-    private static async createDraftIfNotExisting(res: Response, me: User): Promise<Assignment> {
+    private static async createDraftIfNotExisting(res: IResponse, me: User): Promise<Assignment> {
         let assignment = await AssignmentsController
             .findAssignmentDraft(res.locals.jwtPayload.userId);
         if (!assignment) {
@@ -362,7 +363,7 @@ class AssignmentsController {
         return assignment;
     }
 
-    private static async findAssignmentDraft(id: number): Promise<Assignment> {
+    private static async findAssignmentDraft(id: string): Promise<Assignment> {
         return getRepository(Assignment).createQueryBuilder("assignment")
             .leftJoinAndSelect("assignment.draftUser", "user")
             .where("user.id = :id", { id })

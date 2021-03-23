@@ -1,15 +1,15 @@
-import { Request, Response } from "express";
+import { Request } from "express";
 import { getRepository } from "typeorm";
 import * as i18n from "i18n";
 import { Assignment } from "../entity/Assignment";
 import { Event } from "../entity/Event";
 import { SchedulerEvent } from "../entity/SchedulerEvent";
-import { User } from "../entity/User";
 import { EventCategory } from "../entity/EventCategory";
 import { HolidayData } from "../entity/Holiday";
+import { IResponse } from "../interfaces/IExpress";
 
 class EventController {
-    public static async listAll(req: Request, res: Response): Promise<void> {
+    public static async listAll(req: Request, res: IResponse): Promise<void> {
         const assignmentsRepository = getRepository(Assignment);
         const eventRepository = getRepository(Event);
         const assignments = await assignmentsRepository
@@ -61,7 +61,7 @@ class EventController {
         res.send(events);
     }
 
-    public static async newEvent(req: Request, res: Response): Promise<void> {
+    public static async newEvent(req: Request, res: IResponse): Promise<void> {
         const {
             Subject, StartTimezone, EndTimezone, RecurrenceRule,
             IsAllDay, Description, EndTime, Location, StartTime,
@@ -92,7 +92,7 @@ class EventController {
         res.redirect("events");
     }
 
-    public static async updateEvent(req: Request, res: Response): Promise<void> {
+    public static async updateEvent(req: Request, res: IResponse): Promise<void> {
         const {
             Subject, StartTimezone, EndTimezone, RecurrenceRule,
             IsAllDay, Description, EndTime, Location, StartTime,
@@ -121,7 +121,7 @@ class EventController {
         res.send({ success: true });
     }
 
-    public static async deleteEvent(req: Request, res: Response): Promise<void> {
+    public static async deleteEvent(req: Request, res: IResponse): Promise<void> {
         const { id } = req.params;
         const eventRepository = getRepository(Event);
         try {

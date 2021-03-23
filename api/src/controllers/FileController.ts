@@ -15,6 +15,7 @@ import { Course } from "../entity/Course";
 import { randomString } from "../utils/random";
 import { User } from "../entity/User";
 import { isTeacher } from "../utils/roles";
+import { IResponse } from "../interfaces/IExpress";
 
 interface FileItem {/*
     dev: number,
@@ -71,7 +72,7 @@ enum DocumentStatus {
 interface FileMetdata {
     modified: Date,
     // created: Date,
-    authorId: number,
+    authorId: string,
     editKey?: string,
     protected?: boolean, // if yes, only author can edit
 }
@@ -87,7 +88,7 @@ class FileController {
         }
         return undefined;
     }
-    public static async listFiles(req: Request, res: Response): Promise<void> {
+    public static async listFiles(req: Request, res: IResponse): Promise<void> {
         const { itemId } = req.params;
         if (typeof itemId !== "string") {
             res.status(400);
@@ -98,7 +99,7 @@ class FileController {
         res.send(items);
     }
 
-    public static async handleUpload(req: Request, res: Response): Promise<void> {
+    public static async handleUpload(req: Request, res: IResponse): Promise<void> {
         // if (req.body.action === "save") {
         const { itemId } = req.params;
         if (!v.isUUID(itemId)) {
@@ -135,7 +136,7 @@ class FileController {
         // }
     }
 
-    public static async deleteFile(req: Request, res: Response): Promise<void> {
+    public static async deleteFile(req: Request, res: IResponse): Promise<void> {
         const filePath = `${req.params.itemId}/${req.params.path}${req.params["0"]}`;
         await (req.app.locals.minio as minio.Client)
             .removeObject(FileController.getBucketName(req), filePath);
@@ -144,7 +145,7 @@ class FileController {
         res.send({ success: true });
     }
 
-    public static async newFile(req: Request, res: Response): Promise<void> {
+    public static async newFile(req: Request, res: IResponse): Promise<void> {
         const { itemId, path } = req.params;
         const rest = req.params[0];
         if (!(typeof itemId === "string" && typeof path === "string" && typeof rest === "string")) {
@@ -177,7 +178,7 @@ class FileController {
             });
     }
 
-    public static async handleServe(req: Request, res: Response): Promise<void> {
+    public static async handleServe(req: Request, res: IResponse): Promise<void> {
         let path = `/${req.params.itemId}${req.query.path}`;
         path = await FileController.fixPathForAssignmentWorksheets(req, res, path);
         path = await FileController.fixPathForAssignmentSubmissions(req, res, path);
@@ -189,7 +190,7 @@ class FileController {
         }
     }
 
-    public static async getFile(req: Request, res: Response): Promise<void> {
+    public static async getFile(req: Request, res: IResponse): Promise<void> {
         try {
             let filePath = `${req.params.itemId}/${req.params.path}${req.params["0"]}`;
             if (req.params.path == "worksheets") {
@@ -207,7 +208,7 @@ class FileController {
         }
     }
 
-    public static async handleSave(req: Request, res: Response): Promise<void> {
+    public static async handleSave(req: Request, res: IResponse): Promise<void> {
         const { status, url } = req.body;
         if (typeof status !== "number") {
             res.status(400);
@@ -238,7 +239,7 @@ class FileController {
     }
 
     private static async fixPathForAssignmentWorksheets(req,
-        res: Response, path: string, isWorksheet = false) {
+        res: IResponse, path: string, isWorksheet = false) {
         if (FileController.isAssignmentFile(req)
             && !await FileController.isDraftAssignmentFile(req.params.itemId,
                 res.locals.jwtPayload.userId)
@@ -249,7 +250,7 @@ class FileController {
     }
 
     private static async fixPathForAssignmentSubmissions(req,
-        res: Response, path: string) {
+        res: IResponse, path: string) {
         if (FileController.isAssignmentFile(req)
             && !await FileController.isDraftAssignmentFile(req.params.itemId,
                 res.locals.jwtPayload.userId)
@@ -264,7 +265,7 @@ class FileController {
         return path;
     }
 
-    public static async getEditKey(req: Request, res: Response): Promise<void> {
+    public static async getEditKey(req: Request, res: IResponse): Promise<void> {
         let path = `${req.params.itemId}${req.query.path}`;
         let forceNewEditKey = false;
         if (FileController.isAssignmentFile(req)) {
@@ -314,7 +315,7 @@ class FileController {
         res.send({ editKey });
     }
 
-    private static worksheetPathToSubmissionPath(path: string, res: Response) {
+    private static worksheetPathToSubmissionPath(path: string, res: IResponse) {
         return path.replace("/worksheets/", `/submissions/${res.locals.jwtPayload.userId}/`);
     }
 
@@ -333,7 +334,7 @@ class FileController {
         return FileController.getBucketName(req) == Buckets.ASSIGNMENTS;
     }
 
-    public static async handleDownload(req: Request, res: Response): Promise<void> {
+    public static async handleDownload(req: Request, res: IResponse): Promise<void> {
         const minioClient = req.app.locals.minio as minio.Client;
         try {
             const info = JSON.parse(req.body.downloadInput);

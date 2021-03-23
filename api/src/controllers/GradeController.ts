@@ -1,16 +1,17 @@
-import { Request, Response } from "express";
+import { Request } from "express";
 import * as i18n from "i18n";
 import { getRepository } from "typeorm";
 import { Grade } from "../entity/Grade";
+import { IResponse } from "../interfaces/IExpress";
 
 class GradeController {
-    public static async listAll(req: Request, res: Response): Promise<void> {
+    public static async listAll(req: Request, res: IResponse): Promise<void> {
         const gradeRepository = getRepository(Grade);
         const grades = await gradeRepository.find({ relations: ["users"] });
         res.send(grades);
     }
 
-    public static async newGrade(req: Request, res: Response): Promise<void> {
+    public static async newGrade(req: Request, res: IResponse): Promise<void> {
         const { name } = req.body;
         if (!name) {
             res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });
@@ -29,7 +30,7 @@ class GradeController {
         res.status(200).send({ success: true });
     }
 
-    public static async deleteGrade(req: Request, res: Response): Promise<void> {
+    public static async deleteGrade(req: Request, res: IResponse): Promise<void> {
         const { id } = req.params;
         const gradeRepository = getRepository(Grade);
         try {

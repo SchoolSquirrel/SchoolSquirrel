@@ -1,7 +1,8 @@
-import { Request, Response } from "express";
+import { Request } from "express";
+import { IResponse } from "../interfaces/IExpress";
 
 class ConfigController {
-    public static config(req: Request, res: Response): void {
+    public static config(req: Request, res: IResponse): void {
         res.send(JSON.stringify({
             // eslint-disable-next-line
             version: require("../../package.json").version,

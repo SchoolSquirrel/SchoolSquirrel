@@ -1,11 +1,15 @@
-import { Request, Response } from "express";
+import { Request, Response, Express } from "express";
 import * as i18n from "i18n";
 import { getRepository } from "typeorm";
 import Avatars from "@dicebear/avatars";
 import initialsSprites from "@dicebear/avatars-initials-sprites";
 import * as v from "validator";
+import * as jwt from "jsonwebtoken";
+import * as socketIO from "socket.io";
 import { User } from "../entity/User";
 import { Grade } from "../entity/Grade";
+import { ACTIVE_CHAT_PAYLOAD, SocketEvent, USER_ONLINE_STATUS_PAYLOAD, USER_TYPING_STATUS_PAYLOAD } from "../entity/SocketEvent";
+import { IExpress, IResponse } from "../interfaces/IExpress";
 
 const avatars = new Avatars(initialsSprites, {});
 
@@ -16,7 +20,7 @@ class UserController {
         res.send(users);
     }
 
-    public static async avatar(req: Request, res: Response): Promise<void> {
+    public static async avatar(req: Request, res: IResponse): Promise<void> {
         const userRepository = getRepository(User);
         const { id } = req.params;
         if (!v.isUUID(id)) {
@@ -37,7 +41,7 @@ class UserController {
         }
     }
 
-    public static async newUser(req: Request, res: Response): Promise<void> {
+    public static async newUser(req: Request, res: IResponse): Promise<void> {
         const { name, role, grade } = req.body;
         if (!(name && ["student", "teacher", "admin"].includes(role) && grade)) {
             res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });
@@ -68,7 +72,7 @@ class UserController {
         res.status(200).send({ success: true });
     }
 
-    public static async editUser(req: Request, res: Response): Promise<void> {
+    public static async editUser(req: Request, res: IResponse): Promise<void> {
         const { id } = req.params;
 
         const { name, role, grade } = req.body;
@@ -107,7 +111,7 @@ class UserController {
         res.status(200).send({ success: true });
     }
 
-    public static async deleteUser(req: Request, res: Response): Promise<void> {
+    public static async deleteUser(req: Request, res: IResponse): Promise<void> {
         const { id } = req.params;
 
         const userRepository = getRepository(User);

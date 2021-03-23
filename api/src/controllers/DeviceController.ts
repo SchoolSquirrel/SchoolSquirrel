@@ -1,11 +1,11 @@
-import { Request, Response } from "express";
+import { Request } from "express";
 import { getRepository } from "typeorm";
 import * as i18n from "i18n";
 import { Device } from "../entity/Device";
-import { User } from "../entity/User";
+import { IResponse } from "../interfaces/IExpress";
 
 class DeviceController {
-    public static async listAll(req: Request, res: Response): Promise<void> {
+    public static async listAll(req: Request, res: IResponse): Promise<void> {
         const deviceRepository = getRepository(Device);
         const devices = await deviceRepository.find({
             where: {
@@ -15,7 +15,7 @@ class DeviceController {
         res.send(devices);
     }
 
-    public static async newDevice(req: Request, res: Response): Promise<void> {
+    public static async newDevice(req: Request, res: IResponse): Promise<void> {
         const {
             os, token, software, device,
         } = req.body;
@@ -44,7 +44,7 @@ class DeviceController {
         res.send({ success: true });
     }
 
-    public static async deleteDevice(req: Request, res: Response): Promise<void> {
+    public static async deleteDevice(req: Request, res: IResponse): Promise<void> {
         const { token } = req.params;
         const deviceRepository = getRepository(Device);
         try {

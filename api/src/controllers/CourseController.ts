@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request } from "express";
 import * as i18n from "i18n";
 import { getRepository } from "typeorm";
 import * as v from "validator";
@@ -7,9 +7,10 @@ import { User } from "../entity/User";
 import { sendMessage } from "../utils/messages";
 import { isAdmin } from "../utils/roles";
 import AssignmentsController from "./AssignmentsController";
+import { IResponse } from "../interfaces/IExpress";
 
 class CourseController {
-    public static async listAll(req: Request, res: Response): Promise<void> {
+    public static async listAll(req: Request, res: IResponse): Promise<void> {
         const courseRepository = getRepository(Course);
         let courses: Course[];
         if (await isAdmin(res.locals.jwtPayload.userId)) {
@@ -24,7 +25,7 @@ class CourseController {
         res.send(courses);
     }
 
-    public static async getCourse(req: Request, res: Response): Promise<void> {
+    public static async getCourse(req: Request, res: IResponse): Promise<void> {
         const courseRepository = getRepository(Course);
         const { id } = req.params;
         if (!v.isUUID(id)) {
@@ -44,11 +45,11 @@ class CourseController {
         }
     }
 
-    public static async sendMessage(req: Request, res: Response): Promise<void> {
+    public static async sendMessage(req: Request, res: IResponse): Promise<void> {
         sendMessage(req, res, "course");
     }
 
-    public static async newCourse(req: Request, res: Response): Promise<void> {
+    public static async newCourse(req: Request, res: IResponse): Promise<void> {
         const { name, users, description }:
             { name: string, users: number[], description: string } = req.body;
         if (!(name && users && users.length)) {
@@ -81,7 +82,7 @@ class CourseController {
         res.status(200).send({ success: true });
     }
 
-    public static async editCourse(req: Request, res: Response): Promise<void> {
+    public static async editCourse(req: Request, res: IResponse): Promise<void> {
         const { name, users, description }:
             { name: string, users: number[], description: string } = req.body;
         if (!(name && users && users.length)) {
@@ -120,7 +121,7 @@ class CourseController {
         res.status(200).send({ success: true });
     }
 
-    public static async deleteCourse(req: Request, res: Response): Promise<void> {
+    public static async deleteCourse(req: Request, res: IResponse): Promise<void> {
         const { id } = req.params;
         const courseRepository = getRepository(Course);
         try {

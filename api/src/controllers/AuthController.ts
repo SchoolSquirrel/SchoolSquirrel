@@ -1,9 +1,10 @@
 /* eslint-disable max-len */
-import { Request, Response } from "express";
+import { Request } from "express";
 import * as i18n from "i18n";
 import * as jwt from "jsonwebtoken";
 import { getRepository } from "typeorm";
 import { User } from "../entity/User";
+import { IResponse } from "../interfaces/IExpress";
 
 class AuthController {
     /**
@@ -13,7 +14,7 @@ class AuthController {
      * @apiResponse 200 | OK | User
      * @apiResponse 401 | Wrong username or password | Error
      */
-    public static async login(req: Request, res: Response): Promise<void> {
+    public static async login(req: Request, res: IResponse): Promise<void> {
         const { name, password } = req.body;
         if (!(name && password)) {
             res.status(400).end(JSON.stringify({ error: i18n.__("errors.usernameOrPasswordEmpty") }));
@@ -62,7 +63,7 @@ class AuthController {
      * @apiResponse 200 | OK | User
      * @apiResponse 401 | Invalid token | Error
      */
-    public static async renewToken(req: Request, res: Response): Promise<void> {
+    public static async renewToken(req: Request, res: IResponse): Promise<void> {
         const { jwtToken } = req.body;
         if (!(jwtToken)) {
             res.status(400).end(JSON.stringify({ error: i18n.__("errors.notAllFieldsProvided") }));
@@ -102,7 +103,7 @@ class AuthController {
      * @apiResponse 400 | Password does not match criteria | Error
      * @apiResponse 500 | Server error | Error
      */
-    public static async changePassword(req: Request, res: Response): Promise<void> {
+    public static async changePassword(req: Request, res: IResponse): Promise<void> {
         const { password }: {password: string} = req.body;
         try {
             if (!(password)) {

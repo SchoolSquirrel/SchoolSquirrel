@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request } from "express";
 import { getRepository } from "typeorm";
 import { Chat } from "../entity/Chat";
 import { User } from "../entity/User";
@@ -6,6 +6,7 @@ import { Message } from "../entity/Message";
 import { Course } from "../entity/Course";
 import { ActivityType } from "../entity/Activity";
 import { createActivity } from "./activities";
+import { IResponse } from "../interfaces/IExpress";
 
 function getOtherUserInPrivateChat(userId: string, chat: Chat): User {
     return chat.users.filter((u) => u.id != userId)[0];
@@ -19,7 +20,7 @@ function getGroupChatName(chat: Chat): string {
     return chat.name ? chat.name : chat.users.map((u) => u.name.split(" ")[0]).join(", ");
 }
 
-export async function sendMessage(req: Request, res: Response, type: "chat" | "course"): Promise<void> {
+export async function sendMessage(req: Request, res: IResponse, type: "chat" | "course"): Promise<void> {
     const { text, citation } = req.body;
     if (!text) {
         res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });

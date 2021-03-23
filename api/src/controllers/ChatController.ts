@@ -1,9 +1,10 @@
-import { Request, Response } from "express";
+import { Request } from "express";
 import * as i18n from "i18n";
 import { getRepository } from "typeorm";
 import * as v from "validator";
 import { Chat } from "../entity/Chat";
 import { User } from "../entity/User";
+import { IResponse } from "../interfaces/IExpress";
 import { sendMessage } from "../utils/messages";
 
 class ChatController {
@@ -11,7 +12,7 @@ class ChatController {
      * @apiDescription List all chats
      * @apiResponse 200 | OK | Chat[]
      */
-    public static async listAll(req: Request, res: Response): Promise<void> {
+    public static async listAll(req: Request, res: IResponse): Promise<void> {
         const chatRepository = getRepository(Chat);
         const chats = await chatRepository.find({ relations: ["users"] });
         res.send(chats);
@@ -22,7 +23,7 @@ class ChatController {
      * @apiResponse 200 | OK | Chat
      * @apiResponse 404 | Chat not found | Error
      */
-    public static async getChatFromUserId(req: Request, res: Response): Promise<void> {
+    public static async getChatFromUserId(req: Request, res: IResponse): Promise<void> {
         const chatRepository = getRepository(Chat);
         const userRepository = getRepository(User);
         const { id } = req.params;
@@ -59,7 +60,7 @@ class ChatController {
      * @apiResponse 200 | OK | Message
      * @apiResponse 500 | Missing fields | Error
      */
-    public static async sendMessage(req: Request, res: Response): Promise<void> {
+    public static async sendMessage(req: Request, res: IResponse): Promise<void> {
         sendMessage(req, res, "chat");
     }
 
@@ -68,7 +69,7 @@ class ChatController {
      * @apiResponse 200 | OK | Chat
      * @apiResponse 404 | Chat not found | Error
      */
-    public static async getChat(req: Request, res: Response): Promise<void> {
+    public static async getChat(req: Request, res: IResponse): Promise<void> {
         const chatRepository = getRepository(Chat);
         try {
             const { id } = req.params;
@@ -97,7 +98,7 @@ class ChatController {
      * @apiResponse 200 | OK | Success
      * @apiResponse 400 | Missing fields | Error
      */
-    public static async newGroupChat(req: Request, res: Response): Promise<void> {
+    public static async newGroupChat(req: Request, res: IResponse): Promise<void> {
         const { name, user } = req.body;
         if (!(name && user)) {
             res.status(400).send({ message: i18n.__("errors.notAllFieldsProvided") });
@@ -130,7 +131,7 @@ class ChatController {
      * @apiResponse 200 | OK | Success
      * @apiResponse 500 | Server Error | Error
      */
-    public static async deleteChat(req: Request, res: Response): Promise<void> {
+    public static async deleteChat(req: Request, res: IResponse): Promise<void> {
         const { id } = req.params;
         const chatRepository = getRepository(Chat);
         try {
