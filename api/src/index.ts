@@ -6,12 +6,14 @@ import * as express from "express";
 import * as helmet from "helmet";
 import * as rateLimit from "express-rate-limit";
 import * as i18n from "i18n";
+import * as http from "http";
+import * as socketIO from "socket.io";
 import * as path from "path";
 import * as hpp from "hpp";
-import "reflect-metadata";
-import { createConnection } from "typeorm";
 import * as fs from "fs";
 import * as minio from "minio";
+import "reflect-metadata";
+import { createConnection } from "typeorm";
 import { getConfig } from "container-env";
 import { User } from "./entity/User";
 import { createAdminUser1574018391679 } from "./migration/1574018391679-createAdminUser";
@@ -30,6 +32,8 @@ import { Device } from "./entity/Device";
 import { getHolidays } from "./utils/holidays";
 import { Conference } from "./entity/Conference";
 import { Activity } from "./entity/Activity";
+import UserController from "./controllers/UserController";
+import { IExpress } from "./interfaces/IExpress";
 
 const config = getConfig(JSON.parse(fs.readFileSync(path.join(__dirname, "../../container-env.json")).toString()));
 
@@ -83,7 +87,7 @@ createConnection({
         // eslint-disable-next-line no-console
         console.log("Migrations: ", await connection.runMigrations());
         // Create a new express application instance
-        const app = express();
+        const app = express() as IExpress;
 
         // S3 Initialization
         const minioClient = new minio.Client({
@@ -103,6 +107,7 @@ createConnection({
         // make config and minioClient available in the controllers using req.app.locals
         app.locals.config = config;
         app.locals.minio = minioClient;
+        app.locals.sockets = {};
 
         // load holiday data for the calendar
         app.locals.holidays = await getHolidays(config.COUNTRY_CODE, config.STATE_CODE);
@@ -130,15 +135,29 @@ createConnection({
         app.use("/api", routes);
         // Set route for config.json
         app.use("/config.json", ConfigController.config);
+
+        const httpServer = new http.Server(app);
+        const io = new socketIO.Server(httpServer, {
+            cors: {
+                origin: "*",
+            },
+        });
+        const namespace = io.of("/api/live");
+        namespace.on("connection", (socket) => {
+            socket.on("login", (data) => {
+                UserController.socketLogin(app, socket, data);
+            });
+        });
+
         app.use("/", express.static("/app/dist/frontend"));
         app.use("*", express.static("/app/dist/frontend/index.html"));
 
         let port = 80;
         if (process.env.NODE_ENV == "development") {
-            port = 3000;
+            port = 3003;
         }
         // That starts the server on the given port
-        app.listen(port, () => {
+        httpServer.listen(port, () => {
             // eslint-disable-next-line no-console
             console.log(`Server started on port ${port}!`);
         });

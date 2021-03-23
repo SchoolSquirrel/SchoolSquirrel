@@ -1,10 +1,11 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request } from "express";
 import * as i18n from "i18n";
 import * as jwt from "jsonwebtoken";
 import { getRepository } from "typeorm";
 import { User } from "../entity/User";
+import { IResponse } from "../interfaces/IExpress";
 
-export async function checkJwt(req: Request, res: Response, next: NextFunction): Promise<void> {
+export async function checkJwt(req: Request, res: IResponse, next: NextFunction): Promise<void> {
     // Get the jwt token from the head
     let token = req.headers.authorization as string;
     if (!token) {
