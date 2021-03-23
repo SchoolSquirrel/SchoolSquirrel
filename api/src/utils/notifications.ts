@@ -5,7 +5,7 @@ import { Device } from "../entity/Device";
 import { Activity } from "../entity/Activity";
 import { PushNotificationInfo, PushNotificationData } from "../entity/PushNotification";
 
-const relayServerUrl = "https://push-notifications.schoolsquirrel.hannesrueger.de";
+const relayServerUrl = "https://push-notifications.schoolsquirrel.dev.hannesrueger.de";
 const invalidTokenErrorCodes = ["messaging/invalid-argument", "messaging/registration-token-not-registered"];
 
 export async function sendPushNotification(
