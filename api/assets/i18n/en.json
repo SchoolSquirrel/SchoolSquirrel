@@ -21,5 +21,8 @@
         "usernameOrPasswordEmpty": "Username oder password empty!",
         "wrongPassword": "Wrong password!",
         "wrongUsername": "Wrong username!"
-    }
+    },
+	"calendar": {
+		"isDue": "is due"
+	}
 }

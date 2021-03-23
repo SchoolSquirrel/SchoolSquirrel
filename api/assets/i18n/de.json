@@ -1,26 +1,29 @@
 {
-    "errors": {
-        "emailNotFound": "Email-Adresse nicht gefunden!",
-        "error": "Fehler!",
-        "errorWhileAddingUser": "Fehler beim Hinzufügen des Benutzers!",
-        "errorWhileDeleting": "Fehler beim Löschen!",
-        "errorWhileDeletingUser": "Fehler beim Löschen des Benutzers!",
-        "errorWhileSavingToken": "Fehler beim Speichern des Tokens!",
-        "existingUsername": "Benutzername bereits vorhanden!",
-        "notAllFieldsProvided": "Nicht alle Daten angegeben!",
-        "notAllowed": "Diese Aktion ist nicht erlaubt!",
-        "oldPasswordWrong": "Altes Passwort stimmt nicht!",
-        "passwordsDontMatch": "Die beiden Passwörter stimmen nicht überein!",
-        "sessionExpired": "Sitzung abgelaufen. Bitte erneut einloggen!",
-        "unauthorized": "Unauthorisiert!",
-        "unknown": "Unbekannter Fehler!",
-        "unknownError": "Unbekannter Fehler!",
-        "userNotFound": "Benutzer wurde nicht gefunden!",
-        "userNotFoundWrongLink": "Benutzer nicht gefunden, fehlerhafter Link!",
-        "usergroupDoesNotExist": "Die Benutzergruppe existiert nicht!",
-        "usernameOrPasswordEmpty": "Benutzername oder Passwort leer!",
-        "wrongPassword": "Falsches Passwort!",
-        "wrongUsername": "Falscher Benutzername!",
-        "chatNotFound": "Der Chat wurde nicht gefunden!"
-    }
+	"errors": {
+		"emailNotFound": "Email-Adresse nicht gefunden!",
+		"error": "Fehler!",
+		"errorWhileAddingUser": "Fehler beim Hinzufügen des Benutzers!",
+		"errorWhileDeleting": "Fehler beim Löschen!",
+		"errorWhileDeletingUser": "Fehler beim Löschen des Benutzers!",
+		"errorWhileSavingToken": "Fehler beim Speichern des Tokens!",
+		"existingUsername": "Benutzername bereits vorhanden!",
+		"notAllFieldsProvided": "Nicht alle Daten angegeben!",
+		"notAllowed": "Diese Aktion ist nicht erlaubt!",
+		"oldPasswordWrong": "Altes Passwort stimmt nicht!",
+		"passwordsDontMatch": "Die beiden Passwörter stimmen nicht überein!",
+		"sessionExpired": "Sitzung abgelaufen. Bitte erneut einloggen!",
+		"unauthorized": "Unauthorisiert!",
+		"unknown": "Unbekannter Fehler!",
+		"unknownError": "Unbekannter Fehler!",
+		"userNotFound": "Benutzer wurde nicht gefunden!",
+		"userNotFoundWrongLink": "Benutzer nicht gefunden, fehlerhafter Link!",
+		"usergroupDoesNotExist": "Die Benutzergruppe existiert nicht!",
+		"usernameOrPasswordEmpty": "Benutzername oder Passwort leer!",
+		"wrongPassword": "Falsches Passwort!",
+		"wrongUsername": "Falscher Benutzername!",
+		"chatNotFound": "Der Chat wurde nicht gefunden!"
+	},
+	"calendar": {
+		"isDue": "is fällig"
+	}
 }

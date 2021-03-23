@@ -26,7 +26,7 @@ class EventController {
         }[] = [];
         events.push(...assignments.map((a) => ({
             Id: a.id,
-            Subject: `"${a.title}" is due (${a.due.getHours()}:${a.due.getMinutes()})`,
+            Subject: `"${a.title}" ${i18n.__("calendar.isDue")} (${a.due.getHours()}:${a.due.getMinutes()})`,
             StartTime: a.due,
             EndTime: a.due,
             Category: EventCategory.Assignment,
