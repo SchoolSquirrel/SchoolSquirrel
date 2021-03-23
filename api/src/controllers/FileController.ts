@@ -183,6 +183,8 @@ class FileController {
         path = await FileController.fixPathForAssignmentWorksheets(req, res, path);
         path = await FileController.fixPathForAssignmentSubmissions(req, res, path);
         try {
+            res.contentType(path.split(".").pop());
+            res.attachment(`download.${path.split(".").pop()}`);
             (await (req.app.locals.minio as minio.Client)
                 .getObject(FileController.getBucketName(req), path)).pipe(res);
         } catch {
@@ -210,15 +212,13 @@ class FileController {
 
     public static async handleSave(req: Request, res: IResponse): Promise<void> {
         const { status, url } = req.body;
-        if (typeof status !== "number") {
+        if (status === undefined || typeof status !== "number") {
             res.status(400);
             return;
         }
-        if (typeof url !== "string" || !url.startsWith(res.app.locals.config.ONLYOFFICE_URL)) {
-            res.status(400);
-            return;
-        }
-        if (status == DocumentStatus.BEING_EDITED) {
+        if (status == DocumentStatus.CLOSED_WITHOUT_CHANGES) {
+            res.json({ error: 0 });
+        } else if (status == DocumentStatus.BEING_EDITED) {
             res.json({ error: 0 });
         } else if (status == DocumentStatus.READY_TO_SAVE) {
             http.get(url, async (response) => {
