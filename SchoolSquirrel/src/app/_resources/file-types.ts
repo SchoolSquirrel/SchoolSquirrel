@@ -7,7 +7,7 @@ export const documentFileTypes = {
 export const fileTypes = {
     document: [],
     image: ["jpg", "jpeg", "png", "tif", "svg", "gif", "bmp"],
-    video: ["mp4", "avi", "mov"],
+    video: ["mp4", "avi", "mov", "webm"],
     audio: ["mp3", "wav"],
     pdf: ["pdf"],
 };
