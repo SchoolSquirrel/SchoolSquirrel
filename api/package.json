@@ -61,7 +61,7 @@
         "multer": "^1.4.2",
         "mysql": "^2.18.1",
         "reflect-metadata": "^0.1.13",
-        "sanitize-html": "^1.27.0",
+        "sanitize-html": "^2.3.2",
         "socket.io": "^3.0.5",
         "ts-node-dev": "^1.0.0-pre.44",
         "typeorm": "0.2.24",
