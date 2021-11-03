@@ -65,7 +65,7 @@
         "socket.io": "^3.0.5",
         "ts-node-dev": "^1.0.0-pre.44",
         "typeorm": "0.2.25",
-        "validator": "^13.1.17"
+        "validator": "^13.7.0"
     },
     "scripts": {
         "tsc": "tsc",
